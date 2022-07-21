@@ -11,3 +11,7 @@
 ![ColorPalette](../../../../../B307/design/%EC%B0%90%EC%B5%9C%EC%A2%85/ColorPalette.PNG)
 
 ![0720 figma](../../../../../B307/design/%EC%B0%90%EC%B5%9C%EC%A2%85/0720%20figma.PNG)
+
+- 220721
+
+  ![wireframe](wireframe_history.assets/wireframe.PNG)
