@@ -15,3 +15,13 @@
 - 220721
 
   ![wireframe](wireframe_history.assets/wireframe.PNG)
+
+- 220722
+
+  - 와이어프레임 확장
+
+  - 컬러 다시뽑을예정
+
+  - 모바일 웹도 하기로 확정
+
+    ![image-20220722180325007](wireframe_history.assets/image-20220722180325007-16584806068491.png)
