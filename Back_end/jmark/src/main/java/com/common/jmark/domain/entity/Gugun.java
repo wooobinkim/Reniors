@@ -16,7 +16,6 @@ public class Gugun {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "gugun_id")
     private Long id;
-
     private String name;
 
     private Long gugunCode;

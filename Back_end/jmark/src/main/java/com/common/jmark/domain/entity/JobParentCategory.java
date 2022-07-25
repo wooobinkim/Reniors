@@ -39,8 +39,6 @@ public class JobParentCategory {
         JobChildCategory jcc = JobChildCategory.create(childName, this);
         childs.add(jcc);
     }
-
-
     public void deleteGugun(Long childId){
         Optional<JobChildCategory> findChild = childs.stream()
                 .filter(child -> child.getId().equals(childId))

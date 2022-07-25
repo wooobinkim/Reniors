@@ -23,7 +23,6 @@ public class JobChildCategory {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_parent_category_id")
     private JobParentCategory parent;
-
     public static JobChildCategory create(String name, JobParentCategory parent){
         JobChildCategory jcc = new JobChildCategory();
         jcc.name = name;
