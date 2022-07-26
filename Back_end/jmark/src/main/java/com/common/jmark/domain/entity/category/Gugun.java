@@ -1,4 +1,4 @@
-package com.common.jmark.domain.entity;
+package com.common.jmark.domain.entity.category;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,23 +18,23 @@ public class Gugun {
     private Long id;
     private String name;
 
-    private Long gugunCode;
+    private Long code;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sido_code")
     private Sido sido;
 
-    public static Gugun create(String name, Long gugunCode, Sido sido){
+    public static Gugun create(String name, Long code, Sido sido){
         Gugun gugun = new Gugun();
         gugun.name = name;
-        gugun.gugunCode = gugunCode;
+        gugun.code = code;
         gugun.sido = sido;
         return gugun;
     }
 
-    public void update(String name, Long gugunCode, Sido sido){
+    public void update(String name, Long code, Sido sido){
         this.name = name;
-        this.gugunCode = gugunCode;
+        this.code = code;
         this.sido = sido;
     }
 

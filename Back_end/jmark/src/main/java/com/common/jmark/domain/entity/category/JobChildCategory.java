@@ -1,4 +1,4 @@
-package com.common.jmark.domain.entity;
+package com.common.jmark.domain.entity.category;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

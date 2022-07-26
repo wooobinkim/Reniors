@@ -1,5 +1,6 @@
-package com.common.jmark.domain.entity;
+package com.common.jmark.domain.entity.category;
 
+import com.common.exception.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +9,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,19 +30,18 @@ public class JobParentCategory {
         jpc.name = name;
         return jpc;
     }
-
     public void update(String name){
         this.name = name;
     }
 
-    public void addJobChildCategory(String childName){
+    public void addChild(String childName){
         JobChildCategory jcc = JobChildCategory.create(childName, this);
         childs.add(jcc);
     }
-    public void deleteGugun(Long childId){
-        Optional<JobChildCategory> findChild = childs.stream()
+    public void deleteChild(Long childId){
+        JobChildCategory findChild = childs.stream()
                 .filter(child -> child.getId().equals(childId))
-                .findFirst();
+                .findFirst().orElseThrow(()-> new NotFoundException("Not Found Child Category"));
         childs.remove(findChild);
     }
 }

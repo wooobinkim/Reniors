@@ -1,15 +1,14 @@
-package com.common.jmark.domain.entity;
+package com.common.jmark.domain.entity.category;
 
+import com.common.exception.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,21 +22,21 @@ public class Sido {
 
     private String name;
 
-    private long sidoCode;
+    private long code;
 
     @OneToMany(mappedBy = "sido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Gugun> guguns = new ArrayList<>();
 
-    public static Sido create(String name, long sidoCode){
+    public static Sido create(String name, long code){
         Sido sido = new Sido();
         sido.name = name;
-        sido.sidoCode = sidoCode;
+        sido.code = code;
         return sido;
     }
 
-    public void update(String name, long sidoCode){
+    public void update(String name, long code){
         this.name = name;
-        this.sidoCode = sidoCode;
+        this.code = code;
     }
 
     public void addGugun(String gugunName, long gugunCode){
@@ -46,9 +45,9 @@ public class Sido {
     }
 
     public void deleteGugun(long gugunId){
-        Optional<Gugun> findGugun = guguns.stream()
+        Gugun findGugun = guguns.stream()
                 .filter(gugun -> gugun.getId()==(gugunId))
-                .findFirst();
+                .findFirst().orElseThrow(()->new NotFoundException("Not Found Gugun"));
         guguns.remove(findGugun);
     }
 }
