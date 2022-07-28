@@ -19,7 +19,7 @@ public class CompanyController {
 
     @GetMapping("/hi")
     public ResponseEntity<?> hi(){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("hi");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("hiz");
     }
 
     @GetMapping("/{companyId}")
