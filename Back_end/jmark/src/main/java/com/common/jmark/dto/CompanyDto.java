@@ -2,9 +2,16 @@ package com.common.jmark.dto;
 
 import com.common.jmark.domain.entity.Company;
 import com.common.jmark.domain.entity.Enum.TypeCompany;
+import com.common.jmark.domain.entity.category.Gugun;
+import com.common.jmark.dto.category.GugunResponse;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
+@Setter(AccessLevel.NONE)
+@NoArgsConstructor
 public class CompanyDto {
 
     private Long id;
@@ -35,4 +42,5 @@ public class CompanyDto {
         this.companyPhone = company.getCompanyPhone();
         this.typeCompany = company.getTypeCompany();
     }
+
 }

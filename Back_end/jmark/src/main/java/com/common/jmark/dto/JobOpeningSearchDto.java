@@ -11,7 +11,7 @@ import lombok.Setter;
 public class JobOpeningSearchDto {
 
     private String contents;
-    private int salary;
+    private int minSalary;
     private Long jobChildCategoryId;
-    private Long guGunCode;
+    private Long guGunId;
 }

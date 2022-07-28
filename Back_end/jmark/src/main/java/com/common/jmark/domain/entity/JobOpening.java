@@ -1,7 +1,12 @@
 package com.common.jmark.domain.entity;
 
 import com.common.jmark.domain.entity.Enum.TypeEmployment;
+import com.common.jmark.domain.entity.category.Gugun;
+import com.common.jmark.domain.entity.category.JobChildCategory;
+import com.common.jmark.dto.CompanyDto;
 import com.common.jmark.dto.JobOpeningDto;
+import com.common.jmark.dto.category.GugunResponse;
+import com.common.jmark.dto.category.JobChildCategoryResponse;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -52,6 +57,14 @@ public class JobOpening{
     @JoinColumn(name = "company_id")
     private Company company;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_child_category_id")
+    private JobChildCategory jobChildCategory;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gugun_id")
+    private Gugun gugun;
+
     //공고 - 고용형태 연관관계
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "type_employment_id")
@@ -60,7 +73,7 @@ public class JobOpening{
     //최종학력, 직무소분류, 구군 받아오기
 
 
-    public JobOpening(JobOpeningDto jobOpeningDto) {
+    public JobOpening(JobOpeningDto jobOpeningDto, Gugun gugun, JobChildCategory jobChildCategory) {
         this.id = jobOpeningDto.getId();
         this.createdDate = jobOpeningDto.getCreatedDate();
         this.finishedDate = jobOpeningDto.getFinishedDate();
@@ -74,13 +87,16 @@ public class JobOpening{
         this.jobPosition = jobOpeningDto.getJobPosition();
         this.workingDay = jobOpeningDto.getWorkingDay();
         this.typeEmployment = jobOpeningDto.getTypeEmployment();
+        this.gugun = gugun;
+        this.jobChildCategory = jobChildCategory;
+
     }
 
     public void updateCompany(Company company){
         this.company = company;
     }
 
-    public void update(JobOpeningDto jobOpeningDto){
+    public void update(JobOpeningDto jobOpeningDto, Gugun gugun, JobChildCategory jobChildCategory){
         this.numberPeople = jobOpeningDto.getNumberPeople();
         this.minCareer = jobOpeningDto.getMinCareer();
         this.title = jobOpeningDto.getTitle();
@@ -91,5 +107,8 @@ public class JobOpening{
         this.jobPosition = jobOpeningDto.getJobPosition();
         this.workingDay = jobOpeningDto.getWorkingDay();
         this.typeEmployment = jobOpeningDto.getTypeEmployment();
+        this.gugun = gugun;
+        this.jobChildCategory = jobChildCategory;
     }
+
 }

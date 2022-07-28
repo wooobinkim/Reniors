@@ -6,10 +6,9 @@ import com.common.jmark.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.Entity;
 
 @RestController
 @RequestMapping("/company")
@@ -19,15 +18,40 @@ public class CompanyController {
 
     @GetMapping("/hi")
     public ResponseEntity<?> hi(){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("hiz");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("hi");
     }
 
+    //회사 회원가입
+    @PostMapping
+    public ResponseEntity<?> postCompany(@RequestBody CompanyDto companyDto){
+        System.out.println("companyDto = " + companyDto);
+        CompanyDto postCompany = companyService.postCompany(companyDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(postCompany);
+    }
+
+    //회사 상세정보
     @GetMapping("/{companyId}")
     public ResponseEntity<?> getCompany(@PathVariable("companyId")Long companyId){
-        Company company = companyService.getCompany(companyId);
+        CompanyDto getCompany = companyService.getCompany(companyId);
 
-        CompanyDto companyDto = new CompanyDto(company);
+        return ResponseEntity.status(HttpStatus.OK).body(getCompany);
+    }
 
-        return ResponseEntity.status(HttpStatus.OK).body(companyDto);
+    //회사정보 수정
+    @PutMapping("/{companyId}")
+    public ResponseEntity<?> updateCompany(@PathVariable("companyId")Long companyId, @RequestBody CompanyDto companyDto){
+        CompanyDto updateCompany = companyService.updateCompany(companyId, companyDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(updateCompany);
+    }
+
+
+    //회사 탈퇴
+    @DeleteMapping("/{companyId}")
+    public ResponseEntity<?> deleteCompany(@PathVariable("companyId")Long companyId){
+        companyService.deleteCompany(companyId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }

@@ -2,6 +2,7 @@ package com.common.jmark.domain.entity;
 
 import com.common.jmark.domain.entity.Enum.TypeCompany;
 import com.common.jmark.domain.entity.Enum.TypeEmployment;
+import com.common.jmark.dto.CompanyDto;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -52,17 +53,29 @@ public class Company {
     private List<JobOpening> jobOpenings = new ArrayList<>();
 
     @Builder
-    public Company(String name, String companyAppId, String companyAppPwd, String establishedAt, String companyUrl, String address, String companyImgName, String companyImgPath, String companyNum, String companyPhone, TypeCompany typeCompany) {
-        this.name = name;
-        this.companyAppId = companyAppId;
-        this.companyAppPwd = companyAppPwd;
-        this.establishedAt = establishedAt;
-        this.companyUrl = companyUrl;
-        this.address = address;
-        this.companyImgName = companyImgName;
-        this.companyImgPath = companyImgPath;
-        this.companyNum = companyNum;
-        this.companyPhone = companyPhone;
-        this.typeCompany = typeCompany;
+    public Company(CompanyDto companyDto) {
+        this.name = companyDto.getName();
+        this.companyAppId = companyDto.getCompanyAppId();
+        this.companyAppPwd = companyDto.getCompanyAppPwd();
+        this.establishedAt = companyDto.getEstablishedAt();
+        this.companyUrl = companyDto.getCompanyUrl();
+        this.address = companyDto.getAddress();
+        this.companyImgName = companyDto.getCompanyImgName();
+        this.companyImgPath = companyDto.getCompanyImgPath();
+        this.companyNum = companyDto.getCompanyNum();
+        this.companyPhone = companyDto.getCompanyPhone();
+        this.typeCompany = companyDto.getTypeCompany();
+    }
+
+    public void update(CompanyDto companyDto){
+        this.name = companyDto.getName();
+        this.establishedAt = companyDto.getEstablishedAt();
+        this.companyUrl = companyDto.getCompanyUrl();
+        this.address = companyDto.getAddress();
+        this.companyImgName = companyDto.getCompanyImgName();
+        this.companyImgPath = companyDto.getCompanyImgPath();
+        this.companyNum = companyDto.getCompanyNum();
+        this.companyPhone = companyDto.getCompanyPhone();
+        this.typeCompany = companyDto.getTypeCompany();
     }
 }

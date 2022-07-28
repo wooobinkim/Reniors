@@ -2,10 +2,15 @@ package com.common.jmark.controller;
 
 import com.common.jmark.domain.entity.Company;
 import com.common.jmark.domain.entity.JobOpening;
+import com.common.jmark.domain.entity.category.Gugun;
+import com.common.jmark.domain.entity.category.JobChildCategory;
 import com.common.jmark.dto.JobOpeningDto;
 import com.common.jmark.dto.JobOpeningSearchDto;
+import com.common.jmark.dto.category.GugunResponse;
 import com.common.jmark.service.JobOpeningService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +28,11 @@ public class JobOpeningController {
 
     //채용공고 조회(조건포함)
     @GetMapping
-    public ResponseEntity<?> getJobOpeningList(@RequestBody JobOpeningSearchDto jobOpeningSearchDto){
-        List<JobOpening> jobOpeningList = jobOpeningService.getJobOpeningList(jobOpeningSearchDto);
-        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(x->new JobOpeningDto(x)).collect(Collectors.toList());
+    public ResponseEntity<?> getJobOpeningList(@RequestBody JobOpeningSearchDto jobOpeningSearchDto, Pageable pageable){
+        Page<JobOpeningDto> jobOpeningList = jobOpeningService.getJobOpeningList(jobOpeningSearchDto, pageable);
+//        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(x->new JobOpeningDto(x)).collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(jobOpeningDtoList);
+        return ResponseEntity.status(HttpStatus.OK).body(jobOpeningList);
     }
 
 
@@ -38,10 +43,9 @@ public class JobOpeningController {
         토큰에서 회사 or 유저 정보추출
          */
 
-        JobOpening jobOpening = jobOpeningService.getJobOpening(jobOpeningId);
-        JobOpeningDto getJobOpening = new JobOpeningDto(jobOpening);
+        JobOpeningDto jobOpening = jobOpeningService.getJobOpening(jobOpeningId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(getJobOpening);
+        return ResponseEntity.status(HttpStatus.OK).body(jobOpening);
     }
 
     //채용공고 등록

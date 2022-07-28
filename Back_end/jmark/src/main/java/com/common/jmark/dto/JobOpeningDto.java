@@ -2,6 +2,10 @@ package com.common.jmark.dto;
 
 import com.common.jmark.domain.entity.Enum.TypeEmployment;
 import com.common.jmark.domain.entity.JobOpening;
+import com.common.jmark.domain.entity.category.Gugun;
+import com.common.jmark.domain.entity.category.JobChildCategory;
+import com.common.jmark.dto.category.GugunResponse;
+import com.common.jmark.dto.category.JobChildCategoryResponse;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +32,13 @@ public class JobOpeningDto {
     private int workingDay;
     private TypeEmployment typeEmployment;
 
+    private long gugunId;
+    private long jobChildCategoryId;
+
+    private GugunResponse gugunResponse;
+    private JobChildCategoryResponse jobChildCategoryResponse;
+    private CompanyDto companyDto;
+
     public JobOpeningDto(JobOpening jobOpening) {
         this.id = jobOpening.getId();
         this.createdDate = jobOpening.getCreatedDate();
@@ -42,5 +53,11 @@ public class JobOpeningDto {
         this.jobPosition = jobOpening.getJobPosition();
         this.workingDay = jobOpening.getWorkingDay();
         this.typeEmployment = jobOpening.getTypeEmployment();
+    }
+
+    public void setLinkEntity(CompanyDto companyDto, GugunResponse gugunResponse, JobChildCategoryResponse jobChildCategoryResponse){
+        this.companyDto = companyDto;
+        this.gugunResponse = gugunResponse;
+        this.jobChildCategoryResponse = jobChildCategoryResponse;
     }
 }
