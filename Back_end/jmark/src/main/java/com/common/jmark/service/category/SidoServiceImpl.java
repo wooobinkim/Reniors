@@ -27,7 +27,9 @@ public class SidoServiceImpl implements SidoService{
         if(sidoRepository.findByName(request.getName()).isPresent()){
             throw new DuplicateException(String.format("%s는 이미 존재하는 카테고리입니다.",request.getName()));
         }
+        System.out.println("dddd");
         Sido sido = Sido.create(request.getName(), request.getCode());
+        System.out.println("aaaaaa");
         return sidoRepository.save(sido).getId();
     }
 
