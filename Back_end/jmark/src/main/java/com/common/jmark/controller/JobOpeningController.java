@@ -43,9 +43,9 @@ public class JobOpeningController {
         토큰에서 회사 or 유저 정보추출
          */
 
-        JobOpeningDto jobOpening = jobOpeningService.getJobOpening(jobOpeningId);
+        JobOpeningDto JobOpening = jobOpeningService.getJobOpening(jobOpeningId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(jobOpening);
+        return ResponseEntity.status(HttpStatus.OK).body(JobOpening);
     }
 
     //채용공고 등록
@@ -56,9 +56,9 @@ public class JobOpeningController {
          */
 
         JobOpening jobOpening = jobOpeningService.postJobOpening(1L,jobOpeningDto);
-        JobOpeningDto postJobOpening = new JobOpeningDto(jobOpening);
+        JobOpeningDto JobOpening = new JobOpeningDto(jobOpening);
 
-        return ResponseEntity.status(HttpStatus.OK).body(postJobOpening);
+        return ResponseEntity.status(HttpStatus.OK).body(JobOpening);
     }
 
     //채용공고 수정
@@ -69,9 +69,9 @@ public class JobOpeningController {
          */
 
         JobOpening jobOpening = jobOpeningService.updateJobOpening(jobOpeningId, jobOpeningDto);
-        JobOpeningDto updateJobOpening= new JobOpeningDto(jobOpening);
+        JobOpeningDto JobOpening= new JobOpeningDto(jobOpening);
 
-        return ResponseEntity.status(HttpStatus.OK).body(updateJobOpening);
+        return ResponseEntity.status(HttpStatus.OK).body(JobOpening);
     }
 
     //채용공고 삭제
