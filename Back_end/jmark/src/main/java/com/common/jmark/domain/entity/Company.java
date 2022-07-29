@@ -52,6 +52,9 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<JobOpening> jobOpenings = new ArrayList<>();
 
+    @OneToMany(mappedBy = "company")
+    private List<Eval> evals = new ArrayList<>();
+
     @Builder
     public Company(CompanyDto companyDto) {
         this.name = companyDto.getName();
