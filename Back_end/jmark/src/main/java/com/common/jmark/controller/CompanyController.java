@@ -25,25 +25,25 @@ public class CompanyController {
     @PostMapping
     public ResponseEntity<?> postCompany(@RequestBody CompanyDto companyDto){
         System.out.println("companyDto = " + companyDto);
-        CompanyDto postCompany = companyService.postCompany(companyDto);
+        CompanyDto Company = companyService.postCompany(companyDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(postCompany);
+        return ResponseEntity.status(HttpStatus.OK).body(Company);
     }
 
     //회사 상세정보
     @GetMapping("/{companyId}")
     public ResponseEntity<?> getCompany(@PathVariable("companyId")Long companyId){
-        CompanyDto getCompany = companyService.getCompany(companyId);
+        CompanyDto Company = companyService.getCompany(companyId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(getCompany);
+        return ResponseEntity.status(HttpStatus.OK).body(Company);
     }
 
     //회사정보 수정
     @PutMapping("/{companyId}")
     public ResponseEntity<?> updateCompany(@PathVariable("companyId")Long companyId, @RequestBody CompanyDto companyDto){
-        CompanyDto updateCompany = companyService.updateCompany(companyId, companyDto);
+        CompanyDto Company = companyService.updateCompany(companyId, companyDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(updateCompany);
+        return ResponseEntity.status(HttpStatus.OK).body(Company);
     }
 
 
