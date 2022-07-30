@@ -1,4 +1,4 @@
-package com.common.exception;
+package com.common.jmark.common.exception;
 
 public class DuplicateException extends RuntimeException{
     public DuplicateException(){

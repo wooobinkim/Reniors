@@ -1,8 +1,7 @@
 package com.common.jmark.dto.user;
 
-import com.common.jmark.domain.entity.Enum.TypeGender;
-import com.common.jmark.domain.entity.Enum.TypeIsOpen;
-import com.common.jmark.domain.entity.Enum.TypeRole;
+import com.common.jmark.domain.entity.Type.Gender;
+import com.common.jmark.domain.entity.Type.IsOpen;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -25,12 +25,12 @@ public class UserCreateRequest {
     @NotBlank
     private String name;
 
-    @NotBlank
+    @NotNull
     private Date birth;
 
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
-    private TypeGender gender;
+    private Gender gender;
 
     @NotBlank
     private String phone;
@@ -44,9 +44,9 @@ public class UserCreateRequest {
     @NotBlank
     private String address;
 
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
-    private TypeIsOpen isOpen;
+    private IsOpen isOpen;
 
     private int workingDay;
 

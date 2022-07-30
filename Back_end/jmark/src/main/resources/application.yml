@@ -23,7 +23,17 @@ spring:
     show-sql: true
     hibernate:
       format_sql: true
-      ddl-auto: create-drop
+      ddl-auto: create
+
+  # swagger 설정
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+token:
+  # 일단 하루
+  expiration_time: 1296000000
+  secret: secretcode
 
 logging:
   level:

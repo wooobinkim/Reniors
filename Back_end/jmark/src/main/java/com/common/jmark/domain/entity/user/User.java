@@ -1,8 +1,8 @@
 package com.common.jmark.domain.entity.user;
 
-import com.common.jmark.domain.entity.Enum.TypeGender;
-import com.common.jmark.domain.entity.Enum.TypeIsOpen;
-import com.common.jmark.domain.entity.Enum.TypeRole;
+import com.common.jmark.domain.entity.Type.Gender;
+import com.common.jmark.domain.entity.Type.IsOpen;
+import com.common.jmark.domain.entity.Type.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,12 +31,12 @@ public class User {
     private Date birth;
 
     @Enumerated(EnumType.STRING)
-    private TypeGender gender;
+    private Gender gender;
 
     private String phone;
 
     @Enumerated(EnumType.STRING)
-    private TypeRole role;
+    private Role role;
 
     private int totalCareer;
 
@@ -47,7 +47,7 @@ public class User {
     private String address;
 
     @Enumerated(EnumType.STRING)
-    private TypeIsOpen isOpen;
+    private IsOpen isOpen;
 
     private int workingDay;
 
@@ -58,7 +58,7 @@ public class User {
     private String portfolioPath;
 
 
-    public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, TypeGender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, TypeIsOpen isOpen, int workingDay, long minSalary, String portfolioName, String portfolioPath) {
+    public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, int workingDay, long minSalary, String portfolioName, String portfolioPath) {
         User user = new User();
         user.userAppId = userAppId;
         user.userAppPwd = userAppPwd;
@@ -67,7 +67,7 @@ public class User {
         user.birth = birth;
         user.gender = gender;
         user.phone = phone;
-        user.role = TypeRole.일반유저;
+        user.role = Role.ROLE_USER;
         user.totalCareer = totalCareer;
         user.profileImgName = profileImgName;
         user.profileImgPath = profileImgPath;
@@ -80,7 +80,7 @@ public class User {
         return user;
     }
 
-    public void update(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, TypeGender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, TypeIsOpen isOpen, int workingDay, long minSalary, String portfolioName, String portfolioPath) {
+    public void update(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, int workingDay, long minSalary, String portfolioName, String portfolioPath) {
         this.userAppId = userAppId;
         this.userAppPwd = userAppPwd;
         this.kakaoId = kakaoId;

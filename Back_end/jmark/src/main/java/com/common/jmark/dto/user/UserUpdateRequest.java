@@ -1,7 +1,7 @@
 package com.common.jmark.dto.user;
 
-import com.common.jmark.domain.entity.Enum.TypeGender;
-import com.common.jmark.domain.entity.Enum.TypeIsOpen;
+import com.common.jmark.domain.entity.Type.Gender;
+import com.common.jmark.domain.entity.Type.IsOpen;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,7 +29,7 @@ public class UserUpdateRequest {
 
     @NotBlank
     @Enumerated(EnumType.STRING)
-    private TypeGender gender;
+    private Gender gender;
 
     @NotBlank
     private String phone;
@@ -45,7 +45,7 @@ public class UserUpdateRequest {
 
     @NotBlank
     @Enumerated(EnumType.STRING)
-    private TypeIsOpen isOpen;
+    private IsOpen isOpen;
 
     private int workingDay;
 
