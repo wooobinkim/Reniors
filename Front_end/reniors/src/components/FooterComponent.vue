@@ -2,7 +2,7 @@
   <div class="footer">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">채용공고</router-link> |
-    <router-link to="/about">MyPage</router-link> |
+    <router-link to="/mypage">MyPage</router-link> |
     <router-link to="/about">커뮤니티</router-link> |
     <router-link to="/about">면접</router-link>
   </div>
