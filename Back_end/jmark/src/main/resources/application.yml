@@ -1,12 +1,30 @@
+server:
+  port: 8080
+  error:
+    whitelabel:
+      enabled: false
+
+  servlet:
+    context-path: /api
+#    encoding:
+#      charset: UTF-8
+#      enabled: true
+#      force: true
+
 spring:
-  server:
-    port: 8080
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/jmark?serverTimezone=UTC&characterEncoding=UTF-8
-    username: ssafy
-    password: ssafy
+
+    #username: ssafy
+    #assword: ssafy
+
+
+    username: root
+    password: root
+
+    #password: Common7333!
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -15,6 +33,16 @@ spring:
     hibernate:
       format_sql: true
       ddl-auto: update
+
+  # swagger 설정
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+token:
+  # 일단 하루
+  expiration_time: 1296000000
+  secret: secretcode
 
 logging:
   level:
