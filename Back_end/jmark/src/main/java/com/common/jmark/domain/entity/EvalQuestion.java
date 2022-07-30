@@ -30,7 +30,6 @@ public class EvalQuestion {
     }
 
     public void update(EvalQuestionDto evalQuestionDto, Eval eval) {
-//        this.id = evalQuestionDto.getId();
         this.contents = evalQuestionDto.getContents();
         this.eval = eval;
     }

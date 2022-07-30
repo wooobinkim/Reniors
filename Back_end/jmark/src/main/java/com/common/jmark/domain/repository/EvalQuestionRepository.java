@@ -9,4 +9,5 @@ import java.util.List;
 public interface EvalQuestionRepository extends JpaRepository<EvalQuestion, Long> {
 
     List<EvalQuestion> findByEval(Eval eval);
+
 }

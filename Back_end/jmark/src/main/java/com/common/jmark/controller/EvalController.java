@@ -6,6 +6,7 @@ import com.common.jmark.service.EvalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -69,6 +70,7 @@ public class EvalController {
     }
 
     //평가 질문 조회
+
     @GetMapping("/{evalId}/question")
     public ResponseEntity<?> getEvalQuestionList(@PathVariable("evalId")Long evalId){
         List<EvalQuestionDto> EvalQuestionList = evalService.getEvalQuestionList(evalId);
@@ -105,5 +107,6 @@ public class EvalController {
     //유저 평가 입력
     //유저 평가 조회
     //유저 평가 삭제
+
 
 }

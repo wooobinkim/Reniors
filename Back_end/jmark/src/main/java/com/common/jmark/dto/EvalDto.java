@@ -12,11 +12,13 @@ import lombok.Setter;
 public class EvalDto {
     private Long id;
     private String name;
+
     private CompanyDto companyDto;
 
     public EvalDto(Eval eval , CompanyDto companyDto) {
         this.id = eval.getId();
         this.name = eval.getName();
+
         this.companyDto = companyDto;
     }
 

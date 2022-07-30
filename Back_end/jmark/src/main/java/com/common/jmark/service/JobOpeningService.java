@@ -1,6 +1,6 @@
 package com.common.jmark.service;
 
-import com.common.exception.NotFoundException;
+import com.common.jmark.common.exception.NotFoundException;
 import com.common.jmark.domain.entity.Company;
 import com.common.jmark.domain.entity.JobOpening;
 import com.common.jmark.domain.entity.QJobOpening;

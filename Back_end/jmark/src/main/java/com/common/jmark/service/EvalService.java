@@ -1,6 +1,6 @@
 package com.common.jmark.service;
 
-import com.common.exception.NotFoundException;
+import com.common.jmark.common.exception.NotFoundException;
 import com.common.jmark.domain.entity.Company;
 import com.common.jmark.domain.entity.Eval;
 import com.common.jmark.domain.entity.EvalQuestion;
@@ -35,6 +35,7 @@ public class EvalService {
     public EvalDto postEval(EvalDto evalDto){
 
         Optional<Company> optionalCompany = companyRepository.findById(1L);
+
         if (optionalCompany.isPresent()){
             Eval eval = new Eval(evalDto, optionalCompany.get());
             evalRepository.save(eval);

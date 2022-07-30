@@ -46,6 +46,9 @@ public class JobOpeningController {
         JobOpeningDto JobOpening = jobOpeningService.getJobOpening(jobOpeningId);
 
         return ResponseEntity.status(HttpStatus.OK).body(JobOpening);
+
     }
+
+
 
 }

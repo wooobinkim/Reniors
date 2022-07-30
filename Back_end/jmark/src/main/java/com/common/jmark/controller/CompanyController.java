@@ -35,6 +35,7 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.OK).body(Company);
     }
 
+
     //회사정보 수정
     @PutMapping()
     public ResponseEntity<?> updateCompany(@RequestBody CompanyDto companyDto){
