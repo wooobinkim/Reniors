@@ -14,6 +14,7 @@ export default {
 .home-info {
   background-color: var(--color-black-3);
   border-radius: 0.3rem;
+  margin: 5px;
   height: 200px;
 }
 </style>

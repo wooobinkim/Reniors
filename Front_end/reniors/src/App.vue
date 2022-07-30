@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <router-view style="width: 480px;" />
+    <router-view style="width: 360px;" />
     <FooterComponent />
   </div>
 </template>

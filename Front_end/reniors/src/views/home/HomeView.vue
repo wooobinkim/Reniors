@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import PreloginHome from '../components/home/PreloginHome.vue'
-import LoginHome from '../components/home/LoginHome.vue'
+import PreloginHome from '../../components/home/PreloginHome.vue'
+import LoginHome from '../../components/home/LoginHome.vue'
 
 export default {
   name: 'HomeView',

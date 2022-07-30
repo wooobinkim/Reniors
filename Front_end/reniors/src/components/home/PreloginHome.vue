@@ -23,7 +23,7 @@ export default {
   setup () {
     const store = useStore()
 
-    const hotJobopenings = computed(() => store.getters.home.hotJobopenings)
+    const hotJobopenings = computed(() => store.state.home.hotJobopenings)
     const newJobopenings = computed(() => store.state.home.newJobopenings)
 
     return {
