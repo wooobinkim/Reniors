@@ -72,6 +72,8 @@ public class Company {
 
     public void update(CompanyDto companyDto){
         this.name = companyDto.getName();
+        this.companyAppId = companyDto.getCompanyAppId();
+        this.companyAppPwd = companyDto.getCompanyAppPwd();
         this.establishedAt = companyDto.getEstablishedAt();
         this.companyUrl = companyDto.getCompanyUrl();
         this.address = companyDto.getAddress();

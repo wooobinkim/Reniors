@@ -1,5 +1,6 @@
 package com.common.jmark.service;
 
+import com.common.exception.NotFoundException;
 import com.common.jmark.domain.entity.Company;
 import com.common.jmark.domain.entity.JobOpening;
 import com.common.jmark.domain.entity.QJobOpening;
@@ -29,6 +30,7 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +43,7 @@ public class JobOpeningService {
     @PersistenceContext
     EntityManager em;
 
+    //채용공고 조건 전체조회
     @Transactional
     public Page<JobOpeningDto> getJobOpeningList(@RequestBody JobOpeningSearchDto jobOpeningSearchDto, Pageable pageable){
         //조건검색을 위한 쿼리DSL 실행
@@ -62,20 +65,28 @@ public class JobOpeningService {
 
         //Entity -> Dto변환
         if (jobOpeningList.size() != 0){
-            List<JobOpeningDto> jobOpeningDtoList = new ArrayList<>();
+//            List<JobOpeningDto> jobOpeningDtoList = new ArrayList<>();
+            List<JobOpeningDto> jobOpeningDtoList =
+                    jobOpeningList.stream().map(o->new JobOpeningDto(
+                            o,
+                            new CompanyDto(o.getCompany()),
+                            GugunResponse.response(o.getGugun()),
+                            JobChildCategoryResponse.response(o.getJobChildCategory())
+                    )).collect(Collectors.toList());
 
-            for (JobOpening jobOpening : jobOpeningList) {
-                //연결된 엔티티 매핑
-                GugunResponse gugunResponse = GugunResponse.response(jobOpening.getGugun());
-                JobChildCategoryResponse jobChildCategoryResponse = JobChildCategoryResponse.response(jobOpening.getJobChildCategory());
-                CompanyDto companyDto = new CompanyDto(jobOpening.getCompany());
 
-                //리턴할 Dto 세팅
-                JobOpeningDto jobOpeningDto = new JobOpeningDto(jobOpening);
-                jobOpeningDto.setLinkEntity(companyDto,gugunResponse,jobChildCategoryResponse);
-
-                jobOpeningDtoList.add(jobOpeningDto);
-            }
+//            for (JobOpening jobOpening : jobOpeningList) {
+//                //연결된 엔티티 매핑
+//                GugunResponse gugunResponse = GugunResponse.response(jobOpening.getGugun());
+//                JobChildCategoryResponse jobChildCategoryResponse = JobChildCategoryResponse.response(jobOpening.getJobChildCategory());
+//                CompanyDto companyDto = new CompanyDto(jobOpening.getCompany());
+//
+//                //리턴할 Dto 세팅
+//                JobOpeningDto jobOpeningDto = new JobOpeningDto(jobOpening,companyDto,gugunResponse,jobChildCategoryResponse);
+////                jobOpeningDto.setLinkEntity(companyDto,gugunResponse,jobChildCategoryResponse);
+//
+//                jobOpeningDtoList.add(jobOpeningDto);
+//            }
 
             long total = jobOpeningDtoList.size();
 
@@ -91,9 +102,11 @@ public class JobOpeningService {
     //채용공고 상세조회
     @Transactional
     public JobOpeningDto getJobOpening(Long jobOpeningId){
-        Optional<JobOpening> jobOpening = jobOpeningRepository.findById(jobOpeningId);
-        if (jobOpening.isPresent()){
-            JobOpening jobOpening1 = jobOpening.get();
+        Optional<JobOpening> optionalJobOpening = jobOpeningRepository.findById(jobOpeningId);
+        optionalJobOpening.orElseThrow(()->new NotFoundException("not found jobOpening"));
+
+        if (optionalJobOpening.isPresent()){
+            JobOpening jobOpening1 = optionalJobOpening.get();
 
             //연결된 엔티티 매핑
             GugunResponse gugunResponse = GugunResponse.response(jobOpening1.getGugun());
@@ -101,52 +114,13 @@ public class JobOpeningService {
             CompanyDto companyDto = new CompanyDto(jobOpening1.getCompany());
 
             //리턴할 Dto 세팅
-            JobOpeningDto jobOpeningDto = new JobOpeningDto(jobOpening1);
-            jobOpeningDto.setLinkEntity(companyDto,gugunResponse,jobChildCategoryResponse);
-
+            JobOpeningDto jobOpeningDto = new JobOpeningDto(jobOpening1,companyDto,gugunResponse,jobChildCategoryResponse);
+//            jobOpeningDto.setLinkEntity(companyDto,gugunResponse,jobChildCategoryResponse);
             return jobOpeningDto;
         }else {
             return null;
         }
     }
 
-    //채용공고 등록
-    @Transactional
-    public JobOpening postJobOpening(Long companyId,JobOpeningDto jobOpeningDto){
-        Gugun gugun = gugunRepository.findById(jobOpeningDto.getGugunId()).get();
-        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(jobOpeningDto.getJobChildCategoryId()).get();
 
-        JobOpening jobOpening = new JobOpening(jobOpeningDto,gugun,jobChildCategory);
-        Optional<Company> company = companyRepository.findById(companyId);
-        if(company.isPresent()){
-            jobOpening.updateCompany(company.get());
-            jobOpeningRepository.save(jobOpening);
-
-            return jobOpening;
-        }else {
-            return null;
-        }
-    }
-
-    //채용공고 수정
-    @Transactional
-    public JobOpening updateJobOpening(Long jobOpeningId, JobOpeningDto jobOpeningDto){
-        Gugun gugun = gugunRepository.findById(jobOpeningDto.getGugunId()).get();
-        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(jobOpeningDto.getJobChildCategoryId()).get();
-
-        Optional<JobOpening> jobOpening = jobOpeningRepository.findById(jobOpeningId);
-
-        if (jobOpening.isPresent()){
-            jobOpening.get().update(jobOpeningDto,gugun,jobChildCategory);
-            return jobOpening.get();
-        }else{
-            return null;
-        }
-    }
-
-    //채용공고 삭제
-    @Transactional
-    public void deleteJobOpening(Long jobOpeningId){
-        jobOpeningRepository.deleteById(jobOpeningId);
-    }
 }

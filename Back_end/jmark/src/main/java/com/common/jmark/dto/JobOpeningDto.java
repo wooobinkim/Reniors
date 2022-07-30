@@ -39,7 +39,7 @@ public class JobOpeningDto {
     private JobChildCategoryResponse jobChildCategoryResponse;
     private CompanyDto companyDto;
 
-    public JobOpeningDto(JobOpening jobOpening) {
+    public JobOpeningDto(JobOpening jobOpening,CompanyDto companyDto, GugunResponse gugunResponse, JobChildCategoryResponse jobChildCategoryResponse) {
         this.id = jobOpening.getId();
         this.createdDate = jobOpening.getCreatedDate();
         this.finishedDate = jobOpening.getFinishedDate();
@@ -53,11 +53,14 @@ public class JobOpeningDto {
         this.jobPosition = jobOpening.getJobPosition();
         this.workingDay = jobOpening.getWorkingDay();
         this.typeEmployment = jobOpening.getTypeEmployment();
-    }
-
-    public void setLinkEntity(CompanyDto companyDto, GugunResponse gugunResponse, JobChildCategoryResponse jobChildCategoryResponse){
         this.companyDto = companyDto;
         this.gugunResponse = gugunResponse;
         this.jobChildCategoryResponse = jobChildCategoryResponse;
     }
+
+//    public void setLinkEntity(CompanyDto companyDto, GugunResponse gugunResponse, JobChildCategoryResponse jobChildCategoryResponse){
+//        this.companyDto = companyDto;
+//        this.gugunResponse = gugunResponse;
+//        this.jobChildCategoryResponse = jobChildCategoryResponse;
+//    }
 }
