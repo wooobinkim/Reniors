@@ -1,49 +1,22 @@
 <template>
   <div class="home">
-    <h1 class="home-header">comm on</h1>
-    <HomeNotice />
-    <HomeInfo />
-    <HomeJobopeningList type="hot" :jobopenings="hotJobopenings" />
-    <HomeJobopeningList type="new" :jobopenings="newJobopenings" />
+    <PreloginHome v-if="!isLogin" />
+    <LoginHome v-else />
   </div>
 </template>
 
 <script>
-import HomeNotice from '../components/HomeNotice.vue'
-import HomeInfo from '../components/HomeInfo.vue'
-import HomeJobopeningList from '../components/HomeJobopeningList.vue'
+import PreloginHome from '../components/home/PreloginHome.vue'
+import LoginHome from '../components/home/LoginHome.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    HomeNotice, HomeInfo, HomeJobopeningList,
+    PreloginHome, LoginHome
   },
   data() {
     return {
-      hotJobopenings: [
-        {
-          id: 1,
-          name: '핫한 채용공고 첫 번째',
-          context: 'dsgsdsjdgoihwghgerg'
-        },
-        {
-          id: 2,
-          name: 'second hot jobopening',
-          context: 'asdigaoghrughguiehguigj'
-        }
-      ],
-      newJobopenings: [
-        {
-          id: 1,
-          name: 'new 채용공고 첫 번째',
-          context: 'dsgsdsjdgoihwghgerg'
-        },
-        {
-          id: 2,
-          name: 'second new jobopening',
-          context: 'asdigaoghrughguiehguigj'
-        }
-      ]
+      isLogin: false,
     }
   }
 }
