@@ -23,7 +23,6 @@ import java.util.Map;
 public class CategoryController {
     private final SidoService sidoService;
     private final GugunService gugunService;
-
     private final JobChildCategoryService jobChildCategoryService;
     private final JobParentCategoryService jobParentCategoryService;
 

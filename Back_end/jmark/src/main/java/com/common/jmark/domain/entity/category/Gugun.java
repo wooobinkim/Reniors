@@ -21,7 +21,7 @@ public class Gugun {
     private Long code;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sido_code")
+    @JoinColumn(name = "sido")
     private Sido sido;
 
     public static Gugun create(String name, Long code, Sido sido){
