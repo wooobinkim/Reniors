@@ -5,6 +5,9 @@ import com.common.jmark.domain.entity.user.User;
 import com.common.jmark.dto.user.UserCreateRequest;
 import com.common.jmark.dto.user.UserLoginRequest;
 import com.common.jmark.service.user.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,10 +21,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@Api(tags={"회원 API"})
 public class UserController {
 
     private final UserService userService;
 
+    @ApiOperation(value = "자체 서비스 로그인", notes = "아이디와 비밀번호를 서버에 넘겨주세요")
+    @ApiImplicitParam(name = "request", value = "자체 서비스 ID와 PASSWORD")
     @PostMapping("/login")
     public ResponseEntity<?> login(
             @Valid @RequestBody UserLoginRequest request
