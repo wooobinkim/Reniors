@@ -3,7 +3,7 @@
     <h1 class="home-header">comm on</h1>
     <HomeNotice />
     <HomeInfo />
-    <HomeJobopeningList type="recommend" :jobopenings="recommendJobopenings" />
+    <HomeJobopeningList type="추천 채용공고" :jobopenings="recommendJobopenings" />
   </div>
 </template>
 

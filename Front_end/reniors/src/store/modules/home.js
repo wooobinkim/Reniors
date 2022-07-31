@@ -41,6 +41,11 @@ export default {
         name: '세 번째 추천 채용공고!',
         context: '한화'
       },
+      {
+        id: 4,
+        name: '네 번째 추천 채용공고!',
+        context: '한화'
+      },
     ]
   },
   getters: {
