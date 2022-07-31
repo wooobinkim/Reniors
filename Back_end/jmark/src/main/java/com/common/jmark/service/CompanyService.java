@@ -1,6 +1,8 @@
 package com.common.jmark.service;
 
+import com.common.jmark.common.config.security.util.JwtUtil;
 import com.common.jmark.common.exception.NotFoundException;
+import com.common.jmark.common.exception.NotMatchException;
 import com.common.jmark.domain.entity.Company;
 import com.common.jmark.domain.entity.JobOpening;
 import com.common.jmark.domain.entity.category.Gugun;
@@ -10,6 +12,7 @@ import com.common.jmark.domain.repository.JobOpeningRepository;
 import com.common.jmark.domain.repository.category.GugunRepository;
 import com.common.jmark.domain.repository.category.JobChildCategoryRepository;
 import com.common.jmark.dto.CompanyDto;
+import com.common.jmark.dto.CompanyLoginRequest;
 import com.common.jmark.dto.JobOpeningDto;
 import com.common.jmark.dto.category.GugunResponse;
 import com.common.jmark.dto.category.JobChildCategoryResponse;
@@ -21,6 +24,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.common.jmark.common.exception.NotFoundException.USER_NOT_FOUND;
+import static com.common.jmark.common.exception.NotMatchException.PASSWORD_NOT_MATCH;
+
 @Service
 @RequiredArgsConstructor
 public class CompanyService {
@@ -29,6 +35,7 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
     private final GugunRepository gugunRepository;
     private final JobChildCategoryRepository jobChildCategoryRepository;
+    private final JwtUtil jwtUtil;
 
     //회사 회원가입
     @Transactional
@@ -38,6 +45,20 @@ public class CompanyService {
 
         CompanyDto companyDto1 = new CompanyDto(company);
         return companyDto1;
+    }
+
+    @Transactional
+    public String loginCompany(CompanyLoginRequest companyLoginRequest){
+        Optional<Company> optionalCompany = companyRepository.findByCompanyAppId(companyLoginRequest.getCompanyAppId());
+        if (!optionalCompany.isPresent()){
+            throw new NotFoundException(USER_NOT_FOUND);
+        }else {
+            if (optionalCompany.get().getCompanyAppPwd().equals(companyLoginRequest.getCompanyAppPwd())){
+                return jwtUtil.createToken(optionalCompany.get().getId());
+            }else {
+                throw new NotMatchException(PASSWORD_NOT_MATCH);
+            }
+        }
     }
 
     //회사 상세정보

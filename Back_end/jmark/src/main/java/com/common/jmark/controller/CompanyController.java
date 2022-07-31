@@ -1,10 +1,14 @@
 package com.common.jmark.controller;
 
+import com.common.jmark.common.config.security.filter.JwtAuthenticationFilter;
+import com.common.jmark.common.config.security.util.JwtUtil;
 import com.common.jmark.domain.entity.Company;
 import com.common.jmark.dto.CompanyDto;
+import com.common.jmark.dto.CompanyLoginRequest;
 import com.common.jmark.dto.JobOpeningDto;
 import com.common.jmark.service.CompanyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompanyController {
     private final CompanyService companyService;
+    private final JwtUtil jwtUtil;
 
     //회사 회원가입
     @PostMapping
@@ -27,9 +32,22 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.CREATED).body(Company);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> loginCompany(@RequestBody CompanyLoginRequest companyLoginRequest){
+        String accessToken = companyService.loginCompany(companyLoginRequest);
+        System.out.println("accessToken = " + accessToken);
+        return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.AUTHORIZATION,accessToken).build();
+    }
+
     //회사 상세정보
     @GetMapping()
-    public ResponseEntity<?> getCompany(){
+    public ResponseEntity<?> getCompany(@RequestHeader("Authorization")String token){
+        System.out.println("들어오긴함?");
+        System.out.println("token = " + token);
+        token = token.substring(7);
+        String subject = jwtUtil.getSubject(token);
+        System.out.println("subject = " + subject);
+
         CompanyDto Company = companyService.getCompany(1L);
 
         return ResponseEntity.status(HttpStatus.OK).body(Company);
