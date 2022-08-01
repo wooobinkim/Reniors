@@ -16,7 +16,7 @@ export default {
 
 <style>
 .footer {
-  position: sticky;
+  position: fixed;
   bottom: 0;
   border: 1px solid var(--color-black-4);
   background: var(--color-black-5);

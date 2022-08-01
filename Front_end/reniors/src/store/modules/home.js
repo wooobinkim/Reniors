@@ -1,6 +1,7 @@
 export default {
   namespaced: true,
   state: {
+    isLogin: false,
     hotJobopenings: [
       {
         id: 1,
@@ -49,12 +50,22 @@ export default {
     ]
   },
   getters: {
+    isLogin: state => state.isLogin,
     hotJobopenings: state => state.hotJobopenings,
     newJobopenings: state => state.newJobopenings,
     recommendJobopenings: state => state.recommendJobopenings,
   },
   mutations: {
+    IS_LOGIN: (state, value) => state.isLogin = value,
   },
   actions: {
+    login({ commit }) {
+      console.log('login')
+      commit('IS_LOGIN', true)
+    },
+    logout({ commit }) {
+      console.log('logout')
+      commit('IS_LOGIN', false)
+    }
   },
 }

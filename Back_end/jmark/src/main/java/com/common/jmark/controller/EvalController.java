@@ -3,6 +3,7 @@ package com.common.jmark.controller;
 import com.common.jmark.dto.EvalDto;
 import com.common.jmark.dto.EvalQuestionDto;
 import com.common.jmark.service.EvalService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/eval")
 @RequiredArgsConstructor
+@Api(tags={"평가 API"})
 public class EvalController {
 
     private final EvalService evalService;

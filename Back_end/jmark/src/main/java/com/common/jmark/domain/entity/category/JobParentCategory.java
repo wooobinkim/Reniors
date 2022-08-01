@@ -1,6 +1,6 @@
 package com.common.jmark.domain.entity.category;
 
-import com.common.exception.NotFoundException;
+import com.common.jmark.common.exception.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

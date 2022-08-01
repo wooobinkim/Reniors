@@ -3,6 +3,7 @@ package com.common.jmark.controller;
 import com.common.jmark.domain.entity.Company;
 import com.common.jmark.dto.CompanyDto;
 import com.common.jmark.service.CompanyService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import javax.persistence.Entity;
 @RestController
 @RequestMapping("/company")
 @RequiredArgsConstructor
+@Api(tags={"회사 API"})
 public class CompanyController {
     private final CompanyService companyService;
 

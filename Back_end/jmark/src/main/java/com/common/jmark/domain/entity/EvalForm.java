@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class Eval {
+public class EvalForm {
 
     @Id @GeneratedValue
     @Column(name = "Eval_id")
@@ -19,6 +19,5 @@ public class Eval {
     private String contents;
     private String score;
     private String memo;
-
 
 }
