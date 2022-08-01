@@ -27,7 +27,7 @@ public class CategoryController {
     private final JobParentCategoryService jobParentCategoryService;
 
     @PostMapping("/sido")
-    public ResponseEntity<Map<String, Long>> createSido(
+    public ResponseEntity<?> createSido(
             @Valid @RequestBody SidoCreateRequest request){
         Long sidoId = sidoService.create(request);
         Map<String, Long> response = new HashMap<>();
@@ -36,12 +36,12 @@ public class CategoryController {
     }
 
     @GetMapping("/sido")
-    public ResponseEntity<List<SidoResponse>> readSido(){
+    public ResponseEntity<?> readSido(){
         return ResponseEntity.ok(sidoService.getSidoList());
     }
 
     @PutMapping("/sido/{sidoId}")
-    public ResponseEntity<Map<String, Long>> updateSido(
+    public ResponseEntity<?> updateSido(
             @PathVariable Long sidoId,
             @Valid @RequestBody SidoUpdateRequest request){
         sidoService.update(sidoId, request);
@@ -49,14 +49,14 @@ public class CategoryController {
     }
 
     @DeleteMapping("/sido/{sidoId}")
-    public ResponseEntity<Map<String, Long>> deleteSido(
+    public ResponseEntity<?> deleteSido(
             @PathVariable Long sidoId){
         sidoService.delete(sidoId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/sido/{sidoId}/gugun")
-    public ResponseEntity<Map<String, Long>> createGugun(
+    public ResponseEntity<?> createGugun(
             @PathVariable Long sidoId,
             @Valid @RequestBody GugunCreateRequest request){
         Long gugunId = gugunService.create(sidoId, request);
@@ -66,13 +66,13 @@ public class CategoryController {
     }
 
     @GetMapping("/sido/{sidoId}/gugun")
-    public ResponseEntity<List<GugunResponse>> readGugun(
+    public ResponseEntity<?> readGugun(
             @PathVariable Long sidoId){
         return ResponseEntity.ok(gugunService.getGugunList(sidoId));
     }
 
     @PutMapping("/sido/{sidoId}/gugun/{gugunId}")
-    public ResponseEntity<Map<String, Long>> updateGugun(
+    public ResponseEntity<?> updateGugun(
             @PathVariable("sidoId") Long sidoId,
             @PathVariable("gugunId") Long gugunId,
             @Valid @RequestBody GugunUpdateRequest request){
@@ -81,14 +81,14 @@ public class CategoryController {
     }
 
     @DeleteMapping("/sido/{sidoId}/gugun/{gugunId}")
-    public ResponseEntity<Map<String, Long>> deleteGugun(
+    public ResponseEntity<?> deleteGugun(
             @PathVariable Long gugunId){
         gugunService.delete(gugunId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/parent")
-    public ResponseEntity<Map<String, Long>> createParent(
+    public ResponseEntity<?> createParent(
             @Valid @RequestBody JobParentCategoryCreateRequest request){
         Long parentId = jobParentCategoryService.create(request);
         Map<String, Long> response = new HashMap<>();
@@ -96,25 +96,25 @@ public class CategoryController {
         return ResponseEntity.ok(response);
     }
     @GetMapping("/parent")
-    public ResponseEntity<List<JobParentCategoryResponse>> readParent(){
+    public ResponseEntity<?> readParent(){
         return ResponseEntity.ok(jobParentCategoryService.getParentList());
     }
     @PutMapping("/parent/{parentId}")
-    public ResponseEntity<Map<String, Long>> updateParent(
+    public ResponseEntity<?> updateParent(
             @PathVariable Long parentId,
             @Valid @RequestBody JobParentCategoryUpdateRequest request){
         jobParentCategoryService.update(parentId, request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @DeleteMapping("/parent/{parentId}")
-    public ResponseEntity<Map<String, Long>> deleteParent(
+    public ResponseEntity<?> deleteParent(
             @PathVariable Long parentId){
         jobParentCategoryService.delete(parentId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/parent/{parentId}/child")
-    public ResponseEntity<Map<String, Long>> createChild(
+    public ResponseEntity<?> createChild(
             @PathVariable Long parentId,
             @Valid @RequestBody JobChildCategoryCreateRequest request){
         Long childId = jobChildCategoryService.create(parentId, request);
@@ -123,12 +123,12 @@ public class CategoryController {
         return ResponseEntity.ok(response);
     }
     @GetMapping("/parent/{parentId}/child")
-    public ResponseEntity<List<JobChildCategoryResponse>> readChild(
+    public ResponseEntity<?> readChild(
             @PathVariable Long parentId){
         return ResponseEntity.ok(jobChildCategoryService.getChildList(parentId));
     }
     @PutMapping("/parent/{parentId}/child/{childId}")
-    public ResponseEntity<Map<String, Long>> updateChild(
+    public ResponseEntity<?> updateChild(
             @PathVariable Long parentId,
             @PathVariable Long childId,
             @Valid @RequestBody JobChildCategoryUpdateRequest request){
@@ -136,7 +136,7 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @DeleteMapping("/parent/{parentId}/child/{childId}")
-    public ResponseEntity<Map<String, Long>> deleteChild(
+    public ResponseEntity<?> deleteChild(
             @PathVariable Long parentId,
             @PathVariable Long childId){
         jobChildCategoryService.delete(childId);
