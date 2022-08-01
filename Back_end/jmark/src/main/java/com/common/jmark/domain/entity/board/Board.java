@@ -31,22 +31,22 @@ public class Board extends BaseEntity{
     private int views;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Gugun> comments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_board")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_board")
-    private JobParentCategory parent;
+    @JoinColumn(name = "job_parent_category_id")
+    private JobParentCategory category;
 
-    public static Board create(String title, String contents, User user, JobParentCategory parent){
+    public static Board create(String title, String contents, User user, JobParentCategory category){
         Board board = new Board();
         board.title = title;
         board.contents = contents;
         board.user = user;
-        board.parent = parent;
+        board.category = category;
         return board;
     }
 

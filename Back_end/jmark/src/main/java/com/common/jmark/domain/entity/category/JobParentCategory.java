@@ -26,7 +26,7 @@ public class JobParentCategory {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobChildCategory> childs = new ArrayList<>();
 
-    @OneToMany(mappedBy = "parent_board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Board> boards = new ArrayList<>();
 
 

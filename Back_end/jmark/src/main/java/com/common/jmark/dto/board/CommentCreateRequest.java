@@ -5,14 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardUpdateRequest {
-    @NotBlank
-    String title;
+public class CommentCreateRequest {
 
     @NotBlank
-    String contents;
+    private String contents;
+
+    @NotNull
+    private Long userId;
 }

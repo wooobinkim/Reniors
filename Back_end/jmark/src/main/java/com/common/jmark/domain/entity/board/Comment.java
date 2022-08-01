@@ -22,14 +22,14 @@ public class Comment extends BaseEntity{
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board")
+    @JoinColumn(name = "board_id")
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_commnet")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public static Comment create(String title, String contents, Board board, User user){
+    public static Comment create(String contents, Board board, User user){
         Comment comment = new Comment();
         comment.contents = contents;
         comment.board = board;

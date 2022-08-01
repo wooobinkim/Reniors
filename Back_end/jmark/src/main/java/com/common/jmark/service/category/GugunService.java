@@ -57,7 +57,7 @@ public class GugunService{
     }
 
     @Transactional
-    public List<GugunResponse> read(Long sidoId) {
+    public List<GugunResponse> getGugunList(Long sidoId) {
         Sido sido = sidoRepository.findById(sidoId)
                 .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
         List<GugunResponse> guguns = gugunRepository.findBySido(sido).stream()

@@ -47,7 +47,7 @@ public class JobParentCategoryService {
         jobParentCategoryRepository.delete(jpc);
     }
 
-    public List<JobParentCategoryResponse> read() {
+    public List<JobParentCategoryResponse> getParentList() {
         List<JobParentCategoryResponse> parents = jobParentCategoryRepository.findAll().stream()
                 .map(JobParentCategoryResponse::response)
                 .collect(Collectors.toList());

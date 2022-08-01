@@ -37,7 +37,7 @@ public class CategoryController {
 
     @GetMapping("/sido")
     public ResponseEntity<List<SidoResponse>> readSido(){
-        return ResponseEntity.ok(sidoService.read());
+        return ResponseEntity.ok(sidoService.getSidoList());
     }
 
     @PutMapping("/sido/{sidoId}")
@@ -68,7 +68,7 @@ public class CategoryController {
     @GetMapping("/sido/{sidoId}/gugun")
     public ResponseEntity<List<GugunResponse>> readGugun(
             @PathVariable Long sidoId){
-        return ResponseEntity.ok(gugunService.read(sidoId));
+        return ResponseEntity.ok(gugunService.getGugunList(sidoId));
     }
 
     @PutMapping("/sido/{sidoId}/gugun/{gugunId}")
@@ -97,7 +97,7 @@ public class CategoryController {
     }
     @GetMapping("/parent")
     public ResponseEntity<List<JobParentCategoryResponse>> readParent(){
-        return ResponseEntity.ok(jobParentCategoryService.read());
+        return ResponseEntity.ok(jobParentCategoryService.getParentList());
     }
     @PutMapping("/parent/{parentId}")
     public ResponseEntity<Map<String, Long>> updateParent(
@@ -125,7 +125,7 @@ public class CategoryController {
     @GetMapping("/parent/{parentId}/child")
     public ResponseEntity<List<JobChildCategoryResponse>> readChild(
             @PathVariable Long parentId){
-        return ResponseEntity.ok(jobChildCategoryService.read(parentId));
+        return ResponseEntity.ok(jobChildCategoryService.getChildList(parentId));
     }
     @PutMapping("/parent/{parentId}/child/{childId}")
     public ResponseEntity<Map<String, Long>> updateChild(

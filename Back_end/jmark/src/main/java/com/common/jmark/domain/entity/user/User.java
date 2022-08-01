@@ -4,6 +4,7 @@ import com.common.jmark.domain.entity.Type.Gender;
 import com.common.jmark.domain.entity.Type.IsOpen;
 import com.common.jmark.domain.entity.Type.Role;
 import com.common.jmark.domain.entity.board.Board;
+import com.common.jmark.domain.entity.board.Comment;
 import com.common.jmark.domain.entity.category.Gugun;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -61,11 +62,11 @@ public class User {
 
     private String portfolioPath;
 
-    @OneToMany(mappedBy = "user_board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Board> boards = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user_comment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Board> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
     public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, int workingDay, long minSalary, String portfolioName, String portfolioPath) {
         User user = new User();

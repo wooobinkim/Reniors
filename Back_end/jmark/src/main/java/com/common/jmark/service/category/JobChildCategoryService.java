@@ -55,7 +55,7 @@ public class JobChildCategoryService{
     }
 
     @Transactional
-    public List<JobChildCategoryResponse> read(Long jpcId) {
+    public List<JobChildCategoryResponse> getChildList(Long jpcId) {
         JobParentCategory jpc = jobParentCategoryRepository.findById(jpcId)
                 .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
         List<JobChildCategoryResponse> childs = jobChildCategoryRepository.findByParent(jpc).stream()

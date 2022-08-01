@@ -9,10 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardUpdateRequest {
+public class CommentUpdateRequest {
     @NotBlank
-    String title;
-
-    @NotBlank
-    String contents;
+    private String contents;
 }

@@ -54,7 +54,7 @@ public class SidoService{
 
 
     @Transactional
-    public List<SidoResponse> read() {
+    public List<SidoResponse> getSidoList() {
         List<SidoResponse> sidos = sidoRepository.findAll().stream()
                 .map(SidoResponse::response)
                 .collect(Collectors.toList());
