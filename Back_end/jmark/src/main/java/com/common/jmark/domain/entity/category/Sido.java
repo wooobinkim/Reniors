@@ -1,6 +1,6 @@
 package com.common.jmark.domain.entity.category;
 
-import com.common.exception.NotFoundException;
+import com.common.jmark.common.exception.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class Sido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sido_id")
-    private long id;
+    private Long id;
 
     private String name;
 
@@ -27,19 +27,19 @@ public class Sido {
     @OneToMany(mappedBy = "sido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Gugun> guguns = new ArrayList<>();
 
-    public static Sido create(String name, long code){
+    public static Sido create(String name, Long code){
         Sido sido = new Sido();
         sido.name = name;
         sido.code = code;
         return sido;
     }
 
-    public void update(String name, long code){
+    public void update(String name, Long code){
         this.name = name;
         this.code = code;
     }
 
-    public void addGugun(String gugunName, long gugunCode){
+    public void addGugun(String gugunName, Long gugunCode){
         Gugun gugun = Gugun.create(gugunName, gugunCode, this);
         guguns.add(gugun);
     }

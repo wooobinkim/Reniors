@@ -29,10 +29,10 @@ public class JobOpeningController {
     //채용공고 조회(조건포함)
     @GetMapping
     public ResponseEntity<?> getJobOpeningList(@RequestBody JobOpeningSearchDto jobOpeningSearchDto, Pageable pageable){
-        Page<JobOpeningDto> jobOpeningList = jobOpeningService.getJobOpeningList(jobOpeningSearchDto, pageable);
+        Page<JobOpeningDto> JobOpeningList = jobOpeningService.getJobOpeningList(jobOpeningSearchDto, pageable);
 //        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(x->new JobOpeningDto(x)).collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(jobOpeningList);
+        return ResponseEntity.status(HttpStatus.OK).body(JobOpeningList);
     }
 
 
@@ -43,55 +43,11 @@ public class JobOpeningController {
         토큰에서 회사 or 유저 정보추출
          */
 
-        JobOpeningDto jobOpening = jobOpeningService.getJobOpening(jobOpeningId);
+        JobOpeningDto JobOpening = jobOpeningService.getJobOpening(jobOpeningId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(jobOpening);
+        return ResponseEntity.status(HttpStatus.OK).body(JobOpening);
+
     }
 
-    //회사별 채용공고 조회
-    @GetMapping("/{companyId}")
-    public ResponseEntity<?> getCompanyJobOpening(@PathVariable("companyId") Long companyId){
-        List<JobOpeningDto> companyJobOpening = jobOpeningService.getCompanyJobOpening(companyId);
-
-        return ResponseEntity.status(HttpStatus.OK).body(companyJobOpening);
-    }
-
-    //채용공고 등록
-    @PostMapping
-    public ResponseEntity<?> postJobOpening(@RequestBody JobOpeningDto jobOpeningDto){
-        /*
-        토큰에서 회사정보추출
-         */
-
-        JobOpening jobOpening = jobOpeningService.postJobOpening(1L,jobOpeningDto);
-        JobOpeningDto postJobOpening = new JobOpeningDto(jobOpening);
-
-        return ResponseEntity.status(HttpStatus.OK).body(postJobOpening);
-    }
-
-    //채용공고 수정
-    @PutMapping("/{jobOpeningId}")
-    public ResponseEntity<?> updateJobOpening(@PathVariable("jobOpeningId") Long jobOpeningId, @RequestBody JobOpeningDto jobOpeningDto){
-        /*
-        토큰에서 회사정보추출
-         */
-
-        JobOpening jobOpening = jobOpeningService.updateJobOpening(jobOpeningId, jobOpeningDto);
-        JobOpeningDto updateJobOpening= new JobOpeningDto(jobOpening);
-
-        return ResponseEntity.status(HttpStatus.OK).body(updateJobOpening);
-    }
-
-    //채용공고 삭제
-    @DeleteMapping("/{jobOpeningId}")
-    public ResponseEntity<?> deleteJobOpening(@PathVariable("jobOpeningId") Long jobOpeningId){
-        /*
-        토큰에서 회사정보추출
-         */
-
-        jobOpeningService.deleteJobOpening(jobOpeningId);
-
-        return ResponseEntity.status(HttpStatus.OK).body(null);
-    }
 
 }

@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
+import java.util.Optional;
+
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 //    List<JobOpeningDto> findByCompanyId(Long companyId);
+    Optional<Company> findByCompanyAppId (String companyAppId);
 }

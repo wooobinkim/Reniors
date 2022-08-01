@@ -5,15 +5,19 @@ import com.common.jmark.domain.entity.Enum.TypeEmployment;
 import com.common.jmark.dto.CompanyDto;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.springframework.security.core.CredentialsContainer;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Company {
+public class Company{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "company_id")
@@ -52,6 +56,9 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<JobOpening> jobOpenings = new ArrayList<>();
 
+    @OneToMany(mappedBy = "company")
+    private List<Eval> evals = new ArrayList<>();
+
     @Builder
     public Company(CompanyDto companyDto) {
         this.name = companyDto.getName();
@@ -69,6 +76,8 @@ public class Company {
 
     public void update(CompanyDto companyDto){
         this.name = companyDto.getName();
+        this.companyAppId = companyDto.getCompanyAppId();
+        this.companyAppPwd = companyDto.getCompanyAppPwd();
         this.establishedAt = companyDto.getEstablishedAt();
         this.companyUrl = companyDto.getCompanyUrl();
         this.address = companyDto.getAddress();
@@ -78,4 +87,6 @@ public class Company {
         this.companyPhone = companyDto.getCompanyPhone();
         this.typeCompany = companyDto.getTypeCompany();
     }
+
+
 }

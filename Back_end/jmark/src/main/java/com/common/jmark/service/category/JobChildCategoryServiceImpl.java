@@ -1,7 +1,7 @@
 package com.common.jmark.service.category;
 
-import com.common.exception.DuplicateException;
-import com.common.exception.NotFoundException;
+import com.common.jmark.common.exception.DuplicateException;
+import com.common.jmark.common.exception.NotFoundException;
 import com.common.jmark.domain.entity.category.JobChildCategory;
 import com.common.jmark.domain.entity.category.JobParentCategory;
 import com.common.jmark.domain.repository.category.JobChildCategoryRepository;
@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.common.jmark.common.exception.NotFoundException.CATEGORY_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -28,7 +30,7 @@ public class JobChildCategoryServiceImpl implements JobChildCategoryService{
     @Transactional
     public Long create(Long jpcId, JobChildCategoryCreateRequest request) {
         JobParentCategory jpc = jobParentCategoryRepository.findById(jpcId)
-                .orElseThrow(()->new NotFoundException("Not Found Parent"));
+                .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
         if(jobChildCategoryRepository.findByName(request.getName()).isPresent()){
             throw new DuplicateException(String.format("%s는 이미 존재하는 카테고리입니다.",request.getName()));
         }
@@ -40,7 +42,7 @@ public class JobChildCategoryServiceImpl implements JobChildCategoryService{
     @Transactional
     public void update(Long jccId, JobChildCategoryUpdateRequest request) {
         JobChildCategory jcc = jobChildCategoryRepository.findById(jccId)
-                .orElseThrow(()->new NotFoundException("Not Found Child"));
+                .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
         if(jobChildCategoryRepository.findByName(request.getName()).isPresent()){
             throw new DuplicateException(String.format("%s는 이미 존재하는 카테고리입니다.", request.getName()));
         }
@@ -51,7 +53,7 @@ public class JobChildCategoryServiceImpl implements JobChildCategoryService{
     @Transactional
     public void delete(Long jccId) {
         JobChildCategory jcc = jobChildCategoryRepository.findById(jccId)
-                .orElseThrow(()-> new NotFoundException("Not Found Child"));
+                .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
         jobChildCategoryRepository.delete(jcc);
     }
 
@@ -59,7 +61,7 @@ public class JobChildCategoryServiceImpl implements JobChildCategoryService{
     @Transactional
     public List<JobChildCategoryResponse> read(Long jpcId) {
         JobParentCategory jpc = jobParentCategoryRepository.findById(jpcId)
-                .orElseThrow(()->new NotFoundException("Not Found Parent"));
+                .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
         List<JobChildCategoryResponse> childs = jobChildCategoryRepository.findByParent(jpc).stream()
                 .map(JobChildCategoryResponse::response)
                 .collect(Collectors.toList());
