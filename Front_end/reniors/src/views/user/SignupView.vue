@@ -1,36 +1,62 @@
 <template>
-  <div>
-    <h1>회원가입</h1>
-    <form @submit.prevent="signup(credentials)" class="signupform">
-      <div v-show="page===1">
-        <h2>step1</h2>
-        <b-form-input class="mb-2" v-model="credentials.user_id" type="text" placeholder="사용하실 이메일을 입력해주세요." required></b-form-input>
-        <b-form-input class="mb-2" v-model="credentials.password1" type="password" placeholder="비밀번호를 입력해주세요." required></b-form-input>
-        <b-form-input class="mb-2" v-model="credentials.password2" type="password" placeholder="비밀번호를 한번 더 입력해주세요." required></b-form-input>
+  <div class="container">
+    <header>
+      <div>
+        <img style="width: 40%; margin: 10px" alt="logo" src="@/assets/logo.png">
       </div>
+    </header> 
 
-      <div v-show="page===2">
-        <h2>step2</h2>
-        <b-form-input class="mb-2" v-model="credentials.name" type="text" placeholder="이름을 입력해주세요." required></b-form-input>
-        <b-form-input class="mb-2" v-model="credentials.phone" type="text" placeholder="예시)01012345678" required></b-form-input>
-        <b-form-input class="mb-2" v-model="credentials.address" type="text" placeholder="주소를 입력해주세요" required></b-form-input>
-      </div>
+    <div>
+      <br>
+      <form @submit.prevent="signup(credentials)" class="signupform">
+        <div v-show="page===1">
+          <p style="font-size: 14px">간단한 회원가입을 진행하려고 해요.</p>
+          <p>먼저, 로그인 시 사용하실 <span>이메일</span>과 <span>비밀번호</span>를 입력해주세요!</p>
+          <br>
+          <p class="forminfo">이메일</p>
+          <b-form-input class="mb-3" v-model="credentials.user_id" type="text" placeholder="사용하실 이메일을 입력해주세요." ></b-form-input>
+          <p class="forminfo">비밀번호</p>
+          <b-form-input class="mb-3" v-model="credentials.password1" type="password" placeholder="비밀번호를 입력해주세요." ></b-form-input>
+          <p class="forminfo">비밀번호 확인</p>
+          <b-form-input class="mb-3" v-model="credentials.password2" type="password" placeholder="비밀번호를 한번 더 입력해주세요." ></b-form-input>
+        </div>
 
-      <div v-show="page===3">
-        <h2>step3</h2>
-        <b-form-select class="mb-2" v-model="credentials.lastEdu" :options="lastEdu" required></b-form-select>
-        <b-form-input class="mb-2" v-model="credentials.birth" type="date" placeholder="생년-월-일" required></b-form-input>
-        <b-form-select class="mb-2" v-model="credentials.gender" :options="gender" required></b-form-select>
-      </div>
+        <div v-show="page===2">
+          <p>회원님의 <span>이름</span>과 <span>전화번호</span>, <span>주소</span>를 알려주실 수 있나요?</p>
+          <br>
+          <p class="forminfo">이름</p>
+          <b-form-input class="mb-3" v-model="credentials.name" type="text" placeholder="이름을 입력해주세요." ></b-form-input>
+          <p class="forminfo">휴대전화</p>
+          <b-form-input class="mb-3" v-model="credentials.phone" type="text" placeholder="예시)01012345678" ></b-form-input>
+          <p class="forminfo">주소</p>
+          <b-form-input class="mb-3" v-model="credentials.address" type="text" placeholder="주소를 입력해주세요" ></b-form-input>
+        </div>
 
-      
-      <footer>
-        <button type="button" v-show="page === 1"><router-link :to="{ name: 'Login' }">이전</router-link></button>
-        <button type="button" v-show="page !== 1" @click="decreasePage">이전</button>
-        <button type="button" v-show="page !== 3" @click="increasePage">다음</button>
-        <button v-show="page === 3">완료</button>
-      </footer>
-    </form>
+        <div v-show="page===3">
+          <p style="font-size: 14px">마지막 단계입니다!</p>
+          <p><span>최종학력</span>, <span>생년월일</span>, 성별을 입력해주세요!</p>
+          <br>
+          <p class="forminfo">최종학력</p>
+          <b-form-select class="mb-3" v-model="credentials.lastEdu" :options="lastEdu" ></b-form-select>
+          <p class="forminfo">생년월일</p>
+          <b-form-input class="mb-3" v-model="credentials.birth" type="date" placeholder="생년-월-일" ></b-form-input>
+          <p class="forminfo">성별</p>
+          <b-form-select class="mb-3" v-model="credentials.gender" :options="gender" ></b-form-select>
+        </div>
+
+        
+        <footer style="width: 312px;">
+          <button style="background-color: #FFC0A3;" type="button" v-show="page === 1"><router-link style="text-decoration:none; color: white;" :to="{ name: 'Login' }">이전</router-link></button>
+          <button type="button" v-show="page !== 1" @click="decreasePage">이전</button>
+          <button type="button" v-show="page !== 3" @click="increasePage">다음</button>
+          <button v-show="page === 3">완료!</button>
+        </footer>
+      </form>
+
+
+
+    </div>
+
   </div>
 </template>
 <script>
@@ -84,6 +110,33 @@ export default {
 </script>
 
 <style scoped>
+
+  header{
+    height: 120px;
+    border-style: none  none solid none;
+    border-width: 0.5px;
+    border-color: #EAEAEA;
+  }
+
+  span{
+    color: var(--color-green-1);
+    font-size: 17px;
+  }
+  
+  p{
+    color: #0F0F0F;
+    font-weight: 800;
+    font-size: 16px;
+    text-align:left;
+  }
+
+  .forminfo {
+    color: #8A8A8A;
+    font-weight: 400;
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+
   .signupform {
     display: flex;
     flex-direction: column;
@@ -92,11 +145,26 @@ export default {
     /* min-height: 100vh; */
   }
 
+  footer > button {    
+    background-color: var(--color-red-2);
+    width: 45%;
+    height: 80%;
+    /* height: 40px; */
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
+    cursor: pointer;
+  }
+
   footer {
-    background-color: blue;
     width: 100%;
     height: 50px;
     bottom: 0px;
     position: absolute;
+    display: flex;
+    justify-content: space-between;
   }
 </style>
