@@ -1,10 +1,11 @@
 <template>
   <div>
     <h1 class="home-header">comm on</h1>
-    <HomeNotice />
+    <button @click="login">login</button>
+    <HomeNotice :login="false"/>
     <HomeInfo />
-    <HomeJobopeningList type="hot" :jobopenings="hotJobopenings" />
-    <HomeJobopeningList type="new" :jobopenings="newJobopenings" />
+    <HomeJobopeningList type="핫한 채용공고 🔥" :jobopenings="hotJobopenings" />
+    <HomeJobopeningList type="신규 채용공고" :jobopenings="newJobopenings" />
   </div>
 </template>
 
@@ -26,8 +27,10 @@ export default {
     const hotJobopenings = computed(() => store.state.home.hotJobopenings)
     const newJobopenings = computed(() => store.state.home.newJobopenings)
 
+    const login = () => store.dispatch('home/login')
+
     return {
-      hotJobopenings, newJobopenings,
+      hotJobopenings, newJobopenings, login
     }
   },
 }
