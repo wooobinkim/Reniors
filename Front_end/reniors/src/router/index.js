@@ -1,7 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/home/HomeView.vue'
+import board from './board.js'
 
-const routes = [
+const routes = [{
+
+  routes: [
+    ...board,
+  ]},
   {
     path: '/',
     name: 'home',
