@@ -13,4 +13,5 @@ import java.util.List;
 
 public interface JobOpeningRepository extends JpaRepository<JobOpening, Long>{
 //        Page<JobOpening> pageJobOpeningList(JobOpeningSearchDto jobOpeningSearchDto, Pageable pageable);
+            List<JobOpening> findByCompanyId(Long companyId);
 }

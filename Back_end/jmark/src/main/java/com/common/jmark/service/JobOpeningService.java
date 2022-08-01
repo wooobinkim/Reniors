@@ -41,6 +41,7 @@ public class JobOpeningService {
     @PersistenceContext
     EntityManager em;
 
+    //채용공고 조회(조건검색, 페이징)
     @Transactional
     public Page<JobOpeningDto> getJobOpeningList(@RequestBody JobOpeningSearchDto jobOpeningSearchDto, Pageable pageable){
         //조건검색을 위한 쿼리DSL 실행
@@ -106,6 +107,34 @@ public class JobOpeningService {
 
             return jobOpeningDto;
         }else {
+            return null;
+        }
+    }
+
+    //특정 회사의 채용공고 조회
+    @Transactional
+    public List<JobOpeningDto> getCompanyJobOpening(Long companyId){
+        List<JobOpening> jobOpeningList = jobOpeningRepository.findByCompanyId(companyId);
+
+        if (jobOpeningList.size() != 0) {
+            List<JobOpeningDto> jobOpeningDtoList = new ArrayList<>();
+
+            for (JobOpening jobOpening : jobOpeningList) {
+                //연결된 엔티티 매핑
+                GugunResponse gugunResponse = GugunResponse.response(jobOpening.getGugun());
+                JobChildCategoryResponse jobChildCategoryResponse = JobChildCategoryResponse.response(jobOpening.getJobChildCategory());
+                CompanyDto companyDto = new CompanyDto(jobOpening.getCompany());
+
+                //리턴할 Dto 세팅
+                JobOpeningDto jobOpeningDto = new JobOpeningDto(jobOpening);
+                jobOpeningDto.setLinkEntity(companyDto, gugunResponse, jobChildCategoryResponse);
+
+                jobOpeningDtoList.add(jobOpeningDto);
+            }
+
+            return jobOpeningDtoList;
+
+        }else{
             return null;
         }
     }

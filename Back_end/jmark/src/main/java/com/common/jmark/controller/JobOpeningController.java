@@ -48,6 +48,14 @@ public class JobOpeningController {
         return ResponseEntity.status(HttpStatus.OK).body(jobOpening);
     }
 
+    //회사별 채용공고 조회
+    @GetMapping("/{companyId}")
+    public ResponseEntity<?> getCompanyJobOpening(@PathVariable("companyId") Long companyId){
+        List<JobOpeningDto> companyJobOpening = jobOpeningService.getCompanyJobOpening(companyId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(companyJobOpening);
+    }
+
     //채용공고 등록
     @PostMapping
     public ResponseEntity<?> postJobOpening(@RequestBody JobOpeningDto jobOpeningDto){

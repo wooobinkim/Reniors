@@ -11,14 +11,15 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class Eval {
+public class EvalForm {
 
     @Id @GeneratedValue
-    @Column(name = "Eval_id")
+    @Column(name = "eval_form_id")
     private Long Id;
     private String contents;
-    private String score;
-    private String memo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    Company company;
 
 }

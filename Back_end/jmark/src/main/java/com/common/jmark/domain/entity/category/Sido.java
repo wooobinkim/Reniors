@@ -22,7 +22,7 @@ public class Sido {
 
     private String name;
 
-    private long code;
+    private Long code;
 
     @OneToMany(mappedBy = "sido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Gugun> guguns = new ArrayList<>();

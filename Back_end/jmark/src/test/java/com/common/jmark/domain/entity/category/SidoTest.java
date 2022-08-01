@@ -1,11 +1,16 @@
 package com.common.jmark.domain.entity.category;
 
+import com.common.jmark.domain.repository.category.SidoRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SidoTest {
+
+    @Autowired
+    SidoRepository sidoRepository;
     @Test
     @DisplayName("create sido")
     void create(){
@@ -13,6 +18,7 @@ public class SidoTest {
         Long code = 111111L;
 
         Sido sido = Sido.create(name, code);
+        sidoRepository.save(sido);
 
         assertThat(sido.getName()).isEqualTo(name);
         assertThat(sido.getCode()).isEqualTo(code);
