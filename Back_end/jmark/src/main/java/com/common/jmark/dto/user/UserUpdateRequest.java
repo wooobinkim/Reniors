@@ -1,5 +1,6 @@
 package com.common.jmark.dto.user;
 
+import com.common.jmark.domain.entity.Enum.LastEdu;
 import com.common.jmark.domain.entity.Type.Gender;
 import com.common.jmark.domain.entity.Type.IsOpen;
 import lombok.AllArgsConstructor;
@@ -48,6 +49,9 @@ public class UserUpdateRequest {
     private IsOpen isOpen;
 
     private int workingDay;
+
+    @Enumerated(EnumType.STRING)
+    private LastEdu lastEdu;
 
     private long minSalary;
 

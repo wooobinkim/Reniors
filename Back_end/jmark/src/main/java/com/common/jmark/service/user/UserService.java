@@ -63,6 +63,7 @@ public class UserService {
                     request.getAddress(),
                     request.getIsOpen(),
                     request.getWorkingDay(),
+                    request.getLastEdu(),
                     request.getMinSalary(),
                     request.getPortfolioName(),
                     request.getPortfolioPath()
