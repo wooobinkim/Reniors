@@ -22,7 +22,7 @@ import java.util.Map;
 public class RecommendConditionController {
     private final RecommendConditionService recommendConditionService;
 
-    @ApiOperation(value = "추천 조건 생성", notes = "직무 소분류 ID, 구군 ID, 희망 근무 일수, 의망 최소 연봉을 서버에 넘겨주세요")
+    @ApiOperation(value = "추천 조건 생성", notes = "직무 소분류 ID, 구군 ID, 희망 근무 일수, 희망 최소 연봉을 서버에 넘겨주세요")
     @ApiImplicitParam(name = "request", value = "")
     @PostMapping("/{userId}/condition")
     public ResponseEntity<?> create (
