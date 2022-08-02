@@ -24,6 +24,7 @@ public class JobParentCategoryService {
 
     private final JobParentCategoryRepository jobParentCategoryRepository;
 
+    @Transactional
     public Long create(JobParentCategoryCreateRequest request) {
         if(jobParentCategoryRepository.findByName(request.getName()).isPresent()){
             throw new DuplicateException(String.format("%s는 이미 존재하는 카테고리입니다.",request.getName()));
@@ -32,6 +33,7 @@ public class JobParentCategoryService {
         return jobParentCategoryRepository.save(jpc).getId();
     }
 
+    @Transactional
     public void update(Long jpcId, JobParentCategoryUpdateRequest request) {
         JobParentCategory jpc = jobParentCategoryRepository.findById(jpcId)
                 .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
@@ -41,12 +43,14 @@ public class JobParentCategoryService {
         jpc.update(request.getName());
     }
 
+    @Transactional
     public void delete(Long jpcId) {
         JobParentCategory jpc = jobParentCategoryRepository.findById(jpcId)
                 .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
         jobParentCategoryRepository.delete(jpc);
     }
 
+    @Transactional
     public List<JobParentCategoryResponse> getParentList() {
         List<JobParentCategoryResponse> parents = jobParentCategoryRepository.findAll().stream()
                 .map(JobParentCategoryResponse::response)

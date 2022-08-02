@@ -41,12 +41,14 @@ public class GugunService{
 
     @Transactional
     public void update(Long gugunId, GugunUpdateRequest request) {
+        Sido sido = sidoRepository.findById(request.getSidoId())
+                .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
         Gugun gugun = gugunRepository.findById(gugunId)
                 .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
         if(gugunRepository.findByName(request.getName()).isPresent()){
             throw new DuplicateException(String.format("%s는 이미 존재하는 카테고리 입니다.", request.getName()));
         }
-        gugun.update(request.getName(), request.getCode(), request.getSido());
+        gugun.update(request.getName(), request.getCode(), sido);
     }
 
     @Transactional

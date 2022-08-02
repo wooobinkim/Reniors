@@ -14,6 +14,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentResponse {
+
+    @NotBlank
+    Long commnetId;
+
     @NotBlank
     String contents;
 
@@ -23,6 +27,6 @@ public class CommentResponse {
     @NotNull LocalDateTime updatedAt;
 
     public static CommentResponse response(Comment comment){
-        return new CommentResponse(comment.getContents(), comment.getUser().getName(), comment.getUpdatedAt());
+        return new CommentResponse(comment.getId(), comment.getContents(), comment.getUser().getName(), comment.getUpdatedAt());
     }
 }

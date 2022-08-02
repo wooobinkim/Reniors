@@ -53,7 +53,7 @@ public class CommentService {
     @Transactional
     public List<CommentResponse> getCommentList(Long boardId) {
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
+                .orElseThrow(()->new NotFoundException(BOARD_NOT_FOUND));
         List<CommentResponse> comments = commentRepository.findByBoard(board).stream()
                 .map(CommentResponse::response)
                 .collect(Collectors.toList());
