@@ -1,13 +1,17 @@
 <template>
   <div class="container">
-    <router-view style="width: 360px;"/>
+    <router-view style="width: 360px;" />
+    <FooterComponent />
   </div>
 </template>
 
 <script>
+import FooterComponent from './components/FooterComponent.vue'
+
 export default {
   name: "App",
   components: {
+    FooterComponent,
   }
 }
 </script>

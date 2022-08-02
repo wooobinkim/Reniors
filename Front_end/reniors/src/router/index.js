@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+
 import LoginView from '../views/user/LoginView.vue'
 import SignupView from '../views/user/SignupView.vue'
 import SignupCompleteView from '../views/user/SignupCompleteView.vue'
@@ -7,6 +7,7 @@ import FindPasswordView from '../views/user/FindPasswordView.vue'
 import FindUsernameView from '../views/user/FindUsernameView.vue'
 import MypageView from '../views/user/MypageView.vue'
 import ResumeEditView from '../views/user/ResumeEditView.vue'
+import HomeView from '../views/home/HomeView.vue'
 
 const routes = [
   {
