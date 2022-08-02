@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -26,6 +27,21 @@ public class CategoryController {
     private final GugunService gugunService;
     private final JobChildCategoryService jobChildCategoryService;
     private final JobParentCategoryService jobParentCategoryService;
+
+
+    @PostMapping("/admin/sido")
+    @ApiIgnore
+    public void createSidoList(
+            @RequestBody List<SidoCreateRequest> requestList){
+        sidoService.createList(requestList);
+    }
+
+    @PostMapping("/admin/gugun")
+    @ApiIgnore
+    public void createGugunList(
+            @RequestBody List<GugunCreateRequest> requestList){
+        gugunService.createList(requestList);
+    }
 
     @PostMapping("/sido")
     @ApiOperation(value = "시/도 생성", notes = "[ROLE_ADMIN]시/도를 생성한다.")
@@ -66,6 +82,7 @@ public class CategoryController {
             @PathVariable Long sidoId,
             @Valid @RequestBody GugunCreateRequest request){
         Long gugunId = gugunService.create(sidoId, request);
+        gugunService.create(sidoId, request);
         Map<String, Long> response = new HashMap<>();
         response.put("gugunId", gugunId);
         return ResponseEntity.ok(response);

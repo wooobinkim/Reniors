@@ -9,11 +9,13 @@ import com.common.jmark.domain.repository.category.SidoRepository;
 import com.common.jmark.dto.category.GugunCreateRequest;
 import com.common.jmark.dto.category.GugunResponse;
 import com.common.jmark.dto.category.GugunUpdateRequest;
+import com.common.jmark.dto.category.SidoCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 import static com.common.jmark.common.exception.NotFoundException.CATEGORY_NOT_FOUND;
@@ -26,10 +28,19 @@ public class GugunService{
     private final SidoRepository sidoRepository;
     private final GugunRepository gugunRepository;
 
+
+    @Transactional
+    public void createList(List<GugunCreateRequest> requestList){
+        requestList.forEach(request -> {
+            Sido sido = sidoRepository.findByCode(Long.parseLong(request.getCode().toString().substring(0,2)+"00000000"))
+                    .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
+            Gugun gugun = Gugun.create(request.getName(), request.getCode(), sido);
+            gugunRepository.save(gugun);
+        });
+    }
     @Transactional
     public Long create(Long sidoId, GugunCreateRequest request) {
-
-        Sido sido = sidoRepository.findById(sidoId)
+        Sido sido = sidoRepository.findByCode(Long.parseLong(request.getCode().toString().substring(0,2)+"00000000"))
                 .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
 
         if(gugunRepository.findByName(request.getName()).isPresent()){
@@ -41,7 +52,7 @@ public class GugunService{
 
     @Transactional
     public void update(Long gugunId, GugunUpdateRequest request) {
-        Sido sido = sidoRepository.findById(request.getSidoId())
+        Sido sido = sidoRepository.findByCode(request.getSidoCode())
                 .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
         Gugun gugun = gugunRepository.findById(gugunId)
                 .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
