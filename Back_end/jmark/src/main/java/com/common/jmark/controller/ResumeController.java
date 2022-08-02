@@ -4,7 +4,6 @@ import com.common.jmark.dto.resume.*;
 import com.common.jmark.service.resume.AwardService;
 import com.common.jmark.service.resume.CareerDetailService;
 import com.common.jmark.service.resume.LicenseService;
-import com.common.jmark.service.user.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;

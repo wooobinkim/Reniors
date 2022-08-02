@@ -4,6 +4,7 @@ import com.common.jmark.domain.entity.Enum.LastEdu;
 import com.common.jmark.domain.entity.Type.Gender;
 import com.common.jmark.domain.entity.Type.IsOpen;
 import com.common.jmark.domain.entity.Type.Role;
+import com.common.jmark.domain.entity.recommend.RecommendCondition;
 import com.common.jmark.domain.entity.resume.Award;
 import com.common.jmark.domain.entity.resume.CareerDetail;
 import com.common.jmark.domain.entity.resume.License;
@@ -55,12 +56,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private IsOpen isOpen;
 
-    private int workingDay;
-
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
-
-    private long minSalary;
 
     private String portfolioName;
 
@@ -78,7 +75,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<License> licenses = new ArrayList<>();
 
-    public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, int workingDay, LastEdu lastEdu, long minSalary, String portfolioName, String portfolioPath) {
+    // 회원 추천 조건 연관관계
+    @OneToOne(mappedBy = "user")
+    private RecommendCondition recommendCondition;
+
+   public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
         User user = new User();
         user.userAppId = userAppId;
         user.userAppPwd = userAppPwd;
@@ -93,15 +94,13 @@ public class User {
         user.profileImgPath = profileImgPath;
         user.address = address;
         user.isOpen = isOpen;
-        user.workingDay = workingDay;
         user.lastEdu = lastEdu;
-        user.minSalary = minSalary;
         user.portfolioName = portfolioName;
         user.portfolioPath = portfolioPath;
         return user;
     }
 
-    public void update(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, int workingDay, LastEdu lastEdu, long minSalary, String portfolioName, String portfolioPath) {
+    public void update(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
         this.userAppId = userAppId;
         this.userAppPwd = userAppPwd;
         this.kakaoId = kakaoId;
@@ -114,9 +113,7 @@ public class User {
         this.profileImgPath = profileImgPath;
         this.address = address;
         this.isOpen = isOpen;
-        this.workingDay = workingDay;
         this.lastEdu = lastEdu;
-        this.minSalary = minSalary;
         this.portfolioName = portfolioName;
         this.portfolioPath = portfolioPath;
     }

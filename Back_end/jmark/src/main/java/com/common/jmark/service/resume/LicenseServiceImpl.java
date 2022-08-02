@@ -2,7 +2,6 @@ package com.common.jmark.service.resume;
 
 import com.common.jmark.common.exception.DuplicateException;
 import com.common.jmark.common.exception.NotFoundException;
-import com.common.jmark.domain.entity.resume.Award;
 import com.common.jmark.domain.entity.resume.License;
 import com.common.jmark.domain.entity.user.User;
 import com.common.jmark.domain.repository.resume.LicenseRepository;
@@ -25,18 +24,14 @@ import static com.common.jmark.common.exception.NotFoundException.USER_NOT_FOUND
 @Transactional(readOnly = true)
 public class LicenseServiceImpl implements LicenseService {
     private final UserRepository userRepository;
-
     private final LicenseRepository licenseRepository;
 
     @Override
     @Transactional
-    // 같은 이름의 자격증은 없다는 가정 하에 중복을 허용하지 않음 -> 37~39, 49~51 line 수정 필요
+    // 같은 이름의 자격증이지만 등급이 다를 수 있으므로 중복 허용
     public Long create(Long userId, LicenseCreateRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
-//        if (!licenseRepository.findById(userId).get().getName().equals(request.getName())) {
-//            throw new DuplicateException(String.format("%s는 이미 등록된 자격증입니다.", request.getName()));
-//        }
         License license = License.create(request.getName(), request.getPassedAt(), request.getGrade(), user);
         return licenseRepository.save(license).getId();
     }
@@ -46,9 +41,6 @@ public class LicenseServiceImpl implements LicenseService {
     public void update(Long licenseId, LicenseUpdateRequest request) {
         License license = licenseRepository.findById(licenseId)
                 .orElseThrow(()->new NotFoundException(LICENSE_NOT_FOUND));
-//        if (licenseRepository.findById(licenseId).get().getName().equals(request.getName())) {
-//            throw new DuplicateException(String.format("%s는 이미 등록된 자격증입니다.", request.getName()));
-//        }
         license.update(request.getName(), request.getPassedAt(), request.getGrade());
     }
 

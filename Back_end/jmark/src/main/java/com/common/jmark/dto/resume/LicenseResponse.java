@@ -2,6 +2,7 @@ package com.common.jmark.dto.resume;
 
 import com.common.jmark.domain.entity.resume.License;
 import com.common.jmark.domain.entity.user.User;
+import com.common.jmark.dto.user.UserResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,9 +21,13 @@ public class LicenseResponse {
 
     private String grade;
 
-    private User user;
+    private UserResponse userResponse;
 
     public static LicenseResponse response(License license) {
-        return new LicenseResponse(license.getId(), license.getName(), license.getPassedAt(), license.getGrade(), license.getUser());
+        return new LicenseResponse(license.getId(),
+                license.getName(),
+                license.getPassedAt(),
+                license.getGrade(),
+                UserResponse.response(license.getUser()));
     }
 }

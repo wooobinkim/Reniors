@@ -2,6 +2,7 @@ package com.common.jmark.dto.resume;
 
 import com.common.jmark.domain.entity.resume.CareerDetail;
 import com.common.jmark.domain.entity.user.User;
+import com.common.jmark.dto.user.UserResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,9 +23,14 @@ public class CareerDetailResponse {
 
     private String jobContents;
 
-    private User user;
+    private UserResponse userResponse;
 
     public static CareerDetailResponse response(CareerDetail careerDetail) {
-        return new CareerDetailResponse(careerDetail.getId(), careerDetail.getCompanyName(), careerDetail.getStartedAt(), careerDetail.getFinishedAt(), careerDetail.getJobContents(), careerDetail.getUser());
+        return new CareerDetailResponse(careerDetail.getId(),
+                careerDetail.getCompanyName(),
+                careerDetail.getStartedAt(),
+                careerDetail.getFinishedAt(),
+                careerDetail.getJobContents(),
+                UserResponse.response(careerDetail.getUser()));
     }
 }

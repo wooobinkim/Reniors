@@ -21,7 +21,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-@Api(tags={"회원 API"})
+@Api(tags = {"회원 API"})
 public class UserController {
 
     private final UserService userService;
@@ -29,30 +29,36 @@ public class UserController {
     @ApiOperation(value = "자체 서비스 로그인", notes = "아이디와 비밀번호를 서버에 넘겨주세요")
     @ApiImplicitParam(name = "request", value = "자체 서비스 ID와 PASSWORD")
     @PostMapping("/login")
-    public ResponseEntity<?> login(
+    public ResponseEntity<?> loginUser (
             @Valid @RequestBody UserLoginRequest request
-            ){
-        String accessToken = userService.login(request);
+    ) {
+        String accessToken = userService.loginUser(request);
         return ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .build();
     }
 
     @PostMapping("/regist")
-    public  ResponseEntity<?> regist(
+    public ResponseEntity<?> registUser (
             @Valid @RequestBody UserCreateRequest request
-    ){
-        Long userId = userService.create(request);
+    ) {
+        Long userId = userService.createUser(request);
         Map<String, Long> response = new HashMap<>();
         response.put("userId", userId);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping()
-    public ResponseEntity<?> getUserInfo(
+    public ResponseEntity<?> readUser (
             @LoginUser User user
-    ){
-        return ResponseEntity.ok(userService.getUserInfo(user));
+    ) {
+        return ResponseEntity.ok(userService.readUser(user));
     }
 
+    @DeleteMapping()
+    public ResponseEntity<Map<String, Long>> deleteUser(
+
+    ) {
+        return null;
+    }
 }

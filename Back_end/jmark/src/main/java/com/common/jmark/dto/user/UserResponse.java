@@ -34,17 +34,13 @@ public class UserResponse {
 
     private IsOpen isOpen;
 
-    private int workingDay;
-
     private LastEdu lastEdu;
-
-    private long minSalary;
 
     private String portfolioName;
 
     private String portfolioPath;
 
     public static UserResponse response(User user){
-        return new UserResponse(user.getId(), user.getName(),user.getBirth(), user.getGender(),user.getPhone(), user.getTotalCareer(), user.getProfileImgName(), user.getProfileImgPath(), user.getAddress(), user.getIsOpen(), user.getWorkingDay(), user.getLastEdu(), user.getMinSalary(), user.getPortfolioName(),user.getPortfolioPath());
+        return new UserResponse(user.getId(), user.getName(),user.getBirth(), user.getGender(),user.getPhone(), user.getTotalCareer(), user.getProfileImgName(), user.getProfileImgPath(), user.getAddress(), user.getIsOpen(), user.getLastEdu(), user.getPortfolioName(),user.getPortfolioPath());
     }
 }

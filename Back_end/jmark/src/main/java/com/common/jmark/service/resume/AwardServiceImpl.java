@@ -23,7 +23,6 @@ import static com.common.jmark.common.exception.NotFoundException.USER_NOT_FOUND
 @Transactional(readOnly = true)
 public class AwardServiceImpl implements AwardService {
     private final UserRepository userRepository;
-
     private final AwardRepository awardRepository;
 
     @Override

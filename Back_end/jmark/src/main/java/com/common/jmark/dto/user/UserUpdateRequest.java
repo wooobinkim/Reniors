@@ -48,12 +48,8 @@ public class UserUpdateRequest {
     @Enumerated(EnumType.STRING)
     private IsOpen isOpen;
 
-    private int workingDay;
-
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
-
-    private long minSalary;
 
     private String portfolioName;
 

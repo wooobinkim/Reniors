@@ -8,7 +8,7 @@ import com.common.jmark.dto.category.GugunUpdateRequest;
 import java.util.List;
 
 public interface GugunService {
-    Long create(Long sidoId, GugunCreateRequest reqeust);
+    Long create(Long sidoId, GugunCreateRequest request);
 
     void update(Long gugunId, GugunUpdateRequest request);
 

@@ -15,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.common.jmark.common.exception.NotFoundException.*;
+import static com.common.jmark.common.exception.NotFoundException.CAREER_DETAIL_NOT_FOUND;
+import static com.common.jmark.common.exception.NotFoundException.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class CareerDetailServiceImpl implements CareerDetailService {
     private final UserRepository userRepository;
-
     private final CareerDetailRepository careerDetailRepository;
 
     @Override

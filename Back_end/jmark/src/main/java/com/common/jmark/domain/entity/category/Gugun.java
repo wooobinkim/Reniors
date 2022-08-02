@@ -1,11 +1,14 @@
 package com.common.jmark.domain.entity.category;
 
+import com.common.jmark.domain.entity.recommend.RecommendCondition;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,6 +26,9 @@ public class Gugun {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sido_code")
     private Sido sido;
+
+    @OneToMany(mappedBy = "gugun")
+    private List<RecommendCondition> recommendConditions = new ArrayList<>();
 
     public static Gugun create(String name, Long code, Sido sido){
         Gugun gugun = new Gugun();
