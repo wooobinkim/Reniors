@@ -14,7 +14,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -64,6 +66,9 @@ public class JobOpening{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gugun_id")
     private Gugun gugun;
+
+    @OneToMany(mappedBy = "jobOpening")
+    List<Apply> applies = new ArrayList<>();
 
     //공고 - 고용형태 연관관계
 //    @ManyToOne(fetch = FetchType.LAZY)

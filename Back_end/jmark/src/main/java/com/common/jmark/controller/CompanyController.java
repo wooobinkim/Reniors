@@ -3,10 +3,13 @@ package com.common.jmark.controller;
 import com.common.jmark.common.config.security.filter.JwtAuthenticationFilter;
 import com.common.jmark.common.config.security.util.JwtUtil;
 import com.common.jmark.common.config.web.LoginCompany;
+import com.common.jmark.domain.entity.Apply;
 import com.common.jmark.domain.entity.Company;
+import com.common.jmark.dto.ApplyDto;
 import com.common.jmark.dto.CompanyDto;
 import com.common.jmark.dto.CompanyLoginRequest;
 import com.common.jmark.dto.JobOpeningDto;
+import com.common.jmark.dto.user.UserResponse;
 import com.common.jmark.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -43,9 +46,6 @@ public class CompanyController {
     //회사 상세정보
     @GetMapping()
     public ResponseEntity<?> getCompany(@LoginCompany Company company){
-//        token = token.substring(7);
-//        String subject = jwtUtil.getSubject(token);
-//
         CompanyDto Company = companyService.getCompany(company);
 
         return ResponseEntity.status(HttpStatus.OK).body(Company);
@@ -54,8 +54,8 @@ public class CompanyController {
 
     //회사정보 수정
     @PutMapping()
-    public ResponseEntity<?> updateCompany(@RequestBody CompanyDto companyDto){
-        CompanyDto Company = companyService.updateCompany(5L, companyDto);
+    public ResponseEntity<?> updateCompany(@LoginCompany Company company, @RequestBody CompanyDto companyDto){
+        CompanyDto Company = companyService.updateCompany(company, companyDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(Company);
     }
@@ -63,53 +63,44 @@ public class CompanyController {
 
     //회사 탈퇴
     @DeleteMapping()
-    public ResponseEntity<?> deleteCompany(){
-        companyService.deleteCompany(1L);
+    public ResponseEntity<?> deleteCompany(@LoginCompany Company company){
+        companyService.deleteCompany(company);
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     //회사 공고 등록
     @PostMapping("/jobopening")
-    public ResponseEntity<?> postJobOpening(@RequestBody JobOpeningDto jobOpeningDto){
-        /*
-        토큰에서 회사정보추출
-         */
+    public ResponseEntity<?> postJobOpening(@LoginCompany Company company, @RequestBody JobOpeningDto jobOpeningDto){
 
-        JobOpeningDto JobOpening = companyService.postJobOpening(1L, jobOpeningDto);
-//        JobOpeningDto JobOpening = new JobOpeningDto(jobOpening);
+        JobOpeningDto JobOpening = companyService.postJobOpening(company, jobOpeningDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(JobOpening);
     }
 
     //회사 공고 목록
     @GetMapping("/jobopening")
-    public ResponseEntity<?> getJobOpeningList(){
-        List<JobOpeningDto> JobOpeningList = companyService.getJobOpeningList(1L);
+    public ResponseEntity<?> getJobOpeningList(@LoginCompany Company company){
+        List<JobOpeningDto> JobOpeningList = companyService.getJobOpeningList(company);
 
         return ResponseEntity.status(HttpStatus.OK).body(JobOpeningList);
     }
 
     //회사 공고 상세조회
     @GetMapping("/jobopening/{jobOpeningId}")
-    public ResponseEntity<?> getJobOpening(@PathVariable("jobOpeningId") Long jobOpeningId){
-        /*
-        토큰에서 회사 or 유저 정보추출
-         */
-
-        JobOpeningDto JobOpening = companyService.getJobOpening(jobOpeningId);
+    public ResponseEntity<?> getJobOpening(@LoginCompany Company company, @PathVariable("jobOpeningId") Long jobOpeningId){
+        JobOpeningDto JobOpening = companyService.getJobOpening(company,jobOpeningId);
 
         return ResponseEntity.status(HttpStatus.OK).body(JobOpening);
     }
 
     //회사 공고 수정
     @PutMapping("/jobopening/{jobOpeningId}")
-    public ResponseEntity<?> updateJobOpening(@PathVariable("jobOpeningId") Long jobOpeningId, @RequestBody JobOpeningDto jobOpeningDto){
-        /*
-        토큰에서 회사정보추출
-         */
+    public ResponseEntity<?> updateJobOpening(@LoginCompany Company company,
+                                              @PathVariable("jobOpeningId") Long jobOpeningId,
+                                              @RequestBody JobOpeningDto jobOpeningDto){
 
-        JobOpeningDto JobOpening = companyService.updateJobOpening(jobOpeningId, jobOpeningDto);
+        JobOpeningDto JobOpening = companyService.updateJobOpening(company, jobOpeningId, jobOpeningDto);
 //        JobOpeningDto JobOpening= new JobOpeningDto(jobOpening);
 
         return ResponseEntity.status(HttpStatus.OK).body(JobOpening);
@@ -117,17 +108,37 @@ public class CompanyController {
 
     //회사 공고 삭제
     @DeleteMapping("/jobopening/{jobOpeningId}")
-    public ResponseEntity<?> deleteJobOpening(@PathVariable("jobOpeningId") Long jobOpeningId){
-        /*
-        토큰에서 회사정보추출
-         */
-
-        companyService.deleteJobOpening(jobOpeningId);
+    public ResponseEntity<?> deleteJobOpening(@LoginCompany Company company, @PathVariable("jobOpeningId") Long jobOpeningId){
+        companyService.deleteJobOpening(company,jobOpeningId);
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     //회사 공고 지원자 목록
+    @GetMapping("/jobopening/{jobOpeningId}/apply")
+    public ResponseEntity<?> getApplyList(@LoginCompany Company company, @PathVariable("jobOpeningId") Long jobOpeningId){
+        List<ApplyDto> ApplyList = companyService.getappliyList(company, jobOpeningId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(ApplyList);
+    }
+
     //회사 공고 지원자 상세목록
+    @GetMapping("/jobopening/{jobOpeningId}/apply/{applyId}")
+    public ResponseEntity<?> getApplicant(@LoginCompany Company company, @PathVariable("applyId") Long applyId){
+        UserResponse User = companyService.getapplicant(company, applyId);
+        return ResponseEntity.status(HttpStatus.OK).body(User);
+    }
+
     //회사 공고 지원자 상태수정
+    @PutMapping("/jobopening/{jobOpeningId}/apply/{applyId}")
+    public ResponseEntity<?> updateApply(@LoginCompany Company company,
+                                         @PathVariable("applyId") Long applyId,
+                                         @RequestBody ApplyDto applyDto){
+        System.out.println("company = " + company);
+        System.out.println("applyId = " + applyId);
+        System.out.println("applyDto = " + applyDto);
+        Apply apply = companyService.updateapply(company, applyId, applyDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
 }

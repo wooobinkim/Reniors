@@ -1,5 +1,6 @@
 package com.common.jmark.service;
 
+import com.common.jmark.common.exception.NotAuthException;
 import com.common.jmark.common.exception.NotFoundException;
 import com.common.jmark.domain.entity.Company;
 import com.common.jmark.domain.entity.Eval;
@@ -22,6 +23,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.common.jmark.common.exception.NotAuthException.COMPANY_NOT_MATCH;
+
 @Service
 @RequiredArgsConstructor
 public class EvalService {
@@ -32,32 +35,32 @@ public class EvalService {
 
     //평가 폼 등록
     @Transactional
-    public EvalDto postEval(EvalDto evalDto){
+    public EvalDto postEval(Company company, EvalDto evalDto){
 
-        Optional<Company> optionalCompany = companyRepository.findById(1L);
+//        Optional<Company> optionalCompany = companyRepository.findById(companyId);
 
-        if (optionalCompany.isPresent()){
-            Eval eval = new Eval(evalDto, optionalCompany.get());
+//        if (optionalCompany.isPresent()){
+            Eval eval = new Eval(evalDto, company);
             evalRepository.save(eval);
-            CompanyDto companyDto = new CompanyDto(optionalCompany.get());
+            CompanyDto companyDto = new CompanyDto(company);
             EvalDto evalDto1 = new EvalDto(eval,companyDto);
 //            evalFormDto1.setLinkEntity(companyDto);
             return evalDto1;
-        }else{
-            return null;
-        }
+//        }else{
+//            return null;
+//        }
     }
 
     @Transactional
     //평가 폼 전체조회
-    public Page<EvalDto> getEvalList(Long companyId, Pageable pageable){
+    public Page<EvalDto> getEvalList(Company company, Pageable pageable){
         //토큰쓰기
-        Optional<Company> optionalCompany = companyRepository.findById(companyId);
-        if (optionalCompany.isPresent()){
-            List<Eval> evalPage = evalRepository.findByCompany(optionalCompany.get());
+//        Optional<Company> optionalCompany = companyRepository.findById(companyId);
+//        if (optionalCompany.isPresent()){
+            List<Eval> evalPage = evalRepository.findByCompany(company);
             List<EvalDto> evalDtoList = new ArrayList<>();
 
-            CompanyDto companyDto = new CompanyDto(optionalCompany.get());
+            CompanyDto companyDto = new CompanyDto(company);
             for (Eval eval : evalPage) {
                 EvalDto evalDto = new EvalDto(eval, companyDto);
                 evalDtoList.add(evalDto);
@@ -67,21 +70,25 @@ public class EvalService {
 
             return evalDtoPage;
 
-        }else{
-            return null;
-        }
+//        }else{
+//            return null;
+//        }
 
     }
 
     //평가 폼 상세조회
     @Transactional
-    public EvalDto getEval(Long evalId){
+    public EvalDto getEval(Company company, Long evalId){
+        if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
+            throw new NotAuthException(COMPANY_NOT_MATCH);
+
+
         Optional<Eval> optionalEval = evalRepository.findById(evalId);
 
         optionalEval.orElseThrow(()->new NotFoundException("not found eval"));
 
         if (optionalEval.isPresent()){
-            Optional<Company> optionalCompany = companyRepository.findById(optionalEval.get().getCompany().getId());
+            Optional<Company> optionalCompany = companyRepository.findById(company.getId());
             CompanyDto companyDto = new CompanyDto(optionalCompany.get());
             EvalDto evalDto = new EvalDto(optionalEval.get(), companyDto);
 
@@ -93,16 +100,19 @@ public class EvalService {
 
     //평가 폼 수정
     @Transactional
-    public EvalDto updateEval(Long evalId, EvalDto evalDto){
+    public EvalDto updateEval(Company company, Long evalId, EvalDto evalDto){
+        if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
+            throw new NotAuthException(COMPANY_NOT_MATCH);
+
         Optional<Eval> optionalEval = evalRepository.findById(evalId);
 
         optionalEval.orElseThrow(()->new NotFoundException("not found eval"));
 
         if (optionalEval.isPresent()){
-            Optional<Company> optionalCompany = companyRepository.findById(optionalEval.get().getCompany().getId());
-            CompanyDto companyDto = new CompanyDto(optionalCompany.get());
+//            Optional<Company> optionalCompany = companyRepository.findById(company.getId());
+            CompanyDto companyDto = new CompanyDto(company);
 
-            optionalEval.get().update(evalDto,optionalCompany.get());
+            optionalEval.get().update(evalDto,company);
             EvalDto evalDto1 = new EvalDto(optionalEval.get(), companyDto);
 
             return evalDto1;
@@ -113,7 +123,10 @@ public class EvalService {
 
     //평가 폼 삭제
     @Transactional
-    public void deleteEval(Long evalId){
+    public void deleteEval(Company company, Long evalId){
+        if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
+            throw new NotAuthException(COMPANY_NOT_MATCH);
+
         Optional<Eval> optionalEval = evalRepository.findById(evalId);
 
         optionalEval.orElseThrow(()->new NotFoundException("not found eval"));
@@ -123,7 +136,10 @@ public class EvalService {
 
     //평가 질문 등록
     @Transactional
-    public EvalQuestionDto postEvalQuestion(Long evalId, EvalQuestionDto evalQuestionDto){
+    public EvalQuestionDto postEvalQuestion(Company company, Long evalId, EvalQuestionDto evalQuestionDto){
+        if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
+            throw new NotAuthException(COMPANY_NOT_MATCH);
+
         Optional<Eval> optionalEval = evalRepository.findById(evalId);
 
         if (optionalEval.isPresent()){
@@ -131,8 +147,8 @@ public class EvalService {
 
             evalQuestionRepository.save(evalQuestion);
 
-            Optional<Company> optionalCompany = companyRepository.findById(optionalEval.get().getCompany().getId());
-            CompanyDto companyDto = new CompanyDto(optionalCompany.get());
+//            Optional<Company> optionalCompany = companyRepository.findById(optionalEval.get().getCompany().getId());
+            CompanyDto companyDto = new CompanyDto(company);
             EvalDto evalDto = new EvalDto(optionalEval.get(), companyDto);
 
             EvalQuestionDto evalQuestionDto1 = new EvalQuestionDto(evalQuestion, evalDto);
@@ -145,15 +161,18 @@ public class EvalService {
 
     //평가 질문 조회
     @Transactional
-    public List<EvalQuestionDto> getEvalQuestionList(Long evalId){
+    public List<EvalQuestionDto> getEvalQuestionList(Company company, Long evalId){
+        if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
+            throw new NotAuthException(COMPANY_NOT_MATCH);
+
         Optional<Eval> optionalEval = evalRepository.findById(evalId);
         optionalEval.orElseThrow(()->new NotFoundException("not found eval"));
 
         if (optionalEval.isPresent()){
             List<EvalQuestion> evalQuestionList = evalQuestionRepository.findByEval(optionalEval.get());
 
-            Optional<Company> optionalCompany = companyRepository.findById(optionalEval.get().getCompany().getId());
-            CompanyDto companyDto = new CompanyDto(optionalCompany.get());
+//            Optional<Company> optionalCompany = companyRepository.findById(optionalEval.get().getCompany().getId());
+            CompanyDto companyDto = new CompanyDto(company);
             EvalDto evalDto = new EvalDto(optionalEval.get(),companyDto);
 
             List<EvalQuestionDto> evalQuestionDtos = evalQuestionList.stream().map(e->new EvalQuestionDto(e,evalDto)).collect(Collectors.toList());
@@ -166,7 +185,10 @@ public class EvalService {
 
     //평가 질문 상세조회
     @Transactional
-    public EvalQuestionDto getEvalQuestion(Long evalId, Long evalQuestionId){
+    public EvalQuestionDto getEvalQuestion(Company company, Long evalId, Long evalQuestionId){
+        if (company.getId() != evalQuestionRepository.findById(evalQuestionId).get().getEval().getCompany().getId())
+            throw new NotAuthException(COMPANY_NOT_MATCH);
+
         Optional<EvalQuestion> optionalEvalQuestion = evalQuestionRepository.findById(evalQuestionId);
         optionalEvalQuestion.orElseThrow(()->new NotFoundException("not found evalQuestion"));
 
@@ -174,9 +196,9 @@ public class EvalService {
             Optional<Eval> optionalEval = evalRepository.findById(evalId);
             optionalEval.orElseThrow(() -> new NotFoundException("not found eval"));
 
-            Optional<Company> optionalCompany = companyRepository.findById(1L);
-            optionalCompany.orElseThrow(() -> new NotFoundException("not found eval"));
-            CompanyDto companyDto = new CompanyDto(optionalCompany.get());
+//            Optional<Company> optionalCompany = companyRepository.findById(1L);
+//            optionalCompany.orElseThrow(() -> new NotFoundException("not found eval"));
+            CompanyDto companyDto = new CompanyDto(company);
 
             EvalDto evalDto = new EvalDto(optionalEval.get(), companyDto);
             EvalQuestionDto evalQuestionDto = new EvalQuestionDto(optionalEvalQuestion.get(), evalDto);
@@ -190,7 +212,10 @@ public class EvalService {
 
     //평가 질문 수정
     @Transactional
-    public EvalQuestionDto updateEvalQuestion(Long evalId, Long evalQuestionId, EvalQuestionDto evalQuestionDto){
+    public EvalQuestionDto updateEvalQuestion(Company company, Long evalId, Long evalQuestionId, EvalQuestionDto evalQuestionDto){
+        if (company.getId() != evalQuestionRepository.findById(evalQuestionId).get().getEval().getCompany().getId())
+            throw new NotAuthException(COMPANY_NOT_MATCH);
+
         Optional<EvalQuestion> optionalEvalQuestion = evalQuestionRepository.findById(evalQuestionId);
         optionalEvalQuestion.orElseThrow(()->new NotFoundException("not found evalQuestion"));
 
@@ -198,9 +223,9 @@ public class EvalService {
             Optional<Eval> optionalEval = evalRepository.findById(evalId);
             optionalEval.orElseThrow(() -> new NotFoundException("not found eval"));
 
-            Optional<Company> optionalCompany = companyRepository.findById(1L);
-            optionalCompany.orElseThrow(() -> new NotFoundException("not found company"));
-            CompanyDto companyDto = new CompanyDto(optionalCompany.get());
+//            Optional<Company> optionalCompany = companyRepository.findById(1L);
+//            optionalCompany.orElseThrow(() -> new NotFoundException("not found company"));
+            CompanyDto companyDto = new CompanyDto(company);
 
             optionalEvalQuestion.get().update(evalQuestionDto, optionalEval.get());
 
@@ -216,7 +241,10 @@ public class EvalService {
 
     //평가 질문 삭제
     @Transactional
-    public void deleteEvalQuestion(Long evalQuestionId){
+    public void deleteEvalQuestion(Company company, Long evalQuestionId){
+        if (company.getId() != evalQuestionRepository.findById(evalQuestionId).get().getEval().getCompany().getId())
+            throw new NotAuthException(COMPANY_NOT_MATCH);
+
         evalQuestionRepository.deleteById(evalQuestionId);
     }
 

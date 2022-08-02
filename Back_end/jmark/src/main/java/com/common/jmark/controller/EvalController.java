@@ -1,5 +1,7 @@
 package com.common.jmark.controller;
 
+import com.common.jmark.common.config.web.LoginCompany;
+import com.common.jmark.domain.entity.Company;
 import com.common.jmark.dto.EvalDto;
 import com.common.jmark.dto.EvalQuestionDto;
 import com.common.jmark.service.EvalService;
@@ -22,49 +24,51 @@ public class EvalController {
 
     //평가 폼 등록
     @PostMapping
-    public ResponseEntity<?> postEval(@RequestBody EvalDto evalDto){
-        EvalDto Eval = evalService.postEval(evalDto);
+    public ResponseEntity<?> postEval(@LoginCompany Company company, @RequestBody EvalDto evalDto){
+        EvalDto Eval = evalService.postEval(company,evalDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(Eval);
     }
 
     //평가 폼 전체조회
     @GetMapping
-    public ResponseEntity<?> getEvalList(Pageable pageable){
-        Page<EvalDto> EvalList = evalService.getEvalList(1L, pageable);
+    public ResponseEntity<?> getEvalList(@LoginCompany Company company,Pageable pageable){
+        Page<EvalDto> EvalList = evalService.getEvalList(company, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(EvalList);
     }
 
     //평가 폼 상세조회
     @GetMapping("/{evalId}")
-    public ResponseEntity<?> getEval(@PathVariable("evalId")Long evalId){
-        EvalDto Eval = evalService.getEval(evalId);
+    public ResponseEntity<?> getEval(@LoginCompany Company company,@PathVariable("evalId")Long evalId){
+        EvalDto Eval = evalService.getEval(company, evalId);
 
         return ResponseEntity.status(HttpStatus.OK).body(Eval);
     }
 
     //평가 폼 수정
     @PutMapping("/{evalId}")
-    public ResponseEntity<?> updateEval(@PathVariable("evalId")Long evalId, @RequestBody EvalDto evalDto){
-        EvalDto Eval = evalService.updateEval(evalId, evalDto);
+    public ResponseEntity<?> updateEval(@LoginCompany Company company,
+                                        @PathVariable("evalId")Long evalId,
+                                        @RequestBody EvalDto evalDto){
+        EvalDto Eval = evalService.updateEval(company, evalId, evalDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(Eval);
     }
 
     //평가 폼 삭제
     @DeleteMapping("/{evalId}")
-    public ResponseEntity<?> deleteEval(@PathVariable("evalId")Long evalId){
-        System.out.println("evalId = " + evalId);
-        evalService.deleteEval(evalId);
+    public ResponseEntity<?> deleteEval(@LoginCompany Company company,
+                                        @PathVariable("evalId")Long evalId){
+        evalService.deleteEval(company, evalId);
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     //평가 질문 등록
     @PostMapping("/{evalId}/question")
-    public ResponseEntity<?> postEvalQuestion(@PathVariable("evalId") Long evalId, @RequestBody EvalQuestionDto evalQuestionDto){
-        EvalQuestionDto EvalQuestion = evalService.postEvalQuestion(evalId, evalQuestionDto);
+    public ResponseEntity<?> postEvalQuestion(@LoginCompany Company company, @PathVariable("evalId") Long evalId, @RequestBody EvalQuestionDto evalQuestionDto){
+        EvalQuestionDto EvalQuestion = evalService.postEvalQuestion(company, evalId, evalQuestionDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(EvalQuestion);
     }
@@ -72,34 +76,37 @@ public class EvalController {
     //평가 질문 조회
 
     @GetMapping("/{evalId}/question")
-    public ResponseEntity<?> getEvalQuestionList(@PathVariable("evalId")Long evalId){
-        List<EvalQuestionDto> EvalQuestionList = evalService.getEvalQuestionList(evalId);
+    public ResponseEntity<?> getEvalQuestionList(@LoginCompany Company company,@PathVariable("evalId")Long evalId){
+        List<EvalQuestionDto> EvalQuestionList = evalService.getEvalQuestionList(company,evalId);
 
         return ResponseEntity.status(HttpStatus.OK).body(EvalQuestionList);
     }
 
     //평가 질문 상세조회
     @GetMapping("/{evalId}/question/{evalQuestionId}")
-    public ResponseEntity<?> getEvalQuestion(@PathVariable("evalId")Long evalId, @PathVariable("evalQuestionId")Long evalQuestionId){
-        EvalQuestionDto EvalQuestion = evalService.getEvalQuestion(evalId, evalQuestionId);
+    public ResponseEntity<?> getEvalQuestion(@LoginCompany Company company,
+                                             @PathVariable("evalId")Long evalId,
+                                             @PathVariable("evalQuestionId")Long evalQuestionId){
+        EvalQuestionDto EvalQuestion = evalService.getEvalQuestion(company,evalId, evalQuestionId);
 
         return ResponseEntity.status(HttpStatus.OK).body(EvalQuestion);
     }
 
     //평가 질문 수정
     @PutMapping("/{evalId}/question/{evalQuestionId}")
-    public ResponseEntity<?> updateEvalQuestion(@PathVariable("evalId")Long evalId,
+    public ResponseEntity<?> updateEvalQuestion(@LoginCompany Company company,
+                                                @PathVariable("evalId")Long evalId,
                                                 @PathVariable("evalQuestionId")Long evalQuestionId,
                                                 @RequestBody EvalQuestionDto evalQuestionDto){
-        EvalQuestionDto EvalQuestion = evalService.updateEvalQuestion(evalId, evalQuestionId, evalQuestionDto);
+        EvalQuestionDto EvalQuestion = evalService.updateEvalQuestion(company,evalId, evalQuestionId, evalQuestionDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(EvalQuestion);
     }
 
     //평가 질문 삭제
     @DeleteMapping("/{evalId}/question/{evalQuestionId}")
-    public ResponseEntity<?> deleteEvalQuestion(@PathVariable("evalQuestionId")Long evalQuestionId){
-        evalService.deleteEvalQuestion(evalQuestionId);
+    public ResponseEntity<?> deleteEvalQuestion(@LoginCompany Company company,@PathVariable("evalQuestionId")Long evalQuestionId){
+        evalService.deleteEvalQuestion(company,evalQuestionId);
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
