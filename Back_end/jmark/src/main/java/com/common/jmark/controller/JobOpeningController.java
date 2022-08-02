@@ -30,8 +30,8 @@ public class JobOpeningController {
 
     //채용공고 조회(조건포함)
     @GetMapping("/conditionlist")
-    public ResponseEntity<?> getJobOpeningList(@RequestBody JobOpeningSearchDto jobOpeningSearchDto, Pageable pageable){
-        Page<JobOpeningDto> JobOpeningList = jobOpeningService.getJobOpeningConditionList(jobOpeningSearchDto, pageable);
+    public ResponseEntity<?> getJobOpeningList(@RequestBody SearchConditionDto searchConditionDto, Pageable pageable){
+        Page<JobOpeningDto> JobOpeningList = jobOpeningService.getJobOpeningConditionList(searchConditionDto, pageable);
 //        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(x->new JobOpeningDto(x)).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(JobOpeningList);

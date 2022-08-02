@@ -1,5 +1,6 @@
 package com.common.jmark.dto;
 
+import com.common.jmark.domain.entity.Enum.LastEdu;
 import com.common.jmark.domain.entity.Enum.TypeEmployment;
 import com.common.jmark.domain.entity.JobOpening;
 import com.common.jmark.domain.entity.category.Gugun;
@@ -31,6 +32,7 @@ public class JobOpeningDto {
     private String jobPosition;
     private int workingDay;
     private TypeEmployment typeEmployment;
+    private LastEdu lastEdu;
 
     private long gugunId;
     private long jobChildCategoryId;
@@ -53,6 +55,7 @@ public class JobOpeningDto {
         this.jobPosition = jobOpening.getJobPosition();
         this.workingDay = jobOpening.getWorkingDay();
         this.typeEmployment = jobOpening.getTypeEmployment();
+        this.lastEdu = jobOpening.getLastEdu();
         this.companyDto = companyDto;
         this.gugunResponse = gugunResponse;
         this.jobChildCategoryResponse = jobChildCategoryResponse;

@@ -1,5 +1,6 @@
 package com.common.jmark.domain.entity;
 
+import com.common.jmark.domain.entity.Enum.LastEdu;
 import com.common.jmark.domain.entity.Enum.TypeEmployment;
 import com.common.jmark.domain.entity.category.Gugun;
 import com.common.jmark.domain.entity.category.JobChildCategory;
@@ -54,6 +55,9 @@ public class JobOpening{
     @Enumerated(EnumType.STRING)
     private TypeEmployment typeEmployment;
 
+    @Enumerated(EnumType.STRING)
+    private LastEdu lastEdu;
+
     //공고 - 회사 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
@@ -92,6 +96,7 @@ public class JobOpening{
         this.jobPosition = jobOpeningDto.getJobPosition();
         this.workingDay = jobOpeningDto.getWorkingDay();
         this.typeEmployment = jobOpeningDto.getTypeEmployment();
+        this.lastEdu=jobOpeningDto.getLastEdu();
         this.gugun = gugun;
         this.jobChildCategory = jobChildCategory;
 
@@ -112,6 +117,7 @@ public class JobOpening{
         this.jobPosition = jobOpeningDto.getJobPosition();
         this.workingDay = jobOpeningDto.getWorkingDay();
         this.typeEmployment = jobOpeningDto.getTypeEmployment();
+        this.lastEdu=jobOpeningDto.getLastEdu();
         this.gugun = gugun;
         this.jobChildCategory = jobChildCategory;
     }

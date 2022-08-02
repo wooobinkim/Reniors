@@ -160,19 +160,24 @@ public class JobOpeningService {
 
     //채용공고 조건 조회
     @Transactional
-    public Page<JobOpeningDto> getJobOpeningConditionList(@RequestBody JobOpeningSearchDto jobOpeningSearchDto, Pageable pageable){
+    public Page<JobOpeningDto> getJobOpeningConditionList(@RequestBody SearchConditionDto searchConditionDto, Pageable pageable){
         //조건검색을 위한 쿼리DSL 실행
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
         QJobOpening j = new QJobOpening("j");
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-        if (jobOpeningSearchDto.getGuGunId() != null) booleanBuilder.and(j.gugun.id.eq(jobOpeningSearchDto.getGuGunId()));
-        if (jobOpeningSearchDto.getJobChildCategoryId()!= null) booleanBuilder.and(j.jobChildCategory.id.eq(jobOpeningSearchDto.getJobChildCategoryId()));
+//        if (jobOpeningSearchDto.getGuGunId() != null) booleanBuilder.and(j.gugun.id.eq(jobOpeningSearchDto.getGuGunId()));
+//        if (jobOpeningSearchDto.getJobChildCategoryId()!= null) booleanBuilder.and(j.jobChildCategory.id.eq(jobOpeningSearchDto.getJobChildCategoryId()));
 
         List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
                 .where(
-                        (j.contents.contains(jobOpeningSearchDto.getContents())),
-                        (j.minSalary.goe(jobOpeningSearchDto.getMinSalary())),
-                        booleanBuilder
+//                        (j.contents.contains(jobOpeningSearchDto.getContents())),
+//                        (j.minSalary.goe(jobOpeningSearchDto.getMinSalary())),
+//                        booleanBuilder
+                        (j.minCareer.goe(searchConditionDto.getMinCareer())),
+                        (j.minSalary.goe(searchConditionDto.getMinSalary())),
+                        (j.workingDay.loe(searchConditionDto.getWorkingDay())),
+                        (j.typeEmployment.eq(searchConditionDto.getTypeEmployment())),
+                        (j.lastEdu.eq(searchConditionDto.getLastEdu()))
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -188,20 +193,6 @@ public class JobOpeningService {
                             GugunResponse.response(o.getGugun()),
                             JobChildCategoryResponse.response(o.getJobChildCategory())
                     )).collect(Collectors.toList());
-
-
-//            for (JobOpening jobOpening : jobOpeningList) {
-//                //연결된 엔티티 매핑
-//                GugunResponse gugunResponse = GugunResponse.response(jobOpening.getGugun());
-//                JobChildCategoryResponse jobChildCategoryResponse = JobChildCategoryResponse.response(jobOpening.getJobChildCategory());
-//                CompanyDto companyDto = new CompanyDto(jobOpening.getCompany());
-//
-//                //리턴할 Dto 세팅
-//                JobOpeningDto jobOpeningDto = new JobOpeningDto(jobOpening,companyDto,gugunResponse,jobChildCategoryResponse);
-////                jobOpeningDto.setLinkEntity(companyDto,gugunResponse,jobChildCategoryResponse);
-//
-//                jobOpeningDtoList.add(jobOpeningDto);
-//            }
 
             long total = jobOpeningDtoList.size();
 
