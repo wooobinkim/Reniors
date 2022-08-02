@@ -2,8 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/user/LoginView.vue'
 import SignupView from '../views/user/SignupView.vue'
+import SignupCompleteView from '../views/user/SignupCompleteView.vue'
 import FindPasswordView from '../views/user/FindPasswordView.vue'
 import FindUsernameView from '../views/user/FindUsernameView.vue'
+import MypageView from '../views/user/MypageView.vue'
+import ResumeEditView from '../views/user/ResumeEditView.vue'
 
 const routes = [
   {
@@ -32,6 +35,11 @@ const routes = [
     component: SignupView
   },
   {
+    path: '/signup/complete',
+    name: 'SignupComplete',
+    component: SignupCompleteView
+  },
+  {
     path: '/find/password',
     name: 'FindPassword',
     component: FindPasswordView
@@ -41,6 +49,20 @@ const routes = [
     name: 'FindUsername',
     component: FindUsernameView
   },
+  {
+    path: '/mypage/:user_id',
+    name: 'MyPage',
+    component: MypageView
+  },
+
+
+  // resume
+  {
+    path: '/resume/edit',
+    name: 'ResumeEdit',
+    component: ResumeEditView
+  },
+
 ]
 
 const router = createRouter({

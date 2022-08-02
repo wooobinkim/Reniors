@@ -1,13 +1,18 @@
 import router from '@/router'
 import axios from 'axios'
+import jwt_decode from 'jwt-decode'
+
+import { login, findById } from '@/api/user.js'
 
 export const user = {
     state: {
-      token: localStorage.getItem('token') || '',
+      // token: localStorage.getItem('token') || '',
       currentUser: {},
       profile: {},
       authError: null,
-      // credentials: {}
+      // 코드추가
+      isLogin: false,
+      userInfo: null,
     },
 
     getters: {
@@ -24,6 +29,12 @@ export const user = {
       SET_CURRENT_USER: (state, user) => state.currentUser = user,
       SET_PROFILE: (state, profile) => state.profile = profile,
       SET_AUTH_ERROR: (state, error) => state.authError = error,
+      // 추가
+      SET_IS_LOGIN: (state, isLogin) => state.isLogin = isLogin,
+      SET_USER_INFO: (state, userInfo) => {
+        state.isLogin = true;
+        state.userInfo = userInfo;
+      }
     },
 
     actions: {
@@ -38,23 +49,46 @@ export const user = {
       },
 
       // error 커밋 추가
-      login({ dispatch }, credentials){
-        axios({
-          // url 수정
-          url: '',
-          method: 'post',
-          data: credentials
+      // login({ dispatch }, credentials){
+      //   axios({
+      //     // url 수정
+      //     url: '',
+      //     method: 'post',
+      //     data: credentials
+      //   })
+      //   .then(res => {
+      //     const token = res.data.key
+      //     dispatch('saveToken', token)
+      //     dispatch('fetchCurrentUser')
+      //     // router 수정
+      //     router.push({ name: 'home'})
+      //   })
+      //     // error 부분 추가
+      // },
+
+      // 추가
+      async userConfirm({ commit }, credentials){
+        await login(credentials, (response)=> {
+          if (response.data.message === "success" ){
+            let token = response.data["access-token"]
+            commit("SET_IS_LOGIN", true)
+            // error 부분 추가
+            sessionStorage.setItem("access-token", token);
+          } else {
+            commit("SET_IS_LOGIN", false);
+          }
         })
-        .then(res => {
-          const token = res.data.key
-          dispatch('saveToken', token)
-          dispatch('fetchCurrentUser')
-          // router 수정
-          router.push({ name: 'home'})
-        })
-          // error 부분 추가
       },
-      
+
+      getUserInfo({ commit }, token){
+        let decode_token = jwt_decode(token);
+        findById(decode_token.id, (response) => {
+          if (response.data.message === "success"){
+            commit("SET_USER_INFO", response.data.userInfo)
+          }
+        })
+      },
+
       // error 커밋 추가
       signup(credentials){
         axios({
