@@ -40,7 +40,6 @@ public class BoardController {
             @Valid @RequestBody BoardSearchRequest request,
             Pageable pageable
             ){
-        // TODO : URI 생각하고 작성하기
         return ResponseEntity.ok(boardService.getBoardList(request, pageable));
     }
 
