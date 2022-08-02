@@ -1,6 +1,7 @@
 export default {
   namespaced: true,
   state: {
+    isLogin: false,
     hotJobopenings: [
       {
         id: 1,
@@ -41,15 +42,30 @@ export default {
         name: '세 번째 추천 채용공고!',
         context: '한화'
       },
+      {
+        id: 4,
+        name: '네 번째 추천 채용공고!',
+        context: '한화'
+      },
     ]
   },
   getters: {
+    isLogin: state => state.isLogin,
     hotJobopenings: state => state.hotJobopenings,
     newJobopenings: state => state.newJobopenings,
     recommendJobopenings: state => state.recommendJobopenings,
   },
   mutations: {
+    IS_LOGIN: (state, value) => state.isLogin = value,
   },
   actions: {
+    login({ commit }) {
+      console.log('login')
+      commit('IS_LOGIN', true)
+    },
+    logout({ commit }) {
+      console.log('logout')
+      commit('IS_LOGIN', false)
+    }
   },
 }
