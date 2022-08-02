@@ -6,11 +6,13 @@
 <script>
 
 export default{ 
-    name:'IT',
+    name:'ArticleItem',
+    props:{},
     components:{},
     data(){
         return{
-            sampleData:''
+            article_pk : this.$route.params.article_pk,
+            
         };
     },
     setup(){},

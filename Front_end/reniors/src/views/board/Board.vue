@@ -1,17 +1,22 @@
 <template>
-  <div>
-    게시판!!
+  <div>  
     <board-head-slider></board-head-slider>
+    <article-item
+      v-for="article in articles"
+      :key="article.pk"
+      :article="article"
+    ></article-item>
   </div>
 </template>
 <script>
 
-import BoardHeadSlider from '@/components/board/BoardHeadSlider.vue';
-
+import BoardHeadSlider from '@/components/board/BoardHeadSlider.vue'
+import ArticleItem from '@/components/board/ArticleItem.vue'
 export default{ 
     name:'BoardHome',
     components:{
       BoardHeadSlider,
+      ArticleItem
     },
     data(){
         return{
