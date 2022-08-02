@@ -1,7 +1,8 @@
 <template>
   <div>
     <h1 class="home-header">comm on</h1>
-    <button @click="logout">logout</button>
+    <button @click="logout" style="position: absolute; top: 100px; left: 100px;">logout</button>
+    <HomeSearch />
     <HomeNotice :login="true"/>
     <HomeInfo />
     <HomeJobopeningList type="추천 채용공고" :jobopenings="recommendJobopenings" />
@@ -12,6 +13,7 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import HomeSearch from './HomeSearch.vue'
 import HomeNotice from './HomeNotice.vue'
 import HomeInfo from './HomeInfo.vue'
 import HomeJobopeningList from './HomeJobopeningList.vue'
@@ -20,7 +22,7 @@ import HomeYoutubeList from './HomeYoutubeList.vue'
 export default {
   name: 'LoginHome',
   components: {
-    HomeNotice, HomeInfo, HomeJobopeningList, HomeYoutubeList
+    HomeSearch, HomeNotice, HomeInfo, HomeJobopeningList, HomeYoutubeList
   },
   setup () {
     const store = useStore()

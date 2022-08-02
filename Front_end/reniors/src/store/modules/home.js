@@ -67,6 +67,7 @@ export default {
   mutations: {
     IS_LOGIN: (state, value) => state.isLogin = value,
     YOUTUBES: (state, youtubes) => state.youtubes = youtubes,
+    DUMMY: () => 0,
   },
   actions: {
     login({ commit }) {
@@ -92,5 +93,9 @@ export default {
       console.log(youtubes)
       commit('YOUTUBES', youtubes)
     },
+    async search({ commit }, keyword) {
+      console.log(keyword)
+      commit('DUMMY')
+    }
   },
 }
