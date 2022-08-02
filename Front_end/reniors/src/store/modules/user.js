@@ -12,6 +12,7 @@ export const user = {
       authError: null,
       // 코드추가
       isLogin: false,
+      isLoginError: false,
       userInfo: null,
     },
 
@@ -31,6 +32,9 @@ export const user = {
       SET_AUTH_ERROR: (state, error) => state.authError = error,
       // 추가
       SET_IS_LOGIN: (state, isLogin) => state.isLogin = isLogin,
+      SET_IS_LOGIN_ERROR: (state, isLoginError) => {
+        state.isLoginError = isLoginError
+      },
       SET_USER_INFO: (state, userInfo) => {
         state.isLogin = true;
         state.userInfo = userInfo;
@@ -69,15 +73,24 @@ export const user = {
       // 추가
       async userConfirm({ commit }, credentials){
         await login(credentials, (response)=> {
+          console.log('check!!!!!')
+          console.log(response.data)
           if (response.data.message === "success" ){
             let token = response.data["access-token"]
+            console.log(token)
             commit("SET_IS_LOGIN", true)
             // error 부분 추가
+            commit("SET_IS_LOGIN_ERROR", false)
             sessionStorage.setItem("access-token", token);
           } else {
             commit("SET_IS_LOGIN", false);
+            commit("SET_IS_LOGIN_ERROR", true)
           }
-        })
+        },
+        () => {
+          console.log('실패!')
+        }
+        )
       },
 
       getUserInfo({ commit }, token){

@@ -4,11 +4,11 @@
       <img style="width: 80%;" alt="logo" src="@/assets/logo.png">
       <br>
       <!-- <form style="width: 312px;" @submit.prevent="login(credentials)"> -->
-      <form style="width: 312px;">
-        <b-form-input style="width: 100%; height: 48px;" class="mb-2" v-model="credentials.user_id" type="text" placeholder="아이디" required></b-form-input>
-        <b-form-input style="width: 100%; height: 48px;" class="mb-4" v-model="credentials.password" type="password" placeholder="비밀번호" required></b-form-input>
+      <div style="width: 312px;">
+        <b-form-input style="width: 100%; height: 48px;" class="mb-2" v-model="credentials.userAppId" type="text" placeholder="아이디" required></b-form-input>
+        <b-form-input style="width: 100%; height: 48px;" class="mb-4" v-model="credentials.userAppPwd" type="password" placeholder="비밀번호" required></b-form-input>
         <button id="LoginBtn" @click="confirm()" v-bind:disabled="credentials.user_id && credentials.password== ''">로그인</button>
-      </form>
+      </div>
       <br>
       <p class="line">또는</p>
 
@@ -37,8 +37,8 @@
     data() {
       return {
         credentials: {
-          user_id: '',
-          password: '',
+          userAppId: '',
+          userAppPwd: '',
         }
       }
     },
@@ -48,7 +48,7 @@
     unmounted() {},
     // 추가
     computed: {
-      ...mapState(["isLogin"])
+      ...mapState(['isLogin'])
     },
     methods: {
       // ...mapActions(['login']),
@@ -57,8 +57,9 @@
       async confirm(){
         await this.userConfirm(this.credentials)
         let token = sessionStorage.getItem("access-token")
+        console.log(token)
         if (this.isLogin){
-          await this.getUserInfo(token);
+          await this.getUserInfo(token)
           this.$router.push({ name: 'home' })
         }
       }

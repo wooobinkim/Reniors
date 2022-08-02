@@ -24,9 +24,9 @@
           <p>먼저, 로그인 시 사용하실 <span>이메일</span>과 <span>비밀번호</span>를 입력해주세요!</p>
           <br>
           <p class="forminfo">이메일</p>
-          <b-form-input class="mb-3" v-model="credentials.user_id" type="text" placeholder="사용하실 이메일을 입력해주세요." ></b-form-input>
+          <b-form-input class="mb-3" v-model="credentials.userAppId" type="text" placeholder="사용하실 이메일을 입력해주세요." ></b-form-input>
           <p class="forminfo">비밀번호</p>
-          <b-form-input class="mb-3" v-model="credentials.password1" type="password" placeholder="비밀번호를 입력해주세요." ></b-form-input>
+          <b-form-input class="mb-3" v-model="credentials.userAppPwd" type="password" placeholder="비밀번호를 입력해주세요." ></b-form-input>
           <p class="forminfo">비밀번호 확인</p>
           <b-form-input class="mb-3" v-model="credentials.password2" type="password" placeholder="비밀번호를 한번 더 입력해주세요." ></b-form-input>
         </div>
@@ -83,8 +83,8 @@ export default {
     return {
       credentials: {
         // 변수 이름 설정
-        user_id: '',
-        password1: '',
+        userAppId: '',
+        userAppPwd: '',
         password2: '',
         name: '',
         phone: '',
