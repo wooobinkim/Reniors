@@ -1,9 +1,10 @@
 <template>
   <div>
     <h1 class="home-header">comm on</h1>
-    <HomeNotice />
+    <button @click="logout">logout</button>
+    <HomeNotice :login="true"/>
     <HomeInfo />
-    <HomeJobopeningList type="recommend" :jobopenings="recommendJobopenings" />
+    <HomeJobopeningList type="추천 채용공고" :jobopenings="recommendJobopenings" />
   </div>
 </template>
 
@@ -22,12 +23,13 @@ export default {
   setup () {
     const store = useStore()
 
-    console.log(store.getters["home/recommendJobopenings"])
-
     const recommendJobopenings = computed(() => store.state.home.recommendJobopenings)
 
+    const logout = () => store.dispatch('home/logout')
+    console.log('logout')
+
     return {
-      recommendJobopenings,
+      recommendJobopenings, logout
     }
   },
 }
