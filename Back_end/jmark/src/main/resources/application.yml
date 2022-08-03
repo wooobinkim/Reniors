@@ -16,11 +16,6 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/jmark?serverTimezone=UTC&characterEncoding=UTF-8
-
-    #username: ssafy
-    #assword: ssafy
-
-
     username: root
     password: root
 
@@ -32,7 +27,7 @@ spring:
     show-sql: true
     hibernate:
       format_sql: true
-      ddl-auto: update
+      ddl-auto: none
 
   # swagger 설정
   mvc:

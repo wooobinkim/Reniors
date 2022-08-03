@@ -32,7 +32,9 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-
+    private static final String API_NAME = "RENIORS API 문서";
+    private static final String API_VERSION = "0.0.1";
+    private static final String API_DESCRIPTION = "RENIORS API 명세서";
     // documentationpluginsbootstrapper 에러 설정
     @Bean
     public WebMvcEndpointHandlerMapping webEndpointServletHandlerMapping(WebEndpointsSupplier webEndpointsSupplier, ServletEndpointsSupplier servletEndpointsSupplier, ControllerEndpointsSupplier controllerEndpointsSupplier, EndpointMediaTypes endpointMediaTypes, CorsEndpointProperties corsProperties, WebEndpointProperties webEndpointProperties, Environment environment) {
@@ -67,9 +69,9 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("RENIORS API 문서")
-                .version("1.0.0")
-                .description("RENIORS API 문서")
+                .title(API_NAME)
+                .version(API_VERSION)
+                .description(API_DESCRIPTION)
                 .build();
     }
 

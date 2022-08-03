@@ -24,6 +24,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
+        System.out.println("CustomAuthenticationEntryPoint - commence");
         String body = objectMapper.writeValueAsString(ExceptionResponse.from("로그인이 필요한 서비스입니다."));
 
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
