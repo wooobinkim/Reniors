@@ -1,14 +1,15 @@
 <template>
   <div>
-    <h1>이력서 작성 및 수정</h1>
-    <resume-step-one></resume-step-one>
-
+    <h1>2.경력사항</h1>
+    <resume-career-form></resume-career-form>
   </div>
 </template>
 <script>
-import ResumeStepOne from '@/components/resume/ResumeStepOne.vue'
+import ResumeCareerForm from '@/components/resume/ResumeCareerForm.vue'
+
 export default {
-  components: { ResumeStepOne },
+  name: 'ResumeStepTwo',
+  components: { ResumeCareerForm },
   data() {
     return {
       example: '',

@@ -53,6 +53,7 @@ export const user = {
 
       // error 커밋 추가
       login({ dispatch }, credentials){
+        console.log(credentials)
         axios({
           // url 수정
           url: 'https://i7b307.p.ssafy.io/api/users/login',
@@ -101,32 +102,35 @@ export const user = {
       // },
 
       // error 커밋 추가
-      signup(credentials){
-        axios({
-          // url 수정
-          url: '',
-          method: 'post',
-          data: credentials
-        })
-        // .then(res) < 수정
-        .then(() => {
-          // 더 로직이 있을지도..
-          router.push({ name: 'login' })
-        })
-        // error 부분 추가
-      },
+      // signup(user){
+      //   console.log('check!!')
+      //   console.log(user)
+      //   axios({
+      //     // url 수정
+      //     url: 'https://i7b307.p.ssafy.io/api/users/regist',
+      //     method: 'post',
+      //     data: user
+      //   })
+      //   // .then(res) < 수정
+      //   .then((res) => {
+      //     console.log(res)
+      //     // 더 로직이 있을지도..
+      //     router.push({ name: 'login' })
+      //   })
+      //   // error 부분 추가
+      // },
 
-      fetchMypage({ commit, getters }, user_id){
-        axios({
-          // url 수정
-          url: user_id,
-          method: 'get',
-          headers: getters.authHeader,
-        })
-        .then(res => {
-          commit('SET_PROFILE', res.data)
-        })
-      },
+      // fetchMypage({ commit, getters }, user_id){
+      //   axios({
+      //     // url 수정
+      //     url: user_id,
+      //     method: 'get',
+      //     headers: getters.authHeader,
+      //   })
+      //   .then(res => {
+      //     commit('SET_PROFILE', res.data)
+      //   })
+      // },
 
       fetchCurrentUser({ commit, getters, dispatch }){
         if (getters.isLogginedIn) {
@@ -138,10 +142,12 @@ export const user = {
             headers: getters.authHeader
           })
           .then(res => {
+            console.log('그냥')
             console.log(res.data)
             commit('SET_CURRENT_USER', res.data)
+            console.log('proxy')
             console.log(getters.currentUser)
-            dispatch('fetchMypage', res.data.user_id)
+            // dispatch('fetchMypage', res.data.user_id)
           })
           .catch(err => {
             if (err.response.status === 401){
