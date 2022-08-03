@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class Gugun {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "gugun_id")
@@ -30,7 +31,7 @@ public class Gugun {
     private Long code;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sido_code")
+    @JoinColumn(name = "sido")
     private Sido sido;
 
     @OneToMany(mappedBy = "gugun")

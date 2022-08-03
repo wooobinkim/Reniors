@@ -1,6 +1,7 @@
 package com.common.jmark.domain.entity.category;
 
 import com.common.jmark.common.exception.NotFoundException;
+import com.common.jmark.domain.entity.board.Board;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +28,10 @@ public class JobParentCategory {
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobChildCategory> childs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Board> boards = new ArrayList<>();
+
 
     public static JobParentCategory create(String name){
         JobParentCategory jpc = new JobParentCategory();

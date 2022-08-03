@@ -43,10 +43,10 @@ public class SearchCondition {
     User user;
 
     @OneToMany(mappedBy = "searchCondition")
-    List<HopeArea> hopeAreas = new ArrayList<>();
+    private List<HopeArea> hopeAreas = new ArrayList<>();
 
     @OneToMany(mappedBy = "searchCondition")
-    List<HopeJob> hopeJobs = new ArrayList<>();
+    private List<HopeJob> hopeJobs = new ArrayList<>();
 
     public SearchCondition(SearchConditionDto searchConditionDto, User user) {
         this.id = searchConditionDto.getId();

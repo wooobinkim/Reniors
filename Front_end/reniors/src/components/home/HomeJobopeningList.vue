@@ -1,10 +1,11 @@
 <template>
   <div>
-    <h2 class="jobopening-type">{{ type }}</h2>
-    <ul class="jobopening-list">
-      <li class="jobopening-item" v-for="jobopening in jobopenings" :key="jobopening.id">
-        <p>{{ jobopening.name }}</p>
-        <p>{{ jobopening.context }}</p>
+    <h2 class="home-jobopening-type">{{ type }}</h2>
+    <ul class="home-jobopening-list">
+      <li class="home-jobopening-item" v-for="jobopening in jobopenings" :key="jobopening.id">
+        <p>{{ jobopening.companyDto?.name }}</p>
+        <p>{{ jobopening.title }}</p>
+        <p>{{ jobopening.contents }}</p>
       </li>
     </ul>
   </div>
@@ -21,14 +22,14 @@ export default {
 </script>
 
 <style>
-.jobopening-type {
+.home-jobopening-type {
   margin-bottom: 0;
   margin-left: 10px;
   text-align: left;
   font-weight: bold;
 }
 
-.jobopening-list {
+.home-jobopening-list {
   display: flex;
   margin: 0;
   padding: 0;
@@ -37,7 +38,7 @@ export default {
   overflow-y: hidden;
 }
 
-.jobopening-item {
+.home-jobopening-item {
   background-color: var(--color-black-4);
   border-radius: 0.3rem;
   margin: 10px;

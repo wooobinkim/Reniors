@@ -31,6 +31,7 @@ public class JobChildCategory {
     @JoinColumn(name = "job_parent_category_id")
     private JobParentCategory parent;
 
+
     @OneToMany(mappedBy = "jobChildCategory")
     private List<RecommendCondition> recommendConditions = new ArrayList<>();
 

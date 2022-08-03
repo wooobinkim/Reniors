@@ -20,5 +20,5 @@ public class GugunUpdateRequest {
     private Long code;
 
     @NotNull
-    private Sido sido;
+    private Long sidoCode;
 }

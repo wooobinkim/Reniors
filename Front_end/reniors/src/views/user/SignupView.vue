@@ -18,32 +18,33 @@
 
     <div>
       <br>
-      <form @submit.prevent="signup(credentials)" class="signupform">
+      <!-- <form @submit.prevent="signup(user)" class="signupform"> -->
+      <div class="signupform">
         <div v-show="page===1">
           <p style="font-size: 14px">간단한 회원가입을 진행하려고 해요.</p>
           <p>먼저, 로그인 시 사용하실 <span>이메일</span>과 <span>비밀번호</span>를 입력해주세요!</p>
           <br>
           <p class="forminfo">이메일</p>
-          <b-form-input class="mb-3" v-model="credentials.userAppId" type="text" placeholder="사용하실 이메일을 입력해주세요." ></b-form-input>
+          <b-form-input class="mb-3" v-model="user.userAppId" type="text" placeholder="사용하실 이메일을 입력해주세요." ></b-form-input>
           <p class="forminfo">비밀번호</p>
-          <b-form-input class="mb-3" v-model="credentials.userAppPwd" type="password" placeholder="비밀번호를 입력해주세요." ></b-form-input>
+          <b-form-input class="mb-3" v-model="user.userAppPwd" type="password" placeholder="비밀번호를 입력해주세요." ></b-form-input>
           <p class="forminfo">비밀번호 확인</p>
-          <b-form-input class="mb-3" v-model="credentials.password2" type="password" placeholder="비밀번호를 한번 더 입력해주세요." ></b-form-input>
+          <b-form-input class="mb-3" v-model="password" type="password" placeholder="비밀번호를 한번 더 입력해주세요." ></b-form-input>
         </div>
 
         <div v-show="page===2">
           <p>회원님의 <span>이름</span>과 <span>전화번호</span>, <span>주소</span>를 알려주실 수 있나요?</p>
           <br>
           <p class="forminfo">이름</p>
-          <b-form-input class="mb-3" v-model="credentials.name" type="text" placeholder="이름을 입력해주세요." ></b-form-input>
+          <b-form-input class="mb-3" v-model="user.name" type="text" placeholder="이름을 입력해주세요." ></b-form-input>
           <p class="forminfo">휴대전화</p>
-          <b-form-input class="mb-3" v-model="credentials.phone" type="text" placeholder="예시) 01012345678" ></b-form-input>
+          <b-form-input class="mb-3" v-model="user.phone" type="text" placeholder="예시) 01012345678" ></b-form-input>
           <p class="forminfo">주소</p>
           <div class="address">
-            <b-form-input class="mb-3" style="width:90%;" v-model="credentials.address" type="text" placeholder="주소 검색" ></b-form-input>
+            <b-form-input class="mb-3" style="width:90%;" v-model="user.address" type="text" placeholder="주소 검색" ></b-form-input>
             <button class="search" style="margin-bottom:16px;" @click="execDaumPostcode()" type="button" value="우편번호 찾기" ><img src="@/assets/searching.png" alt="search"></button>
           </div>
-          <b-form-input class="mb-3" v-model="credentials.extraAddress" type="text" placeholder="상세주소를 입력해주세요" ></b-form-input>
+          <b-form-input class="mb-3" v-model="extraAddress" type="text" placeholder="상세주소를 입력해주세요" ></b-form-input>
           <!-- <b-form-input class="mb-3" v-model="credentials.address" type="text" placeholder="" ></b-form-input> -->
         </div>
 
@@ -52,11 +53,11 @@
           <p><span>최종학력</span>, <span>생년월일</span>, 성별을 입력해주세요!</p>
           <br>
           <p class="forminfo">최종학력</p>
-          <b-form-select class="mb-3" v-model="credentials.lastEdu" :options="lastEdu" ></b-form-select>
+          <b-form-select class="mb-3" v-model="user.lastEdu" :options="lastEdu" ></b-form-select>
           <p class="forminfo">생년월일</p>
-          <b-form-input class="mb-3" v-model="credentials.birth" type="date" placeholder="생년-월-일" ></b-form-input>
+          <b-form-input class="mb-3" v-model="user.birth" type="date" placeholder="생년-월-일" ></b-form-input>
           <p class="forminfo">성별</p>
-          <b-form-select class="mb-3" v-model="credentials.gender" :options="gender" ></b-form-select>
+          <b-form-select class="mb-3" v-model="user.gender" :options="gender" ></b-form-select>
         </div>
 
         
@@ -64,9 +65,9 @@
           <button style="background-color: #FFC0A3;" type="button" v-show="page === 1"><router-link style="text-decoration:none; color: white;" :to="{ name: 'Login' }">이전</router-link></button>
           <button style="background-color: #FFC0A3;" type="button" v-show="page !== 1" @click="decreasePage">이전</button>
           <button type="button" v-show="page !== 3" @click="increasePage">다음</button>
-          <button v-show="page === 3">완료!</button>
+          <button @click="signup()" v-show="page === 3">완료!</button>
         </footer>
-      </form>
+      </div>
 
 
 
@@ -75,17 +76,19 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+// import { mapActions } from 'vuex'
+// import { register } from "@/api/user.js"
+import axios from 'axios'
+
 export default {
   name: 'SignupView',
   components: {},
   data() {
     return {
-      credentials: {
+      user: {
         // 변수 이름 설정
         userAppId: '',
         userAppPwd: '',
-        password2: '',
         name: '',
         phone: '',
         address: '',
@@ -93,20 +96,29 @@ export default {
         lastEdu: '',
         birth: '',
         gender: '',
+        isOpen: 'CLOSE',
+        kakaoId: '',
+        portfolioName: '',
+        portfolioPath: '',
+        profileImgName: '',
+        profileImgPath: '',
+        totalCareer: 0,        
         // 이력서 공개 여부
       },
       lastEdu: [
         // value 수정
       { value: null, text: '최종학력을 선택해주세요.' },          
-      { value: 'a', text: 'This is First option' },
+      { value: '고교졸업이하', text: '고교졸업 이하' },
       { value: 'b', text: 'Selected Option' },
       ],
       gender: [
       { value: null, text: '성별을 선택해주세요.' },          
-      { value: 'Female', text: '여자' },
-      { value: 'Male', text: '남자' },
+      { value: 'F', text: '여자' },
+      { value: 'M', text: '남자' },
       ],
-      page: 1 
+      page: 1,
+      password: '',
+      extraAddress: ''
     }
   },
   setup() {},
@@ -114,7 +126,31 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
-    ...mapActions(['signup']),
+    // ...mapActions(['signup']),
+    // confirm(){
+    //   register(this.credentials, (response) => {
+    //     if (response.data.data === "회원 가입 성공"){
+    //       this.$router.push({ name: "login" })
+    //     }}
+    //   )
+    // },
+    signup(){
+      axios({
+        // url 수정
+        url: 'https://i7b307.p.ssafy.io/api/users/regist',
+        method: 'post',
+        data: this.user
+      })
+      // .then(res) < 수정
+      .then(() => {
+        console.log('성공!')
+        this.$router.push({ name: 'Login' })
+      })
+      .catch((res) => {
+        console.log(res)
+      })
+      // error 부분 추가
+    },
     increasePage(){
       this.page += 1
     },
@@ -124,15 +160,15 @@ export default {
     execDaumPostcode() {
       new window.daum.Postcode({
         oncomplete: (data) => {
-          if (this.credentials.extraAddress !== "") {
-            this.credentials.extraAddress = "";
+          if (this.extraAddress !== "") {
+            this.extraAddress = "";
           }
           if (data.userSelectedType === "R") {
             // 사용자가 도로명 주소를 선택했을 경우
-            this.credentials.address = data.roadAddress;
+            this.user.address = data.roadAddress;
           } else {
             // 사용자가 지번 주소를 선택했을 경우(J)
-            this.credentials.address = data.jibunAddress;
+            this.user.address = data.jibunAddress;
           }
  
           // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
@@ -140,21 +176,21 @@ export default {
             // 법정동명이 있을 경우 추가한다. (법정리는 제외)
             // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
             if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
-              this.credentials.extraAddress += data.bname;
+              this.extraAddress += data.bname;
             }
             // 건물명이 있고, 공동주택일 경우 추가한다.
             if (data.buildingName !== "" && data.apartment === "Y") {
-              this.credentials.extraAddress +=
-                this.credentials.extraAddress !== ""
+              this.extraAddress +=
+                this.extraAddress !== ""
                   ? `, ${data.buildingName}`
                   : data.buildingName;
             }
             // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-            if (this.credentials.extraAddress !== "") {
-              this.credentials.extraAddress = `(${this.credentials.extraAddress})`;
+            if (this.extraAddress !== "") {
+              this.extraAddress = `(${this.extraAddress})`;
             }
           } else {
-            this.credentials.extraAddress = "";
+            this.extraAddress = "";
           }
         },
       }).open();

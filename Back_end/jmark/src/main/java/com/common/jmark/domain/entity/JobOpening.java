@@ -86,7 +86,7 @@ public class JobOpening{
     private Gugun gugun;
 
     @OneToMany(mappedBy = "jobOpening")
-    List<Apply> applies = new ArrayList<>();
+    private List<Apply> applies = new ArrayList<>();
 
     //공고 - 고용형태 연관관계
 //    @ManyToOne(fetch = FetchType.LAZY)

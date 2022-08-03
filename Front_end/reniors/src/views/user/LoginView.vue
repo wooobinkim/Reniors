@@ -3,12 +3,12 @@
     <div class="loginform" >
       <img style="width: 80%;" alt="logo" src="@/assets/logo.png">
       <br>
-      <!-- <form style="width: 312px;" @submit.prevent="login(credentials)"> -->
-      <div style="width: 312px;">
+      <form style="width: 312px;" @submit.prevent="login(credentials)">
+      <!-- <form style="width: 312px;"> -->
         <b-form-input style="width: 100%; height: 48px;" class="mb-2" v-model="credentials.userAppId" type="text" placeholder="아이디" required></b-form-input>
         <b-form-input style="width: 100%; height: 48px;" class="mb-4" v-model="credentials.userAppPwd" type="password" placeholder="비밀번호" required></b-form-input>
-        <button id="LoginBtn" @click="confirm()" v-bind:disabled="credentials.user_id && credentials.password== ''">로그인</button>
-      </div>
+        <button id="LoginBtn" v-bind:disabled="credentials.user_id && credentials.password== ''">로그인</button>
+      </form>
       <br>
       <p class="line">또는</p>
 
@@ -29,7 +29,8 @@
   </div>
 </template>
 <script>
-  import { mapState, mapActions } from 'vuex'
+  // import { mapState, mapActions } from 'vuex'
+  import { mapActions } from 'vuex'
 
   export default {
     name: 'LoginView',
@@ -46,23 +47,23 @@
     created() {},
     mounted() {},
     unmounted() {},
-    // 추가
-    computed: {
-      ...mapState(['isLogin'])
-    },
+    // // 추가
+    // computed: {
+    //   ...mapState(['isLogin'])
+    // },
     methods: {
-      // ...mapActions(['login']),
-      ...mapActions(['userConfirm', 'getUserInfo']),
-      // 코드추가
-      async confirm(){
-        await this.userConfirm(this.credentials)
-        let token = sessionStorage.getItem("access-token")
-        console.log(token)
-        if (this.isLogin){
-          await this.getUserInfo(token)
-          this.$router.push({ name: 'home' })
-        }
-      }
+      ...mapActions(['login']),
+    //   ...mapActions(['userConfirm', 'getUserInfo']),
+    //   // 코드추가
+    //   async confirm(){
+    //     await this.userConfirm(this.credentials)
+    //     let token = sessionStorage.getItem("access-token")
+    //     console.log(token)
+    //     if (this.isLogin){
+    //       await this.getUserInfo(token)
+    //       this.$router.push({ name: 'home' })
+    //     }
+    //   }
     }
   }
 </script>

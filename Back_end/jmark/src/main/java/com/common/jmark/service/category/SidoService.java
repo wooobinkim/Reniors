@@ -25,6 +25,14 @@ public class SidoService{
 
 
     @Transactional
+    public void createList(List<SidoCreateRequest> requestList){
+        requestList.forEach(request -> {
+            Sido sido = Sido.create(request.getName(), request.getCode());
+            sidoRepository.save(sido);
+        });
+    }
+
+    @Transactional
     public Long create(SidoCreateRequest request) {
         if(sidoRepository.findByName(request.getName()).isPresent()){
             throw new DuplicateException(String.format("%s는 이미 존재하는 카테고리입니다.",request.getName()));
@@ -54,7 +62,7 @@ public class SidoService{
 
 
     @Transactional
-    public List<SidoResponse> read() {
+    public List<SidoResponse> getSidoList() {
         List<SidoResponse> sidos = sidoRepository.findAll().stream()
                 .map(SidoResponse::response)
                 .collect(Collectors.toList());

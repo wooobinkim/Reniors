@@ -6,6 +6,8 @@ import com.common.jmark.domain.entity.SearchCondition;
 import com.common.jmark.domain.entity.Type.Gender;
 import com.common.jmark.domain.entity.Type.IsOpen;
 import com.common.jmark.domain.entity.Type.Role;
+import com.common.jmark.domain.entity.board.Board;
+import com.common.jmark.domain.entity.board.Comment;
 import com.common.jmark.domain.entity.recommend.RecommendCondition;
 import com.common.jmark.domain.entity.resume.Award;
 import com.common.jmark.domain.entity.resume.CareerDetail;
@@ -87,10 +89,14 @@ public class User {
     @Column(length = 100)
     private String portfolioPath;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Board> boards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
     // 회원 - 경력사항 연관관계
     @OneToMany(mappedBy = "user")
     private List<CareerDetail> careerDetails = new ArrayList<>();
-
     // 회원 - 수상경력 연관관계
     @OneToMany(mappedBy = "user")
     private List<Award> awards = new ArrayList<>();
@@ -105,11 +111,11 @@ public class User {
 
     // 회원 - 공고 지원 연관관계
     @OneToMany(mappedBy = "user")
-    List<Apply> applies = new ArrayList<>();
+    private List<Apply> applies = new ArrayList<>();
 
     // 회원 - 검색 조건 연관관계
     @OneToMany(mappedBy = "user")
-    List<SearchCondition> searchConditions = new ArrayList<>();
+    private List<SearchCondition> searchConditions = new ArrayList<>();
 
    public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
         User user = new User();

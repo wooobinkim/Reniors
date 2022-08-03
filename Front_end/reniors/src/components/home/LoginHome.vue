@@ -1,11 +1,9 @@
 <template>
   <div>
-    <h1 class="home-header">comm on</h1>
-    <button @click="logout" style="position: absolute; top: 100px; left: 100px;">logout</button>
-    <HomeSearch />
+    <SearchBar />
     <HomeNotice :login="true"/>
     <HomeInfo />
-    <HomeJobopeningList type="추천 채용공고" :jobopenings="recommendJobopenings" />
+    <HomeJobopeningList v-if="isFetch" type="추천 채용공고" :jobopenings="recommendJobopenings" />
     <HomeYoutubeList v-if="isYoutube" type="맞춤 유튜브 크롤링" :youtubes="youtubes"/>
   </div>
 </template>
@@ -13,7 +11,7 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import HomeSearch from './HomeSearch.vue'
+import SearchBar from '../SearchBar.vue'
 import HomeNotice from './HomeNotice.vue'
 import HomeInfo from './HomeInfo.vue'
 import HomeJobopeningList from './HomeJobopeningList.vue'
@@ -22,26 +20,23 @@ import HomeYoutubeList from './HomeYoutubeList.vue'
 export default {
   name: 'LoginHome',
   components: {
-    HomeSearch, HomeNotice, HomeInfo, HomeJobopeningList, HomeYoutubeList
+    SearchBar, HomeNotice, HomeInfo, HomeJobopeningList, HomeYoutubeList
   },
   setup () {
     const store = useStore()
 
+    const fetchHome = () => store.dispatch('home/fetchHome', '취업정보')
+    fetchHome()
+
     const recommendJobopenings = computed(() => store.state.home.recommendJobopenings)
     const youtubes = computed(() => store.getters['home/youtubes'])
+    const isFetch = computed(() => store.getters['home/isJobopenings'])
     const isYoutube = computed(() => store.getters['home/isYoutube'])
 
-    const logout = () => store.dispatch('home/logout')
-
     return {
-      recommendJobopenings, youtubes, isYoutube, logout
+      recommendJobopenings, youtubes, isYoutube, isFetch,
     }
   },
-  mounted() {
-    const store = useStore()
-    const fetch = () => store.dispatch('home/fetchYoutubes', '취업정보')
-    fetch()
-  }
 }
 </script>
 
