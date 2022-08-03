@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ jobopeningId }}
     <NavBar />
     <b-tabs pills class="jobopening-detail-tab"
       active-nav-item-class="bg-transparent"
