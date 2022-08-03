@@ -52,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        System.out.println("SecurityConfig - configure");
         http
                 .httpBasic().disable()
                 .cors().configurationSource(corsConfigurationSource())
@@ -63,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(PERMIT_URL_ARRAY).permitAll()
                 .antMatchers("/ws-stomp/**", "/api/port","/actuator/health").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users", "/api/users/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/company", "/api/company/login").permitAll()
 //                .anyRequest().hasAnyRole("USER", "ADMIN")
                 .anyRequest().permitAll()
                 .and()
@@ -75,6 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+        System.out.println("SecurityConfig - corsConfigurationSource");
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.addAllowedOriginPattern("*");
@@ -89,6 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
+        System.out.println("SecurityConfig - passwordEncoder");
         return new BCryptPasswordEncoder();
     }
 }

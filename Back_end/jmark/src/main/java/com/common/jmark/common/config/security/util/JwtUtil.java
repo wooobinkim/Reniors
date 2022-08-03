@@ -1,5 +1,7 @@
 package com.common.jmark.common.config.security.util;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AllArgsConstructor;
@@ -15,30 +17,31 @@ import java.util.Date;
 public class JwtUtil {
 
     @Value("${token.secret}")
-    private String secretKey;
+    private String SecretKey;
 
     // 15 * 24 * 60 * 60 * 1000 = 15days
     @Value("${token.expiration_time}")
     private long expirationTime;
 
-    public String createToken(Long userId) {
+    public String createToken(Long userId, String name) {
         Date now = new Date();
-
+        String id = String.valueOf(userId);
         return Jwts.builder()
-                .setSubject(String.valueOf(userId))
+                .setSubject(id +","+ name)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + expirationTime))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(SignatureAlgorithm.HS256, SecretKey)
                 .compact();
     }
 
+
     public String getSubject(String jwtToken) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken).getBody().getSubject();
+        return Jwts.parser().setSigningKey(SecretKey).parseClaimsJws(jwtToken).getBody().getSubject();
     }
 
     public boolean isValidToken(String jwtToken) {
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
+            Jwts.parser().setSigningKey(SecretKey).parseClaimsJws(jwtToken);
             return true;
         } catch (Exception e) {
             return false;

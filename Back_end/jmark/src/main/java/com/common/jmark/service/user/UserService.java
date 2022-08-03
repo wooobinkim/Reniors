@@ -35,7 +35,7 @@ public class UserService {
         }else{
             //비밀번호 확인
             if(findUser.get().getUserAppPwd().equals(request.getUserAppPwd())){
-                return jwtUtil.createToken(findUser.get().getId());
+                return jwtUtil.createToken(findUser.get().getId(),"user");
             }
             else {
                 throw new NotMatchException(PASSWORD_NOT_MATCH);

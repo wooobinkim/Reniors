@@ -1,5 +1,7 @@
 package com.common.jmark.domain.entity.user;
 
+import com.common.jmark.domain.entity.Apply;
+import com.common.jmark.domain.entity.SearchCondition;
 import com.common.jmark.domain.entity.Type.Gender;
 import com.common.jmark.domain.entity.Type.IsOpen;
 import com.common.jmark.domain.entity.Type.Role;
@@ -8,7 +10,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -57,6 +61,11 @@ public class User {
 
     private String portfolioPath;
 
+    @OneToMany(mappedBy = "user")
+    List<Apply> applies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    List<SearchCondition> searchConditions = new ArrayList<>();
 
     public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, int workingDay, long minSalary, String portfolioName, String portfolioPath) {
         User user = new User();

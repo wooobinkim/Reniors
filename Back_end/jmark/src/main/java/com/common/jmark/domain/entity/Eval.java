@@ -34,7 +34,6 @@ public class Eval {
     }
 
     public void update(EvalDto evalDto, Company company) {
-        this.id = evalDto.getId();
         this.name = evalDto.getName();
         this.company = company;
     }
