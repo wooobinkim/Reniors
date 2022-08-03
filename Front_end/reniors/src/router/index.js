@@ -14,6 +14,11 @@ import BoardDetail from "../views/board/BoardDetail.vue"
 import BoardCreate from "../views/board/BoardCreate.vue"
 import BoardUpdate from "../views/board/BoardUpdate.vue"
 
+import QuestionAnswer from "../views/practice/QuestionAnswer.vue"
+import QuestionList from "../views/practice/QuestionList.vue"
+import VideoPractice from "../views/practice/VideoPractice.vue"
+import VideoPracticeList from "../views/practice/VideoPracticeList.vue"
+
 const routes = [
   {
     path: '/',
@@ -92,6 +97,28 @@ const routes = [
     component: BoardUpdate,
     name: 'boardUpdate'
   },
+
+  //video practice
+  {
+    path: '/practice/questions',
+    name:'QuestionList',
+    component: QuestionList,
+  },
+  {
+    path: '/practice/question/:question_id/answer',
+    component: QuestionAnswer,
+    name: 'QuestionAnswer'
+  },
+  {
+    path: '/practice/videopractices',
+    component: VideoPracticeList,
+    name: 'VideoPracticeList',
+  },
+  {
+    path: '/practice/videopractice',
+    component: VideoPractice,
+    name: 'VideoPractice'
+  }
 
 
 ]

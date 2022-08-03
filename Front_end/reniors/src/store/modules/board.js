@@ -43,11 +43,11 @@ export default{
     },
 
     actions: {
-        createArticle({getters, commit}, {article}){
+        createArticle({getters, commit}, article){
             axios({
                 url: drf.board.new(),
                 method: 'post',
-                data: article,
+                data: {article},
                 headers: getters.authHeader,
             })
             .then(res => {
@@ -97,8 +97,6 @@ export default{
             })
             .catch(err => console.error(err.response))
         },
-
-
         fetchArticle({commit, getters}, article_pk) {
             axios({
                 url: drf.board.detail(article_pk),

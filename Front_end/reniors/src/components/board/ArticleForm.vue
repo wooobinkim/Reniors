@@ -5,19 +5,17 @@
       <form @submit.prevent="onSubmit" class="form-group row-cols-8" >
       <br>
       <br>
-          <h4 align="start" style="font-size:60px">게시글 작성</h4>
-
         <div>
-          <label for="title"></label>
-          <input type="text" class="form-control" id="title" placeholder="제목을 입력해주세요." v-model="newArticle.title">
+          <label for="title" style="text-align:start">제목</label>
+          <input type="text" class="form-control my-0" id="title" placeholder="제목을 입력해주세요." v-model="newArticle.title">
         </div>
         <div class="form-group">
-          <label for="content"></label>
-          <input style="height: 150px;" type="text" class="form-control" id="content" placeholder="내용을 입력해주세요." v-model="newArticle.content">
+          <label for="content">내용</label>
+          <input style="height: 150px; vertical-align:text-top ;" type="text" class="form-control" id="content" placeholder="내용을 입력해주세요." v-model="newArticle.contents">
         </div>
         <br>
         <br>
-        <button type="submit" class="btn-lg btn-info rounded-pill">{{action}}</button>
+        <button type="submit" class="Btn">등록</button>
       </form>
     </div>
 
@@ -37,7 +35,7 @@ export default{
         return{
             newArticle: {
                 title: this.article.title,
-                content: this.article.content,
+                contents: this.article.content,
             }
         };
     },
@@ -47,7 +45,7 @@ export default{
     unmounted(){},
     methods:{
         ...mapActions(['createArticle', 'updateArticle']),
-        onsubmit(){
+        onSubmit(){
             if (this.action === 'create') {
                 this.createArticle({ article: this.newArticle})
             } else if (this.action === 'update') {
@@ -61,3 +59,27 @@ export default{
     }
 }
 </script>
+
+<style>
+.forminfo {
+    color: #8A8A8A;
+    font-weight: 400;
+    font-size: 13px;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+
+  .Btn {
+    background-color: var(--color-red-2);
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+
+    /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
+    cursor: pointer;
+  }
+  
+  </style>
