@@ -18,7 +18,8 @@
 
     <div>
       <br>
-      <form @submit.prevent="signup(credentials)" class="signupform">
+      <!-- <form @submit.prevent="signup(credentials)" class="signupform"> -->
+      <div class="signupform">
         <div v-show="page===1">
           <p style="font-size: 14px">간단한 회원가입을 진행하려고 해요.</p>
           <p>먼저, 로그인 시 사용하실 <span>이메일</span>과 <span>비밀번호</span>를 입력해주세요!</p>
@@ -28,7 +29,7 @@
           <p class="forminfo">비밀번호</p>
           <b-form-input class="mb-3" v-model="credentials.userAppPwd" type="password" placeholder="비밀번호를 입력해주세요." ></b-form-input>
           <p class="forminfo">비밀번호 확인</p>
-          <b-form-input class="mb-3" v-model="credentials.password2" type="password" placeholder="비밀번호를 한번 더 입력해주세요." ></b-form-input>
+          <b-form-input class="mb-3" v-model="password" type="password" placeholder="비밀번호를 한번 더 입력해주세요." ></b-form-input>
         </div>
 
         <div v-show="page===2">
@@ -64,9 +65,9 @@
           <button style="background-color: #FFC0A3;" type="button" v-show="page === 1"><router-link style="text-decoration:none; color: white;" :to="{ name: 'Login' }">이전</router-link></button>
           <button style="background-color: #FFC0A3;" type="button" v-show="page !== 1" @click="decreasePage">이전</button>
           <button type="button" v-show="page !== 3" @click="increasePage">다음</button>
-          <button v-show="page === 3">완료!</button>
+          <button @click="confirm" v-show="page === 3">완료!</button>
         </footer>
-      </form>
+      </div>
 
 
 
@@ -76,6 +77,8 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+import { register } from "@/api/user.js"
+
 export default {
   name: 'SignupView',
   components: {},
@@ -85,7 +88,6 @@ export default {
         // 변수 이름 설정
         userAppId: '',
         userAppPwd: '',
-        password2: '',
         name: '',
         phone: '',
         address: '',
@@ -103,10 +105,11 @@ export default {
       ],
       gender: [
       { value: null, text: '성별을 선택해주세요.' },          
-      { value: 'Female', text: '여자' },
-      { value: 'Male', text: '남자' },
+      { value: 'F', text: '여자' },
+      { value: 'M', text: '남자' },
       ],
-      page: 1 
+      page: 1,
+      password: ''
     }
   },
   setup() {},
@@ -115,6 +118,13 @@ export default {
   unmounted() {},
   methods: {
     ...mapActions(['signup']),
+    confirm(){
+      register(this.credentials, (response) => {
+        if (response.data.data === "회원 가입 성공"){
+          this.$router.push({ name: "login" })
+        }}
+      )
+    },
     increasePage(){
       this.page += 1
     },

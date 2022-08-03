@@ -5,7 +5,7 @@ import SignupView from '../views/user/SignupView.vue'
 import SignupCompleteView from '../views/user/SignupCompleteView.vue'
 import FindPasswordView from '../views/user/FindPasswordView.vue'
 import FindUsernameView from '../views/user/FindUsernameView.vue'
-import MypageView from '../views/user/MypageView.vue'
+
 import ResumeEditView from '../views/user/ResumeEditView.vue'
 import HomeView from '../views/home/HomeView.vue'
 
@@ -49,11 +49,6 @@ const routes = [
     path: '/find/username',
     name: 'FindUsername',
     component: FindUsernameView
-  },
-  {
-    path: '/mypage/:user_id',
-    name: 'MyPage',
-    component: MypageView
   },
 
 
