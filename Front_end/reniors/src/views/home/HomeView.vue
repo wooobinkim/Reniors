@@ -19,7 +19,7 @@ export default {
   setup() {
     const store = useStore()
 
-    const isLogin = computed(() => store.getters['home/isLogin'])
+    const isLogin = computed(() => store.getters['user/isLogginedIn'])
 
     return {
       isLogin,
