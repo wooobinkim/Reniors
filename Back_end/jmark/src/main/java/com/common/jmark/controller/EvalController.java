@@ -29,7 +29,7 @@ public class EvalController {
     public ResponseEntity<?> postEval(@LoginCompany Company company, @RequestBody EvalDto evalDto){
         EvalDto Eval = evalService.postEval(company,evalDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(Eval);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Eval);
     }
 
     //평가 폼 전체조회
@@ -72,7 +72,7 @@ public class EvalController {
     public ResponseEntity<?> postEvalQuestion(@LoginCompany Company company, @PathVariable("evalId") Long evalId, @RequestBody EvalQuestionDto evalQuestionDto){
         EvalQuestionDto EvalQuestion = evalService.postEvalQuestion(company, evalId, evalQuestionDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(EvalQuestion);
+        return ResponseEntity.status(HttpStatus.CREATED).body(EvalQuestion);
     }
 
     //평가 질문 조회
