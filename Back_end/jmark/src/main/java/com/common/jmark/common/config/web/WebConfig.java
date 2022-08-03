@@ -15,18 +15,6 @@ public class WebConfig implements WebMvcConfigurer {
     private final LoginUserArgumentResolver loginUserArgumentResolver;
 
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
-
-        registry.addMapping("/**")
-                .allowedOriginPatterns("*")
-                .allowedMethods("*")
-                .allowedHeaders("Authorization")
-                .exposedHeaders("Authorization")
-                .allowCredentials(true);
-        //WebMvcConfigurer.super.addCorsMappings(registry);
-    }
-
-    @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(loginUserArgumentResolver);
     }
