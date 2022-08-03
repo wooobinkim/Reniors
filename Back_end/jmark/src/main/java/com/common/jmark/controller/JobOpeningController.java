@@ -1,11 +1,13 @@
 package com.common.jmark.controller;
 
+import com.common.jmark.common.config.web.LoginUser;
 import com.common.jmark.domain.entity.Company;
+import com.common.jmark.domain.entity.Enum.JobOpeningProcess;
 import com.common.jmark.domain.entity.JobOpening;
 import com.common.jmark.domain.entity.category.Gugun;
 import com.common.jmark.domain.entity.category.JobChildCategory;
-import com.common.jmark.dto.JobOpeningDto;
-import com.common.jmark.dto.JobOpeningSearchDto;
+import com.common.jmark.domain.entity.user.User;
+import com.common.jmark.dto.*;
 import com.common.jmark.dto.category.GugunResponse;
 import com.common.jmark.service.JobOpeningService;
 import io.swagger.annotations.Api;
@@ -29,63 +31,143 @@ public class JobOpeningController {
     private final JobOpeningService jobOpeningService;
 
     //채용공고 조회(조건포함)
-    @GetMapping
-    public ResponseEntity<?> getJobOpeningList(@RequestBody JobOpeningSearchDto jobOpeningSearchDto, Pageable pageable){
-        Page<JobOpeningDto> jobOpeningList = jobOpeningService.getJobOpeningList(jobOpeningSearchDto, pageable);
+    @GetMapping("/search/{searchConditionId}")
+    public ResponseEntity<?> getJobOpeningList(@PathVariable("searchConditionId")Long searchConditionId, Pageable pageable){
+        Page<JobOpeningDto> JobOpeningList = jobOpeningService.getJobOpeningConditionList(searchConditionId, pageable);
 //        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(x->new JobOpeningDto(x)).collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(jobOpeningList);
+        return ResponseEntity.status(HttpStatus.OK).body(JobOpeningList);
     }
 
 
     //채용공고 상세조회
     @GetMapping("/{jobOpeningId}")
     public ResponseEntity<?> getJobOpening(@PathVariable("jobOpeningId") Long jobOpeningId){
-        /*
-        토큰에서 회사 or 유저 정보추출
-         */
-
         JobOpeningDto JobOpening = jobOpeningService.getJobOpening(jobOpeningId);
 
         return ResponseEntity.status(HttpStatus.OK).body(JobOpening);
+
     }
 
-    //채용공고 등록
-    @PostMapping
-    public ResponseEntity<?> postJobOpening(@RequestBody JobOpeningDto jobOpeningDto){
-        /*
-        토큰에서 회사정보추출
-         */
+    //지원하기
+    @PostMapping("/{jobOpeningId}/apply")
+    public ResponseEntity<?> applyJobOpening(@PathVariable("jobOpeningId") Long jobOpeningId, @LoginUser User user){
+        JobOpeningProcess jobOpeningProcess = JobOpeningProcess.서류심사중;
+        ApplyDto applyDto = new ApplyDto(jobOpeningProcess);
 
-        JobOpening jobOpening = jobOpeningService.postJobOpening(1L,jobOpeningDto);
-        JobOpeningDto JobOpening = new JobOpeningDto(jobOpening);
+        ApplyDto Apply = jobOpeningService.applyJobOpening(user, jobOpeningId, applyDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(JobOpening);
+        return ResponseEntity.status(HttpStatus.OK).body(Apply);
     }
 
-    //채용공고 수정
-    @PutMapping("/{jobOpeningId}")
-    public ResponseEntity<?> updateJobOpening(@PathVariable("jobOpeningId") Long jobOpeningId, @RequestBody JobOpeningDto jobOpeningDto){
-        /*
-        토큰에서 회사정보추출
-         */
+    //지원이력 조회
+    @GetMapping("/apply")
+    public ResponseEntity<?> getApplyList(@LoginUser User user){
+        List<ApplyDto> ApplyList = jobOpeningService.getApplyList(user);
 
-        JobOpening jobOpening = jobOpeningService.updateJobOpening(jobOpeningId, jobOpeningDto);
-        JobOpeningDto JobOpening= new JobOpeningDto(jobOpening);
-
-        return ResponseEntity.status(HttpStatus.OK).body(JobOpening);
+        return ResponseEntity.status(HttpStatus.OK).body(ApplyList);
     }
 
-    //채용공고 삭제
-    @DeleteMapping("/{jobOpeningId}")
-    public ResponseEntity<?> deleteJobOpening(@PathVariable("jobOpeningId") Long jobOpeningId){
-        /*
-        토큰에서 회사정보추출
-         */
+    //지원이력 상세조회
+    @GetMapping("/apply/{applyId}")
+    public ResponseEntity<?> getApplyList(@LoginUser User user, @PathVariable("applyId")Long applyId){
+        ApplyDto Apply = jobOpeningService.getApply(user, applyId);
 
-        jobOpeningService.deleteJobOpening(jobOpeningId);
-
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(Apply);
     }
 
+    //공고 조건 생성(지역, 직무 제외)
+    @PostMapping("/condition")
+    public ResponseEntity<?> postSearchCondition(@LoginUser User user, @RequestBody SearchConditionDto searchConditionDto){
+        SearchConditionDto SearchCondition = jobOpeningService.postSearchCondition(user, searchConditionDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(SearchCondition);
+    }
+
+    //공고 조건 희망지역 설정
+    @PostMapping("/condition/{searchConditionId}/hopearea")
+    public ResponseEntity<?> postHopeArea(@PathVariable("searchConditionId")Long searchConditionId, @RequestBody HopeAreaDto hopeAreaDto){
+        jobOpeningService.postHopeArea(searchConditionId, hopeAreaDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("성공~");
+    }
+
+    @PutMapping("/condition/{searchConditionId}/hopearea/{hopeAreaId}")
+    //공고 조건 희망지역 수정
+    public ResponseEntity<?> updateHopeArea(@PathVariable("searchConditionId")Long searchConditionId,
+                                            @RequestBody HopeAreaDto hopeAreaDto,
+                                            @PathVariable("hopeAreaId")Long hopeAreaId){
+        jobOpeningService.updateHopeArea(searchConditionId,hopeAreaDto,hopeAreaId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("성공~");
+    }
+
+    //공고 조건 희망지역 삭제
+    @DeleteMapping("/condition/{searchConditionId}/hopearea/{hopeAreaId}")
+    public ResponseEntity<?> deleteHopeArea(@PathVariable("hopeAreaId")Long hopeAreaId){
+        jobOpeningService.deleteHopeArea(hopeAreaId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("성공~");
+    }
+
+    //공고 조건 희망직무 설정
+    @PostMapping("/condition/{searchConditionId}/hopejob")
+    public ResponseEntity<?> postHopeJob(@PathVariable("searchConditionId")Long searchConditionId, @RequestBody HopeJobDto hopeJobDto){
+        jobOpeningService.postHopeJob(searchConditionId,hopeJobDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("성공~");
+    }
+
+    //공고 조건 희망지역 수정
+    @PutMapping("/condition/{searchConditionId}/hopejob/{hopeJobId}")
+    public ResponseEntity<?> updateHopeJob(@PathVariable("searchConditionId")Long searchConditionId,
+                                           @RequestBody HopeJobDto hopeJobDto,
+                                           @PathVariable("hopeJobId")Long hopeJobId){
+        jobOpeningService.updateHopeJob(searchConditionId,hopeJobDto,hopeJobId);
+        return ResponseEntity.status(HttpStatus.CREATED).body("성공~");
+    }
+
+    //공고 조건 희망지역 삭제
+    @DeleteMapping("/condition/{searchConditionId}/hopejob/{hopeJobId}")
+    public ResponseEntity<?> deleteHopeJob(@PathVariable("hopeJobId")Long hopeJobId){
+        jobOpeningService.deleteHopeJob(hopeJobId);
+        return ResponseEntity.status(HttpStatus.CREATED).body("성공~");
+    }
+
+    @GetMapping("/condition")
+    //공고 조건 조회
+    public ResponseEntity<?> getSearchConditionList(@LoginUser User user){
+        List<SearchConditionDto> searchConditionList = jobOpeningService.getSearchConditionList(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(searchConditionList);
+    }
+
+    //공고 조건 수정
+    @PutMapping("/condition/{searchConditionId}")
+    public ResponseEntity<?> updateSearchCondition(@LoginUser User user,
+                                                   @PathVariable("searchConditionId")Long searchConditionId,
+                                                   @RequestBody SearchConditionDto searchConditionDto){
+        jobOpeningService.updateSearchCondition(user,searchConditionId,searchConditionDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("성공~");
+    }
+
+    //공고 조건 삭제
+    @DeleteMapping("/condition/{searchConditionId}")
+    public ResponseEntity<?> deleteSearchCondition( @PathVariable("searchConditionId")Long searchConditionId){
+        jobOpeningService.deleteSearchCondition(searchConditionId);
+        return ResponseEntity.status(HttpStatus.CREATED).body("성공~");
+    }
+
+    //공고 조건 상세조회
+    @GetMapping("/condition/{searchConditionId}")
+    public ResponseEntity<?> getSearchCondition(@PathVariable("searchConditionId")Long searchConditionId){
+        SearchConditionDto searchCondition = jobOpeningService.getSearchCondition(searchConditionId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(searchCondition);
+    }
+
+    //공고 전체조회
+    @GetMapping("/search")
+    public ResponseEntity<?> getJobOpening(Pageable pageable){
+        Page<JobOpeningDto> jobOpeningList = jobOpeningService.getJobOpening(pageable);
+        return ResponseEntity.status(HttpStatus.CREATED).body(jobOpeningList);
+    }
 }

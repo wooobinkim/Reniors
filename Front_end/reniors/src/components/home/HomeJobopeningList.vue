@@ -1,14 +1,12 @@
 <template>
   <div>
-    <h2>{{ type }} 채용 공고</h2>
-    <div class="jobopening-list">
-      <ul class="jobopening-item" v-for="jobopening in jobopenings" :key="jobopening.id">
-        <li>
-          <p>{{ jobopening.name }}</p>
-          <p>{{ jobopening.context }}</p>
-        </li>
-      </ul>
-    </div>
+    <h2 class="jobopening-type">{{ type }}</h2>
+    <ul class="jobopening-list">
+      <li class="jobopening-item" v-for="jobopening in jobopenings" :key="jobopening.id">
+        <p>{{ jobopening.name }}</p>
+        <p>{{ jobopening.context }}</p>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -23,14 +21,28 @@ export default {
 </script>
 
 <style>
+.jobopening-type {
+  margin-bottom: 0;
+  margin-left: 10px;
+  text-align: left;
+  font-weight: bold;
+}
+
 .jobopening-list {
   display: flex;
+  margin: 0;
+  padding: 0;
+  flex-wrap: no-wrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .jobopening-item {
-  border: 1px solid;
+  background-color: var(--color-black-4);
+  border-radius: 0.3rem;
   margin: 10px;
   padding: 10px;
   list-style: none;
+  flex: 0 0 auto;
 }
 </style>

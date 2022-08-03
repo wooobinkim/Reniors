@@ -1,6 +1,8 @@
 package com.common.jmark.domain.entity.user;
 
 import com.common.jmark.domain.entity.Enum.LastEdu;
+import com.common.jmark.domain.entity.Apply;
+import com.common.jmark.domain.entity.SearchCondition;
 import com.common.jmark.domain.entity.Type.Gender;
 import com.common.jmark.domain.entity.Type.IsOpen;
 import com.common.jmark.domain.entity.Type.Role;
@@ -75,9 +77,17 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<License> licenses = new ArrayList<>();
 
-    // 회원 추천 조건 연관관계
+    // 회원 - 추천 조건 연관관계
     @OneToOne(mappedBy = "user")
     private RecommendCondition recommendCondition;
+
+    // 회원 - 공고 지원 연관관계
+    @OneToMany(mappedBy = "user")
+    List<Apply> applies = new ArrayList<>();
+
+    // 회원 - 검색 조건 연관관계
+    @OneToMany(mappedBy = "user")
+    List<SearchCondition> searchConditions = new ArrayList<>();
 
    public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
         User user = new User();

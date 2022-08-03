@@ -16,15 +16,9 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/jmark?serverTimezone=UTC&characterEncoding=UTF-8
-
-    #username: ssafy
-    #password: ssafy
-
-
     username: root
     password: root
 
-    #password: Common7333!
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect

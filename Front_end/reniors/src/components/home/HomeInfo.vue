@@ -12,7 +12,7 @@ export default {
 
 <style>
 .home-info {
-  background-color: var(--color-black-3);
+  background-color: var(--color-black-4);
   border-radius: 0.3rem;
   margin: 5px;
   height: 200px;

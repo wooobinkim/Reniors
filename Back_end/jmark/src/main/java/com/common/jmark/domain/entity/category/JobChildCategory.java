@@ -1,6 +1,7 @@
 package com.common.jmark.domain.entity.category;
 
 import com.common.jmark.domain.entity.recommend.RecommendCondition;
+import com.common.jmark.domain.entity.HopeJob;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +30,9 @@ public class JobChildCategory {
 
     @OneToMany(mappedBy = "jobChildCategory")
     private List<RecommendCondition> recommendConditions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "jobChildCategory")
+    private List<HopeJob> hopeJobs = new ArrayList<>();
 
     public static JobChildCategory create(String name, JobParentCategory parent){
         JobChildCategory jcc = new JobChildCategory();
