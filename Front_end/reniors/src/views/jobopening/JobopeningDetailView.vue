@@ -3,7 +3,6 @@
     <NavBar />
     <b-tabs pills class="jobopening-detail-tab"
       active-nav-item-class="bg-transparent"
-      content-class="jobopening-detail-tab-item"
     >
       <b-tab title="모집조건"><DetailCondition /></b-tab>
       <b-tab title="상세모집내용"><DetailContent /></b-tab>
@@ -14,6 +13,7 @@
 
 <script>
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import NavBar from '@/components/jobopening/NavBar.vue'
 import DetailCondition from '@/components/jobopening/DetailCondition.vue'
 import DetailContent from '@/components/jobopening/DetailContent.vue'
@@ -25,16 +25,24 @@ export default {
     NavBar, DetailCondition, DetailContent, DetailInfo,
   },
   setup() {
+    const store = useStore()
     const jobopeningId = useRoute().params.jobopeningId
 
+    const selectJobopening = () => store.dispatch('jobopening/selectJobopening', jobopeningId)
+    // selectJobopening()
+
     return {
-      jobopeningId,
+      jobopeningId, selectJobopening
     }
   }
 }
 </script>
 
 <style>
+.jobopening-detail-tab {
+  background-color: var(--color-red-4);
+}
+
 .jobopening-detail-tab .nav {
   display: flex;
   justify-content: space-evenly;
@@ -51,9 +59,5 @@ export default {
 
 .jobopening-detail-tab button.active {
   font-weight: bold;
-}
-
-.jobopening-detail-tab-item {
-  background-color: var(--color-red-3);
 }
 </style>
