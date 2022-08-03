@@ -59,8 +59,8 @@ export default {
   color: #f3620f;
 }
 
-.router-link-active {
-  color: #f3620f;
+.footer a.router-link-exact-active {
+  color: var(--color-red-1);
 }
 
 
