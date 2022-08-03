@@ -6,7 +6,6 @@ const YOUTUBE_API_KEY = 'AIzaSyAF4F4t4ryCtxtxMrF0LgKNNXCITQVyi7E'
 export default {
   namespaced: true,
   state: {
-    isLogin: false,
     hotJobopenings: [
       {
         id: 1,
@@ -57,7 +56,6 @@ export default {
     isYoutube: false,
   },
   getters: {
-    isLogin: state => state.isLogin,
     hotJobopenings: state => state.hotJobopenings,
     newJobopenings: state => state.newJobopenings,
     recommendJobopenings: state => state.recommendJobopenings,
@@ -65,19 +63,10 @@ export default {
     isYoutube: state => !_.isEmpty(state.youtubes),
   },
   mutations: {
-    IS_LOGIN: (state, value) => state.isLogin = value,
     YOUTUBES: (state, youtubes) => state.youtubes = youtubes,
     DUMMY: () => 0,
   },
   actions: {
-    login({ commit }) {
-      console.log('login')
-      commit('IS_LOGIN', true)
-    },
-    logout({ commit }) {
-      console.log('logout')
-      commit('IS_LOGIN', false)
-    },
     async fetchYoutubes({ commit }, keyword) {
       console.log('fetch execute')
       commit('YOUTUBES', [])

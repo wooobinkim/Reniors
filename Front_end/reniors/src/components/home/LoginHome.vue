@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button @click="logout" style="position: absolute; top: 100px; left: 100px;">logout</button>
     <SearchBar />
     <HomeNotice :login="true"/>
     <HomeInfo />
@@ -30,10 +29,8 @@ export default {
     const youtubes = computed(() => store.getters['home/youtubes'])
     const isYoutube = computed(() => store.getters['home/isYoutube'])
 
-    const logout = () => store.dispatch('home/logout')
-
     return {
-      recommendJobopenings, youtubes, isYoutube, logout
+      recommendJobopenings, youtubes, isYoutube
     }
   },
   mounted() {

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button @click="login" style="position: absolute; top: 100px; left: 100px;">login</button>
     <SearchBar />
     <HomeNotice :login="false" />
     <HomeInfo />
@@ -32,10 +31,8 @@ export default {
     const youtubes = computed(() => store.getters['home/youtubes'])
     const isYoutube = computed(() => store.getters['home/isYoutube'])
 
-    const login = () => store.dispatch('home/login')
-
     return {
-      hotJobopenings, newJobopenings, youtubes, isYoutube, login
+      hotJobopenings, newJobopenings, youtubes, isYoutube
     }
   },
   mounted() {
