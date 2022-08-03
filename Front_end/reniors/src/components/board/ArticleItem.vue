@@ -1,13 +1,19 @@
 <template>
   <div>
-
+    <router-link :to="{ name: 'BoardDetail', params: {board_id: article_pk}}">
+        <h3>
+            {{ article.user }} | {{ article.title }}
+        </h3>
+    </router-link>
   </div>
 </template>
 <script>
 
 export default{ 
     name:'ArticleItem',
-    props:{},
+    props:{
+        article: Object,
+    },
     components:{},
     data(){
         return{
