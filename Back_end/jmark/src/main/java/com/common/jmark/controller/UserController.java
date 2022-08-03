@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -50,7 +51,7 @@ public class UserController {
 
     @GetMapping()
     public ResponseEntity<?> getUserInfo(
-            @LoginUser User user
+           @ApiIgnore @LoginUser User user
     ){
         return ResponseEntity.ok(userService.getUserInfo(user));
     }

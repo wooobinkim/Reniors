@@ -1,4 +1,4 @@
-package com.common.jmark.dto.category;
+package com.common.jmark.dto.board;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,10 +10,11 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class JobChildCategoryUpdateRequest {
-    @NotBlank(message = "소분류 카테고리 이름은 필수입니다.")
-    private String name;
+public class CommentCreateRequest {
+
+    @NotBlank
+    private String contents;
 
     @NotNull
-    private Long parentId;
+    private Long userId;
 }

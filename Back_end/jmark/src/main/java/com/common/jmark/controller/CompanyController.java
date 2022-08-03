@@ -18,11 +18,6 @@ import javax.persistence.Entity;
 public class CompanyController {
     private final CompanyService companyService;
 
-    @GetMapping("/hi")
-    public ResponseEntity<?> hi(){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("hi");
-    }
-
     //회사 회원가입
     @PostMapping
     public ResponseEntity<?> postCompany(@RequestBody CompanyDto companyDto){

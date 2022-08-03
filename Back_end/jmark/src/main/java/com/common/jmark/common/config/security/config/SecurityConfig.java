@@ -6,8 +6,10 @@ import com.common.jmark.common.config.security.handler.CustomAuthenticationEntry
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/configuration/ui",
             "/configuration/security",
             "/swagger-ui.html",
+            "/swagger-ui/**",
             "/webjars/**",
             /* swagger v3 */
             "/v3/api-docs/**",
@@ -40,15 +43,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             /* 카카오 로그인 */
             "/user/kakao/callback",
             "/user/login",
-            // 연습
-            "/user/users",
-            "/user/users/login"
+
     };
 
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/swagger-ui.html"); // swagger url로 바꾸기
-//    }
+    private static final String[] ADMIN_PERMIT_URL_ARRAY = {
+            "/categories/sido/**",
+    };
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/api/swagger-ui.html"); // swagger url로 바꾸기
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -61,10 +65,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(PERMIT_URL_ARRAY).permitAll()
+                // TODO : 권한 설정할 페이지들 넣어야함
                 .antMatchers("/ws-stomp/**", "/api/port","/actuator/health").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/users", "/api/users/login").permitAll()
-//                .anyRequest().hasAnyRole("USER", "ADMIN")
-                .anyRequest().permitAll()
+                .antMatchers(HttpMethod.POST, "/users/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/categories/sido", "/categories/sido/*/gugun").permitAll()
+                .antMatchers(ADMIN_PERMIT_URL_ARRAY).hasRole("ADMIN")
+                .anyRequest().permitAll()//hasAnyRole("USER","ADMIN")
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint)
@@ -80,6 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.addAllowedOriginPattern("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
+        configuration.addExposedHeader(HttpHeaders.AUTHORIZATION);
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
