@@ -8,16 +8,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Apply {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "apply_id")
     private Long id;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private JobOpeningProcess jobOpeningProcess;
 

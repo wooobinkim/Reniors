@@ -58,12 +58,21 @@ public class CareerDetailServiceImpl implements CareerDetailService {
 
     @Override
     @Transactional
-    public List<CareerDetailResponse> read(Long userId) {
+    public List<CareerDetailResponse> readList(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
         List<CareerDetailResponse> careerDetails = careerDetailRepository.findByUser(user).stream()
                 .map(CareerDetailResponse::response)
                 .collect(Collectors.toList());
         return careerDetails;
+    }
+
+    @Override
+    @Transactional
+    public CareerDetailResponse read(Long careerDetailId) {
+        CareerDetail careerDetail = careerDetailRepository.findById(careerDetailId)
+                .orElseThrow(()->new NotFoundException(CAREER_DETAIL_NOT_FOUND));
+        CareerDetailResponse careerDetailResponse = CareerDetailResponse.response(careerDetail);
+        return careerDetailResponse;
     }
 }

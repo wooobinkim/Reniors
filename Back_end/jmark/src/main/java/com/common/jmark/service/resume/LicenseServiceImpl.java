@@ -42,6 +42,26 @@ public class LicenseServiceImpl implements LicenseService {
 
     @Override
     @Transactional
+    public List<LicenseResponse> readList(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
+        List<LicenseResponse> licenses = licenseRepository.findByUser(user).stream()
+                .map(LicenseResponse::response)
+                .collect(Collectors.toList());
+        return licenses;
+    }
+
+    @Override
+    @Transactional
+    public LicenseResponse read(Long licenseId) {
+        License license = licenseRepository.findById(licenseId)
+                .orElseThrow(()->new NotFoundException(LICENSE_NOT_FOUND));
+        LicenseResponse licenseResponse = LicenseResponse.response(license);
+        return licenseResponse;
+    }
+
+    @Override
+    @Transactional
     public void update(Long licenseId, LicenseUpdateRequest request) {
         License license = licenseRepository.findById(licenseId)
                 .orElseThrow(()->new NotFoundException(LICENSE_NOT_FOUND));
@@ -54,16 +74,5 @@ public class LicenseServiceImpl implements LicenseService {
         License license = licenseRepository.findById(licenseId)
                 .orElseThrow(()->new NotFoundException(LICENSE_NOT_FOUND));
         licenseRepository.delete(license);
-    }
-
-    @Override
-    @Transactional
-    public List<LicenseResponse> read(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
-        List<LicenseResponse> licenses = licenseRepository.findByUser(user).stream()
-                .map(LicenseResponse::response)
-                .collect(Collectors.toList());
-        return licenses;
     }
 }

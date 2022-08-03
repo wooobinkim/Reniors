@@ -22,9 +22,8 @@ import java.util.Map;
 public class RecommendConditionController {
     private final RecommendConditionService recommendConditionService;
 
-    @ApiOperation(value = "추천 조건 생성", notes = "직무 소분류 ID, 구군 ID, 희망 근무 일수, 희망 최소 연봉을 서버에 넘겨주세요")
-    @ApiImplicitParam(name = "request", value = "")
     @PostMapping("/{userId}/condition")
+    @ApiOperation(value = "추천 조건 생성", notes = "해당 유저의 추천 조건을 생성합니다.")
     public ResponseEntity<?> create (
             @PathVariable Long userId,
             @Valid @RequestBody RecommendConditionCreateRequest request
@@ -36,6 +35,7 @@ public class RecommendConditionController {
     }
 
     @GetMapping("/{userId}/condition")
+    @ApiOperation(value = "추천 조건 조회", notes = "해당 유저의 추천 조건을 조회합니다.")
     public ResponseEntity<?> read(
             @PathVariable Long userId
     ) {
@@ -43,6 +43,7 @@ public class RecommendConditionController {
     }
 
     @PutMapping("/condition/{recommendConditionId}")
+    @ApiOperation(value = "추천 조건 수정", notes = "해당 유저의 추천 조건을 수정합니다.")
     public ResponseEntity<?> update(
             @PathVariable Long recommendConditionId,
             @Valid @RequestBody RecommendConditionUpdateRequest request
@@ -52,6 +53,7 @@ public class RecommendConditionController {
     }
 
     @DeleteMapping("/condition/{recommendConditionId}")
+    @ApiOperation(value = "추천 조건 삭제", notes = "해당 유저의 추천 조건을 삭제합니다.")
     public ResponseEntity<Map<String, Long>> delete(
             @PathVariable Long recommendConditionId
     ) {

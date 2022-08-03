@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,8 @@ public class JobParentCategory {
     @Column(name = "job_parent_category_id")
     private Long id;
 
+    @NotNull
+    @Column(length = 50)
     private String name;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)

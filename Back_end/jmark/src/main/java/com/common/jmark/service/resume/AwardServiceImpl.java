@@ -58,12 +58,21 @@ public class AwardServiceImpl implements AwardService {
 
     @Override
     @Transactional
-    public List<AwardResponse> read(Long userId) {
+    public List<AwardResponse> readList(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
         List<AwardResponse> awards = awardRepository.findByUser(user).stream()
                 .map(AwardResponse::response)
                 .collect(Collectors.toList());
         return awards;
+    }
+
+    @Override
+    @Transactional
+    public AwardResponse read(Long awardId) {
+        Award award = awardRepository.findById(awardId)
+                .orElseThrow(()->new NotFoundException(AWARD_NOT_FOUND));
+        AwardResponse awardResponse = AwardResponse.response(award);
+        return awardResponse;
     }
 }

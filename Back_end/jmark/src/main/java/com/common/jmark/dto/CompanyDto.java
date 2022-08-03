@@ -9,11 +9,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Data
 @Setter(AccessLevel.NONE)
 @NoArgsConstructor
 public class CompanyDto {
-
     private Long id;
     private String name;
     private String companyAppId;
@@ -26,6 +27,7 @@ public class CompanyDto {
     private String companyNum;
     private String companyPhone;
 
+    private String representativePhone;
     private TypeCompany typeCompany;
 
     public CompanyDto(Company company){
@@ -40,6 +42,7 @@ public class CompanyDto {
         this.companyImgPath = company.getCompanyImgPath();
         this.companyNum = company.getCompanyNum();
         this.companyPhone = company.getCompanyPhone();
+        this.representativePhone = company.getRepresentativePhone();
         this.typeCompany = company.getTypeCompany();
     }
 

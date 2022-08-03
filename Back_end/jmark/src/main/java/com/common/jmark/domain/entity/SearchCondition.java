@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,17 +17,24 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SearchCondition {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "search_condition_id")
     private Long id;
 
+    @NotNull
+    @Column(length = 50)
     private String name;
+
     private int minCareer;
+
     private int minSalary;
+
     private int workingDay;
 
     @Enumerated(EnumType.STRING)
     private TypeEmployment typeEmployment;
+
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
 

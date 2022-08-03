@@ -25,9 +25,8 @@ public class ResumeController {
     private final CareerDetailService careerDetailService;
     private final LicenseService licenseService;
 
-    @ApiOperation(value = "경력사항 추가", notes = "기업명, 재직 시작 날짜, 재직 종료 날짜, 직무 및 업무내용, 해당 User 정보를 서버에 넘겨주세요")
-    @ApiImplicitParam(name = "request", value = "경력사항의 기업명, 재직 시작 날짜, 재직 종료 날짜, 직무 및 업무내용, 해당 User의 userId")
     @PostMapping("/{userId}/career")
+    @ApiOperation(value = "경력사항 추가", notes = "경력사항을 추가합니다.")
     public ResponseEntity<?> createCareer (
             @PathVariable Long userId,
             @Valid @RequestBody CareerDetailCreateRequest request
@@ -39,15 +38,24 @@ public class ResumeController {
     }
 
     @GetMapping("/{userId}/career")
-    public ResponseEntity<?> readCareer (
+    @ApiOperation(value = "경력사항 조회", notes = "경력사항을 조회합니다.")
+    public ResponseEntity<?> readCareerList (
             @PathVariable Long userId
     ) {
-        return ResponseEntity.ok(careerDetailService.read(userId));
+        return ResponseEntity.ok(careerDetailService.readList(userId));
     }
 
-    @PutMapping("/{userId}/career/{careerDetailId}")
+    @GetMapping("/career/{careerDetailId}")
+    @ApiOperation(value = "경력사항 상세 조회", notes = "경력사항을 상세 조회합니다.")
+    public ResponseEntity<?> readCareer (
+            @PathVariable Long careerDetailId
+    ) {
+        return ResponseEntity.ok(careerDetailService.read(careerDetailId));
+    }
+
+    @PutMapping("/career/{careerDetailId}")
+    @ApiOperation(value = "경력사항 수정", notes = "경력사항을 수정합니다.")
     public ResponseEntity<?> updateCareer (
-//            @PathVariable Long userId,
             @PathVariable Long careerDetailId,
             @Valid @RequestBody CareerDetailUpdateRequest request
             ) {
@@ -55,18 +63,17 @@ public class ResumeController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @DeleteMapping("/{userId}/career/{careerDetailId}")
+    @DeleteMapping("/career/{careerDetailId}")
+    @ApiOperation(value = "경력사항 삭제", notes = "경력사항을 삭제합니다.")
     public ResponseEntity<Map<String, Long>> deleteCareer (
-//            @PathVariable Long userId,
             @PathVariable Long careerDetailId
     ) {
         careerDetailService.delete(careerDetailId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @ApiOperation(value = "수상경력 추가", notes = "수상경력명, 수상날짜, 해당 User의 userId를 서버에 넘겨주세요")
-    @ApiImplicitParam(name = "request", value = "수상경력의 수상경력명, 수상날짜, 해당 User의 userId")
     @PostMapping("/{userId}/awards")
+    @ApiOperation(value = "수상경력 추가", notes = "수상경력을 추가합니다.")
     public ResponseEntity<?> createAward(
             @PathVariable Long userId,
             @Valid @RequestBody AwardCreateRequest request
@@ -78,15 +85,24 @@ public class ResumeController {
     }
 
     @GetMapping("/{userId}/awards")
-    public ResponseEntity<?> readAward (
+    @ApiOperation(value = "수상경력 조회", notes = "수상경력을 조회합니다.")
+    public ResponseEntity<?> readAwardList (
             @PathVariable Long userId
     ) {
-        return ResponseEntity.ok(awardService.read(userId));
+        return ResponseEntity.ok(awardService.readList(userId));
     }
 
-    @PutMapping("/{userId}/awards/{awardId}")
+    @GetMapping("/awards/{awardId}")
+    @ApiOperation(value = "수상경력 상세 조회", notes = "수상경력을 상세 조회합니다.")
+    public ResponseEntity<?> readAward (
+            @PathVariable Long awardId
+    ) {
+        return ResponseEntity.ok(awardService.read(awardId));
+    }
+
+    @PutMapping("/awards/{awardId}")
+    @ApiOperation(value = "수상경력 수정", notes = "수상경력을 수정합니다.")
     public ResponseEntity<?> updateAward (
-//            @PathVariable Long userId,
             @PathVariable Long awardId,
             @Valid @RequestBody AwardUpdateRequest request
     ) {
@@ -94,18 +110,17 @@ public class ResumeController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @DeleteMapping("/{userId}/awards/{awardId}")
+    @DeleteMapping("/awards/{awardId}")
+    @ApiOperation(value = "수상경력 삭제", notes = "수상경력을 삭제합니다.")
     public ResponseEntity<Map<String, Long>> deleteAward (
-//            @PathVariable Long userId,
             @PathVariable Long awardId
     ) {
         awardService.delete(awardId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @ApiOperation(value = "자격증 추가", notes = "자격증명, 취득일자, 자격증 등급, 해당 User의 userId를 서버에 넘겨주세요")
-    @ApiImplicitParam(name = "request", value = "수상경력의 자격증명, 취득일자, 자격증 등급, 해당 User의 userId")
     @PostMapping("/{userId}/license")
+    @ApiOperation(value = "자격증 추가", notes = "자격증을 추가합니다.")
     public ResponseEntity<?> createLicense (
             @PathVariable Long userId,
             @Valid @RequestBody LicenseCreateRequest request
@@ -117,24 +132,33 @@ public class ResumeController {
     }
 
     @GetMapping("/{userId}/license")
-    public ResponseEntity<?> readLicense (
+    @ApiOperation(value = "자격증 조회", notes = "자격증을 조회합니다.")
+    public ResponseEntity<?> readLicenseList (
             @PathVariable Long userId
     ) {
-        return ResponseEntity.ok(licenseService.read(userId));
+        return ResponseEntity.ok(licenseService.readList(userId));
     }
 
-    @PutMapping("/{userId}/license/{licenseId}")
+    @GetMapping("/license/{licenseId}")
+    @ApiOperation(value = "자격증 상세 조회", notes = "자격증을 상세 조회합니다.")
+    public ResponseEntity<?> readLicense (
+            @PathVariable Long licenseId
+    ) {
+        return ResponseEntity.ok(licenseService.read(licenseId));
+    }
+
+    @PutMapping("/license/{licenseId}")
+    @ApiOperation(value = "자격증 수정", notes = "자격증을 수정합니다.")
     public ResponseEntity<?> updateLicense (
-//            @PathVariable Long userId,
             @PathVariable Long licenseId,
             @Valid @RequestBody LicenseUpdateRequest request
     ) {
         licenseService.update(licenseId, request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-    @DeleteMapping("/{userId}/license/{licenseId}")
+    @DeleteMapping("/license/{licenseId}")
+    @ApiOperation(value = "자격증 삭제", notes = "자격증을 삭제합니다.")
     public ResponseEntity<Map<String, Long>> deleteLicense (
-//            @PathVariable Long userId,
             @PathVariable Long licenseId
     ) {
         licenseService.delete(licenseId);

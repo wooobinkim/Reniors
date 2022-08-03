@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +15,13 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Eval {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "eval_id")
     private Long id;
 
+    @NotNull
+    @Column(length = 50)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
