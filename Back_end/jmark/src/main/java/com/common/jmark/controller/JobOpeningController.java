@@ -29,9 +29,9 @@ public class JobOpeningController {
     private final JobOpeningService jobOpeningService;
 
     //채용공고 조회(조건포함)
-    @GetMapping("/conditionlist")
-    public ResponseEntity<?> getJobOpeningList(@RequestBody SearchConditionDto searchConditionDto, Pageable pageable){
-        Page<JobOpeningDto> JobOpeningList = jobOpeningService.getJobOpeningConditionList(searchConditionDto, pageable);
+    @GetMapping("/search/{searchConditionId}")
+    public ResponseEntity<?> getJobOpeningList(@PathVariable("searchConditionId")Long searchConditionId, Pageable pageable){
+        Page<JobOpeningDto> JobOpeningList = jobOpeningService.getJobOpeningConditionList(searchConditionId, pageable);
 //        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(x->new JobOpeningDto(x)).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(JobOpeningList);
@@ -163,7 +163,7 @@ public class JobOpeningController {
     }
 
     //공고 전체조회
-    @GetMapping()
+    @GetMapping("/search")
     public ResponseEntity<?> getJobOpening(Pageable pageable){
         Page<JobOpeningDto> jobOpeningList = jobOpeningService.getJobOpening(pageable);
         return ResponseEntity.status(HttpStatus.CREATED).body(jobOpeningList);

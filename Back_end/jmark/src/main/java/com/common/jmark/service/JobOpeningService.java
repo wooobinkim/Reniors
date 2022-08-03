@@ -13,6 +13,9 @@ import com.common.jmark.dto.category.GugunResponse;
 import com.common.jmark.dto.category.JobChildCategoryResponse;
 import com.common.jmark.dto.user.UserResponse;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -160,24 +163,52 @@ public class JobOpeningService {
 
     //채용공고 조건 조회
     @Transactional
-    public Page<JobOpeningDto> getJobOpeningConditionList(@RequestBody SearchConditionDto searchConditionDto, Pageable pageable){
+    public Page<JobOpeningDto> getJobOpeningConditionList(Long searchConditionId, Pageable pageable){
         //조건검색을 위한 쿼리DSL 실행
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
         QJobOpening j = new QJobOpening("j");
         BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
+        List<HopeArea> hopeAreaList = hopeAreaRepository.findBySearchCondition(searchCondition);
+        List<HopeJob> hopeJobList = hopeJobRepository.findBySearchCondition(searchCondition);
+
+        List<Gugun> gugunList = new ArrayList<>();
+         for (HopeArea hopeArea : hopeAreaList) {
+             Gugun gugun = gugunRepository.findById(hopeArea.getGugun().getId()).orElseThrow(() -> new NotFoundException("not found gugun"));
+             gugunList.add(gugun);
+        }
+
+         List<JobChildCategory> jobChildCategoryList = new ArrayList<>();
+        for (HopeJob hopeJob : hopeJobList) {
+            JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(hopeJob.getJobChildCategory().getId()).orElseThrow(() -> new NotFoundException("not found jobChildCategory"));
+            jobChildCategoryList.add(jobChildCategory);
+        }
+//        for (HopeArea hopeArea : hopeAreaList) {
+//            booleanBuilder.and(j.gugun.id.in(hopeArea.getId()));
+//        }
+//
+//        for (HopeJob hopeJob : hopeJobList) {
+//            booleanBuilder.and(j.jobChildCategory.id.in(hopeJob.getId()));
+//        }
 //        if (jobOpeningSearchDto.getGuGunId() != null) booleanBuilder.and(j.gugun.id.eq(jobOpeningSearchDto.getGuGunId()));
 //        if (jobOpeningSearchDto.getJobChildCategoryId()!= null) booleanBuilder.and(j.jobChildCategory.id.eq(jobOpeningSearchDto.getJobChildCategoryId()));
+            if (searchCondition.getLastEdu() != null) booleanBuilder.and(j.lastEdu.eq(searchCondition.getLastEdu()));
+            if (searchCondition.getTypeEmployment() != null) booleanBuilder.and(j.typeEmployment.eq(searchCondition.getTypeEmployment()));
 
         List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
                 .where(
 //                        (j.contents.contains(jobOpeningSearchDto.getContents())),
 //                        (j.minSalary.goe(jobOpeningSearchDto.getMinSalary())),
 //                        booleanBuilder
-                        (j.minCareer.goe(searchConditionDto.getMinCareer())),
-                        (j.minSalary.goe(searchConditionDto.getMinSalary())),
-                        (j.workingDay.loe(searchConditionDto.getWorkingDay())),
-                        (j.typeEmployment.eq(searchConditionDto.getTypeEmployment())),
-                        (j.lastEdu.eq(searchConditionDto.getLastEdu()))
+                        (j.minCareer.goe(searchCondition.getMinCareer())),
+                        (j.minSalary.goe(searchCondition.getMinSalary())),
+                        (j.workingDay.loe(searchCondition.getWorkingDay())),
+                        booleanBuilder,
+//                        (j.typeEmployment.eq(searchCondition.getTypeEmployment())),
+//                        (j.lastEdu.eq(searchCondition.getLastEdu())),
+                        (j.gugun.in(gugunList)),
+                        (j.jobChildCategory.in(jobChildCategoryList))
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
