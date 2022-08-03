@@ -1,6 +1,7 @@
 <template>
-  <div class="home-search">
-    <form action="" @submit.prevent="search">
+  <div>
+    <h1 class="home-header">comm on</h1>
+    <form class="home-search" action="" @submit.prevent="search">
       <input type="text" name="keyword" class="home-search-text"
         placeholder="회사명, 직종, 지역 등 검색어를 입력해주세요" v-model="keyword">
       <svg @click="search" class="home-search-button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M500.3 443.7l-119.7-119.7c27.22-40.41 40.65-90.9 33.46-144.7C401.8 87.79 326.8 13.32 235.2 1.723C99.01-15.51-15.51 99.01 1.724 235.2c11.6 91.64 86.08 166.7 177.6 178.9c53.8 7.189 104.3-6.236 144.7-33.46l119.7 119.7c15.62 15.62 40.95 15.62 56.57 0C515.9 484.7 515.9 459.3 500.3 443.7zM79.1 208c0-70.58 57.42-128 128-128s128 57.42 128 128c0 70.58-57.42 128-128 128S79.1 278.6 79.1 208z"/></svg>
@@ -12,7 +13,7 @@
 import { useStore } from 'vuex'
 
 export default {
-  name: 'HomeSearch',
+  name: 'SearchBar',
   setup() {
     const store = useStore()
 
@@ -30,8 +31,15 @@ export default {
 </script>
 
 <style>
+.home-header {
+  color: var(--color-red-1);
+  font-weight: bold;
+  margin: 20px;
+}
+
 .home-search {
   position: relative;
+  margin-bottom: 15px;
 }
 
 .home-search-text {
@@ -42,6 +50,7 @@ export default {
   height: 40px;
   width: 100%;
   padding: 0 20px;
+  font-size: 14px;
 }
 
 .home-search-button {
