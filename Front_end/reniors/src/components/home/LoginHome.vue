@@ -3,7 +3,7 @@
     <SearchBar />
     <HomeNotice :login="true"/>
     <HomeInfo />
-    <HomeJobopeningList type="추천 채용공고" :jobopenings="recommendJobopenings" />
+    <HomeJobopeningList v-if="isFetch" type="추천 채용공고" :jobopenings="recommendJobopenings" />
     <HomeYoutubeList v-if="isYoutube" type="맞춤 유튜브 크롤링" :youtubes="youtubes"/>
   </div>
 </template>
@@ -25,19 +25,18 @@ export default {
   setup () {
     const store = useStore()
 
+    const fetchHome = () => store.dispatch('home/fetchHome', '취업정보')
+    fetchHome()
+
     const recommendJobopenings = computed(() => store.state.home.recommendJobopenings)
     const youtubes = computed(() => store.getters['home/youtubes'])
+    const isFetch = computed(() => store.getters['home/isJobopenings'])
     const isYoutube = computed(() => store.getters['home/isYoutube'])
 
     return {
-      recommendJobopenings, youtubes, isYoutube
+      recommendJobopenings, youtubes, isYoutube, isFetch,
     }
   },
-  mounted() {
-    const store = useStore()
-    const fetch = () => store.dispatch('home/fetchYoutubes', '취업정보')
-    fetch()
-  }
 }
 </script>
 
