@@ -10,6 +10,7 @@ import com.common.jmark.domain.entity.user.User;
 import com.common.jmark.dto.*;
 import com.common.jmark.dto.category.GugunResponse;
 import com.common.jmark.service.JobOpeningService;
+import com.common.jmark.service.bookmark.BookmarkService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -30,6 +33,7 @@ import java.util.stream.Collectors;
 public class JobOpeningController {
 
     private final JobOpeningService jobOpeningService;
+    private final BookmarkService bookmarkService;
 
     //채용공고 조회(조건포함)
     @GetMapping("/search/{searchConditionId}")
@@ -190,6 +194,47 @@ public class JobOpeningController {
     }
 
 
+    //공고 전체조회
+    @GetMapping("/search")
+    public ResponseEntity<?> getJobOpening(Pageable pageable){
+        Page<JobOpeningDto> jobOpeningList = jobOpeningService.getJobOpening(pageable);
+        return ResponseEntity.status(HttpStatus.CREATED).body(jobOpeningList);
+    }
 
+    // 관심 공고 등록
+    @PostMapping("/{userId}/bookmark/{jobOpenigId}")
+    public ResponseEntity<?> createBookmark(
+            @PathVariable Long userId,
+            @PathVariable Long jobOpenigId
+    ) {
+        Long bookmarkId = bookmarkService.create(userId, jobOpenigId);
+        Map<String, Long> response = new HashMap<>();
+        response.put("bookmarkId", bookmarkId);
+        return ResponseEntity.ok(response);
+    }
 
+    // 관심 공고 조회
+    @GetMapping("/{userId}/bookmark")
+    public ResponseEntity<?> readBookmarkList(
+            @PathVariable Long userId
+    ) {
+        return ResponseEntity.ok(bookmarkService.readList(userId));
+    }
+
+    // 관심 공고 상세 조회
+    @GetMapping("/bookmark/{bookmarkId}")
+    public ResponseEntity<?> readBookmark(
+            @PathVariable Long bookmarkId
+    ) {
+        return ResponseEntity.ok(bookmarkService.read(bookmarkId));
+    }
+
+    // 관심 공고 해제
+    @DeleteMapping("/bookmark/{bookmarkId}")
+    public ResponseEntity<Map<String, Long>> deleteBookmark (
+            @PathVariable Long bookmarkId
+    ) {
+        bookmarkService.delete(bookmarkId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

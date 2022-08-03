@@ -1,5 +1,6 @@
 package com.common.jmark.service.resume;
 
+import com.common.jmark.common.exception.DuplicateException;
 import com.common.jmark.common.exception.NotFoundException;
 import com.common.jmark.domain.entity.resume.CareerDetail;
 import com.common.jmark.domain.entity.user.User;
@@ -27,10 +28,14 @@ public class CareerDetailServiceImpl implements CareerDetailService {
 
     @Override
     @Transactional
-    // 경력사항 등록 시 동일한 기업에서 여러번 근무한 경험이 있을 수 있기 때문에 중복 허용
     public Long create(Long userId, CareerDetailCreateRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
+        careerDetailRepository.findByUser(user).forEach(careerDetail -> {
+            if (careerDetail.getCompanyName().equals(request.getCompanyName())) {
+                throw new DuplicateException(String.format("%s에서의 경력은 이미 등록된 경력 사항입니다.", request.getCompanyName()));
+            }
+        });
         CareerDetail careerDetail = CareerDetail.create(request.getCompanyName(), request.getStartedAt(), request.getFinishedAt(), request.getJobContents(), user);
         return careerDetailRepository.save(careerDetail).getId();
     }
@@ -53,12 +58,21 @@ public class CareerDetailServiceImpl implements CareerDetailService {
 
     @Override
     @Transactional
-    public List<CareerDetailResponse> read(Long userId) {
+    public List<CareerDetailResponse> readList(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
         List<CareerDetailResponse> careerDetails = careerDetailRepository.findByUser(user).stream()
                 .map(CareerDetailResponse::response)
                 .collect(Collectors.toList());
         return careerDetails;
+    }
+
+    @Override
+    @Transactional
+    public CareerDetailResponse read(Long careerDetailId) {
+        CareerDetail careerDetail = careerDetailRepository.findById(careerDetailId)
+                .orElseThrow(()->new NotFoundException(CAREER_DETAIL_NOT_FOUND));
+        CareerDetailResponse careerDetailResponse = CareerDetailResponse.response(careerDetail);
+        return careerDetailResponse;
     }
 }

@@ -1,5 +1,6 @@
 package com.common.jmark.service.recommend;
 
+import com.common.jmark.common.exception.DuplicateException;
 import com.common.jmark.common.exception.NotFoundException;
 import com.common.jmark.domain.entity.category.Gugun;
 import com.common.jmark.domain.entity.category.JobChildCategory;
@@ -34,6 +35,9 @@ public class RecommendConditionServiceImpl implements RecommendConditionService 
     public Long create(Long userId, RecommendConditionCreateRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
+        if (recommendConditionRepository.findByUser(user).isPresent()) {
+            throw new DuplicateException(String.format("%s님의 추천 조건이 이미 존재합니다.", user.getName()));
+        }
         JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(request.getJobChildCategoryId())
                 .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
         Gugun gugun = gugunRepository.findById(request.getGugunId())

@@ -6,16 +6,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EvalQuestion {
-
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "eval_question_id")
     private Long id;
 
+    @NotNull
+    @Column(length = 500)
     private String contents;
 
     @ManyToOne(fetch = FetchType.LAZY)

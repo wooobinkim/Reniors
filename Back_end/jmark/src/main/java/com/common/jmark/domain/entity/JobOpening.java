@@ -25,8 +25,8 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 @ToString
 public class JobOpening{
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_opening_id")
     private Long id;
 
@@ -37,20 +37,34 @@ public class JobOpening{
     @NotNull
     @CreatedDate
     private LocalDateTime finishedDate;
+
     @NotNull
     private int numberPeople;
+
     @NotNull
     private int minCareer;
+
     @NotNull
+    @Column(length = 100)
     private String title;
+
     @NotNull
+    @Column(length = 2000)
     private String contents;
+
+    @Column(length = 100)
     private String contentsImgName;
+
+    @Column(length = 100)
     private String contentsImgPath;
-    @NotNull
+
     private int minSalary;
+
+    @Column(length = 100)
     private String jobPosition;
+
     private int workingDay;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private TypeEmployment typeEmployment;

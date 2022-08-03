@@ -106,8 +106,8 @@ public class CompanyService {
     //회사 공고 등록
     @Transactional
     public JobOpeningDto postJobOpening(Company company, JobOpeningDto jobOpeningDto){
-        Gugun gugun = gugunRepository.findById(jobOpeningDto.getGugunId()).get();
-        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(jobOpeningDto.getJobChildCategoryId()).get();
+        Gugun gugun = gugunRepository.findById(jobOpeningDto.getGugunResponse().getId()).get();
+        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(jobOpeningDto.getJobChildCategoryResponse().getId()).get();
 
         JobOpening jobOpening = new JobOpening(jobOpeningDto,gugun,jobChildCategory);
 //        Optional<Company> company = companyRepository.findById(companyId);
@@ -182,8 +182,8 @@ public class CompanyService {
         if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
             throw new NotAuthException(COMPANY_NOT_MATCH);
 
-        Gugun gugun = gugunRepository.findById(jobOpeningDto.getGugunId()).get();
-        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(jobOpeningDto.getJobChildCategoryId()).get();
+        Gugun gugun = gugunRepository.findById(jobOpeningDto.getGugunResponse().getId()).get();
+        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(jobOpeningDto.getJobChildCategoryResponse().getId()).get();
 
         Optional<JobOpening> optionalJobOpening = jobOpeningRepository.findById(jobOpeningId);
         optionalJobOpening.orElseThrow(()->new NotFoundException("not found jobOpening"));
