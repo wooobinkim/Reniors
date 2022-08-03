@@ -1,11 +1,10 @@
 <template>
   <div>
-    <button @click="login" style="position: absolute; top: 100px; left: 100px;">login</button>
     <SearchBar />
     <HomeNotice :login="false" />
     <HomeInfo />
-    <HomeJobopeningList type="핫한 채용공고 🔥" :jobopenings="hotJobopenings" />
-    <HomeJobopeningList type="신규 채용공고" :jobopenings="newJobopenings" />
+    <HomeJobopeningList v-if="isFetch" type="핫한 채용공고 🔥" :jobopenings="hotJobopenings" />
+    <HomeJobopeningList v-if="isFetch" type="신규 채용공고" :jobopenings="newJobopenings" />
     <HomeYoutubeList v-if="isYoutube" type="유튜브 크롤링" :youtubes="youtubes" />
   </div>
 </template>
@@ -27,22 +26,19 @@ export default {
   setup () {
     const store = useStore()
 
+    const fetchHome = () => store.dispatch('home/fetchHome', '뮤비')
+    fetchHome()
+
     const hotJobopenings = computed(() => store.state.home.hotJobopenings)
     const newJobopenings = computed(() => store.state.home.newJobopenings)
     const youtubes = computed(() => store.getters['home/youtubes'])
+    const isFetch = computed(() => store.getters['home/isJobopenings'])
     const isYoutube = computed(() => store.getters['home/isYoutube'])
 
-    const login = () => store.dispatch('home/login')
-
     return {
-      hotJobopenings, newJobopenings, youtubes, isYoutube, login
+      hotJobopenings, newJobopenings, youtubes, isYoutube, isFetch
     }
   },
-  mounted() {
-    const store = useStore()
-    const fetch = () => store.dispatch('home/fetchYoutubes', '뮤비')
-    fetch()
-  }
 }
 </script>
 
