@@ -50,7 +50,7 @@ dependencies {
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
 	// gson
-	implementation 'com.google.code.gson:gson:2.8.7'
+	implementation 'com.google.code.gson:gson:2.9.0'
 
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
