@@ -13,5 +13,7 @@ public interface LicenseService {
 
     void delete(Long licenseId);
 
-    List<LicenseResponse> read(Long userId);
+    List<LicenseResponse> readList(Long userId);
+
+    LicenseResponse read(Long licenseId);
 }

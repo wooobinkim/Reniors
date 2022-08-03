@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -18,10 +19,13 @@ public class License {
     @Column(name = "award_id")
     private Long id;
 
+    @NotNull
+    @Column(length = 50)
     private String name;
 
     private Date passedAt;
 
+    @Column(length = 50)
     private String grade;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -13,5 +13,7 @@ public interface CareerDetailService {
 
     void delete(Long careerDetailId);
 
-    List<CareerDetailResponse> read(Long userId);
+    List<CareerDetailResponse> readList(Long userId);
+
+    CareerDetailResponse read(Long careerDetailId);
 }

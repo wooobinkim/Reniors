@@ -33,10 +33,6 @@ public class JobOpeningDto {
     private int workingDay;
     private TypeEmployment typeEmployment;
     private LastEdu lastEdu;
-
-    private long gugunId;
-    private long jobChildCategoryId;
-
     private GugunResponse gugunResponse;
     private JobChildCategoryResponse jobChildCategoryResponse;
     private CompanyDto companyDto;
@@ -60,6 +56,28 @@ public class JobOpeningDto {
         this.gugunResponse = gugunResponse;
         this.jobChildCategoryResponse = jobChildCategoryResponse;
     }
+
+//    public static JobOpeningDto response(JobOpening jobOpening) {
+//        return new JobOpeningDto(jobOpening.getId(),
+//                jobOpening.getCreatedDate(),
+//                jobOpening.getFinishedDate(),
+//                jobOpening.getNumberPeople(),
+//                jobOpening.getMinCareer(),
+//                jobOpening.getTitle(),
+//                jobOpening.getContents(),
+//                jobOpening.getContentsImgName(),
+//                jobOpening.getContentsImgPath(),
+//                jobOpening.getMinSalary(),
+//                jobOpening.getJobPosition(),
+//                jobOpening.getWorkingDay(),
+//                jobOpening.getTypeEmployment(),
+//                jobOpening.getLastEdu(),
+//                jobOpening.getCompany(),
+//                jobOpening.getGugun(),
+//                jobOpening.getJobChildCategory(),
+//                jobOpening.getApplies()
+//                );
+//    }
 
 //    public void setLinkEntity(CompanyDto companyDto, GugunResponse gugunResponse, JobChildCategoryResponse jobChildCategoryResponse){
 //        this.companyDto = companyDto;

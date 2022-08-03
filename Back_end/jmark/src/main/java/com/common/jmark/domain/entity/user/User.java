@@ -17,6 +17,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,40 +32,61 @@ public class User {
     @Column(name = "user_id")
     private long id;
 
+    @NotNull
+    @Column(length = 100)
     private String userAppId;
 
+    @NotNull
+    @Column(length = 50)
     private String userAppPwd;
 
+    @Column(length = 100)
     private String kakaoId;
 
+    @NotNull
+    @Column(length = 50)
     private String name;
 
+    @NotNull
     private Date birth;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @NotNull
+    @Column(length = 30)
     private String phone;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
 
     private int totalCareer;
 
+    @NotNull
+    @Column(length = 50)
     private String profileImgName;
 
+    @NotNull
+    @Column(length = 100)
     private String profileImgPath;
 
+    @NotNull
+    @Column(length = 100)
     private String address;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private IsOpen isOpen;
 
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
 
+    @Column(length = 100)
     private String portfolioName;
 
+    @Column(length = 100)
     private String portfolioPath;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

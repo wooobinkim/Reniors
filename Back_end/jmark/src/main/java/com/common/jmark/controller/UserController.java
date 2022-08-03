@@ -27,9 +27,8 @@ public class UserController {
 
     private final UserService userService;
 
-    @ApiOperation(value = "자체 서비스 로그인", notes = "아이디와 비밀번호를 서버에 넘겨주세요")
-    @ApiImplicitParam(name = "request", value = "자체 서비스 ID와 PASSWORD")
     @PostMapping("/login")
+    @ApiOperation(value = "자체 서비스 로그인", notes = "아이디와 비밀번호를 입력하여 로그인합니다.")
     public ResponseEntity<?> loginUser (
             @Valid @RequestBody UserLoginRequest request
     ) {
@@ -40,6 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/regist")
+    @ApiOperation(value = "자체 서비스 회원가입", notes = "회원가입에 필요한 정보를 입력하고 회원으로 가입합니다.")
     public ResponseEntity<?> registUser (
             @Valid @RequestBody UserCreateRequest request
     ) {
@@ -49,15 +49,16 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping()
-
+    @GetMapping
+    @ApiOperation(value = "유저 상세 정보 조회", notes = "유저의 상세 정보를 조회합니다.")
     public ResponseEntity<?> readUser (
             @LoginUser User user
     ) {
         return ResponseEntity.ok(userService.readUser(user));
     }
 
-    @DeleteMapping()
+    @DeleteMapping
+    @ApiOperation(value = "회원 탈퇴", notes = "유저의 정보를 삭제하고 회원을 탈퇴합니다.")
     public ResponseEntity<Map<String, Long>> deleteUser(
 
     ) {

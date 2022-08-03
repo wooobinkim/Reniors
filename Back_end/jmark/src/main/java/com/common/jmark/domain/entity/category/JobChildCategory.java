@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class JobChildCategory {
     @Column(name = "job_child_category_id")
     private Long id;
 
+    @NotNull
+    @Column(length = 50)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
