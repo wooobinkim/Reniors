@@ -14,6 +14,8 @@ import BoardDetail from "../views/board/BoardDetail.vue"
 import BoardCreate from "../views/board/BoardCreate.vue"
 import BoardUpdate from "../views/board/BoardUpdate.vue"
 
+import VideoMain from "../views/video/VideoMain.vue"
+
 import QuestionAnswer from "../views/practice/QuestionAnswer.vue"
 import QuestionList from "../views/practice/QuestionList.vue"
 import VideoPractice from "../views/practice/VideoPractice.vue"
@@ -101,6 +103,13 @@ const routes = [
     path: '/boards/:board_id/update',
     component: BoardUpdate,
     name: 'boardUpdate'
+  },
+
+  //video
+  {
+    path: '/video',
+    component: VideoMain,
+    name: 'VideoMain'
   },
 
   //video practice

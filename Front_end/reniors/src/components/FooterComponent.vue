@@ -3,8 +3,8 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">채용공고</router-link> |
     <router-link to="/mypage">MyPage</router-link> |
-    <router-link to="/community">커뮤니티</router-link> |
-    <router-link to="/about">면접</router-link>
+    <router-link to="/boards">커뮤니티</router-link> |
+    <router-link to="/video">면접</router-link>
   </div>
 </template>
 
