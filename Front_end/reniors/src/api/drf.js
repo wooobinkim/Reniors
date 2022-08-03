@@ -1,4 +1,4 @@
-const HOST = 'http://localhost:8000/api/v1'
+const HOST = 'https://i7b307.p.ssafy.io/api'
 
 const USER = '/users'
 const RESUME = '/resume'
@@ -59,7 +59,7 @@ export default {
     questionReviewDelete: (evalId, evalQuestionId, userEvalId) => HOST + EVAL + `/${evalId}` + '/question' + `/${evalQuestionId}` + '/user' + `/${userEvalId}`, 
   },
   jobopening: {
-    get: () => HOST + JOB,
+    get: () => HOST + JOB + '/search',
     detail: jobOpeningId => HOST + JOB + `/${jobOpeningId}`,
     bookmark: jobOpeningId => HOST + JOB + `/${jobOpeningId}` + '/bookmark',
     applicant: jobOpeningId => HOST + JOB + `/${jobOpeningId}` + '/applicant',

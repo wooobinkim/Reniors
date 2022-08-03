@@ -37,6 +37,8 @@ export default {
 
 <style>
 .jobopening-detail-tab .nav {
+  display: flex;
+  justify-content: space-evenly;
   background-color: var(--color-red-1);
 }
 
