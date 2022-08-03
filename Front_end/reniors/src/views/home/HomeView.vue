@@ -30,7 +30,4 @@ export default {
 </script>
 
 <style>
-.home-header {
-  color: var(--color-red-1);
-}
 </style>
