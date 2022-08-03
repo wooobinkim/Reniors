@@ -9,6 +9,11 @@ import FindUsernameView from '../views/user/FindUsernameView.vue'
 import ResumeEditView from '../views/user/ResumeEditView.vue'
 import HomeView from '../views/home/HomeView.vue'
 
+import BoardMain from "../views/board/BoardMain.vue"
+import BoardDetail from "../views/board/BoardDetail.vue"
+import BoardCreate from "../views/board/BoardCreate.vue"
+import BoardUpdate from "../views/board/BoardUpdate.vue"
+
 const routes = [
   {
     path: '/',
@@ -70,6 +75,30 @@ const routes = [
     name: 'JobopeningDetail',
     component: () => import('@/views/jobopening/JobopeningDetailView.vue')
   },
+
+  //boards
+  {
+    path: '/boards',
+    component: BoardMain,
+    name: 'board',
+  },
+  {
+    path: '/boards/:board_id',
+    component:BoardDetail,
+    name: 'boardDetail'
+  },
+  {
+    path: '/boards/create',
+    component: BoardCreate,
+    name: 'boardCreate'
+  },
+  {
+    path: '/boards/:board_id/update',
+    component: BoardUpdate,
+    name: 'boardUpdate'
+  },
+
+
 ]
 
 const router = createRouter({
