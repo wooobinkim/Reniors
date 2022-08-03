@@ -28,7 +28,7 @@ public class JobChildCategory {
     private JobParentCategory parent;
 
     @OneToMany(mappedBy = "jobChildCategory")
-    List<HopeJob> hopeJobs = new ArrayList<>();
+    private List<HopeJob> hopeJobs = new ArrayList<>();
 
     public static JobChildCategory create(String name, JobParentCategory parent){
         JobChildCategory jcc = new JobChildCategory();

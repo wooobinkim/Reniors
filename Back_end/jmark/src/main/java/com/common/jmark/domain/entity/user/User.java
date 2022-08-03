@@ -62,10 +62,10 @@ public class User {
     private String portfolioPath;
 
     @OneToMany(mappedBy = "user")
-    List<Apply> applies = new ArrayList<>();
+    private List<Apply> applies = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    List<SearchCondition> searchConditions = new ArrayList<>();
+    private List<SearchCondition> searchConditions = new ArrayList<>();
 
     public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, int workingDay, long minSalary, String portfolioName, String portfolioPath) {
         User user = new User();

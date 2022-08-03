@@ -28,7 +28,7 @@ public class Gugun {
     private Sido sido;
 
     @OneToMany(mappedBy = "gugun")
-    List<HopeArea> hopeAreas = new ArrayList<>();
+    private List<HopeArea> hopeAreas = new ArrayList<>();
 
     public static Gugun create(String name, Long code, Sido sido){
         Gugun gugun = new Gugun();
