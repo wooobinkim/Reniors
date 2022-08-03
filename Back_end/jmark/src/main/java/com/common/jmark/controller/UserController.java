@@ -29,9 +29,7 @@ public class UserController {
     @ApiOperation(value = "자체 서비스 로그인", notes = "아이디와 비밀번호를 서버에 넘겨주세요")
     @ApiImplicitParam(name = "request", value = "자체 서비스 ID와 PASSWORD")
     @PostMapping("/login")
-    public ResponseEntity<?> login(
-            @Valid @RequestBody UserLoginRequest request
-            ){
+    public ResponseEntity<?> login(@Valid @RequestBody UserLoginRequest request){
         String accessToken = userService.login(request);
         return ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
@@ -39,9 +37,7 @@ public class UserController {
     }
 
     @PostMapping("/regist")
-    public  ResponseEntity<?> regist(
-            @Valid @RequestBody UserCreateRequest request
-    ){
+    public  ResponseEntity<?> regist(@Valid @RequestBody UserCreateRequest request){
         Long userId = userService.create(request);
         Map<String, Long> response = new HashMap<>();
         response.put("userId", userId);
@@ -49,9 +45,7 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> getUserInfo(
-            @LoginUser User user
-    ){
+    public ResponseEntity<?> getUserInfo(@LoginUser User user){
         return ResponseEntity.ok(userService.getUserInfo(user));
     }
 
