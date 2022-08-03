@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <router-link class="footroute" to="/">
+    <router-link class="footroute" active-class="active" to="/">
       <i class="bi bi-house"></i>
       <p>home</p>
     </router-link> 
@@ -21,9 +21,11 @@
       <p>면접/연습</p>
     </router-link>
   </div>
+  
 </template>
 
 <script>
+
 export default {
   name: "FooterComponent",
 }
@@ -54,6 +56,10 @@ export default {
 }
 
 .footroute:hover{
+  color: #f3620f;
+}
+
+.router-link-active {
   color: #f3620f;
 }
 
