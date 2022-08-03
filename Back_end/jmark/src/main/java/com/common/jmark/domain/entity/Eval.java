@@ -25,7 +25,7 @@ public class Eval {
     Company company;
 
     @OneToMany(mappedBy = "eval")
-    List<EvalQuestion> evalQuestions = new ArrayList<>();
+    private List<EvalQuestion> evalQuestions = new ArrayList<>();
 
     public Eval(EvalDto evalDto, Company company) {
         this.id = evalDto.getId();
@@ -34,7 +34,6 @@ public class Eval {
     }
 
     public void update(EvalDto evalDto, Company company) {
-        this.id = evalDto.getId();
         this.name = evalDto.getName();
         this.company = company;
     }

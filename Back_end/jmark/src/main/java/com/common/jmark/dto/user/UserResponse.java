@@ -1,5 +1,6 @@
 package com.common.jmark.dto.user;
 
+import com.common.jmark.domain.entity.Enum.LastEdu;
 import com.common.jmark.domain.entity.Type.Gender;
 import com.common.jmark.domain.entity.Type.IsOpen;
 import com.common.jmark.domain.entity.user.User;
@@ -33,15 +34,13 @@ public class UserResponse {
 
     private IsOpen isOpen;
 
-    private int workingDay;
-
-    private long minSalary;
+    private LastEdu lastEdu;
 
     private String portfolioName;
 
     private String portfolioPath;
 
     public static UserResponse response(User user){
-        return new UserResponse(user.getId(), user.getName(),user.getBirth(), user.getGender(),user.getPhone(), user.getTotalCareer(), user.getProfileImgName(), user.getProfileImgPath(), user.getAddress(), user.getIsOpen(), user.getWorkingDay(), user.getMinSalary(), user.getPortfolioName(),user.getPortfolioPath());
+        return new UserResponse(user.getId(), user.getName(),user.getBirth(), user.getGender(),user.getPhone(), user.getTotalCareer(), user.getProfileImgName(), user.getProfileImgPath(), user.getAddress(), user.getIsOpen(), user.getLastEdu(), user.getPortfolioName(),user.getPortfolioPath());
     }
 }

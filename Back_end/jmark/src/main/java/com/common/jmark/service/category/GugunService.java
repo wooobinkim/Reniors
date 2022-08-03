@@ -19,7 +19,6 @@ import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 import static com.common.jmark.common.exception.NotFoundException.CATEGORY_NOT_FOUND;
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
