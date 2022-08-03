@@ -83,11 +83,11 @@ public class User {
 
     // 회원 - 공고 지원 연관관계
     @OneToMany(mappedBy = "user")
-    List<Apply> applies = new ArrayList<>();
+    private List<Apply> applies = new ArrayList<>();
 
     // 회원 - 검색 조건 연관관계
     @OneToMany(mappedBy = "user")
-    List<SearchCondition> searchConditions = new ArrayList<>();
+    private List<SearchCondition> searchConditions = new ArrayList<>();
 
    public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
         User user = new User();

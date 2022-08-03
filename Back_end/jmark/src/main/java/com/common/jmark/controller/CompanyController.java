@@ -42,7 +42,7 @@ public class CompanyController {
     public ResponseEntity<?> loginCompany(@RequestBody CompanyLoginRequest companyLoginRequest){
         String accessToken = companyService.loginCompany(companyLoginRequest);
         System.out.println("accessToken = " + accessToken);
-        return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.AUTHORIZATION,accessToken).build();
+        return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.AUTHORIZATION,accessToken).build();
     }
 
     //회사 상세정보
