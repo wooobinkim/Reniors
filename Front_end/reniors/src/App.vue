@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" >
     <router-view style="width: 360px;" />
     <FooterComponent />
   </div>
@@ -17,6 +17,8 @@ export default {
 </script>
 
 <style>
+
+
 :root {
   --color-red-1: #f3620f;
   --color-red-2: #FF843E;
