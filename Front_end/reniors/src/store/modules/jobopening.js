@@ -17,7 +17,7 @@ export default {
     async fetchJobopenings({ commit }) {
       console.log('jobopening fetch execute')
       const response = await axios.get(drf.jobopening.get())
-      const data = response.data
+      const data = response.data.content
       console.log(data)
       commit('JOBOPENINGS', data)
     },
