@@ -64,6 +64,12 @@ const routes = [
     component: ResumeEditView
   },
 
+  // jobopening
+  {
+    path: '/jobopening',
+    name: 'Jobopening',
+    component: () => import('../views/jobopening/JobopeningView.vue')
+  },
 ]
 
 const router = createRouter({
