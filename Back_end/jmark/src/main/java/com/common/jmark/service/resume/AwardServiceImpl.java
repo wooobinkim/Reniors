@@ -1,5 +1,6 @@
 package com.common.jmark.service.resume;
 
+import com.common.jmark.common.exception.DuplicateException;
 import com.common.jmark.common.exception.NotFoundException;
 import com.common.jmark.domain.entity.resume.Award;
 import com.common.jmark.domain.entity.user.User;
@@ -27,10 +28,14 @@ public class AwardServiceImpl implements AwardService {
 
     @Override
     @Transactional
-    // 수상경력 등록 시 동일한 이름의 상을 수상한 경험이 있을 수 있기 때문에 중복 허용
     public Long create(Long userId, AwardCreateRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
+        awardRepository.findByUser(user).forEach(award -> {
+            if (award.getName().equals(request.getName())) {
+                throw new DuplicateException(String.format("%s은/는 이미 등록된 수상 경력입니다.", request.getName()));
+            }
+        });
         Award award = Award.create(request.getName(), request.getAwardedAt(), user);
         return awardRepository.save(award).getId();
     }

@@ -28,10 +28,14 @@ public class LicenseServiceImpl implements LicenseService {
 
     @Override
     @Transactional
-    // 같은 이름의 자격증이지만 등급이 다를 수 있으므로 중복 허용
     public Long create(Long userId, LicenseCreateRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
+        licenseRepository.findByUser(user).forEach(license -> {
+            if (license.getName().equals(request.getName())) {
+                throw new DuplicateException(String.format("%s은/는 이미 등록된 자격증입니다.", request.getName()));
+            }
+        });
         License license = License.create(request.getName(), request.getPassedAt(), request.getGrade(), user);
         return licenseRepository.save(license).getId();
     }
