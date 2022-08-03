@@ -1,8 +1,7 @@
 <template>
   <div>
-    <h1 class="home-header">comm on</h1>
     <button @click="login" style="position: absolute; top: 100px; left: 100px;">login</button>
-    <HomeSearch />
+    <SearchBar />
     <HomeNotice :login="false" />
     <HomeInfo />
     <HomeJobopeningList type="핫한 채용공고 🔥" :jobopenings="hotJobopenings" />
@@ -14,7 +13,7 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import HomeSearch from './HomeSearch.vue'
+import SearchBar from '../SearchBar.vue'
 import HomeNotice from './HomeNotice.vue'
 import HomeInfo from './HomeInfo.vue'
 import HomeJobopeningList from './HomeJobopeningList.vue'
@@ -23,7 +22,7 @@ import HomeYoutubeList from './HomeYoutubeList.vue'
 export default {
   name: 'PreloginHome',
   components: {
-    HomeSearch, HomeNotice, HomeInfo, HomeJobopeningList, HomeYoutubeList
+    SearchBar, HomeNotice, HomeInfo, HomeJobopeningList, HomeYoutubeList
   },
   setup () {
     const store = useStore()
