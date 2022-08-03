@@ -11,6 +11,7 @@ import com.common.jmark.dto.CompanyLoginRequest;
 import com.common.jmark.dto.JobOpeningDto;
 import com.common.jmark.dto.user.UserResponse;
 import com.common.jmark.service.CompanyService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/company")
 @RequiredArgsConstructor
+@Api(tags={"회사 API"})
 public class CompanyController {
     private final CompanyService companyService;
     private final JwtUtil jwtUtil;

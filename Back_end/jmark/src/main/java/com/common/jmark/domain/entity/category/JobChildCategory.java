@@ -1,5 +1,6 @@
 package com.common.jmark.domain.entity.category;
 
+import com.common.jmark.domain.entity.recommend.RecommendCondition;
 import com.common.jmark.domain.entity.HopeJob;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,9 @@ public class JobChildCategory {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_parent_category_id")
     private JobParentCategory parent;
+
+    @OneToMany(mappedBy = "jobChildCategory")
+    private List<RecommendCondition> recommendConditions = new ArrayList<>();
 
     @OneToMany(mappedBy = "jobChildCategory")
     private List<HopeJob> hopeJobs = new ArrayList<>();

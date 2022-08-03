@@ -5,6 +5,7 @@ import com.common.jmark.domain.entity.Company;
 import com.common.jmark.dto.EvalDto;
 import com.common.jmark.dto.EvalQuestionDto;
 import com.common.jmark.service.EvalService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/eval")
 @RequiredArgsConstructor
+@Api(tags={"평가 API"})
 public class EvalController {
 
     private final EvalService evalService;

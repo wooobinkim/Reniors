@@ -10,6 +10,7 @@ import com.common.jmark.domain.entity.user.User;
 import com.common.jmark.dto.*;
 import com.common.jmark.dto.category.GugunResponse;
 import com.common.jmark.service.JobOpeningService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/jobopening")
 @RequiredArgsConstructor
+@Api(tags={"공고 API"})
 public class JobOpeningController {
 
     private final JobOpeningService jobOpeningService;

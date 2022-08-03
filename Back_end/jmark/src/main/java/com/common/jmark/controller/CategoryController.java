@@ -5,6 +5,7 @@ import com.common.jmark.service.category.GugunService;
 import com.common.jmark.service.category.JobChildCategoryService;
 import com.common.jmark.service.category.JobParentCategoryService;
 import com.common.jmark.service.category.SidoService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/categories")
+@Api(tags={"카테고리 API"})
 public class CategoryController {
     private final SidoService sidoService;
     private final GugunService gugunService;

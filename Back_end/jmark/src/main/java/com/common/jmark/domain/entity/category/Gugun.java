@@ -1,5 +1,6 @@
 package com.common.jmark.domain.entity.category;
 
+import com.common.jmark.domain.entity.recommend.RecommendCondition;
 import com.common.jmark.domain.entity.HopeArea;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -28,7 +29,10 @@ public class Gugun {
     private Sido sido;
 
     @OneToMany(mappedBy = "gugun")
-    private List<HopeArea> hopeAreas = new ArrayList<>();
+    private List<RecommendCondition> recommendConditions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "gugun")
+    private  List<HopeArea> hopeAreas = new ArrayList<>();
 
     public static Gugun create(String name, Long code, Sido sido){
         Gugun gugun = new Gugun();
