@@ -8,6 +8,7 @@
       <b-tab title="상세모집내용"><DetailContent /></b-tab>
       <b-tab title="기업정보"><DetailInfo /></b-tab>
     </b-tabs>
+    <DetailApplyButton />
   </div>
 </template>
 
@@ -18,11 +19,12 @@ import NavBar from '@/components/jobopening/NavBar.vue'
 import DetailCondition from '@/components/jobopening/DetailCondition.vue'
 import DetailContent from '@/components/jobopening/DetailContent.vue'
 import DetailInfo from '@/components/jobopening/DetailInfo.vue'
+import DetailApplyButton from '@/components/jobopening/DetailApplyButton.vue'
 
 export default {
   name: 'JobopeningDetailView',
   components: {
-    NavBar, DetailCondition, DetailContent, DetailInfo,
+    NavBar, DetailCondition, DetailContent, DetailInfo, DetailApplyButton,
   },
   setup() {
     const store = useStore()

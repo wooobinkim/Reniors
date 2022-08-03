@@ -9,7 +9,7 @@ export default {
     jobopenings: [],
     selectedJobopening: {
       id: '1',
-      compantDto: {
+      companyDto: {
         name: '좋은 회사'
       },
       title: '공고제목',
