@@ -87,6 +87,13 @@ const routes = [
     component: () => import('@/views/jobopening/JobopeningDetailView.vue')
   },
 
+  // condition
+  {
+    path: '/condition',
+    name: 'Condition',
+    component: () => import('@/views/condition/ConditionView.vue')
+  },
+
   //boards
   {
     path: '/boards',
