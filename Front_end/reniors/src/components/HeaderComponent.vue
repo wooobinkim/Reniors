@@ -1,8 +1,8 @@
 <template>
   <div class="header-component">
-    <div class="header-logo">
+    <router-link class="header-logo" :to="{ name: 'home' }">
       <img src="@/assets/logo.png" alt="logo">
-    </div>
+    </router-link>
   </div>
 </template>
 
