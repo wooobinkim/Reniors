@@ -8,34 +8,34 @@
       <div style="float: right; margin-top: 5px">
         <img class="order" src="@/assets/one.svg" alt="order">
         <img class="order" src="@/assets/two.svg" alt="order">
-        <img class="order" src="@/assets/three_active.svg" alt="order">
-        <img class="order" src="@/assets/four.svg" alt="order">
+        <img class="order" src="@/assets/three.svg" alt="order">
+        <img class="order" src="@/assets/four_active.svg" alt="order">
         <img class="order" src="@/assets/five.svg" alt="order">          
       </div>
     </header>
 
     <div class="content">
-      <img class="three" src="@/assets/bigthree.svg" alt="three">
-      <p class="text1">자격증</p>
-      <p class="text2">자격증 정보를 입력해주세요.</p>
+      <img class="four" src="@/assets/bigfour.svg" alt="four">
+      <p class="text1">수상경력</p>
+      <p class="text2">수상경력을 입력해주세요.</p>
       <div style="width:312px; margin:0 auto;">
-        <resume-license-form v-for="i in cnt" :key="i" :cnt = 'cnt'></resume-license-form>
-        <button class="add" @click="add"><img class="plus" style="margin-bottom: 5px" src="@/assets/plus.svg" alt="plus">  자격증 추가</button>
+        <resume-award-form v-for="i in cnt" :key="i" :cnt = 'cnt'></resume-award-form>
+        <button class="add" @click="add"><img class="plus" style="margin-bottom: 5px" src="@/assets/plus.svg" alt="plus">  수상경력 추가</button>
       </div>
       <footer>
-        <button style="background-color: #FFC0A3" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepTwo' }">이전</router-link></button>
-        <button style="background-color: #FF843E" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepFour' }">다음</router-link></button>
+        <button style="background-color: #FFC0A3" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepThree' }">이전</router-link></button>
+        <button style="background-color: #FF843E" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepFive' }">다음</router-link></button>
       </footer>
     </div>
 
   </div>
 </template>
 <script>
-import ResumeLicenseForm from '@/components/resume/ResumeLicenseForm.vue'
+import ResumeAwardForm from '@/components/resume/ResumeAwardForm.vue'
 
 export default {
-  name: 'ResumeStepThree',
-  components: { ResumeLicenseForm },
+  name: 'ResumeStepFour',
+  components: { ResumeAwardForm },
   data() {
     return {
       example: '',
@@ -69,7 +69,7 @@ export default {
     font-weight: 900;
   }
 
-  .three{
+  .four{
     float: left;
     margin: 16px;
   }

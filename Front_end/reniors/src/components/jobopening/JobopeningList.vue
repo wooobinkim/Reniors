@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+// import { computed } from 'vue'
+// import { useStore } from 'vuex'
 import JobopeningItem from './JobopeningItem.vue'
 
 export default {
@@ -15,17 +15,16 @@ export default {
     JobopeningItem,
   },
   setup() {
-    const store = useStore()
+    // const store = useStore()
+    // console.log(store)
+    // const fetchJobopenings = () => store.dispatch('jobopening/fetchJobopenings')
+    // fetchJobopenings()
 
-    console.log(store)
-    const fetchJobopenings = () => store.dispatch('jobopening/fetchJobopenings')
-    fetchJobopenings()
+    // const jobopenings = computed(() => store.getters['jobopening/jobopenings'])
 
-    const jobopenings = computed(() => store.getters['jobopening/jobopenings'])
-
-    return {
-      jobopenings,
-    }
+    // return {
+    //   jobopenings,
+    // }
   }
 }
 </script>

@@ -8,38 +8,36 @@
       <div style="float: right; margin-top: 5px">
         <img class="order" src="@/assets/one.svg" alt="order">
         <img class="order" src="@/assets/two.svg" alt="order">
-        <img class="order" src="@/assets/three_active.svg" alt="order">
+        <img class="order" src="@/assets/three.svg" alt="order">
         <img class="order" src="@/assets/four.svg" alt="order">
-        <img class="order" src="@/assets/five.svg" alt="order">          
+        <img class="order" src="@/assets/five_active.svg" alt="order">          
       </div>
     </header>
 
     <div class="content">
-      <img class="three" src="@/assets/bigthree.svg" alt="three">
-      <p class="text1">자격증</p>
-      <p class="text2">자격증 정보를 입력해주세요.</p>
+      <img class="five" src="@/assets/bigfive.svg" alt="five">
+      <p class="text1">포트폴리오</p>
+      <p class="text2">포트폴리오를 첨부해주세요.</p>
       <div style="width:312px; margin:0 auto;">
-        <resume-license-form v-for="i in cnt" :key="i" :cnt = 'cnt'></resume-license-form>
-        <button class="add" @click="add"><img class="plus" style="margin-bottom: 5px" src="@/assets/plus.svg" alt="plus">  자격증 추가</button>
+        <label for="formFile" class="form-label"></label>
+        <input class="form-control" type="file" id="formFile">
       </div>
       <footer>
-        <button style="background-color: #FFC0A3" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepTwo' }">이전</router-link></button>
-        <button style="background-color: #FF843E" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepFour' }">다음</router-link></button>
+        <button style="background-color: #FFC0A3" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepFour' }">이전</router-link></button>
+        <button style="background-color: #FF843E" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'home' }">완료!</router-link></button>
       </footer>
     </div>
 
   </div>
 </template>
 <script>
-import ResumeLicenseForm from '@/components/resume/ResumeLicenseForm.vue'
-
 export default {
-  name: 'ResumeStepThree',
-  components: { ResumeLicenseForm },
+  name: 'ResumeStepFive',
+  components: {},
   data() {
     return {
       example: '',
-      cnt: 1
+      // cnt: 1
     }
   },
   setup() {},
@@ -47,9 +45,9 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
-      add(){
-      this.cnt += 1
-    }
+      // add(){
+      // this.cnt += 1
+    // }
   }
 }
 </script>
@@ -69,7 +67,7 @@ export default {
     font-weight: 900;
   }
 
-  .three{
+  .five{
     float: left;
     margin: 16px;
   }
@@ -121,12 +119,5 @@ export default {
     cursor: pointer;
   }
 
-  .add {
-    border-style: none; 
-    background-color: white;
-    color: #37BF99;
-    /* font-weight: bold; */
-    font-size: 18px;
-  }
 
 </style>
