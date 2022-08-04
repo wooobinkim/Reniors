@@ -1,4 +1,4 @@
-const HOST = 'http://localhost:8000/api/v1'
+const HOST = 'https://i7b307.p.ssafy.io/api'
 
 const USER = '/users'
 const RESUME = '/resume'
@@ -9,7 +9,6 @@ const BOARD = '/boards'
 const ROOM = '/rooms'
 const CATEGORY = '/categories'
 const PRACTICE = '/practice'
-const QEUSTION = '/questions'
 
 export default {
   user: {
@@ -33,7 +32,7 @@ export default {
     get: userId => HOST + RESUME + `/${userId}`,
     edit: userId => HOST + RESUME + `/${userId}`,
     career: resumeId => HOST + RESUME + `/${resumeId}` + '/career',
-    careerEdit: (resumeId, careerDatailId) => HOST + RESUME + `/${resumeId}` + '/career' + `/${careerDatailId}`,
+    careerEdit: (resumeId, careerDetailId) => HOST + RESUME + `/${resumeId}` + '/career' + `/${careerDetailId}`,
     awards: resumeId => HOST + RESUME + `/${resumeId}` + '/awards',
     awardsEdit: (resumeId, awardCareerId) => HOST + RESUME + `/${resumeId}` + '/awards' + `${awardCareerId}`,
     license: resumeId => HOST + RESUME + `/${resumeId}` + '/license',
@@ -60,32 +59,36 @@ export default {
     questionReviewDelete: (evalId, evalQuestionId, userEvalId) => HOST + EVAL + `/${evalId}` + '/question' + `/${evalQuestionId}` + '/user' + `/${userEvalId}`, 
   },
   jobopening: {
-    get: () => HOST + JOB,
+    get: () => HOST + JOB + '/search',
     detail: jobOpeningId => HOST + JOB + `/${jobOpeningId}`,
     bookmark: jobOpeningId => HOST + JOB + `/${jobOpeningId}` + '/bookmark',
     applicant: jobOpeningId => HOST + JOB + `/${jobOpeningId}` + '/applicant',
   },
   board: {
-    get: jobParentCategoryId => HOST + BOARD + '/categories' + `/${jobParentCategoryId}`,
-    new: jobParentCategoryId => HOST + BOARD + '/categories' + `/${jobParentCategoryId}`,
-    detail: jobBoardId => HOST + BOARD + `/${jobBoardId}`,
+    get: () => HOST + BOARD + '/list',
+    new: () => HOST + BOARD,
+    detail: board_id => HOST + BOARD + `/${board_id}`,
     // jobBoardId를 중복해서 쓰길래, 뒤에꺼 안씀
-    comment: jobBoardId => HOST + BOARD + `/${jobBoardId}` + '/comments',
-    commentEdit: (jobBoardId, jobBoardCommentId) => HOST + BOARD + `/${jobBoardId}` + '/comments' + `/${jobBoardCommentId}`,
+    comment: board_id => HOST + BOARD + `/${board_id}` + '/comments',
+    commentEdit: (board_id, commentid) => HOST + BOARD + `/${board_id}` + '/comments' + `/${commentid}`,
+
   },
   room: {
     get: companyId => HOST + ROOM + `/${companyId}`,
     edit: roomId => HOST + ROOM + `/${roomId}`,
     users: roomId => HOST + ROOM + `/${roomId}` + '/users',
-    evalhistory: () => HOST + ROOM + '/evalhistory',
+    evalhistory: roomId => HOST + ROOM + `/${roomId}` +'/evalhistory',
   },
   category: {
     sido: () => HOST + CATEGORY + '/sido',
     sidoEdit: (sidoId) => HOST + CATEGORY + '/sido' + `/${sidoId}`,
     gugun: (sidoId) => HOST + CATEGORY + '/sido' + `/${sidoId}` + '/gugun',
     gugunEdit: (sidoId, gugunId) => HOST + CATEGORY + '/sido' + `/${sidoId}` + '/gugun' + `/${gugunId}`,
-    jobs: () => HOST + CATEGORY + '/jobs',
-    jobsCategory: (jobParentsCategoryid) => HOST + CATEGORY + '/jobs' + `/${jobParentsCategoryid}`,
+    jobsLarge: () => HOST + CATEGORY + '/parent',
+    // get, post
+    jobsLargeEdit: parent_id => HOST + CATEGORY + '/parent' + `/${parent_id}`,
+    jobsSmall: parent_id => HOST + CATEGORY + '/parent' + `/${parent_id}` + '/child',
+    jobsSmallEdit: (parent_id, child_id) => HOST + CATEGORY + '/parent' + `/${parent_id}` + '/child' + `/${child_id}`,
   },
   practice: {
     question: (interviewQuestionCategory) => HOST + PRACTICE + '/question' + `/${interviewQuestionCategory}`,
@@ -95,12 +98,4 @@ export default {
     video: (userId) => HOST + PRACTICE + '/list' + `/${userId}`,
     videoDetail: (practiceInterviewId) => HOST + PRACTICE + `/${practiceInterviewId}`,
   },
-  question: {
-    get: () => HOST + QEUSTION,
-    new: () => HOST + QEUSTION,
-    edit: (questionId) => HOST + QEUSTION + `${questionId}`,
-    answerPost: (questionId) => HOST + QEUSTION + `${questionId}` + 'answers',
-    answer: (questionId, answerId) => HOST + QEUSTION + `${questionId}` + 'answers' + `${answerId}`,
-
-  }
 }
