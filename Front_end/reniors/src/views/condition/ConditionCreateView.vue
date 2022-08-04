@@ -1,7 +1,7 @@
 <template>
   <div class="condition-create-view">
-    <form action="" @submit.prevent="submit">
-      <button class="condition-create-init" @click="initPayload"><span>⟳</span> 초기화</button>
+    <form action="" @submit.prevent="submit" :key="payload.name">
+      <button class="condition-create-init" @click.prevent="initPayload(payload)"><span>⟳</span> 초기화</button>
       <label for="name">맞춤공고 설정</label><br>
       <input type="text" v-model="payload.name" name="name" id="name">
       <hr>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, getCurrentInstance } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -38,13 +38,13 @@ export default {
   // },
   setup() {
     const store = useStore()
+    const instance = getCurrentInstance()
 
     const fetchParents = () => store.dispatch('fetchParents')
     fetchParents()
     const fetchChilds = (parentId) => store.dispatch('fetchChilds', parentId)
     const fetchSido = () => store.dispatch('fetchSido')
     fetchSido()
-    const submit = () => console.log(payload)
 
     const parents = computed(() => store.getters['parents'])
     const childs = computed(() => store.getters['childs'])
@@ -54,16 +54,21 @@ export default {
     // props로 대체 (수정을 위해서)
     const payload = {
       name: '',
-      regions: '',
+      region: '',
       parent: '',
+      child: '',
     }
-    const initPayload = () => {
+    const initPayload = (payload) => {
+      console.log(payload)
       payload.name = '',
-      payload.regions = '',
+      payload.region = '',
       payload.parent = '',
+      payload.child = '',
+      instance?.proxy?.$forceUpdate()
       console.log(payload)
     }
-    initPayload()
+
+    const submit = () => console.log(payload)
 
     return {
       fetchChilds, submit, initPayload,
