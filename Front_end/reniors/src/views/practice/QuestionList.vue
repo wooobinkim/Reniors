@@ -12,52 +12,40 @@
             화상면접 연습 시 참고할 수 있습니다.
         </p>
     </div>
-    <div>
-        <div class="question">
-            <p>q1. 간단한 자기소개 부탁드립니다.</p>
-        </div>
-        <div class="question">
-            <p>q1. 간단한 자기소개 부탁드립니다.</p>
-        </div>
-        <div class="question">
-            <p>q1. 간단한 자기소개 부탁드립니다.</p>
-        </div>
-        <div class="question">
-            <p>q1. 간단한 자기소개 부탁드립니다.</p>
-        </div>
-        <div class="question">
-            <p>q1. 간단한 자기소개 부탁드립니다.</p>
-        </div>
-        <div class="question">
-            <p>q1. 간단한 자기소개 부탁드립니다.</p>
-        </div>
-        <div class="question">
-            <p>q1. 간단한 자기소개 부탁드립니다.</p>
-        </div>
-        <div class="question">
-            <p>q1. 간단한 자기소개 부탁드립니다.</p>
-        </div>
-        <div class="question">
-            <p>q1. 간단한 자기소개 부탁드립니다.</p>
-        </div>
-    </div>
+
+    <question-item
+        v-for="(question,idx) in questions"
+        :key="idx"
+        :question="question.question"
+        :idx="idx"
+    ></question-item>
   </div>
 </template>
 <script>
 
+import QuestionItem from '@/components/practice/QuestionItem.vue';
+import { mapActions, mapGetters } from 'vuex';
+
 export default{ 
     name:'QuestionList',
-    components:{},
+    components:{QuestionItem},
     data(){
         return{
             sampleData:''
         };
     },
+    computed: {
+        ...mapGetters(['questions'])
+    },
     setup(){},
-    created(){},
     mounted(){},
     unmounted(){},
-    methods:{}
+    methods:{
+        ...mapActions(['fetchQuestions'])
+    },
+    created(){
+        this.fetchQuestions()
+    },
 }
 </script>
 
