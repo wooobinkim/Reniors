@@ -1,6 +1,9 @@
 <template>
   <div class="jobopening-list">
-    <JobopeningItem v-for="jobopening in jobopenings" :key="jobopening.job_opening_id" :jobopening="jobopening" />
+    <div v-if="isJobopenings">
+      <JobopeningItem v-for="jobopening in jobopenings" :key="jobopening.job_opening_id" :jobopening="jobopening" />
+    </div>
+    <div v-else>아직 채용공고가 없어요!</div>
   </div>
 </template>
 
@@ -22,16 +25,17 @@ export default {
     fetchJobopenings()
 
     const jobopenings = computed(() => store.getters['jobopening/jobopenings'])
+    const isJobopenings = computed(() => store.getters['jobopening/isJobopenings'])
 
     return {
-      jobopenings,
+      jobopenings, isJobopenings
     }
   }
 }
 </script>
 
 <style>
-.jobopening-list {
+.jobopening-list > div {
   display: grid;
   grid-template-columns: 170px 170px;
   margin-top: 10px;
