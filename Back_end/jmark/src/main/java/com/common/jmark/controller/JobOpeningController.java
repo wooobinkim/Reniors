@@ -62,7 +62,7 @@ public class JobOpeningController {
     //지원하기
     @PostMapping("/{jobOpeningId}/apply")
     @ApiOperation(value = "지원하기", notes = "공고에 지원한다.")
-    public ResponseEntity<?> applyJobOpening( @PathVariable("jobOpeningId") Long jobOpeningId, @LoginUser User user){
+    public ResponseEntity<?> applyJobOpening( @PathVariable("jobOpeningId") Long jobOpeningId, @ApiIgnore @LoginUser User user){
 
         Long applyId = jobOpeningService.applyJobOpening(user, jobOpeningId);
 

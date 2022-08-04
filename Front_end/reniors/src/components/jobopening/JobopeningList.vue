@@ -16,7 +16,7 @@ export default {
     JobopeningItem,
   },
   setup() {
-<<<<<<< HEAD
+
     const jobopenings = [
       {
         job_opening_id: 1,
@@ -64,19 +64,10 @@ export default {
         finished_at: '2022-08-05',
       },
     ]
-=======
-    const store = useStore()
 
-    console.log(store)
-    const fetchJobopenings = () => store.dispatch('jobopening/fetchJobopenings')
-    fetchJobopenings()
-
-    const jobopenings = computed(() => store.getters['jobopening/jobopenings'])
-    const isJobopenings = computed(() => store.getters['jobopening/isJobopenings'])
->>>>>>> 084aaad2f07fc0003f1633e3b89fa2dae790cfc0
 
     return {
-      jobopenings, isJobopenings
+      jobopenings
     }
   }
 }

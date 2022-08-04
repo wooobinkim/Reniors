@@ -1,33 +1,12 @@
 <template>
   <div class="footer">
-<<<<<<< HEAD
+
     <router-link to="/">Home</router-link> |
     <router-link to="/about">채용공고</router-link> |
     <router-link to="/mypage">MyPage</router-link> |
     <router-link to="/community">커뮤니티</router-link> |
     <router-link to="/about">면접</router-link>
-=======
-    <router-link class="footroute" active-class="active" to="/">
-      <i class="bi bi-house"></i>
-      <p>home</p>
-    </router-link> 
-    <router-link class="footroute" to="/jobopening">
-      <i class="bi bi-file-earmark-text"></i>
-      <p>채용공고</p>
-    </router-link> 
-    <router-link class="footroute" to="/mypage">
-      <i class="bi bi-person"></i>
-      <p>MyPage</p>
-    </router-link> 
-    <router-link class="footroute" to="/board">
-      <i class="bi bi-chat-left-quote"></i>
-      <p>커뮤니티</p>
-    </router-link> 
-    <router-link class="footroute" to="/video">
-      <i class="bi bi-camera-video"></i>
-      <p>면접/연습</p>
-    </router-link>
->>>>>>> 084aaad2f07fc0003f1633e3b89fa2dae790cfc0
+
   </div>
 </template>
 
