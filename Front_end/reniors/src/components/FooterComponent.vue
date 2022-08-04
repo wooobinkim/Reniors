@@ -4,7 +4,7 @@
       <i class="bi bi-house"></i>
       <p>home</p>
     </router-link> 
-    <router-link class="footroute" to="/about">
+    <router-link class="footroute" to="/jobopening">
       <i class="bi bi-file-earmark-text"></i>
       <p>채용공고</p>
     </router-link> 
