@@ -9,6 +9,7 @@ const BOARD = '/boards'
 const ROOM = '/rooms'
 const CATEGORY = '/categories'
 const PRACTICE = '/practice'
+const QEUSTION = '/questions'
 
 export default {
   user: {
@@ -98,4 +99,12 @@ export default {
     video: (userId) => HOST + PRACTICE + '/list' + `/${userId}`,
     videoDetail: (practiceInterviewId) => HOST + PRACTICE + `/${practiceInterviewId}`,
   },
+  question: {
+    get: () => HOST + QEUSTION,
+    new: () => HOST + QEUSTION,
+    edit: (questionId) => HOST + QEUSTION + `${questionId}`,
+    answerPost: (questionId) => HOST + QEUSTION + `${questionId}` + 'answers',
+    answer: (questionId, answerId) => HOST + QEUSTION + `${questionId}` + 'answers' + `${answerId}`,
+
+  }
 }
