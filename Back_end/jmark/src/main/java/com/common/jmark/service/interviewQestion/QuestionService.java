@@ -3,7 +3,9 @@ package com.common.jmark.service.interviewQestion;
 import com.common.jmark.common.exception.DuplicateException;
 import com.common.jmark.common.exception.NotFoundException;
 import com.common.jmark.domain.entity.InterviewQuestion.Question;
+import com.common.jmark.domain.entity.category.JobParentCategory;
 import com.common.jmark.domain.repository.interviewQuestion.QuestionRepository;
+import com.common.jmark.dto.category.JobParentCategoryCreateRequest;
 import com.common.jmark.dto.interviewQuestion.QuestionCreateRequest;
 import com.common.jmark.dto.interviewQuestion.QuestionResponse;
 import com.common.jmark.dto.interviewQuestion.QuestionUpdateRequest;
@@ -23,6 +25,7 @@ import static com.common.jmark.common.exception.NotFoundException.QUESTION_NOT_F
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
+
 
     @Transactional
     public void createList(List<QuestionCreateRequest> requestList){

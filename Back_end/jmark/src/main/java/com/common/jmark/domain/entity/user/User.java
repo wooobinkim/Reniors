@@ -33,11 +33,9 @@ public class User {
     @Column(name = "user_id")
     private long id;
 
-    @NotNull
     @Column(length = 100)
     private String userAppId;
 
-    @NotNull
     @Column(length = 50)
     private String userAppPwd;
 
