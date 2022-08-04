@@ -1,4 +1,4 @@
-package com.common.jmark.dto.board;
+package com.common.jmark.dto.interviewQuestion;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,14 +10,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardCreateRequest {
-
+public class AnswerUpdateRequest {
     @NotBlank
-    String title;
-
-    @NotBlank
-    String contents;
-
-    @NotNull
-    Long categoryId;
+    private String answer;
 }

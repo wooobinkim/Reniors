@@ -1,5 +1,6 @@
 package com.common.jmark.service.board;
 
+import com.common.jmark.common.exception.NotAuthException;
 import com.common.jmark.common.exception.NotFoundException;
 import com.common.jmark.domain.entity.board.Board;
 import com.common.jmark.domain.entity.board.QBoard;
@@ -18,10 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.common.jmark.common.exception.NotAuthException.USER_NO_AUTH;
 import static com.common.jmark.common.exception.NotFoundException.*;
 
 @Service
@@ -37,27 +38,34 @@ public class BoardService {
     EntityManager em;
 
     @Transactional
-    public Long create(BoardCreateRequest request) {
+    public Long create(BoardCreateRequest request,User user) {
         JobParentCategory jpc = jobParentCategoryRepository.findById(request.getCategoryId())
                 .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
-        User findUser = userRepository.findById(request.getUserId())
-                .orElseThrow(()-> new NotFoundException(USER_NOT_FOUND));
-        Board board = Board.create(request.getTitle(), request.getContents(), findUser, jpc);
+        Board board = Board.create(request.getTitle(), request.getContents(), user, jpc);
         return boardRepository.save(board).getId();
     }
 
     @Transactional
-    public void update(Long boardId, BoardUpdateRequest request) {
+    public void update(Long boardId, BoardUpdateRequest request, User user) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()->new NotFoundException(BOARD_NOT_FOUND));
-        board.update(request.getTitle(), request.getContents());
+        if(board.getUser() == user) {
+            board.update(request.getTitle(), request.getContents());
+        }
+        else{
+            throw new NotAuthException(USER_NO_AUTH);
+        }
     }
 
     @Transactional
-    public void delete(Long boardId) {
+    public void delete(Long boardId, User user) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()->new NotFoundException(BOARD_NOT_FOUND));
-        boardRepository.delete(board);
+        if(board.getUser() == user) {
+            boardRepository.delete(board);
+        }else{
+            throw new NotAuthException(USER_NO_AUTH);
+        }
     }
 
     @Transactional
@@ -94,6 +102,6 @@ public class BoardService {
     public BoardDetailResponse getBoardInfo(Long boardId){
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()->new NotFoundException(BOARD_NOT_FOUND));
-        return BoardDetailResponse.response(board);
+            return BoardDetailResponse.response(board);
     }
 }
