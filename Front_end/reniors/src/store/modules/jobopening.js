@@ -48,6 +48,12 @@ export default {
       console.log(state.jobopenings)
       console.log(data)
       commit('SELECTJOB', data)
+    },
+    async apply() {
+      console.log('apply')
+    },
+    async bookmark() {
+      console.log('bookmark')
     }
   },
 }
