@@ -31,7 +31,7 @@ public class Gugun {
     private Long code;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sido")
+    @JoinColumn(name = "sido_id")
     private Sido sido;
 
     @OneToMany(mappedBy = "gugun")

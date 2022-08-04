@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface RecommendConditionService {
     Long create(Long userId, RecommendConditionCreateRequest request);
 
-    void update(Long recommendConditionId, RecommendConditionUpdateRequest request);
+    void update(Long userId, RecommendConditionUpdateRequest request);
 
-    void delete(Long recommendConditionId);
+    void delete(Long userId);
 
     RecommendConditionResponse read(Long userId);
 }

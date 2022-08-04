@@ -3,6 +3,7 @@ package com.common.jmark.common.exception;
 public class NotFoundException extends RuntimeException {
 
     public static final String USER_NOT_FOUND = "존재하지 않는 회원입니다.";
+    public static final String USER_LIST_NOT_FOUND = "회원이 존재하지 않습니다.";
     public static final String CATEGORY_NOT_FOUND = "존재하지 않는 카테고리입니다.";
     public static final String JOB_OPENING_NOT_FOUND = "존재하지 않는 공고입니다.";
     public static final String BOOKMARK_NOT_FOUND = "존재하지 않는 관심 공고입니다.";

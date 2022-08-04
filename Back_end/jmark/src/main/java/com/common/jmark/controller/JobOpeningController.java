@@ -191,27 +191,30 @@ public class JobOpeningController {
     }
 
     // 관심 공고 등록
-    @PostMapping("/{userId}/bookmark/{jobOpenigId}")
+    @PostMapping("/bookmark/{jobOpenigId}")
+    @ApiOperation(value = "관심 공고 등록", notes = "관심 공고를 등록한다.")
     public ResponseEntity<?> createBookmark(
-            @PathVariable Long userId,
+            @ApiIgnore @LoginUser User user,
             @PathVariable Long jobOpenigId
     ) {
-        Long bookmarkId = bookmarkService.create(userId, jobOpenigId);
+        Long bookmarkId = bookmarkService.create(user.getId(), jobOpenigId);
         Map<String, Long> response = new HashMap<>();
         response.put("bookmarkId", bookmarkId);
         return ResponseEntity.ok(response);
     }
 
     // 관심 공고 조회
-    @GetMapping("/{userId}/bookmark")
+    @GetMapping("/bookmark")
+    @ApiOperation(value = "관심 공고 조회", notes = "관심 공고를 조회한다.")
     public ResponseEntity<?> readBookmarkList(
-            @PathVariable Long userId
+            @ApiIgnore @LoginUser User user
     ) {
-        return ResponseEntity.ok(bookmarkService.readList(userId));
+        return ResponseEntity.ok(bookmarkService.readList(user.getId()));
     }
 
     // 관심 공고 상세 조회
     @GetMapping("/bookmark/{bookmarkId}")
+    @ApiOperation(value = "관심 공고 상세 조회", notes = "관심 공고를 상세 조회한다.")
     public ResponseEntity<?> readBookmark(
             @PathVariable Long bookmarkId
     ) {
@@ -220,6 +223,7 @@ public class JobOpeningController {
 
     // 관심 공고 해제
     @DeleteMapping("/bookmark/{bookmarkId}")
+    @ApiOperation(value = "관심 공고 해제", notes = "관심 공고를 해제한다.")
     public ResponseEntity<Map<String, Long>> deleteBookmark (
             @PathVariable Long bookmarkId
     ) {

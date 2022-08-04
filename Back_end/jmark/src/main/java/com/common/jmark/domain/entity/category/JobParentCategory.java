@@ -34,7 +34,6 @@ public class JobParentCategory {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Board> boards = new ArrayList<>();
 
-
     public static JobParentCategory create(String name, Long code){
         JobParentCategory jpc = new JobParentCategory();
         jpc.name = name;

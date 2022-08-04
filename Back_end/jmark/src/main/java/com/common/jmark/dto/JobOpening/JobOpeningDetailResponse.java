@@ -13,7 +13,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JobOpeningDetailResponse {
-
     private Date createdDate;
     private Date finishedDate;
     private int numberPeople;
@@ -53,6 +52,4 @@ public class JobOpeningDetailResponse {
                 jobOpening.getJobChildCategory().getId()
         );
     }
-
-
 }

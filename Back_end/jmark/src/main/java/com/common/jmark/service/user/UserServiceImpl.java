@@ -14,9 +14,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.common.jmark.common.exception.NotFoundException.USER_LIST_NOT_FOUND;
 import static com.common.jmark.common.exception.NotFoundException.USER_NOT_FOUND;
 import static com.common.jmark.common.exception.NotMatchException.PASSWORD_NOT_MATCH;
 
@@ -83,20 +85,65 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(Long userId, UserUpdateRequest request) {
+    public List<UserResponse> readUserList() {
+        List<User> users = userRepository.findAll();
+        if (users.isEmpty() || users == null) {
+            throw new NotFoundException(USER_LIST_NOT_FOUND);
+        }
+        List<UserResponse> userResponses = new ArrayList<>();
+        for (User user : users) {
+            userResponses.add(UserResponse.response(user));
+        }
+        return userResponses;
+    }
 
+    @Override
+    @Transactional
+    public void updateUser(Long userId, UserUpdateRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+        user.update(
+                request.getUserAppId(),
+                request.getUserAppPwd(),
+                request.getKakaoId(),
+                request.getName(),
+                request.getBirth(),
+                request.getGender(),
+                request.getPhone(),
+                request.getTotalCareer(),
+                request.getProfileImgName(),
+                request.getProfileImgPath(),
+                request.getAddress(),
+                request.getIsOpen(),
+                request.getLastEdu(),
+                request.getPortfolioName(),
+                request.getPortfolioPath()
+        );
+        userRepository.save(user);
     }
 
     @Override
     @Transactional
     public void deleteUser(Long userId) {
-
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+        userRepository.delete(user);
     }
 
     @Override
     @Transactional
-    public List<User> readUserList() {
-        return null;
+    public String findIdByPhone(String name, String phone) {
+        User user = userRepository.findByNameAndPhone(name, phone)
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+        return user.getUserAppId();
+    }
+
+    @Override
+    @Transactional
+    public String findPwdByUserAppId(String name, String userAppId) {
+        User user = userRepository.findByNameAndUserAppId(name, userAppId)
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+        return user.getUserAppPwd();
     }
 
     @Override

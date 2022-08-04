@@ -73,7 +73,6 @@ public class Company{
     @OneToMany(mappedBy = "company")
     private List<Eval> evals = new ArrayList<>();
 
-
     public Company(CompanyCreateRequest companyCreateRequest) {
         this.name = companyCreateRequest.getName();
         this.companyAppId = companyCreateRequest.getCompanyAppId();

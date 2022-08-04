@@ -17,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class JobChildCategory {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_child_category_id")
@@ -29,10 +28,10 @@ public class JobChildCategory {
 
     @NotNull
     private Long code;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_parent_category_id")
     private JobParentCategory parent;
-
 
     @OneToMany(mappedBy = "jobChildCategory")
     private List<RecommendCondition> recommendConditions = new ArrayList<>();
@@ -53,6 +52,4 @@ public class JobChildCategory {
         this.code = code;
         this.parent = parent;
     }
-
-
 }
