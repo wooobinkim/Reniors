@@ -2,7 +2,6 @@
   <div class="comment-list-item d-flex justify-content-between align-items-center">
         
     <span v-if="!isEditing">{{ payload.content }}</span>
-
     <span v-if="isEditing">
       <input type="text" v-model="payload.content">
       <button @click="onUpdate" class="btn btn-open" >Update</button> |

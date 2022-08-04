@@ -20,7 +20,7 @@ export default{
         return{
             category_pk: this.$route.params.jobParentCategoryId,
             article_pk: this.$route.params.jobBoardId
-        };
+        }
     },
     computed: {
         ...mapGetters(['article', 'isArticle'])

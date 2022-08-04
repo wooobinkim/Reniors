@@ -1,7 +1,7 @@
 <template>
   <div class="comment-list container">
     <comment-form></comment-form>
-    <br>
+
     <br>
     <div class="row">
       <comment-item class="col-8 offset-2" 

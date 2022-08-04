@@ -21,7 +21,7 @@ export default{
                 title: '',
                 content: '',
             }
-        };
+        }
     },
     setup(){},
     created(){},
