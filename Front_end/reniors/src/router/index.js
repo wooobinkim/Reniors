@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ResumeStepOne from '../components/resume/ResumeStepOne.vue'
 import ResumeStepTwo from '../components/resume/ResumeStepTwo.vue'
+import ResumeStepThree from '../components/resume/ResumeStepThree.vue'
 import LoginView from '../views/user/LoginView.vue'
 import SignupView from '../views/user/SignupView.vue'
 import SignupCompleteView from '../views/user/SignupCompleteView.vue'
@@ -73,7 +74,11 @@ const routes = [
     component: ResumeStepTwo,
     name: 'ResumeStepTwo' 
   },
-
+  {
+    path: '/resume/edit/3',
+    component: ResumeStepThree,
+    name: 'ResumeStepThree' 
+  },
 
   // jobopening
   {
