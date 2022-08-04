@@ -108,6 +108,16 @@ const routes = [
     ],
   },
   {
+    path: '/boards',
+    component: BoardMain,
+    name: 'boardMain',
+  },
+  {
+    path: '/boards/:board_id',
+    component: BoardDetail,
+    name: 'boardDetail',
+  },
+  {
     path: '/boards/create',
     component: BoardCreate,
     name: 'boardCreate'

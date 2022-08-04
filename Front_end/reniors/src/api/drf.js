@@ -33,12 +33,12 @@ export default {
     get: userId => HOST + RESUME + `/${userId}`,
     edit: userId => HOST + RESUME + `/${userId}`,
     career: resumeId => HOST + RESUME + `/${resumeId}` + '/career',
-    careerEdit: (resumeId, careerDatailId) => HOST + RESUME + `/${resumeId}` + '/career' + `/${careerDetailId}`,
+    careerEdit: (resumeId, careerDatailId) => HOST + RESUME + `/${resumeId}` + '/career' + `/${careerDatailId}`,
     awards: resumeId => HOST + RESUME + `/${resumeId}` + '/awards',
     awardsEdit: (resumeId, awardCareerId) => HOST + RESUME + `/${resumeId}` + '/awards' + `${awardCareerId}`,
     license: resumeId => HOST + RESUME + `/${resumeId}` + '/license',
     licenseEdit: (resumeId, licenseId) => HOST + RESUME + `/${resumeId}` + '/license' + `/${licenseId}`,
-    portfolio: resumeId => HOST + RESUME + `/${resumeId}` + 'portfolio',
+    portfolios: resumeId => HOST + RESUME + `/${resumeId}` + 'portfolio',
     portfolio: (resumeId, portfolioName) => HOST + RESUME + `/${resumeId}` + 'portfolio' + `/${portfolioName}`,
   },
   company: {
@@ -77,7 +77,7 @@ export default {
     get: companyId => HOST + ROOM + `/${companyId}`,
     edit: roomId => HOST + ROOM + `/${roomId}`,
     users: roomId => HOST + ROOM + `/${roomId}` + '/users',
-    evalhistory: roomId => HOST + ROOM + '/evalhistory',
+    evalhistory: () => HOST + ROOM + '/evalhistory',
   },
   category: {
     sido: () => HOST + CATEGORY + '/sido',
