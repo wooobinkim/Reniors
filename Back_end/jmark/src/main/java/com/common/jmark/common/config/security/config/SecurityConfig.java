@@ -47,7 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     };
 
     private static final String[] ADMIN_PERMIT_URL_ARRAY = {
-            "/categories/sido/**",
+            "/api/categories/**",
+            "/api/question"
     };
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -68,8 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(PERMIT_URL_ARRAY).permitAll()
                 // TODO : 권한 설정할 페이지들 넣어야함
                 .antMatchers("/ws-stomp/**", "/api/port","/actuator/health").permitAll()
-                .antMatchers(HttpMethod.POST, "/users/*").permitAll()
-                .antMatchers(HttpMethod.GET, "/categories/sido", "/categories/sido/*/gugun").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/users/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/categories/sido", "/api/categories/sido/*/gugun").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/question","/api/question/*/answer/**").hasRole("USER")
                 .antMatchers(ADMIN_PERMIT_URL_ARRAY).hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/users", "/api/users/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/company", "/api/company/login").permitAll()

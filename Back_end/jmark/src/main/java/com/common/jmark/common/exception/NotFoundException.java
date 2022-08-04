@@ -12,6 +12,8 @@ public class NotFoundException extends RuntimeException {
     public static final String CAREER_DETAIL_NOT_FOUND = "존재하지 않는 경력사항입니다.";
     public static final String LICENSE_NOT_FOUND = "존재하지 않는 자격증입니다.";
     public static final String RECOMMEND_CONDITION_NOT_FOUND = "존재하지 않는 추천 조건입니다.";
+    public static final String QUESTION_NOT_FOUND = "존재하지 않는 질문입니다.";
+    public static final String ANSWER_NOT_FOUND = "존재하지 않는 답변입니다.";
 
     public NotFoundException(String message) {
         super(message);

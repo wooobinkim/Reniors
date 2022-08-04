@@ -52,7 +52,7 @@ public class UserController {
     @GetMapping
     @ApiOperation(value = "유저 상세 정보 조회", notes = "유저의 상세 정보를 조회합니다.")
     public ResponseEntity<?> readUser (
-            @LoginUser User user
+            @ApiIgnore @LoginUser User user
     ) {
         return ResponseEntity.ok(userService.readUser(user));
     }

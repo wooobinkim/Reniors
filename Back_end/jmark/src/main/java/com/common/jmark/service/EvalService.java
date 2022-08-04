@@ -23,7 +23,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.common.jmark.common.exception.NotAuthException.COMPANY_NOT_MATCH;
+import static com.common.jmark.common.exception.NotAuthException.COMPANY_NO_AUTH;
+
 
 @Service
 @RequiredArgsConstructor
@@ -80,7 +81,7 @@ public class EvalService {
     @Transactional
     public EvalDto getEval(Company company, Long evalId){
         if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
-            throw new NotAuthException(COMPANY_NOT_MATCH);
+            throw new NotAuthException(COMPANY_NO_AUTH);
 
 
         Optional<Eval> optionalEval = evalRepository.findById(evalId);
@@ -102,7 +103,7 @@ public class EvalService {
     @Transactional
     public EvalDto updateEval(Company company, Long evalId, EvalDto evalDto){
         if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
-            throw new NotAuthException(COMPANY_NOT_MATCH);
+            throw new NotAuthException(COMPANY_NO_AUTH);
 
         Optional<Eval> optionalEval = evalRepository.findById(evalId);
 
@@ -125,7 +126,7 @@ public class EvalService {
     @Transactional
     public void deleteEval(Company company, Long evalId){
         if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
-            throw new NotAuthException(COMPANY_NOT_MATCH);
+            throw new NotAuthException(COMPANY_NO_AUTH);
 
         Optional<Eval> optionalEval = evalRepository.findById(evalId);
 
@@ -138,7 +139,7 @@ public class EvalService {
     @Transactional
     public EvalQuestionDto postEvalQuestion(Company company, Long evalId, EvalQuestionDto evalQuestionDto){
         if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
-            throw new NotAuthException(COMPANY_NOT_MATCH);
+            throw new NotAuthException(COMPANY_NO_AUTH);
 
         Optional<Eval> optionalEval = evalRepository.findById(evalId);
 
@@ -163,7 +164,7 @@ public class EvalService {
     @Transactional
     public List<EvalQuestionDto> getEvalQuestionList(Company company, Long evalId){
         if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
-            throw new NotAuthException(COMPANY_NOT_MATCH);
+            throw new NotAuthException(COMPANY_NO_AUTH);
 
         Optional<Eval> optionalEval = evalRepository.findById(evalId);
         optionalEval.orElseThrow(()->new NotFoundException("not found eval"));
@@ -187,7 +188,7 @@ public class EvalService {
     @Transactional
     public EvalQuestionDto getEvalQuestion(Company company, Long evalId, Long evalQuestionId){
         if (company.getId() != evalQuestionRepository.findById(evalQuestionId).get().getEval().getCompany().getId())
-            throw new NotAuthException(COMPANY_NOT_MATCH);
+            throw new NotAuthException(COMPANY_NO_AUTH);
 
         Optional<EvalQuestion> optionalEvalQuestion = evalQuestionRepository.findById(evalQuestionId);
         optionalEvalQuestion.orElseThrow(()->new NotFoundException("not found evalQuestion"));
@@ -214,7 +215,7 @@ public class EvalService {
     @Transactional
     public EvalQuestionDto updateEvalQuestion(Company company, Long evalId, Long evalQuestionId, EvalQuestionDto evalQuestionDto){
         if (company.getId() != evalQuestionRepository.findById(evalQuestionId).get().getEval().getCompany().getId())
-            throw new NotAuthException(COMPANY_NOT_MATCH);
+            throw new NotAuthException(COMPANY_NO_AUTH);
 
         Optional<EvalQuestion> optionalEvalQuestion = evalQuestionRepository.findById(evalQuestionId);
         optionalEvalQuestion.orElseThrow(()->new NotFoundException("not found evalQuestion"));
@@ -243,7 +244,7 @@ public class EvalService {
     @Transactional
     public void deleteEvalQuestion(Company company, Long evalQuestionId){
         if (company.getId() != evalQuestionRepository.findById(evalQuestionId).get().getEval().getCompany().getId())
-            throw new NotAuthException(COMPANY_NOT_MATCH);
+            throw new NotAuthException(COMPANY_NO_AUTH);
 
         evalQuestionRepository.deleteById(evalQuestionId);
     }
