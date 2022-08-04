@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="jobopening-box">
-      <h4>({{ jobopening.title }}) {{ jobopening.contents }}</h4>
+      <h4>{{ jobopening.title }}</h4>
       <p>{{ jobopening.companyDto?.name }}</p>
       <div class="jobopening-box-date">
         <div class="start-badge">시작</div>

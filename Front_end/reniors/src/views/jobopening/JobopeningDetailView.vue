@@ -43,6 +43,7 @@ export default {
 <style>
 .jobopening-detail-tab {
   background-color: var(--color-red-4);
+  padding-bottom: 5px;
 }
 
 .jobopening-detail-tab .nav {
