@@ -193,14 +193,6 @@ public class JobOpeningController {
         return ResponseEntity.status(HttpStatus.OK).body("성공~");
     }
 
-
-    //공고 전체조회
-    @GetMapping("/search")
-    public ResponseEntity<?> getJobOpening(Pageable pageable){
-        Page<JobOpeningDto> jobOpeningList = jobOpeningService.getJobOpening(pageable);
-        return ResponseEntity.status(HttpStatus.CREATED).body(jobOpeningList);
-    }
-
     // 관심 공고 등록
     @PostMapping("/{userId}/bookmark/{jobOpenigId}")
     public ResponseEntity<?> createBookmark(
