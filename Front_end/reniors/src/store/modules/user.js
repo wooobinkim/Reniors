@@ -7,8 +7,9 @@ export const user = {
     state: {
       token: localStorage.getItem('token') || '',
       currentUser: {},
-      profile: {},
       authError: null,
+
+      profile: {},
       // 코드추가
       // isLogin: false,
       // isLoginError: false,
@@ -18,17 +19,19 @@ export const user = {
     getters: {
       isLogginedIn: state => !!state.token,
       currentUser: state => state.currentUser,
-      profile: state => state.profile,
       authError: state => state.authError,
       // Authorization: `Token ${state.token}`
-      authHeader: state => ({ Authorization: `Bearer ${state.token}` })
+      authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
+
+      profile: state => state.profile,      
     },
 
     mutations: {
       SET_TOKEN: (state, token) => state.token = token,
       SET_CURRENT_USER: (state, user) => state.currentUser = user,
-      SET_PROFILE: (state, profile) => state.profile = profile,
       SET_AUTH_ERROR: (state, error) => state.authError = error,
+
+      SET_PROFILE: (state, profile) => state.profile = profile,
       // 추가
       // SET_IS_LOGIN: (state, isLogin) => state.isLogin = isLogin,
       // SET_IS_LOGIN_ERROR: (state, isLoginError) => {

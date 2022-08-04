@@ -31,6 +31,8 @@
           <b-form-input class="mb-3" type="text" placeholder="01000000000" ></b-form-input>
           <p class="forminfo">이메일</p>
           <b-form-input class="mb-3" type="text" placeholder="apple@ssafy.com" ></b-form-input>
+
+          {{ this.currentUser }}
         </div>
       </div>
     </div>
@@ -41,18 +43,46 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   components: {},
   data() {
     return {
-      example: '',
+      editUser: {
+        // 변수 이름 설정
+        // userAppId: this.currentUser.userAppId,
+        // userAppPwd: this.currentUser.userAppPwd,
+        // name: this.currentUser.name,
+        // phone: this.currentUser.phone,
+        // address: this.currentUser.address,
+        // // extraAddress: '',
+        // lastEdu: this.currentUser.lastEdu,
+        // birth: this.currentUser.birth,
+        // gender: this.currentUser.gender,
+        // isOpen: this.currentUser.isOpen,
+        // kakaoId: this.currentUser.kakaoId,
+        // portfolioName: this.currentUser.portfolioName,
+        // portfolioPath: this.currentUser.portfolioPath,
+        // profileImgName: this.currentUser.profileImgName,
+        // profileImgPath: this.currentUser.profileImgPath,
+        // totalCareer: this.currentUser.totalCareer,      
+        // 이력서 공개 여부        
+      }
     }
   },
+  computed: {
+    ...mapGetters(['currentUser'])
+  },
   setup() {},
-  created() {},
+  created() {
+    this.fetchCurrentUser()
+  },
   mounted() {},
   unmounted() {},
-  methods: {}
+  methods: {
+    ...mapActions(['fetchCurrentUser'])
+  }
 }
 </script>
 
