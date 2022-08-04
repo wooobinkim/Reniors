@@ -11,6 +11,7 @@ import com.common.jmark.dto.user.UserLoginRequest;
 import com.common.jmark.dto.user.UserResponse;
 import com.common.jmark.dto.user.UserUpdateRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +29,7 @@ import static com.common.jmark.common.exception.NotMatchException.PASSWORD_NOT_M
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
-
+    private final PasswordEncoder passwordEncoder;
     @Override
     @Transactional
     public String loginUser(UserLoginRequest request) {
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
             throw new NotFoundException(USER_NOT_FOUND);
         }else{
             //비밀번호 확인
-            if(findUser.get().getUserAppPwd().equals(request.getUserAppPwd())){
+            if (passwordEncoder.matches(request.getUserAppPwd(), findUser.get().getUserAppPwd())){
                 return jwtUtil.createToken(findUser.get().getId(), "user");
             }
             else {
@@ -52,11 +53,11 @@ public class UserServiceImpl implements UserService {
     public Long createUser(UserCreateRequest request) {
         if(userRepository.findByPhone(request.getPhone()).isPresent()){
             // 카카오로 회원가입 되있을 시 생각
-            throw new DuplicateException(String.format("%s는 이미 존재하는 회원입니다.",request.getUserAppId()));
+            throw new DuplicateException(String.format("%s는 이미 가입된 회원입니다.",request.getUserAppId()));
         }else {
             User saveUser = User.create(
                     request.getUserAppId(),
-                    request.getUserAppPwd(),
+                    passwordEncoder.encode(request.getUserAppPwd()),
                     request.getKakaoId(),
                     request.getName(),
                     request.getBirth(),
@@ -103,9 +104,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
         user.update(
-                request.getUserAppId(),
                 request.getUserAppPwd(),
-                request.getKakaoId(),
                 request.getName(),
                 request.getBirth(),
                 request.getGender(),

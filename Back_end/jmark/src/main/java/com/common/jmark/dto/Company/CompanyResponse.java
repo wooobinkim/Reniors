@@ -20,7 +20,6 @@ public class CompanyResponse {
     private String companyImgPath;
     private String companyNum;
     private String companyPhone;
-
     private String representativePhone;
     private TypeCompany typeCompany;
 
