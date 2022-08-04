@@ -55,11 +55,11 @@ public class CompanyController {
     @GetMapping()
     @ApiOperation(value = "회사 상세정보", notes = "회사 상세정보를 가져온다.")
 
-    public ResponseEntity<?> getCompany(@LoginCompany Company company){
-        CompanyResponse company1 = companyService.getCompany(company);
+    public ResponseEntity<?> getCompany(@ApiIgnore @LoginCompany Company company){
+        CompanyResponse companyResponse = companyService.getCompany(company);
 
 
-        return ResponseEntity.status(HttpStatus.OK).body(company1);
+        return ResponseEntity.status(HttpStatus.OK).body(companyResponse);
     }
 
 
@@ -67,7 +67,7 @@ public class CompanyController {
     @PutMapping()
     @ApiOperation(value = "회사 정보수정", notes = "회사 정보를 수정한다.")
 
-    public ResponseEntity<?> updateCompany(@LoginCompany Company company, @RequestBody CompanyUpdateRequest companyUpdateRequest){
+    public ResponseEntity<?> updateCompany(@ApiIgnore @LoginCompany Company company, @RequestBody CompanyUpdateRequest companyUpdateRequest){
        companyService.updateCompany(company, companyUpdateRequest);
 
 
@@ -78,7 +78,7 @@ public class CompanyController {
     //회사 탈퇴
     @DeleteMapping()
     @ApiOperation(value = "회사 탈퇴", notes = "회사 아이디 탈퇴한다.")
-    public ResponseEntity<?> deleteCompany( @ApiIgnore @LoginCompany Company company){
+    public ResponseEntity<?> deleteCompany(@ApiIgnore @LoginCompany Company company){
         companyService.deleteCompany(company);
 
         return ResponseEntity.status(HttpStatus.OK).body("success");
@@ -87,7 +87,7 @@ public class CompanyController {
     //회사 공고 등록
     @PostMapping("/jobopening")
     @ApiOperation(value = "회사 공고 등록", notes = "회사가 공고를 등록한다.")
-    public ResponseEntity<?> postJobOpening(@LoginCompany Company company, @RequestBody JobOpeningCreateRequest jobOpeningCreateRequest){
+    public ResponseEntity<?> postJobOpening(@ApiIgnore @LoginCompany Company company, @RequestBody JobOpeningCreateRequest jobOpeningCreateRequest){
         Long jobOpeningId = companyService.postJobOpening(company, jobOpeningCreateRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(jobOpeningId);
@@ -97,7 +97,7 @@ public class CompanyController {
     @GetMapping("/jobopening")
     @ApiOperation(value = "회사 공고목록", notes = "회사가 올린 공고 목록들을 가져온다.")
 
-    public ResponseEntity<?> getJobOpeningList(@LoginCompany Company company){
+    public ResponseEntity<?> getJobOpeningList(@ApiIgnore @LoginCompany Company company){
         List<JobOpeningResponse> jobOpeningList = companyService.getJobOpeningList(company);
 
         return ResponseEntity.status(HttpStatus.OK).body(jobOpeningList);
@@ -107,7 +107,7 @@ public class CompanyController {
     @GetMapping("/jobopening/{jobOpeningId}")
     @ApiOperation(value = "회사 공고상세조회", notes = "회사가 올린 공고 하나의 상세정보를 가져온다.")
 
-    public ResponseEntity<?> getJobOpening(@LoginCompany Company company, @PathVariable("jobOpeningId") Long jobOpeningId){
+    public ResponseEntity<?> getJobOpening(@ApiIgnore @LoginCompany Company company, @PathVariable("jobOpeningId") Long jobOpeningId){
         JobOpeningDetailResponse jobOpening = companyService.getJobOpening(company, jobOpeningId);
 
 
@@ -140,7 +140,7 @@ public class CompanyController {
     @GetMapping("/jobopening/{jobOpeningId}/apply")
     @ApiOperation(value = "공고 지원자 목록", notes = "올린 공고의 지원자 목록을 가져온다.")
 
-    public ResponseEntity<?> getApplyList(@LoginCompany Company company, @PathVariable("jobOpeningId") Long jobOpeningId){
+    public ResponseEntity<?> getApplyList(@ApiIgnore @LoginCompany Company company, @PathVariable("jobOpeningId") Long jobOpeningId){
         List<ApplyResponse> applyList = companyService.getappliyList(company, jobOpeningId);
 
         return ResponseEntity.status(HttpStatus.OK).body(applyList);

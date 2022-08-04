@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +62,7 @@ public class JobOpeningController {
     //지원하기
     @PostMapping("/{jobOpeningId}/apply")
     @ApiOperation(value = "지원하기", notes = "공고에 지원한다.")
-    public ResponseEntity<?> applyJobOpening(@PathVariable("jobOpeningId") Long jobOpeningId, @LoginUser User user){
+    public ResponseEntity<?> applyJobOpening( @PathVariable("jobOpeningId") Long jobOpeningId, @LoginUser User user){
 
         Long applyId = jobOpeningService.applyJobOpening(user, jobOpeningId);
 
@@ -71,7 +72,7 @@ public class JobOpeningController {
     //지원이력 조회
     @GetMapping("/apply")
     @ApiOperation(value = "지원이력 조회", notes = "지원이력을 조회한다.")
-    public ResponseEntity<?> getApplyList(@LoginUser User user){
+    public ResponseEntity<?> getApplyList(@ApiIgnore @LoginUser User user){
         List<ApplyResponse> ApplyList = jobOpeningService.getApplyList(user);
 
         return ResponseEntity.status(HttpStatus.OK).body(ApplyList);
@@ -80,7 +81,7 @@ public class JobOpeningController {
     //지원이력 상세조회
     @GetMapping("/apply/{applyId}")
     @ApiOperation(value = "지원이력 상세조회", notes = "지원이력을 상세조회한다.")
-    public ResponseEntity<?> getApplyList(@LoginUser User user, @PathVariable("applyId")Long applyId){
+    public ResponseEntity<?> getApplyList(@ApiIgnore @LoginUser User user, @PathVariable("applyId")Long applyId){
         ApplyResponse apply = jobOpeningService.getApply(user, applyId);
 
         return ResponseEntity.status(HttpStatus.OK).body(apply);
@@ -89,7 +90,7 @@ public class JobOpeningController {
     //공고 조건 생성(지역, 직무 제외)
     @PostMapping("/condition")
     @ApiOperation(value = "공고 조건생성", notes = "조건검색에 이용한 조건을 만든다.")
-    public ResponseEntity<?> postSearchCondition(@LoginUser User user, @RequestBody SearchConditionCreateRequest searchConditionCreateRequest){
+    public ResponseEntity<?> postSearchCondition(@ApiIgnore @LoginUser User user, @RequestBody SearchConditionCreateRequest searchConditionCreateRequest){
         Long jobOpeningId = jobOpeningService.postSearchCondition(user, searchConditionCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(jobOpeningId);
     }
@@ -153,7 +154,7 @@ public class JobOpeningController {
     //공고 조건 조회
     @GetMapping("/condition")
     @ApiOperation(value = "공고조건 조회", notes = "공고 조건들을 조회한다.")
-    public ResponseEntity<?> getSearchConditionList(@LoginUser User user){
+    public ResponseEntity<?> getSearchConditionList(@ApiIgnore @LoginUser User user){
         List<SearchConditionResponse> searchConditionList = jobOpeningService.getSearchConditionList(user);
 
         return ResponseEntity.status(HttpStatus.OK).body(searchConditionList);
@@ -171,7 +172,7 @@ public class JobOpeningController {
     //공고 조건 수정
     @PutMapping("/condition/{searchConditionId}")
     @ApiOperation(value = "공고조건 수정", notes = "공고 조건을 수정한다.")
-    public ResponseEntity<?> updateSearchCondition(@LoginUser User user,
+    public ResponseEntity<?> updateSearchCondition(@ApiIgnore @LoginUser User user,
                                                    @PathVariable("searchConditionId")Long searchConditionId,
                                                    @RequestBody SearchConditionUpdateRequest searchConditionUpdateRequest){
         jobOpeningService.updateSearchCondition(user,searchConditionId, searchConditionUpdateRequest);
