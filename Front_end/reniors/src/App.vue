@@ -59,8 +59,4 @@ export default {
 nav {
   padding: 30px;
 }
-
-a{
-  text-decoration: none;
-}
 </style>

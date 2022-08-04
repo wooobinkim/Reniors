@@ -4,17 +4,14 @@ import com.common.jmark.domain.entity.Enum.LastEdu;
 import com.common.jmark.domain.entity.Enum.TypeEmployment;
 import com.common.jmark.domain.entity.category.Gugun;
 import com.common.jmark.domain.entity.category.JobChildCategory;
-import com.common.jmark.dto.CompanyDto;
-import com.common.jmark.dto.JobOpeningDto;
-import com.common.jmark.dto.category.GugunResponse;
-import com.common.jmark.dto.category.JobChildCategoryResponse;
+import com.common.jmark.dto.JobOpening.JobOpeningCreateRequest;
+import com.common.jmark.dto.JobOpening.JobOpeningUpdateRequest;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,11 +29,11 @@ public class JobOpening{
 
     @NotNull
     @CreatedDate
-    private LocalDateTime createdDate;
+    private Date createdDate;
 
     @NotNull
     @CreatedDate
-    private LocalDateTime finishedDate;
+    private Date finishedDate;
 
     @NotNull
     private int numberPeople;
@@ -96,42 +93,37 @@ public class JobOpening{
     //최종학력, 직무소분류, 구군 받아오기
 
 
-    public JobOpening(JobOpeningDto jobOpeningDto, Gugun gugun, JobChildCategory jobChildCategory) {
-        this.id = jobOpeningDto.getId();
-        this.createdDate = jobOpeningDto.getCreatedDate();
-        this.finishedDate = jobOpeningDto.getFinishedDate();
-        this.numberPeople = jobOpeningDto.getNumberPeople();
-        this.minCareer = jobOpeningDto.getMinCareer();
-        this.title = jobOpeningDto.getTitle();
-        this.contents = jobOpeningDto.getContents();
-        this.contentsImgName = jobOpeningDto.getContentsImgName();
-        this.contentsImgPath = jobOpeningDto.getContentsImgPath();
-        this.minSalary = jobOpeningDto.getMinSalary();
-        this.jobPosition = jobOpeningDto.getJobPosition();
-        this.workingDay = jobOpeningDto.getWorkingDay();
-        this.typeEmployment = jobOpeningDto.getTypeEmployment();
-        this.lastEdu=jobOpeningDto.getLastEdu();
+    public JobOpening(JobOpeningCreateRequest jobOpeningCreateRequest, Company company,Gugun gugun, JobChildCategory jobChildCategory) {
+        this.createdDate = jobOpeningCreateRequest.getCreatedDate();
+        this.finishedDate = jobOpeningCreateRequest.getFinishedDate();
+        this.numberPeople = jobOpeningCreateRequest.getNumberPeople();
+        this.minCareer = jobOpeningCreateRequest.getMinCareer();
+        this.title = jobOpeningCreateRequest.getTitle();
+        this.contents = jobOpeningCreateRequest.getContents();
+        this.contentsImgName = jobOpeningCreateRequest.getContentsImgName();
+        this.contentsImgPath = jobOpeningCreateRequest.getContentsImgPath();
+        this.minSalary = jobOpeningCreateRequest.getMinSalary();
+        this.jobPosition = jobOpeningCreateRequest.getJobPosition();
+        this.workingDay = jobOpeningCreateRequest.getWorkingDay();
+        this.typeEmployment = jobOpeningCreateRequest.getTypeEmployment();
+        this.lastEdu=jobOpeningCreateRequest.getLastEdu();
+        this.company = company;
         this.gugun = gugun;
         this.jobChildCategory = jobChildCategory;
 
     }
-
-    public void updateCompany(Company company){
-        this.company = company;
-    }
-
-    public void update(JobOpeningDto jobOpeningDto, Gugun gugun, JobChildCategory jobChildCategory){
-        this.numberPeople = jobOpeningDto.getNumberPeople();
-        this.minCareer = jobOpeningDto.getMinCareer();
-        this.title = jobOpeningDto.getTitle();
-        this.contents = jobOpeningDto.getContents();
-        this.contentsImgName = jobOpeningDto.getContentsImgName();
-        this.contentsImgPath = jobOpeningDto.getContentsImgPath();
-        this.minSalary = jobOpeningDto.getMinSalary();
-        this.jobPosition = jobOpeningDto.getJobPosition();
-        this.workingDay = jobOpeningDto.getWorkingDay();
-        this.typeEmployment = jobOpeningDto.getTypeEmployment();
-        this.lastEdu=jobOpeningDto.getLastEdu();
+    public void update(JobOpeningUpdateRequest jobOpeningUpdateRequest, Gugun gugun, JobChildCategory jobChildCategory){
+        this.numberPeople = jobOpeningUpdateRequest.getNumberPeople();
+        this.minCareer = jobOpeningUpdateRequest.getMinCareer();
+        this.title = jobOpeningUpdateRequest.getTitle();
+        this.contents = jobOpeningUpdateRequest.getContents();
+        this.contentsImgName = jobOpeningUpdateRequest.getContentsImgName();
+        this.contentsImgPath = jobOpeningUpdateRequest.getContentsImgPath();
+        this.minSalary = jobOpeningUpdateRequest.getMinSalary();
+        this.jobPosition = jobOpeningUpdateRequest.getJobPosition();
+        this.workingDay = jobOpeningUpdateRequest.getWorkingDay();
+        this.typeEmployment = jobOpeningUpdateRequest.getTypeEmployment();
+        this.lastEdu=jobOpeningUpdateRequest.getLastEdu();
         this.gugun = gugun;
         this.jobChildCategory = jobChildCategory;
     }

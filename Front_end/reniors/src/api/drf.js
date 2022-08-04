@@ -1,4 +1,4 @@
-const HOST = 'https://i7b307.p.ssafy.io/api'
+const HOST = 'http://localhost:8000/api/v1'
 
 const USER = '/users'
 const RESUME = '/resume'
@@ -32,12 +32,12 @@ export default {
     get: userId => HOST + RESUME + `/${userId}`,
     edit: userId => HOST + RESUME + `/${userId}`,
     career: resumeId => HOST + RESUME + `/${resumeId}` + '/career',
-    careerEdit: (resumeId, careerDetailId) => HOST + RESUME + `/${resumeId}` + '/career' + `/${careerDetailId}`,
+    careerEdit: (resumeId, careerDatailId) => HOST + RESUME + `/${resumeId}` + '/career' + `/${careerDetailId}`,
     awards: resumeId => HOST + RESUME + `/${resumeId}` + '/awards',
     awardsEdit: (resumeId, awardCareerId) => HOST + RESUME + `/${resumeId}` + '/awards' + `${awardCareerId}`,
     license: resumeId => HOST + RESUME + `/${resumeId}` + '/license',
     licenseEdit: (resumeId, licenseId) => HOST + RESUME + `/${resumeId}` + '/license' + `/${licenseId}`,
-    portfolios: resumeId => HOST + RESUME + `/${resumeId}` + 'portfolio',
+    portfolio: resumeId => HOST + RESUME + `/${resumeId}` + 'portfolio',
     portfolio: (resumeId, portfolioName) => HOST + RESUME + `/${resumeId}` + 'portfolio' + `/${portfolioName}`,
   },
   company: {
@@ -59,36 +59,32 @@ export default {
     questionReviewDelete: (evalId, evalQuestionId, userEvalId) => HOST + EVAL + `/${evalId}` + '/question' + `/${evalQuestionId}` + '/user' + `/${userEvalId}`, 
   },
   jobopening: {
-    get: () => HOST + JOB + '/search',
+    get: () => HOST + JOB,
     detail: jobOpeningId => HOST + JOB + `/${jobOpeningId}`,
     bookmark: jobOpeningId => HOST + JOB + `/${jobOpeningId}` + '/bookmark',
     applicant: jobOpeningId => HOST + JOB + `/${jobOpeningId}` + '/applicant',
   },
   board: {
-    get: () => HOST + BOARD + '/list',
-    new: () => HOST + BOARD,
-    detail: board_id => HOST + BOARD + `/${board_id}`,
+    get: jobParentCategoryId => HOST + BOARD + '/categories' + `/${jobParentCategoryId}`,
+    new: jobParentCategoryId => HOST + BOARD + '/categories' + `/${jobParentCategoryId}`,
+    detail: jobBoardId => HOST + BOARD + `/${jobBoardId}`,
     // jobBoardId를 중복해서 쓰길래, 뒤에꺼 안씀
-    comment: board_id => HOST + BOARD + `/${board_id}` + '/comments',
-    commentEdit: (board_id, commentid) => HOST + BOARD + `/${board_id}` + '/comments' + `/${commentid}`,
-
+    comment: jobBoardId => HOST + BOARD + `/${jobBoardId}` + '/comments',
+    commentEdit: (jobBoardId, jobBoardCommentId) => HOST + BOARD + `/${jobBoardId}` + '/comments' + `/${jobBoardCommentId}`,
   },
   room: {
     get: companyId => HOST + ROOM + `/${companyId}`,
     edit: roomId => HOST + ROOM + `/${roomId}`,
     users: roomId => HOST + ROOM + `/${roomId}` + '/users',
-    evalhistory: roomId => HOST + ROOM + `/${roomId}` +'/evalhistory',
+    evalhistory: roomId => HOST + ROOM + '/evalhistory',
   },
   category: {
     sido: () => HOST + CATEGORY + '/sido',
     sidoEdit: (sidoId) => HOST + CATEGORY + '/sido' + `/${sidoId}`,
     gugun: (sidoId) => HOST + CATEGORY + '/sido' + `/${sidoId}` + '/gugun',
     gugunEdit: (sidoId, gugunId) => HOST + CATEGORY + '/sido' + `/${sidoId}` + '/gugun' + `/${gugunId}`,
-    jobsLarge: () => HOST + CATEGORY + '/parent',
-    // get, post
-    jobsLargeEdit: parent_id => HOST + CATEGORY + '/parent' + `/${parent_id}`,
-    jobsSmall: parent_id => HOST + CATEGORY + '/parent' + `/${parent_id}` + '/child',
-    jobsSmallEdit: (parent_id, child_id) => HOST + CATEGORY + '/parent' + `/${parent_id}` + '/child' + `/${child_id}`,
+    jobs: () => HOST + CATEGORY + '/jobs',
+    jobsCategory: (jobParentsCategoryid) => HOST + CATEGORY + '/jobs' + `/${jobParentsCategoryid}`,
   },
   practice: {
     question: (interviewQuestionCategory) => HOST + PRACTICE + '/question' + `/${interviewQuestionCategory}`,

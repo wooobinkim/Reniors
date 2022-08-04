@@ -3,9 +3,8 @@
     <h2 class="home-jobopening-type">{{ type }}</h2>
     <ul class="home-jobopening-list">
       <li class="home-jobopening-item" v-for="jobopening in jobopenings" :key="jobopening.id">
-        <p>{{ jobopening.companyDto?.name }}</p>
-        <p>{{ jobopening.title }}</p>
-        <p>{{ jobopening.contents }}</p>
+        <p>{{ jobopening.name }}</p>
+        <p>{{ jobopening.context }}</p>
       </li>
     </ul>
   </div>

@@ -1,18 +1,13 @@
 package com.common.jmark.domain.entity;
 
 import com.common.jmark.domain.entity.Enum.TypeCompany;
-import com.common.jmark.domain.entity.Enum.TypeEmployment;
-import com.common.jmark.dto.CompanyDto;
+import com.common.jmark.dto.Company.CompanyCreateRequest;
+import com.common.jmark.dto.Company.CompanyUpdateRequest;
 import com.sun.istack.NotNull;
 import lombok.*;
-import org.springframework.security.core.CredentialsContainer;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -78,35 +73,35 @@ public class Company{
     @OneToMany(mappedBy = "company")
     private List<Eval> evals = new ArrayList<>();
 
-    @Builder
-    public Company(CompanyDto companyDto) {
-        this.name = companyDto.getName();
-        this.companyAppId = companyDto.getCompanyAppId();
-        this.companyAppPwd = companyDto.getCompanyAppPwd();
-        this.establishedAt = companyDto.getEstablishedAt();
-        this.companyUrl = companyDto.getCompanyUrl();
-        this.address = companyDto.getAddress();
-        this.companyImgName = companyDto.getCompanyImgName();
-        this.companyImgPath = companyDto.getCompanyImgPath();
-        this.companyNum = companyDto.getCompanyNum();
-        this.companyPhone = companyDto.getCompanyPhone();
-        this.representativePhone = companyDto.getRepresentativePhone();
-        this.typeCompany = companyDto.getTypeCompany();
+
+    public Company(CompanyCreateRequest companyCreateRequest) {
+        this.name = companyCreateRequest.getName();
+        this.companyAppId = companyCreateRequest.getCompanyAppId();
+        this.companyAppPwd = companyCreateRequest.getCompanyAppPwd();
+        this.establishedAt = companyCreateRequest.getEstablishedAt();
+        this.companyUrl = companyCreateRequest.getCompanyUrl();
+        this.address = companyCreateRequest.getAddress();
+        this.companyImgName = companyCreateRequest.getCompanyImgName();
+        this.companyImgPath = companyCreateRequest.getCompanyImgPath();
+        this.companyNum = companyCreateRequest.getCompanyNum();
+        this.companyPhone = companyCreateRequest.getCompanyPhone();
+        this.representativePhone = companyCreateRequest.getRepresentativePhone();
+        this.typeCompany = companyCreateRequest.getTypeCompany();
     }
 
-    public void update(CompanyDto companyDto){
-        this.name = companyDto.getName();
-        this.companyAppId = companyDto.getCompanyAppId();
-        this.companyAppPwd = companyDto.getCompanyAppPwd();
-        this.establishedAt = companyDto.getEstablishedAt();
-        this.companyUrl = companyDto.getCompanyUrl();
-        this.address = companyDto.getAddress();
-        this.companyImgName = companyDto.getCompanyImgName();
-        this.companyImgPath = companyDto.getCompanyImgPath();
-        this.companyNum = companyDto.getCompanyNum();
-        this.companyPhone = companyDto.getCompanyPhone();
-        this.representativePhone = companyDto.getRepresentativePhone();
-        this.typeCompany = companyDto.getTypeCompany();
+    public void update(CompanyUpdateRequest companyUpdateRequest){
+        this.name = companyUpdateRequest.getName();
+        this.companyAppId = companyUpdateRequest.getCompanyAppId();
+        this.companyAppPwd = companyUpdateRequest.getCompanyAppPwd();
+        this.establishedAt = companyUpdateRequest.getEstablishedAt();
+        this.companyUrl = companyUpdateRequest.getCompanyUrl();
+        this.address = companyUpdateRequest.getAddress();
+        this.companyImgName = companyUpdateRequest.getCompanyImgName();
+        this.companyImgPath = companyUpdateRequest.getCompanyImgPath();
+        this.companyNum = companyUpdateRequest.getCompanyNum();
+        this.companyPhone = companyUpdateRequest.getCompanyPhone();
+        this.representativePhone = companyUpdateRequest.getRepresentativePhone();
+        this.typeCompany = companyUpdateRequest.getTypeCompany();
     }
 
 
