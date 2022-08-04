@@ -1,5 +1,6 @@
 import axios from 'axios'
 import drf from '@/api/drf'
+import _ from 'lodash'
 
 
 export default {
@@ -26,6 +27,7 @@ export default {
   },
   getters: {
     tags: state => state.tags,
+    isJobopenings: state => !_.isEmpty(state.jobopenings),
     jobopenings: state => state.jobopenings,
     selectedJobopening: state => state.selectedJobopening,
   },
