@@ -16,11 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserUpdateRequest {
-    private String userAppId;
-
     private String userAppPwd;
-
-    private String kakaoId;
 
     @NotBlank
     private String name;

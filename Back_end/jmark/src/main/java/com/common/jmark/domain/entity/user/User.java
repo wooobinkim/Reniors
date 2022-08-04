@@ -36,7 +36,7 @@ public class User {
     @Column(length = 100)
     private String userAppId;
 
-    @Column(length = 50)
+    @Column(length = 200)
     private String userAppPwd;
 
     @Column(length = 100)
@@ -144,10 +144,8 @@ public class User {
         return user;
     }
 
-    public void update(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
-        this.userAppId = userAppId;
+    public void update(String userAppPwd, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
         this.userAppPwd = userAppPwd;
-        this.kakaoId = kakaoId;
         this.name = name;
         this.birth = birth;
         this.gender = gender;
