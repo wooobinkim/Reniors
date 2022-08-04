@@ -2,7 +2,6 @@ package com.common.jmark.controller;
 
 import com.common.jmark.common.config.web.LoginUser;
 import com.common.jmark.domain.entity.user.User;
-import com.common.jmark.dto.category.JobParentCategoryCreateRequest;
 import com.common.jmark.dto.interviewQuestion.AnswerCreateRequest;
 import com.common.jmark.dto.interviewQuestion.AnswerUpdateRequest;
 import com.common.jmark.dto.interviewQuestion.QuestionCreateRequest;

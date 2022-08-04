@@ -1,7 +1,7 @@
 package com.common.jmark.domain.entity;
 
 import com.common.jmark.domain.entity.category.Gugun;
-import com.common.jmark.dto.HopeAreaDto;
+import com.common.jmark.dto.JobOpening.HopeAreaCreateRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,8 +24,8 @@ public class HopeArea {
     @JoinColumn(name = "gugun_id")
     Gugun gugun;
 
-    public HopeArea(HopeAreaDto hopeAreaDto, SearchCondition searchCondition, Gugun gugun) {
-        this.id = hopeAreaDto.getId();
+    public HopeArea(HopeAreaCreateRequest hopeAreaCreateRequest, SearchCondition searchCondition, Gugun gugun) {
+        this.id = hopeAreaCreateRequest.getId();
         this.searchCondition = searchCondition;
         this.gugun = gugun;
     }
