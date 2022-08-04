@@ -13,4 +13,7 @@ public class JobChildCategoryCreateRequest {
 
     @NotNull(message = "소분류 카테고리 이름은 필수입니다.")
     private String name;
+
+    @NotNull
+    private Long code;
 }

@@ -1,10 +1,10 @@
 <template>
   <div class="home-notice">
     <div v-if="login">
-      <p>🔔 오늘 확인하셔야 할 알림이 <router-link to="/mypagr" class="home-notice-count">{{ noticeCount }}개</router-link> 있어요!</p>
+      <p>🔔 오늘 확인하셔야 할 알림이 <router-link to="/mypage" class="home-notice-count">{{ noticeCount }}개</router-link> 있어요!</p>
       <HomeCalendarList />
     </div>
-    <p v-else>지금 <router-link to="/login">로그인</router-link>을 하고<br>더 정확한 추천공고와 관리를 받아보세요!</p>
+    <p v-else>지금 <router-link to="/mypage">로그인</router-link>을 하고<br>더 정확한 추천공고와 관리를 받아보세요!</p>
   </div>
 </template>
 

@@ -2,6 +2,7 @@ package com.common.jmark.domain.entity.user;
 
 import com.common.jmark.domain.entity.Enum.LastEdu;
 import com.common.jmark.domain.entity.Apply;
+import com.common.jmark.domain.entity.InterviewQuestion.Answer;
 import com.common.jmark.domain.entity.SearchCondition;
 import com.common.jmark.domain.entity.Type.Gender;
 import com.common.jmark.domain.entity.Type.IsOpen;
@@ -32,11 +33,9 @@ public class User {
     @Column(name = "user_id")
     private long id;
 
-    @NotNull
     @Column(length = 100)
     private String userAppId;
 
-    @NotNull
     @Column(length = 50)
     private String userAppPwd;
 
@@ -95,28 +94,30 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
     // 회원 - 경력사항 연관관계
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CareerDetail> careerDetails = new ArrayList<>();
     // 회원 - 수상경력 연관관계
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Award> awards = new ArrayList<>();
 
     // 회원 - 자격증 연관관계
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<License> licenses = new ArrayList<>();
 
     // 회원 - 추천 조건 연관관계
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private RecommendCondition recommendCondition;
 
     // 회원 - 공고 지원 연관관계
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Apply> applies = new ArrayList<>();
 
     // 회원 - 검색 조건 연관관계
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SearchCondition> searchConditions = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Answer> answers = new ArrayList<>();
    public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
         User user = new User();
         user.userAppId = userAppId;

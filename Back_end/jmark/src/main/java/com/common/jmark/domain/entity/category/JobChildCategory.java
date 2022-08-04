@@ -1,7 +1,7 @@
 package com.common.jmark.domain.entity.category;
 
+import com.common.jmark.domain.entity.SearchCondition;
 import com.common.jmark.domain.entity.recommend.RecommendCondition;
-import com.common.jmark.domain.entity.HopeJob;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +27,8 @@ public class JobChildCategory {
     @Column(length = 50)
     private String name;
 
+    @NotNull
+    private Long code;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_parent_category_id")
     private JobParentCategory parent;
@@ -36,17 +38,19 @@ public class JobChildCategory {
     private List<RecommendCondition> recommendConditions = new ArrayList<>();
 
     @OneToMany(mappedBy = "jobChildCategory")
-    private List<HopeJob> hopeJobs = new ArrayList<>();
+    private List<SearchCondition> searchConditions = new ArrayList<>();
 
-    public static JobChildCategory create(String name, JobParentCategory parent){
+    public static JobChildCategory create(String name, Long code,JobParentCategory parent){
         JobChildCategory jcc = new JobChildCategory();
         jcc.name = name;
+        jcc.code = code;
         jcc.parent = parent;
         return jcc;
     }
 
-    public void update(String name, JobParentCategory parent){
+    public void update(String name, Long code, JobParentCategory parent){
         this.name = name;
+        this.code = code;
         this.parent = parent;
     }
 

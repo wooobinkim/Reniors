@@ -15,6 +15,4 @@ public class CommentCreateRequest {
     @NotBlank
     private String contents;
 
-    @NotNull
-    private Long userId;
 }

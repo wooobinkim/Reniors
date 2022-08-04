@@ -1,5 +1,6 @@
 package com.common.jmark.service.board;
 
+import com.common.jmark.common.exception.NotAuthException;
 import com.common.jmark.common.exception.NotFoundException;
 import com.common.jmark.domain.entity.board.Board;
 import com.common.jmark.domain.entity.board.Comment;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.common.jmark.common.exception.NotAuthException.USER_NO_AUTH;
 import static com.common.jmark.common.exception.NotFoundException.*;
 
 @Service
@@ -27,27 +29,33 @@ public class CommentService {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
     @Transactional
-    public Long create(Long boardId, CommentCreateRequest request) {
+    public Long create(Long boardId, CommentCreateRequest request, User user) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()->new NotFoundException(BOARD_NOT_FOUND));
-        User findUser = userRepository.findById(request.getUserId())
-                .orElseThrow(()-> new NotFoundException(USER_NOT_FOUND));
-        Comment comment = Comment.create(request.getContents(), board, findUser);
+        Comment comment = Comment.create(request.getContents(), board, user);
         return commentRepository.save(comment).getId();
     }
 
     @Transactional
-    public void update(Long commentId, CommentUpdateRequest request) {
+    public void update(Long commentId, CommentUpdateRequest request, User user) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(()->new NotFoundException(COMMENT_NOT_FOUND));
-        comment.update(request.getContents());
+        if(comment.getUser() == user) {
+            comment.update(request.getContents());
+        }else{
+            throw new NotAuthException(USER_NO_AUTH);
+        }
     }
 
     @Transactional
-    public void delete(Long commentId) {
+    public void delete(Long commentId, User user) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(()->new NotFoundException(COMMENT_NOT_FOUND));
-        commentRepository.delete(comment);
+        if(comment.getUser() == user) {
+            commentRepository.delete(comment);
+        }else{
+            throw new NotAuthException(USER_NO_AUTH);
+        }
     }
 
     @Transactional

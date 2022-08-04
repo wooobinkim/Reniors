@@ -9,13 +9,12 @@ import com.common.jmark.domain.repository.*;
 import com.common.jmark.domain.repository.category.GugunRepository;
 import com.common.jmark.domain.repository.category.JobChildCategoryRepository;
 import com.common.jmark.dto.*;
+import com.common.jmark.dto.Apply.ApplyResponse;
+import com.common.jmark.dto.JobOpening.*;
 import com.common.jmark.dto.category.GugunResponse;
 import com.common.jmark.dto.category.JobChildCategoryResponse;
 import com.common.jmark.dto.user.UserResponse;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.Tuple;
-import com.querydsl.core.types.Expression;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +22,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -40,7 +38,6 @@ public class JobOpeningService {
     private final GugunRepository gugunRepository;
     private final JobChildCategoryRepository jobChildCategoryRepository;
     private final ApplyRepository applyRepository;
-    private final HopeJobRepository hopeJobRepository;
     private final HopeAreaRepository hopeAreaRepository;
     private final SearchConditionRepository searchConditionRepository;
 
@@ -49,28 +46,30 @@ public class JobOpeningService {
 
     //공고 조건 생성(지역, 직무 제외)
     @Transactional
-    public SearchConditionDto postSearchCondition(User user, SearchConditionDto searchConditionDto){
-        SearchCondition searchCondition = new SearchCondition(searchConditionDto, user);
-        SearchConditionDto searchConditionDto1 = new SearchConditionDto(searchCondition);
+    public Long postSearchCondition(User user, SearchConditionCreateRequest searchConditionCreateRequest){
+        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(searchConditionCreateRequest.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jcc"));
+        SearchCondition searchCondition = new SearchCondition(searchConditionCreateRequest,jobChildCategory, user);
 
-        searchConditionRepository.save(searchCondition);
+        Long id = searchConditionRepository.save(searchCondition).getId();
 
-        return searchConditionDto1;
+        return id;
     }
     //공고 조건 희망지역 설정
     @Transactional
-    public void postHopeArea(Long searchConditionId,HopeAreaDto hopeAreaDto){
+    public Long postHopeArea(Long searchConditionId, HopeAreaCreateRequest hopeAreaCreateRequest){
         SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
-        Gugun gugun = gugunRepository.findById(hopeAreaDto.getGugunId()).orElseThrow(() -> new NotFoundException("not found gugun"));
+        Gugun gugun = gugunRepository.findById(hopeAreaCreateRequest.getGugunId()).orElseThrow(() -> new NotFoundException("not found gugun"));
 
-        HopeArea hopeArea = new HopeArea(hopeAreaDto,searchCondition,gugun);
-        hopeAreaRepository.save(hopeArea);
+        HopeArea hopeArea = new HopeArea(hopeAreaCreateRequest,searchCondition,gugun);
+        Long id = hopeAreaRepository.save(hopeArea).getId();
+
+        return id;
     }
     //공고 조건 희망지역 수정
     @Transactional
-    public void updateHopeArea(Long searchConditionId, HopeAreaDto hopeAreaDto, Long hopeAreaId){
+    public void updateHopeArea(Long searchConditionId, HopeAreaUpdateRequest hopeAreaUpdateRequest, Long hopeAreaId){
         SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
-        Gugun gugun = gugunRepository.findById(hopeAreaDto.getGugunId()).orElseThrow(() -> new NotFoundException("not found gugun"));
+        Gugun gugun = gugunRepository.findById(hopeAreaUpdateRequest.getGugunId()).orElseThrow(() -> new NotFoundException("not found gugun"));
         HopeArea hopeArea = hopeAreaRepository.findById(hopeAreaId).orElseThrow(() -> new NotFoundException("not found area"));
 
         hopeArea.update(searchCondition,gugun);
@@ -84,48 +83,49 @@ public class JobOpeningService {
         hopeAreaRepository.deleteById(hopeAreaId);
     }
 
-    //공고 조건 희망직무 설정
-    @Transactional
-    public void postHopeJob(Long searchConditionId,HopeJobDto hopeJobDto){
-        SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
-        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(hopeJobDto.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jobChildCategory"));
-
-        HopeJob hopeJob = new HopeJob(hopeJobDto,searchCondition,jobChildCategory);
-        hopeJobRepository.save(hopeJob);
-    }
-    //공고 조건 희망지역 수정
-    @Transactional
-    public void updateHopeJob(Long searchConditionId, HopeJobDto hopeJobDto, Long hopeJobId){
-        SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
-        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(hopeJobDto.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jobChildCategory"));
-        HopeJob hopejob = hopeJobRepository.findById(hopeJobId).orElseThrow(() -> new NotFoundException("not found hopejob"));
-
-        hopejob.update(searchCondition,jobChildCategory);
-    }
-
-    //공고 조건 희망지역 삭제
-    @Transactional
-    public void deleteHopeJob(Long hopeJobId){
-
-        hopeJobRepository.deleteById(hopeJobId);
-    }
+//    //공고 조건 희망직무 설정
+//    @Transactional
+//    public void postHopeJob(Long searchConditionId,HopeJobDto hopeJobDto){
+//        SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
+//        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(hopeJobDto.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jobChildCategory"));
+//
+//        HopeJob hopeJob = new HopeJob(hopeJobDto,searchCondition,jobChildCategory);
+//        hopeJobRepository.save(hopeJob);
+//    }
+//    //공고 조건 희망직무 수정
+//    @Transactional
+//    public void updateHopeJob(Long searchConditionId, HopeJobDto hopeJobDto, Long hopeJobId){
+//        SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
+//        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(hopeJobDto.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jobChildCategory"));
+//        HopeJob hopejob = hopeJobRepository.findById(hopeJobId).orElseThrow(() -> new NotFoundException("not found hopejob"));
+//
+//        hopejob.update(searchCondition,jobChildCategory);
+//    }
+//
+//    //공고 조건 희망직무 삭제
+//    @Transactional
+//    public void deleteHopeJob(Long hopeJobId){
+//
+//        hopeJobRepository.deleteById(hopeJobId);
+//    }
 
     //공고 조건 조회
     @Transactional
-    public List<SearchConditionDto> getSearchConditionList(User user){
+    public List<SearchConditionResponse> getSearchConditionList(User user){
         List<SearchCondition> searchConditionList = searchConditionRepository.findByUser(user);
-        List<SearchConditionDto> searchConditionDtoList = searchConditionList.stream().map(s->new SearchConditionDto(
-                s
-        )).collect(Collectors.toList());
+        List<SearchConditionResponse> searchConditionResponseList = searchConditionList.stream().map(s->
+                SearchConditionResponse.response(s)
+        ).collect(Collectors.toList());
 
-        return searchConditionDtoList;
+        return searchConditionResponseList;
     }
 
     //공고 조건 수정
     @Transactional
-    public void updateSearchCondition(User user, Long searchConditionId,SearchConditionDto searchConditionDto){
+    public void updateSearchCondition(User user, Long searchConditionId, SearchConditionUpdateRequest searchConditionUpdateRequest){
         SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
-        searchCondition.update(searchConditionDto,user);
+        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(searchConditionUpdateRequest.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jcc"));
+        searchCondition.update(searchConditionUpdateRequest, jobChildCategory,user);
     }
 
     //공고 조건 삭제
@@ -135,35 +135,33 @@ public class JobOpeningService {
     }
 
     //공고 조건 상세조회
-    public SearchConditionDto getSearchCondition(Long searchConditionId){
+    public SearchConditionResponse getSearchCondition(Long searchConditionId){
         SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
-        SearchConditionDto searchConditionDto = new SearchConditionDto(searchCondition);
 
-        return searchConditionDto;
+        SearchConditionResponse searchConditionResponse = SearchConditionResponse.response(searchCondition);
+
+        return searchConditionResponse;
     }
 
     @Transactional
     //공고 전체조회
-    public Page<JobOpeningDto> getJobOpening(Pageable pageable){
-        System.out.println("들어옴?????????????????????");
+    public Page<JobOpeningResponse> getJobOpening(Pageable pageable){
         List<JobOpening> jobOpeningList = jobOpeningRepository.findAll();
-        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(j->new JobOpeningDto(
-                j,
-                new CompanyDto(j.getCompany()),
-                GugunResponse.response(j.getGugun()),
-                JobChildCategoryResponse.response(j.getJobChildCategory())
+
+        List<JobOpeningResponse> jobOpeningResponses = jobOpeningList.stream().map(j->JobOpeningResponse.response(
+                j
         )).collect(Collectors.toList());
 
-        long total = jobOpeningDtoList.size();
+        long total = jobOpeningResponses.size();
 
-        Page jobOpeningDtoPage = new PageImpl<>(jobOpeningDtoList,pageable,total);
+        Page jobOpeningDtoPage = new PageImpl<>(jobOpeningResponses,pageable,total);
 
         return jobOpeningDtoPage;
     }
 
     //채용공고 조건 조회
     @Transactional
-    public Page<JobOpeningDto> getJobOpeningConditionList(Long searchConditionId, Pageable pageable){
+    public Page<JobOpeningResponse> getJobOpeningConditionList(Long searchConditionId, Pageable pageable){
         //조건검색을 위한 쿼리DSL 실행
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
         QJobOpening j = new QJobOpening("j");
@@ -171,7 +169,6 @@ public class JobOpeningService {
 
         SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
         List<HopeArea> hopeAreaList = hopeAreaRepository.findBySearchCondition(searchCondition);
-        List<HopeJob> hopeJobList = hopeJobRepository.findBySearchCondition(searchCondition);
 
         List<Gugun> gugunList = new ArrayList<>();
          for (HopeArea hopeArea : hopeAreaList) {
@@ -179,11 +176,6 @@ public class JobOpeningService {
              gugunList.add(gugun);
         }
 
-         List<JobChildCategory> jobChildCategoryList = new ArrayList<>();
-        for (HopeJob hopeJob : hopeJobList) {
-            JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(hopeJob.getJobChildCategory().getId()).orElseThrow(() -> new NotFoundException("not found jobChildCategory"));
-            jobChildCategoryList.add(jobChildCategory);
-        }
 //        for (HopeArea hopeArea : hopeAreaList) {
 //            booleanBuilder.and(j.gugun.id.in(hopeArea.getId()));
 //        }
@@ -204,11 +196,11 @@ public class JobOpeningService {
                         (j.minCareer.goe(searchCondition.getMinCareer())),
                         (j.minSalary.goe(searchCondition.getMinSalary())),
                         (j.workingDay.loe(searchCondition.getWorkingDay())),
+                        (j.jobChildCategory.eq(searchCondition.getJobChildCategory())),
                         booleanBuilder,
 //                        (j.typeEmployment.eq(searchCondition.getTypeEmployment())),
 //                        (j.lastEdu.eq(searchCondition.getLastEdu())),
-                        (j.gugun.in(gugunList)),
-                        (j.jobChildCategory.in(jobChildCategoryList))
+                        (j.gugun.in(gugunList))
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -217,12 +209,9 @@ public class JobOpeningService {
         //Entity -> Dto변환
         if (jobOpeningList.size() != 0){
 //            List<JobOpeningDto> jobOpeningDtoList = new ArrayList<>();
-            List<JobOpeningDto> jobOpeningDtoList =
-                    jobOpeningList.stream().map(o->new JobOpeningDto(
-                            o,
-                            new CompanyDto(o.getCompany()),
-                            GugunResponse.response(o.getGugun()),
-                            JobChildCategoryResponse.response(o.getJobChildCategory())
+            List<JobOpeningResponse> jobOpeningDtoList =
+                    jobOpeningList.stream().map(o->JobOpeningResponse.response(
+                            o
                     )).collect(Collectors.toList());
 
             long total = jobOpeningDtoList.size();
@@ -238,7 +227,7 @@ public class JobOpeningService {
 
     //채용공고 상세조회
     @Transactional
-    public JobOpeningDto getJobOpening(Long jobOpeningId){
+    public JobOpeningDetailResponse getJobOpening(Long jobOpeningId){
         Optional<JobOpening> optionalJobOpening = jobOpeningRepository.findById(jobOpeningId);
         optionalJobOpening.orElseThrow(()->new NotFoundException("not found jobOpening"));
 
@@ -248,12 +237,11 @@ public class JobOpeningService {
             //연결된 엔티티 매핑
             GugunResponse gugunResponse = GugunResponse.response(jobOpening1.getGugun());
             JobChildCategoryResponse jobChildCategoryResponse = JobChildCategoryResponse.response(jobOpening1.getJobChildCategory());
-            CompanyDto companyDto = new CompanyDto(jobOpening1.getCompany());
 
             //리턴할 Dto 세팅
-            JobOpeningDto jobOpeningDto = new JobOpeningDto(jobOpening1,companyDto,gugunResponse,jobChildCategoryResponse);
+            JobOpeningDetailResponse jobOpeningDetailResponse = JobOpeningDetailResponse.response(jobOpening1);
 //            jobOpeningDto.setLinkEntity(companyDto,gugunResponse,jobChildCategoryResponse);
-            return jobOpeningDto;
+            return jobOpeningDetailResponse;
         }else {
             return null;
         }
@@ -261,45 +249,41 @@ public class JobOpeningService {
 
     //지원하기
     @Transactional
-    public ApplyDto applyJobOpening(User user, Long jobOpeningId, ApplyDto applyDto){
+    public Long applyJobOpening(User user, Long jobOpeningId){
         JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found jobOpening"));
 
-        Apply apply = new Apply(applyDto, user,jobOpening);
-        applyRepository.save(apply);
+        Apply apply = new Apply(user,jobOpening);
+        Long id = applyRepository.save(apply).getId();
 
-        return applyDto;
+        return id;
     }
 
     //지원이력 조회
     @Transactional
-    public List<ApplyDto> getApplyList(User user){
+    public List<ApplyResponse> getApplyList(User user){
         List<Apply> applyList = applyRepository.findByUser(user);
 
-        List<ApplyDto> applyDtoList = applyList.stream().map(a->new ApplyDto(
-                a,
-                new JobOpeningDto(a.getJobOpening(),
-                        new CompanyDto(a.getJobOpening().getCompany()),
-                        GugunResponse.response(a.getJobOpening().getGugun()),
-                        JobChildCategoryResponse.response(a.getJobOpening().getJobChildCategory())),
-                UserResponse.response(user)
-        )).collect(Collectors.toList());
+        List<ApplyResponse> applyResponseList = applyList.stream().map(a->ApplyResponse.response(
+                a
+                )
+        ).collect(Collectors.toList());
 
-        return applyDtoList;
+        return applyResponseList;
     }
 
     //지원이력 상세조회
     @Transactional
-    public ApplyDto getApply(User user, Long applyId){
+    public ApplyResponse getApply(User user, Long applyId){
         Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found apply"));
+//        JobOpeningDto jobOpeningDto = new JobOpeningDto(apply.getJobOpening(),
+//                new CompanyDto(apply.getJobOpening().getCompany()),
+//                GugunResponse.response(apply.getJobOpening().getGugun()),
+//                JobChildCategoryResponse.response(apply.getJobOpening().getJobChildCategory()));
 
-        JobOpeningDto jobOpeningDto = new JobOpeningDto(apply.getJobOpening(),
-                new CompanyDto(apply.getJobOpening().getCompany()),
-                GugunResponse.response(apply.getJobOpening().getGugun()),
-                JobChildCategoryResponse.response(apply.getJobOpening().getJobChildCategory()));
+        ApplyResponse applyResponse = ApplyResponse.response(apply);
+//        ApplyDto applyDto = new ApplyDto(apply,jobOpeningDto,UserResponse.response(user));
 
-        ApplyDto applyDto = new ApplyDto(apply,jobOpeningDto,UserResponse.response(user));
-
-        return applyDto;
+        return applyResponse;
     }
 
 }

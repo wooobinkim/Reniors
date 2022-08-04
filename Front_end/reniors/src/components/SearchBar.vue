@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="home-header">comm on</h1>
+    <HeaderComponent />
     <form class="home-search" action="" @submit.prevent="search">
       <input type="text" name="keyword" class="home-search-text"
         placeholder="회사명, 직종, 지역 등 검색어를 입력해주세요" v-model="keyword">
@@ -11,9 +11,13 @@
 
 <script>
 import { useStore } from 'vuex'
+import HeaderComponent from './HeaderComponent.vue'
 
 export default {
   name: 'SearchBar',
+  components: {
+    HeaderComponent,
+  },
   setup() {
     const store = useStore()
 
