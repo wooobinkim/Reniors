@@ -14,6 +14,15 @@
       </div>
     </header>
 
+    <div class="content">
+      <img class="three" src="@/assets/bigthree.svg" alt="three">
+      <p class="text1">자격증</p>
+      <p class="text2">자격증 정보를 입력해주세요.</p>
+      <div>
+        
+      </div>
+    </div>
+
 
     <h1>3.자격증</h1>
     <p>자격증을 입력해주세요.</p>
@@ -53,8 +62,28 @@ export default {
     font-weight: 900;
   }
 
+  .three{
+    float: left;
+    margin: 16px;
+  }
+
   .order{
     margin: 2px;
+  }
+
+  .text1{
+    text-align: left;
+    font-size: 18px;
+    padding: 20px 4px 6px 4px;
+    font-weight: 900;
+    margin: 0px;
+  }
+
+  .text2{
+    text-align: left;
+    font-size: 15px;
+    padding-right: 50px;
+    color: #6D6D6D;
   }
 
 </style>

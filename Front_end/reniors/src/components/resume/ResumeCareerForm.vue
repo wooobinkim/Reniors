@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="career">
-      <!-- <img v-if="cnt !== 1" style="float:right; margin-bottom: 20px; margin-right: 5px; width: 18px;" class="minus" src="@/assets/minus.svg" alt="minus"> -->
       <p class="forminfo">기업명</p>
       <b-form-input class="mb-3" type="text" placeholder="기업명" ></b-form-input>
       <p class="forminfo">퇴사날짜</p>
