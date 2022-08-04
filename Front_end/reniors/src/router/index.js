@@ -12,7 +12,6 @@ import CompanyHomeView from "@/views/home/CompanyHomeView.vue";
 import CompanyJobOpeningView from "@/views/CompanyJobOpeningView.vue";
 // import CompanyMyPageView from "@/views/CompanyMyPageView.vue";
 
-<<<<<<< HEAD
 import BoardMain from "../views/board/BoardMain.vue"
 import BoardDetail from "../views/board/BoardDetail.vue"
 import BoardCreate from "../views/board/BoardCreate.vue"
@@ -24,12 +23,10 @@ import QuestionAnswer from "../views/practice/QuestionAnswer.vue"
 import QuestionList from "../views/practice/QuestionList.vue"
 import VideoPractice from "../views/practice/VideoPractice.vue"
 import VideoPracticeList from "../views/practice/VideoPracticeList.vue"
-=======
 import CompanyJobOpeningList from "@/components/Company/JobOpening/JobOpeningList.vue";
 import CompanyJobOpeningRegist from "@/components/Company/JobOpening/JobOpeningRegist.vue";
 // import CompanyInterview from "@/components/Company/Interview/CompanyInterview.vue";
 // import CompanyMyPage from "@/components/Company/MyPage/CompanyMyPage.vue";
->>>>>>> bf7bcfb3612882a3068e8b46842c137c463f6b80
 
 const routes = [
   {
