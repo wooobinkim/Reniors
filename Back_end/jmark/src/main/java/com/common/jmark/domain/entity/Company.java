@@ -28,7 +28,7 @@ public class Company{
     private String companyAppId;
 
     @NotNull
-    @Column(length = 50)
+    @Column(length = 200)
     private String companyAppPwd;
 
     @NotNull
@@ -73,19 +73,21 @@ public class Company{
     @OneToMany(mappedBy = "company")
     private List<Eval> evals = new ArrayList<>();
 
-    public Company(CompanyCreateRequest companyCreateRequest) {
-        this.name = companyCreateRequest.getName();
-        this.companyAppId = companyCreateRequest.getCompanyAppId();
-        this.companyAppPwd = companyCreateRequest.getCompanyAppPwd();
-        this.establishedAt = companyCreateRequest.getEstablishedAt();
-        this.companyUrl = companyCreateRequest.getCompanyUrl();
-        this.address = companyCreateRequest.getAddress();
-        this.companyImgName = companyCreateRequest.getCompanyImgName();
-        this.companyImgPath = companyCreateRequest.getCompanyImgPath();
-        this.companyNum = companyCreateRequest.getCompanyNum();
-        this.companyPhone = companyCreateRequest.getCompanyPhone();
-        this.representativePhone = companyCreateRequest.getRepresentativePhone();
-        this.typeCompany = companyCreateRequest.getTypeCompany();
+    public static Company create(String name, String companyAppId, String companyAppPwd, String establishedAt, String companyUrl, String address, String companyImgName, String companyImgPath, String companyNum, String companyPhone, String representativePhone, TypeCompany typeCompany) {
+        Company company = new Company();
+        company.name = name;
+        company.companyAppId = companyAppId;
+        company.companyAppPwd = companyAppPwd;
+        company.establishedAt = establishedAt;
+        company.companyUrl = companyUrl;
+        company.address = address;
+        company.companyImgName = companyImgName;
+        company.companyImgPath = companyImgPath;
+        company.companyNum = companyNum;
+        company.companyPhone = companyPhone;
+        company.representativePhone = representativePhone;
+        company.typeCompany = typeCompany;
+        return company;
     }
 
     public void update(CompanyUpdateRequest companyUpdateRequest){

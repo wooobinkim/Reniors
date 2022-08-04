@@ -23,5 +23,4 @@ public class CompanyUpdateRequest {
     private String companyPhone;
     private String representativePhone;
     private TypeCompany typeCompany;
-
 }
