@@ -1,6 +1,9 @@
 <template>
   <div class="jobopening-list">
-    <JobopeningItem v-for="jobopening in jobopenings" :key="jobopening.job_opening_id" :jobopening="jobopening" />
+    <div v-if="isJobopenings">
+      <JobopeningItem v-for="jobopening in jobopenings" :key="jobopening.job_opening_id" :jobopening="jobopening" />
+    </div>
+    <div v-else>아직 채용공고가 없어요!</div>
   </div>
 </template>
 
@@ -13,6 +16,7 @@ export default {
     JobopeningItem,
   },
   setup() {
+<<<<<<< HEAD
     const jobopenings = [
       {
         job_opening_id: 1,
@@ -60,16 +64,26 @@ export default {
         finished_at: '2022-08-05',
       },
     ]
+=======
+    const store = useStore()
+
+    console.log(store)
+    const fetchJobopenings = () => store.dispatch('jobopening/fetchJobopenings')
+    fetchJobopenings()
+
+    const jobopenings = computed(() => store.getters['jobopening/jobopenings'])
+    const isJobopenings = computed(() => store.getters['jobopening/isJobopenings'])
+>>>>>>> 084aaad2f07fc0003f1633e3b89fa2dae790cfc0
 
     return {
-      jobopenings,
+      jobopenings, isJobopenings
     }
   }
 }
 </script>
 
 <style>
-.jobopening-list {
+.jobopening-list > div {
   display: grid;
   grid-template-columns: 170px 170px;
   margin-top: 10px;

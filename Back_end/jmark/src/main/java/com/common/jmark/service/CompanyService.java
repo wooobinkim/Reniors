@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.common.jmark.common.exception.NotAuthException.COMPANY_NOT_MATCH;
+import static com.common.jmark.common.exception.NotAuthException.COMPANY_NO_AUTH;
 import static com.common.jmark.common.exception.NotFoundException.USER_NOT_FOUND;
 import static com.common.jmark.common.exception.NotMatchException.PASSWORD_NOT_MATCH;
 
@@ -126,7 +126,7 @@ public class CompanyService {
     @Transactional
     public JobOpeningDetailResponse getJobOpening(Company company, Long jobOpeningId){
         if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
-            throw new NotAuthException(COMPANY_NOT_MATCH);
+            throw new NotAuthException(COMPANY_NO_AUTH);
 
         JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found jobOpening"));
 
@@ -148,7 +148,7 @@ public class CompanyService {
     @Transactional
     public void updateJobOpening(Company company, Long jobOpeningId, JobOpeningUpdateRequest jobOpeningUpdateRequest){
         if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
-            throw new NotAuthException(COMPANY_NOT_MATCH);
+            throw new NotAuthException(COMPANY_NO_AUTH);
 
         Gugun gugun = gugunRepository.findById(jobOpeningUpdateRequest.getGugunId()).orElseThrow(() -> new NotFoundException("not found gugun"));
         JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(jobOpeningUpdateRequest.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jcc"));
@@ -162,7 +162,7 @@ public class CompanyService {
     @Transactional
     public void deleteJobOpening(Company company, Long jobOpeningId){
         if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
-            throw new NotAuthException(COMPANY_NOT_MATCH);
+            throw new NotAuthException(COMPANY_NO_AUTH);
 
         jobOpeningRepository.deleteById(jobOpeningId);
     }
@@ -171,7 +171,7 @@ public class CompanyService {
     @Transactional
     public List<ApplyResponse> getappliyList(Company company, Long jobOpeningId){
         if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
-            throw new NotAuthException(COMPANY_NOT_MATCH);
+            throw new NotAuthException(COMPANY_NO_AUTH);
 
         JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found Apply"));
 
@@ -187,7 +187,7 @@ public class CompanyService {
     @Transactional
     public UserResponse getapplicant(Company company, Long applyId){
         if(company.getId() != applyRepository.findById(applyId).get().getJobOpening().getCompany().getId())
-            throw new NotAuthException(COMPANY_NOT_MATCH);
+            throw new NotAuthException(COMPANY_NO_AUTH);
 
         Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found Apply"));
         UserResponse userResponse = UserResponse.response(apply.getUser());
@@ -199,7 +199,7 @@ public class CompanyService {
     @Transactional
     public void updateapply(Company company, Long applyId, ApplyUpdateRequest applyUpdateRequest){
         if(company.getId() != applyRepository.findById(applyId).get().getJobOpening().getCompany().getId())
-            throw new NotAuthException(COMPANY_NOT_MATCH);
+            throw new NotAuthException(COMPANY_NO_AUTH);
 
         Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found Apply"));
         apply.update(applyUpdateRequest,apply.getUser(), apply.getJobOpening());

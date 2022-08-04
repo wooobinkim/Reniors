@@ -184,7 +184,9 @@ public class JobOpeningController {
     @ApiOperation(value = "공고조건 삭제", notes = "공고 조건을 삭제한다.")
     public ResponseEntity<?> deleteSearchCondition( @PathVariable("searchConditionId")Long searchConditionId){
         jobOpeningService.deleteSearchCondition(searchConditionId);
+
         return ResponseEntity.status(HttpStatus.OK).body("success");
+
     }
 
     // 관심 공고 등록
