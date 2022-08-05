@@ -9,16 +9,16 @@
         id="title"
         placeholder="채용 공고 제목을 입력해주세요."
         name="title"
-        v-model="jobopening.title"
+        v-model="jobopeningdetail.title"
       />
     </div>
 
     <div class="mb-3">
-      <datepicker v-model="jobopening.createdDate" format="YYYY-MM-DD" />
+      <datepicker v-model="jobopeningdetail.createdDate" format="YYYY-MM-DD" />
     </div>
 
     <div class="mb-3">
-      <datepicker v-model="jobopening.finishedDate" format="YYYY-MM-DD" />
+      <datepicker v-model="jobopeningdetail.finishedDate" format="YYYY-MM-DD" />
     </div>
 
     <div class="mb-3 mt-3">
@@ -29,7 +29,7 @@
         id="numberPeople"
         placeholder="채용 인원을 입력해주세요."
         name="numberPeople"
-        v-model="jobopening.numberPeople"
+        v-model="jobopeningdetail.numberPeople"
       />
     </div>
 
@@ -42,7 +42,7 @@
       </select>
 
       구군
-      <select v-model="jobopening.gugunId">
+      <select v-model="jobopeningdetail.gugunId">
         <option v-for="gugun in guguns" :value="gugun.value" :key="gugun">
           {{ gugun.text }}
         </option>
@@ -62,7 +62,7 @@
       </select>
 
       직무소분류
-      <select v-model="jobopening.jobChildCategoryId">
+      <select v-model="jobopeningdetail.jobChildCategoryId">
         <option
           v-for="jobchild in jobchilds"
           :value="jobchild.value"
@@ -75,7 +75,7 @@
 
     <div class="mb-3 mt-3">
       학력
-      <select v-model="jobopening.lastEdu">
+      <select v-model="jobopeningdetail.lastEdu">
         <option
           v-for="lastedu in lastedus"
           :value="lastedu.value"
@@ -88,7 +88,7 @@
 
     <div class="mb-3 mt-3">
       근무형태
-      <select v-model="jobopening.typeEmployment">
+      <select v-model="jobopeningdetail.typeEmployment">
         <option
           v-for="typeemployment in typeemployments"
           :value="typeemployment.value"
@@ -106,7 +106,7 @@
         rows="5"
         id="contents"
         name="text"
-        v-model="jobopening.contents"
+        v-model="jobopeningdetail.contents"
       ></textarea>
     </div>
 
@@ -118,7 +118,7 @@
         id="jobPosition"
         placeholder="직책을 입력해주세요."
         name="jobPosition"
-        v-model="jobopening.jobPosition"
+        v-model="jobopeningdetail.jobPosition"
       />
     </div>
 
@@ -130,7 +130,7 @@
         id="minSalary"
         placeholder="급여를 입력해주세요."
         name="minSalary"
-        v-model="jobopening.minSalary"
+        v-model="jobopeningdetail.minSalary"
       />
     </div>
 
@@ -142,7 +142,7 @@
         id="workingDay"
         placeholder="급무횟수를 입력해주세요."
         name="workingDay"
-        v-model="jobopening.workingDay"
+        v-model="jobopeningdetail.workingDay"
       />
     </div>
 
@@ -154,7 +154,7 @@
         id="minCareer"
         placeholder="학력을 입력해주세요."
         name="minCareer"
-        v-model="jobopening.minCareer"
+        v-model="jobopeningdetail.minCareer"
       />
     </div>
 
@@ -167,7 +167,7 @@
 import Datepicker from "vue3-datepicker";
 // import { ref } from "vue";
 import { mapActions, mapState } from "vuex";
-import moment from "moment";
+// import moment from "moment";
 // const picked = ref(new Date())
 </script>
 
@@ -180,7 +180,7 @@ export default {
     return {
       sido: null,
       jobparent: null,
-      jobopening: {
+      jobopeningdetail: {
         contents: null,
         contentsImgName: null,
         contentsImgPath: null,
@@ -199,14 +199,6 @@ export default {
       },
     };
   },
-  watch: {
-    sido: function (data) {
-      this.getGugun(data);
-    },
-    jobparent: function (data) {
-      this.getJobChild(data);
-    },
-  },
   computed: {
     ...mapState("category", [
       "sidos",
@@ -216,10 +208,27 @@ export default {
       "lastedus",
       "typeemployments",
     ]),
+    ...mapState("company", ["jobopening"]),
+  },
+  watch: {
+    jobopening: function (data) {
+      data.createdDate = new Date(data.createdDate);
+      data.finishedDate = new Date(data.finishedDate);
+      this.jobopeningdetail = data;
+      this.sido = data.sidoId;
+      this.jobparent = data.jobParentCategory;
+    },
+    sido: function (data) {
+      this.getGugun(data);
+    },
+    jobparent: function (data) {
+      this.getJobChild(data);
+    },
   },
   created() {
     this.getSido();
     this.getJobParent();
+    this.getJobOpening(this.$route.params.no);
   },
   methods: {
     ...mapActions("category", [
@@ -228,17 +237,7 @@ export default {
       "getJobParent",
       "getJobChild",
     ]),
-    ...mapActions("company", ["registJobOpening"]),
-    regist() {
-      this.jobopening.createdDate = moment(this.jobopening.createdDate).format(
-        "YYYY-MM-DD"
-      );
-      this.jobopening.finishedDate = moment(
-        this.jobopening.finishedDate
-      ).format("YYYY-MM-DD");
-      this.registJobOpening(this.jobopening);
-      this.$router.push({ name: "companyjobopeninglist" });
-    },
+    ...mapActions("company", ["getJobOpening", "updateJobOpening"]),
   },
 };
 </script>

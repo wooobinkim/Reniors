@@ -22,11 +22,14 @@ public class CommentResponse {
     String contents;
 
     @NotBlank
+    Long userid;
+
+    @NotBlank
     String userName;
 
     @NotNull LocalDateTime updatedAt;
 
     public static CommentResponse response(Comment comment){
-        return new CommentResponse(comment.getId(), comment.getContents(), comment.getUser().getName(), comment.getUpdatedAt());
+        return new CommentResponse(comment.getId(), comment.getContents(), comment.getUser().getId(), comment.getUser().getName(), comment.getUpdatedAt());
     }
 }

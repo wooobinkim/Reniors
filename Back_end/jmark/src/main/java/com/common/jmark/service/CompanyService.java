@@ -21,10 +21,7 @@ import com.common.jmark.dto.Company.CompanyCreateRequest;
 import com.common.jmark.dto.Company.CompanyResponse;
 import com.common.jmark.dto.Company.CompanyUpdateRequest;
 import com.common.jmark.dto.Company.CompanyLoginRequest;
-import com.common.jmark.dto.JobOpening.JobOpeningCreateRequest;
-import com.common.jmark.dto.JobOpening.JobOpeningDetailResponse;
-import com.common.jmark.dto.JobOpening.JobOpeningResponse;
-import com.common.jmark.dto.JobOpening.JobOpeningUpdateRequest;
+import com.common.jmark.dto.JobOpening.*;
 import com.common.jmark.dto.user.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -120,10 +117,12 @@ public class CompanyService {
 
     //회사 공고 목록
     @Transactional
-    public List<JobOpeningResponse> getJobOpeningList(Company company){
+    public List<JobOpeningCompanyResponse> getJobOpeningList(Company company){
 
             List<JobOpening> jobOpeningList = jobOpeningRepository.findByCompany(company);
-            List<JobOpeningResponse> jobOpeningResponses = jobOpeningList.stream().map(j->JobOpeningResponse.response(
+
+
+            List<JobOpeningCompanyResponse> jobOpeningResponses = jobOpeningList.stream().map(j->JobOpeningCompanyResponse.response(
                     j
             )).collect(Collectors.toList());
             return jobOpeningResponses;
