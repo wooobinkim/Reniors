@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <router-link class="footroute" active-class="active" :to="{name: 'home'}">
+    <router-link class="footroute" :to="{name: 'home'}">
       <i class="bi bi-house"></i>
       <p>home</p>
     </router-link> 
@@ -12,7 +12,7 @@
       <i class="bi bi-person"></i>
       <p>MyPage</p>
     </router-link> 
-    <router-link class="footroute" :to="{name: 'boardMain'}">
+    <router-link class="footroute" :to="{name: 'boardMain', params:{'category_id' : 1}}">
       <i class="bi bi-chat-left-quote"></i>
       <p>커뮤니티</p>
     </router-link> 
@@ -26,12 +26,10 @@
 <script>
 export default {
   name: "FooterComponent",
-}
+};
 </script>
 
 <style>
-
-
 .footer {
   position: fixed;
   display: flex;
@@ -48,7 +46,7 @@ export default {
   color: #2c3e50;
   text-decoration: none;
 }
-.footroute p{
+.footroute p {
   font-size: 12px;
   margin: 0px 0px 4px;
 }

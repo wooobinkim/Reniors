@@ -49,7 +49,7 @@ public class BoardService {
     public void update(Long boardId, BoardUpdateRequest request, User user) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()->new NotFoundException(BOARD_NOT_FOUND));
-        if(board.getUser() == user) {
+        if(board.getUser().getId() == user.getId()) {
             board.update(request.getTitle(), request.getContents());
         }
         else{
@@ -61,7 +61,7 @@ public class BoardService {
     public void delete(Long boardId, User user) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()->new NotFoundException(BOARD_NOT_FOUND));
-        if(board.getUser() == user) {
+        if(board.getUser().getId() == user.getId()) {
             boardRepository.delete(board);
         }else{
             throw new NotAuthException(USER_NO_AUTH);

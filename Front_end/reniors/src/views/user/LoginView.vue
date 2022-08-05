@@ -8,7 +8,7 @@
         <b-form-input
           style="width: 100%; height: 48px"
           class="mb-2"
-          v-model="credentials.companyAppId"
+          v-model="credentials.userAppId"
           type="text"
           placeholder="아이디"
           required
@@ -16,7 +16,7 @@
         <b-form-input
           style="width: 100%; height: 48px"
           class="mb-4"
-          v-model="credentials.companyAppPwd"
+          v-model="credentials.userAppPwd"
           type="password"
           placeholder="비밀번호"
           required
@@ -24,7 +24,36 @@
         <button
           id="LoginBtn"
           v-bind:disabled="
-            credentials.companyAppId && credentials.companyAppPwd == ''
+            credentials.userAppId && credentials.userAppPwd == ''
+          "
+        >
+          로그인
+        </button>
+      </form>
+      <form style="width: 312px" @submit.prevent="companylogin(companyinfo)">
+        <br />
+        회사로그인
+        <!-- <form style="width: 312px;"> -->
+        <b-form-input
+          style="width: 100%; height: 48px"
+          class="mb-2"
+          v-model="companyinfo.companyAppId"
+          type="text"
+          placeholder="아이디"
+          required
+        ></b-form-input>
+        <b-form-input
+          style="width: 100%; height: 48px"
+          class="mb-4"
+          v-model="companyinfo.companyAppPwd"
+          type="password"
+          placeholder="비밀번호"
+          required
+        ></b-form-input>
+        <button
+          id="CLoginBtn"
+          v-bind:disabled="
+            companyinfo.companyAppId && companyinfo.companyAppPwd == ''
           "
         >
           로그인
@@ -63,6 +92,10 @@ export default {
   data() {
     return {
       credentials: {
+        userAppId: "",
+        userAppPwd: "",
+      },
+      companyinfo: {
         companyAppId: "",
         companyAppPwd: "",
       },
@@ -78,6 +111,7 @@ export default {
   // },
   methods: {
     ...mapActions(["login"]),
+    ...mapActions("company", ["companylogin"]),
     //   ...mapActions(['userConfirm', 'getUserInfo']),
     //   // 코드추가
     //   async confirm(){
@@ -117,6 +151,32 @@ export default {
 
 #LoginBtn:disabled {
   background-color: #ffc0a3;
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
+  cursor: pointer;
+}
+
+#CLoginBtn {
+  background-color: #37bf99;
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
+  cursor: pointer;
+}
+
+#CLoginBtn:disabled {
+  background-color: #8cd6c1;
   width: 100%;
   height: 40px;
   border-radius: 10px;
