@@ -6,10 +6,10 @@
     </div>
     <div>
         <p class="my-0" style="text-align:start">
-            질문에 대한 답변을 미리 작성해보세요!
+            해당 질문을 눌러
         </p>
         <p style="text-align:start">
-            화상면접 연습 시 참고할 수 있습니다.
+            화상면접을 경험해보세요!
         </p>
     </div>
 
@@ -18,35 +18,25 @@
         :key="idx"
         :question="question.question"
         :idx="idx"
-        :id="question.id"
     ></question-item>
+
   </div>
 </template>
-<script> 
-
-import QuestionItem from '@/components/practice/QuestionItem.vue';
-import { mapActions, mapGetters } from 'vuex';
+<script>
 
 export default{ 
-    name:'QuestionList',
-    components:{QuestionItem},
+    name:'VideoPracticeList',
+    components:{},
     data(){
         return{
             sampleData:''
         };
     },
-    computed: {
-        ...mapGetters(['questions'])
-    },
     setup(){},
+    created(){},
     mounted(){},
     unmounted(){},
-    methods:{
-        ...mapActions(['fetchQuestions'])
-    },
-    created(){
-        this.fetchQuestions()
-    },
+    methods:{}
 }
 </script>
 

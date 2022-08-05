@@ -27,7 +27,6 @@ public class ResumeController {
     private final CareerDetailService careerDetailService;
     private final LicenseService licenseService;
 
-
     @PostMapping("/career")
     @ApiOperation(value = "경력사항 추가", notes = "경력사항을 추가합니다.")
     public ResponseEntity<?> createCareer(
@@ -39,7 +38,6 @@ public class ResumeController {
         response.put("careerDetailId", careerDetailId);
         return ResponseEntity.ok(response);
     }
-
 
     @GetMapping("/career")
     @ApiOperation(value = "경력사항 조회", notes = "경력사항을 조회합니다.")
@@ -87,7 +85,6 @@ public class ResumeController {
         response.put("awardId", awardId);
         return ResponseEntity.ok(response);
     }
-
 
     @GetMapping("/awards")
     @ApiOperation(value = "수상경력 조회", notes = "수상경력을 조회합니다.")

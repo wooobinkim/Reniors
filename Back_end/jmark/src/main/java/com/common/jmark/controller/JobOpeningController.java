@@ -192,7 +192,6 @@ public class JobOpeningController {
     }
 
     // 관심 공고 등록
-
     @PostMapping("/bookmark/{jobOpenigId}")
     @ApiOperation(value = "관심 공고 등록", notes = "관심 공고를 등록한다.")
     public ResponseEntity<?> createBookmark(
@@ -200,21 +199,18 @@ public class JobOpeningController {
             @PathVariable Long jobOpenigId
     ) {
         Long bookmarkId = bookmarkService.create(user.getId(), jobOpenigId);
-
         Map<String, Long> response = new HashMap<>();
         response.put("bookmarkId", bookmarkId);
         return ResponseEntity.ok(response);
     }
 
     // 관심 공고 조회
-
     @GetMapping("/bookmark")
     @ApiOperation(value = "관심 공고 조회", notes = "관심 공고를 조회한다.")
     public ResponseEntity<?> readBookmarkList(
             @ApiIgnore @LoginUser User user
     ) {
         return ResponseEntity.ok(bookmarkService.readList(user.getId()));
-
     }
 
     // 관심 공고 상세 조회
