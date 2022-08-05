@@ -82,10 +82,10 @@ const routes = [
     component: CompanyHomeView,
   },
   {
-    path: "/jobopening",
+    path: "/company/jobopening",
     name: "companyjobopening",
     component: CompanyJobOpeningView,
-    redirect: "/jobopening/list",
+    redirect: "/company/jobopening/list",
     children: [
       {
         path: "list",

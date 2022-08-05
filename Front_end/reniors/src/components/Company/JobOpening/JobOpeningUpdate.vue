@@ -158,7 +158,7 @@
       />
     </div>
 
-    <button color="blue" class="ml-3" @click="regist">Submit</button>
+    <button color="blue" class="ml-3" @click="update">수정</button>
     <!-- </form> -->
   </div>
 </template>
@@ -238,6 +238,17 @@ export default {
       "getJobChild",
     ]),
     ...mapActions("company", ["getJobOpening", "updateJobOpening"]),
+    update() {
+      let data = {
+        no: this.$route.params.no,
+        jobopening: this.jobopeningdetail,
+      };
+      this.updateJobOpening(data);
+      this.$router.push({
+        name: "companyjobopeningdetail",
+        params: { no: this.$route.params.no },
+      });
+    },
   },
 };
 </script>

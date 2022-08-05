@@ -56,8 +56,8 @@ export const user = {
       console.log(credentials);
       axios({
         // url 수정
-        
-        url: "https://i7b307.p.ssafy.io/api/company/login",
+
+        url: "https://i7b307.p.ssafy.io/api/users/login",
         method: "post",
         data: credentials,
       }).then((res) => {
