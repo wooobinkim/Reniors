@@ -21,7 +21,10 @@ export const user = {
     profile: (state) => state.profile,
     authError: (state) => state.authError,
     // Authorization: `Token ${state.token}`
-    authHeader: (state) => ({ Authorization: `Bearer ${state.token}` }),
+    authHeader: (state) => ({
+       Authorization: `Bearer ${state.token}` ,
+       'Content-type': 'Application/JSON',
+      }),
   },
 
   mutations: {

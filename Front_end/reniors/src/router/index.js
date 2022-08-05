@@ -109,7 +109,58 @@ const routes = [
       },
     ],
   },
-];
+  {
+    path: '/boards/:category_id',
+    component: BoardMain,
+    name: 'boardMain',
+  },
+  {
+    path: '/boards/:category_id/:board_id',
+    component: BoardDetail,
+    name: 'boardDetail',
+  },
+  {
+    path: '/boards/:category_id/create',
+    component: BoardCreate,
+    name: 'boardCreate'
+  },
+  {
+    path: '/boards/:category_id/:board_id/update',
+    component: BoardUpdate,
+    name: 'boardUpdate'
+  },
+
+  //video
+  {
+    path: '/video',
+    component: VideoMain,
+    name: 'VideoMain'
+  },
+
+  //video practice
+  {
+    path: '/practice/questions',
+    name:'QuestionList',
+    component: QuestionList,
+  },
+  {
+    path: '/practice/question/:question_id/answer',
+    component: QuestionAnswer,
+    name: 'QuestionAnswer'
+  },
+  {
+    path: '/practice/videopractices',
+    component: VideoPracticeList,
+    name: 'VideoPracticeList',
+  },
+  {
+    path: '/practice/videopractice',
+    component: VideoPractice,
+    name: 'VideoPractice'
+  }
+
+
+]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

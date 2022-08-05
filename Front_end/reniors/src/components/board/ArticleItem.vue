@@ -1,8 +1,8 @@
 <template>
   <div>
-    <router-link :to="{ name: 'BoardDetail', params: {board_id: article_pk}}">
+    <router-link :to="{ name: 'boardDetail', params: {'board_id': article.boardId, 'category_id': category_id}}">
         <h3>
-            {{ article.user }} | {{ article.title }}
+            {{ article.userName }} | {{ article.title }}
         </h3>
     </router-link>
   </div>
@@ -16,14 +16,13 @@ export default{
     },
     data(){
         return{
-            article_pk : this.$route.params.article_pk,
-            
+            'category_id' : this.$route.params.category_id,
         };
     },
     setup(){},
     created(){},
     mounted(){},
     unmounted(){},
-    methods:{}
+    methods:{},
 }
 </script>
