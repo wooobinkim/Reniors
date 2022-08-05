@@ -12,7 +12,7 @@
       <i class="bi bi-person"></i>
       <p>MyPage</p>
     </router-link> 
-    <router-link class="footroute" :to="{name: 'boardMain'}">
+    <router-link class="footroute" :to="{name: 'boardMain', params:{'category_id' : 1}}">
       <i class="bi bi-chat-left-quote"></i>
       <p>커뮤니티</p>
     </router-link> 

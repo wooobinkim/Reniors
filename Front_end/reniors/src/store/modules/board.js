@@ -6,7 +6,6 @@ import drf from '@/api/drf'
 
 export default{
     state: {
-        currentUser: {},
         article: {},
         articles: [],
         comment: {},
@@ -19,7 +18,7 @@ export default{
         articles: state => state.articles,
         isArticle: state => !_.isEmpty(state.article),
         isAuthor: (state, getters) => {
-            return state.article.user?.pk === getters.currentUser.pk
+            return state.article.userName === getters.currentUser.userName
         },
         comment: state => state.comment,
         comments: state => state.comments,
@@ -49,11 +48,10 @@ export default{
                 headers: getters.authHeader,
             })
             .then(res => {
+                console.log(res.data)
                 commit ('SET_ARTICLES', res.data)
             })
-            .catch(err => console.error(err.response))
         },
-
         fetchArticle({commit, getters}, article_pk) {
             axios({
                 url: drf.board.detail(article_pk),
@@ -70,11 +68,11 @@ export default{
             axios({
                 url: drf.board.new(),
                 method: 'post',
-                data: {
+                data: JSON.stringify({
                     'categoryId':categoryId, 
                     'contents' : contents, 
                     'title' :title
-                },
+                }),
                 headers: getters.authHeader,
             })
             .then(res => {
@@ -89,7 +87,10 @@ export default{
             axios({
                 url: drf.board.detail(article_pk),
                 method: 'put',
-                data: {title, contents},
+                data: JSON.stringify({
+                    'title': title, 
+                    'contents': contents
+                }),
                 headers: getters.authHeader,
             })
             .then(
@@ -114,46 +115,6 @@ export default{
             }
         },
         
-
-        createComment({getters, commit}, {article_pk, content}){
-            const comment = {content}
-            axios({
-                url: drf.board.comment(article_pk),
-                method: 'post',
-                data: comment,
-                headers: getters.authHeader,
-            })
-            .then(res => {
-                commit('SET_COMMENT', res.data)
-                router.push({name:'boardDetail', params:{board_id: getters.article.pk}})
-            })
-        },
-        updateComment({commit, getters}, { article_pk, comment_pk, content}) {
-            const comment = {content}
-            axios({
-                url: drf.board.commentEdit(article_pk, comment_pk),
-                method: 'put',
-                data: comment,
-                headers: getters.authHeader,
-            })
-            .then(res => {
-                commit ('SET_COMMENT', res.data)
-            })
-        },
-        deleteComment({commit, getters}, {article_pk, comment_pk}) {
-            if (confirm('정말 삭제하시겠습니까?')) {
-                axios({
-                    url: drf.board.commentEdit(article_pk, comment_pk),
-                    method: 'delete',
-                    data: {},
-                    headers: getters.authHeader,
-                })
-                .then(res => {
-                    commit ('SET_COMMENT', res.data)
-                    router.push({name:'boardDetail', params:{board_id: getters.article.pk}})
-                })
-            }
-        },
         fetchComments({commit, getters}, article_pk) {
             axios({
                 url: drf.board.comment(article_pk),
@@ -164,7 +125,59 @@ export default{
                 commit ('SET_COMMENTS', res.data)
             })
             .catch(err => console.error(err.response))
-        },      
+        },  
+
+        createComment({getters, commit, dispatch}, {categoryId, boardId, content}){
+            axios({
+                url: drf.board.comment(boardId),
+                method: 'post',
+                data: JSON.stringify({
+                    'contents' : content
+                }),
+                headers: getters.authHeader,
+            })
+            .then(
+                dispatch('fetchComments', boardId)
+            )
+            .then(res => {
+                commit('SET_COMMENTS', res.data)
+                router.push({name:'boardDetail', params:{'category_id': categoryId, 'board_id': getters.boardId}})
+            })
+        },
+        updateComment({commit, getters, dispatch}, { categoryId, boardId, commentId, contents}) {
+            axios({
+                url: drf.board.commentEdit(boardId, commentId),
+                method: 'put',
+                data: JSON.stringify({
+                    "contents" : contents
+                }),
+                headers: getters.authHeader,
+            })
+            .then(
+                dispatch('fetchComments', boardId)
+            )
+            .then(res => {
+                commit ('SET_COMMENT', res.data)
+                router.push({name:'boardDetail', params:{'category_id': categoryId, 'board_id': getters.boardId}})
+            })
+        },
+        deleteComment({commit, getters, dispatch}, {categoryId, boardId, commentId}) {
+            if (confirm('정말 삭제하시겠습니까?')) {
+                axios({
+                    url: drf.board.commentEdit(boardId, commentId),
+                    method: 'delete',
+                    headers: getters.authHeader,
+                })
+                .then(
+                    dispatch('fetchComments', boardId)
+                )
+                .then(res => {
+                    commit ('SET_COMMENT', res.data)
+                    router.push({name:'boardDetail', params:{'category_id': categoryId, 'board_id': getters.boardId}})
+                })
+            }
+        },
+            
         
 
     },
