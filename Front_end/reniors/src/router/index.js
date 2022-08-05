@@ -107,6 +107,15 @@ const routes = [
       },
     ],
   },
+
+  // condition
+  {
+    path: '/condition',
+    name: 'Condition',
+    component: () => import('@/views/condition/ConditionView.vue')
+  },
+
+  //boards
   {
     path: '/boards',
     component: BoardMain,
