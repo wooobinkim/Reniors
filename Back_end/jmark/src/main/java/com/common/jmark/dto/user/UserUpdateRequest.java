@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -21,10 +22,10 @@ public class UserUpdateRequest {
     @NotBlank
     private String name;
 
-    @NotBlank
+    @NotNull
     private Date birth;
 
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
@@ -40,7 +41,7 @@ public class UserUpdateRequest {
     @NotBlank
     private String address;
 
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     private IsOpen isOpen;
 

@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
         user.update(
-                request.getUserAppPwd(),
+                passwordEncoder.encode(request.getUserAppPwd()),
                 request.getName(),
                 request.getBirth(),
                 request.getGender(),

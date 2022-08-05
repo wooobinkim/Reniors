@@ -53,6 +53,10 @@ public class UserController {
 
     // 카카오 로그인
 
+
+
+    // 카카오 회원 탈퇴
+
     @GetMapping
     @ApiOperation(value = "유저 상세 정보 조회", notes = "유저의 상세 정보를 조회합니다.")
     public ResponseEntity<?> readUser(
