@@ -18,7 +18,7 @@ export default{
         articles: state => state.articles,
         isArticle: state => !_.isEmpty(state.article),
         isAuthor: (state, getters) => {
-            return state.article.userName === getters.currentUser.userName
+            return state.article.userId === getters.currentUser.id
         },
         comment: state => state.comment,
         comments: state => state.comments,

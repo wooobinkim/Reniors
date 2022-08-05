@@ -18,6 +18,8 @@ import CompanyJobOpeningView from "@/views/CompanyJobOpeningView.vue";
 // import CompanyMyPageView from "@/views/CompanyMyPageView.vue";
 
 import CompanyJobOpeningDetail from "@/components/Company/JobOpening/JobOpeningDetail.vue";
+
+
 import CompanyJobOpeningList from "@/components/Company/JobOpening/JobOpeningList.vue";
 import CompanyJobOpeningRegist from "@/components/Company/JobOpening/JobOpeningRegist.vue";
 import CompanyJobOpeningUpdate from "@/components/Company/JobOpening/JobOpeningUpdate.vue";
