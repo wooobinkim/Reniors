@@ -4,7 +4,7 @@
     <article-form
         v-if="isArticle"
         :article="article"
-        :category_pk="category_pk"
+        :category_pk="this.category_pk"
         action="update"
     ></article-form>
   </div>
@@ -18,8 +18,8 @@ export default{
     components:{ArticleForm},
     data(){
         return{
-            category_pk: this.$route.params.jobParentCategoryId,
-            article_pk: this.$route.params.jobBoardId
+            category_pk: this.$route.params.category_id,
+            article_pk: this.$route.params.board_id
         }
     },
     computed: {
@@ -32,7 +32,7 @@ export default{
         ...mapActions(['fetchArticle'])
     },
     created(){
-        this.fetchArticle({category_pk:this.category_pk, article_pk: this.article_pk})
+        this.fetchArticle(this.article_pk)
     },
 }
 </script>

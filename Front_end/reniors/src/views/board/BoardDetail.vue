@@ -1,14 +1,14 @@
 <template>
   <div>
     <h1>{{article.title}}</h1>
-    <h3>{{article.content}}</h3>
+    <h3>{{article.contents}}</h3>
 
     <div v-if="isAuthor">
-        <router-link :to="{ name: 'BoardUpdate'}">
+        <router-link :to="{ name: 'boardUpdate', parmas:{'category_id': categoryId, 'board_id': articleId}}">
             <button>수정하기</button>
         </router-link>
 
-        <button @click="deleteArticle({article_pk})">삭제</button>
+        <button @click="deleteArticle({article_pk: articleId, categoryId: categoryId})">삭제</button>
     </div>
     <comment-list></comment-list>
   </div>
@@ -22,7 +22,8 @@ export default{
     components:{ CommentList },
     data(){
         return{
-            article_pk: this.$route.params.jobBoardId
+            'categoryId': this.$route.params.category_id,
+            'articleId': this.$route.params.board_id
         }
     },
     computed: {
@@ -35,7 +36,7 @@ export default{
         ...mapActions(['fetchArticle', 'deleteArticle'])
     },
     created(){
-        this.fetchArticle({article_pk: this.article_pk})
+        this.fetchArticle(this.articleId)
     },
 }
 </script>

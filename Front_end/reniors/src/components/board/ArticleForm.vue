@@ -34,7 +34,7 @@ export default{
         return{
             newArticle: {
                 title: this.article.title,
-                contents: this.article.content,
+                contents: this.article.contents,
             }
         };
     },
@@ -46,13 +46,19 @@ export default{
         ...mapActions(['createArticle', 'updateArticle']),
         onSubmit(){
             if (this.action === 'create') {
-                this.createArticle({ article: this.newArticle})
+                this.createArticle({ 
+                    categoryId: this.category_pk,
+                    contents: this.newArticle.contents,
+                    title: this.newArticle.title,
+                })
             } else if (this.action === 'update') {
-                const payload = {
-                    article_pk : this.article_pk,
-                    ...this.newArticle
-                }
-                this.updateArticle(payload)
+                this.updateArticle({
+                    categoryId: this.category_pk,
+                    article_pk: this.article.boardId,
+                    title: this.newArticle.title,
+                    contents: this.newArticle.contents,
+
+                })
             }
         }
     }
