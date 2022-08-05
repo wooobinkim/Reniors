@@ -1,7 +1,7 @@
 package com.common.jmark.domain.entity;
 
-import com.common.jmark.dto.CompanyDto;
-import com.common.jmark.dto.EvalDto;
+import com.common.jmark.dto.Eval.EvalCreateRequest;
+import com.common.jmark.dto.Eval.EvalUpdateRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,19 +26,17 @@ public class Eval {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
-    Company company;
+    private Company company;
 
     @OneToMany(mappedBy = "eval")
     private List<EvalQuestion> evalQuestions = new ArrayList<>();
 
-    public Eval(EvalDto evalDto, Company company) {
-        this.id = evalDto.getId();
-        this.name = evalDto.getName();
+    public Eval(EvalCreateRequest evalCreateRequest, Company company) {
+        this.name = evalCreateRequest.getName();
         this.company = company;
     }
 
-    public void update(EvalDto evalDto, Company company) {
-        this.name = evalDto.getName();
-        this.company = company;
+    public void update(EvalUpdateRequest evalUpdateRequest) {
+        this.name = evalUpdateRequest.getName();
     }
 }

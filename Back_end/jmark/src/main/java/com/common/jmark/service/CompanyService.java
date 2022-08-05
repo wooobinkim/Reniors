@@ -1,6 +1,7 @@
 package com.common.jmark.service;
 
 import com.common.jmark.common.config.security.util.JwtUtil;
+import com.common.jmark.common.exception.DuplicateException;
 import com.common.jmark.common.exception.NotAuthException;
 import com.common.jmark.common.exception.NotFoundException;
 import com.common.jmark.common.exception.NotMatchException;
@@ -14,14 +15,19 @@ import com.common.jmark.domain.repository.CompanyRepository;
 import com.common.jmark.domain.repository.JobOpeningRepository;
 import com.common.jmark.domain.repository.category.GugunRepository;
 import com.common.jmark.domain.repository.category.JobChildCategoryRepository;
-import com.common.jmark.dto.ApplyDto;
-import com.common.jmark.dto.CompanyDto;
-import com.common.jmark.dto.CompanyLoginRequest;
-import com.common.jmark.dto.JobOpeningDto;
-import com.common.jmark.dto.category.GugunResponse;
-import com.common.jmark.dto.category.JobChildCategoryResponse;
+import com.common.jmark.dto.Apply.ApplyResponse;
+import com.common.jmark.dto.Apply.ApplyUpdateRequest;
+import com.common.jmark.dto.Company.CompanyCreateRequest;
+import com.common.jmark.dto.Company.CompanyResponse;
+import com.common.jmark.dto.Company.CompanyUpdateRequest;
+import com.common.jmark.dto.Company.CompanyLoginRequest;
+import com.common.jmark.dto.JobOpening.JobOpeningCreateRequest;
+import com.common.jmark.dto.JobOpening.JobOpeningDetailResponse;
+import com.common.jmark.dto.JobOpening.JobOpeningResponse;
+import com.common.jmark.dto.JobOpening.JobOpeningUpdateRequest;
 import com.common.jmark.dto.user.UserResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -36,31 +42,45 @@ import static com.common.jmark.common.exception.NotMatchException.PASSWORD_NOT_M
 @Service
 @RequiredArgsConstructor
 public class CompanyService {
-
     private final JobOpeningRepository jobOpeningRepository;
     private final CompanyRepository companyRepository;
     private final GugunRepository gugunRepository;
     private final JobChildCategoryRepository jobChildCategoryRepository;
     private final ApplyRepository applyRepository;
     private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
 
     //회사 회원가입
     @Transactional
-    public CompanyDto postCompany(CompanyDto companyDto){
-        Company company = new Company(companyDto);
-        companyRepository.save(company);
-
-        CompanyDto companyDto1 = new CompanyDto(company);
-        return companyDto1;
+    public Long postCompany(CompanyCreateRequest request){
+        if (companyRepository.findByCompanyNum(request.getCompanyNum()).isPresent()) {
+            throw new DuplicateException(String.format("%s은 이미 가입된 기업입니다.", request.getName()));
+        } else {
+        Company company = Company.create(
+                request.getName(),
+                request.getCompanyAppId(),
+                passwordEncoder.encode(request.getCompanyAppPwd()),
+                request.getEstablishedAt(),
+                request.getCompanyUrl(),
+                request.getAddress(),
+                request.getCompanyImgName(),
+                request.getCompanyImgPath(),
+                request.getCompanyNum(),
+                request.getCompanyPhone(),
+                request.getRepresentativePhone(),
+                request.getTypeCompany()
+        );
+        return companyRepository.save(company).getId();
+        }
     }
 
     @Transactional
-    public String loginCompany(CompanyLoginRequest companyLoginRequest){
-        Optional<Company> optionalCompany = companyRepository.findByCompanyAppId(companyLoginRequest.getCompanyAppId());
+    public String loginCompany(CompanyLoginRequest request){
+        Optional<Company> optionalCompany = companyRepository.findByCompanyAppId(request.getCompanyAppId());
         if (!optionalCompany.isPresent()){
             throw new NotFoundException(USER_NOT_FOUND);
         }else {
-            if (optionalCompany.get().getCompanyAppPwd().equals(companyLoginRequest.getCompanyAppPwd())){
+            if (passwordEncoder.matches(request.getCompanyAppPwd(), optionalCompany.get().getCompanyAppPwd())){
                 return jwtUtil.createToken(optionalCompany.get().getId(), "company");
             }else {
                 throw new NotMatchException(PASSWORD_NOT_MATCH);
@@ -70,139 +90,72 @@ public class CompanyService {
 
     //회사 상세정보
     @Transactional
-    public CompanyDto getCompany(Company company){
-        Optional<Company> optionalCompany = companyRepository.findById(company.getId());
-        optionalCompany.orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
-
-        if (optionalCompany.isPresent()){
-            CompanyDto companyDto = new CompanyDto(optionalCompany.get());
-            return companyDto;
-        }else {
-            return null;
-        }
+    public CompanyResponse getCompany(Company company){
+        Company company1 = companyRepository.findById(company.getId()).orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+        CompanyResponse response = CompanyResponse.response(company1);
+        return response;
     }
 
     //회사 정보수정
     @Transactional
-    public CompanyDto updateCompany(Company company, CompanyDto companyDto){
-//        optionalCompany.orElseThrow(()->new NotFoundException("not found company"));
-//        if (optionalCompany.isPresent()){
-            company.update(companyDto);
-            CompanyDto companyDto1 = new CompanyDto(company);
-            return companyDto1;
-//        }else {
-//            return null;
-//        }
+    public void updateCompany(Company company, CompanyUpdateRequest request){
+        company.update(request);
     }
 
     //회사 탈퇴
     @Transactional
     public void deleteCompany(Company company){
-//        Optional<Company> optionalCompany = companyRepository.findById(company.getId());
-//        optionalCompany.orElseThrow(()->new NotFoundException("not found company"));
         companyRepository.deleteById(company.getId());
     }
 
     //회사 공고 등록
     @Transactional
-    public JobOpeningDto postJobOpening(Company company, JobOpeningDto jobOpeningDto){
-        Gugun gugun = gugunRepository.findById(jobOpeningDto.getGugunResponse().getId()).get();
-        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(jobOpeningDto.getJobChildCategoryResponse().getId()).get();
-
-        JobOpening jobOpening = new JobOpening(jobOpeningDto,gugun,jobChildCategory);
-//        Optional<Company> company = companyRepository.findById(companyId);
-//        if(company.isPresent()){
-            jobOpening.updateCompany(company);
-            jobOpeningRepository.save(jobOpening);
-
-            CompanyDto companyDto = new CompanyDto(company);
-
-            JobOpeningDto jobOpeningDto1 = new JobOpeningDto(jobOpening,
-                    companyDto,
-                    GugunResponse.response(gugun),
-                    JobChildCategoryResponse.response(jobChildCategory));
-
-            return jobOpeningDto1;
-//        }else {
-//            return null;
-//        }
+    public Long postJobOpening(Company company, JobOpeningCreateRequest jobOpeningCreateRequest){
+        Gugun gugun = gugunRepository.findById(jobOpeningCreateRequest.getGugunId()).orElseThrow(() -> new NotFoundException("not found gugun"));
+        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(jobOpeningCreateRequest.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jcc"));
+        JobOpening jobOpening = new JobOpening(jobOpeningCreateRequest,company,gugun,jobChildCategory);
+        Long id = jobOpeningRepository.save(jobOpening).getId();
+        return id;
     }
 
     //회사 공고 목록
     @Transactional
-    public List<JobOpeningDto> getJobOpeningList(Company company){
-//        Optional<Company> optionalCompany = companyRepository.findById(companyId);
-//        optionalCompany.orElseThrow(()->new NotFoundException("not found company"));
+    public List<JobOpeningResponse> getJobOpeningList(Company company){
 
-//        if (optionalCompany.isPresent()){
             List<JobOpening> jobOpeningList = jobOpeningRepository.findByCompany(company);
-            List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(j->new JobOpeningDto(
-                    j,
-                    new CompanyDto(j.getCompany()),
-                    GugunResponse.response(j.getGugun()),
-                    JobChildCategoryResponse.response(j.getJobChildCategory())
+            List<JobOpeningResponse> jobOpeningResponses = jobOpeningList.stream().map(j->JobOpeningResponse.response(
+                    j
             )).collect(Collectors.toList());
-
-            return jobOpeningDtoList;
-//        }else {
-//            return null;
-//        }
-
+            return jobOpeningResponses;
     }
 
     //회사 공고 상세조회
     @Transactional
-    public JobOpeningDto getJobOpening(Company company, Long jobOpeningId){
+    public JobOpeningDetailResponse getJobOpening(Company company, Long jobOpeningId){
         if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
-
-        Optional<JobOpening> optionalJobOpening = jobOpeningRepository.findById(jobOpeningId);
-        optionalJobOpening.orElseThrow(()->new NotFoundException("not found jobOpening"));
-
-        if (optionalJobOpening.isPresent()){
-            JobOpening jobOpening1 = optionalJobOpening.get();
+        JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found jobOpening"));
 
             //연결된 엔티티 매핑
-            GugunResponse gugunResponse = GugunResponse.response(jobOpening1.getGugun());
-            JobChildCategoryResponse jobChildCategoryResponse = JobChildCategoryResponse.response(jobOpening1.getJobChildCategory());
-            CompanyDto companyDto = new CompanyDto(jobOpening1.getCompany());
-
-            //리턴할 Dto 세팅
-            JobOpeningDto jobOpeningDto = new JobOpeningDto(jobOpening1,companyDto,gugunResponse,jobChildCategoryResponse);
+//            GugunResponse gugunResponse = GugunResponse.response(jobOpening1.getGugun());
+//            JobChildCategoryResponse jobChildCategoryResponse = JobChildCategoryResponse.response(jobOpening1.getJobChildCategory());
+//            CompanyDto companyDto = new CompanyDto(jobOpening1.getCompany());
+        JobOpeningDetailResponse response = JobOpeningDetailResponse.response(jobOpening);
+        //리턴할 Dto 세팅
+//            JobOpeningDto jobOpeningDto = new JobOpeningDto(jobOpening1,companyDto,gugunResponse,jobChildCategoryResponse);
 //            jobOpeningDto.setLinkEntity(companyDto,gugunResponse,jobChildCategoryResponse);
-            return jobOpeningDto;
-        }else {
-            return null;
-        }
+            return response;
     }
 
     //회사 공고 수정
     @Transactional
-    public JobOpeningDto updateJobOpening(Company company, Long jobOpeningId, JobOpeningDto jobOpeningDto){
+    public void updateJobOpening(Company company, Long jobOpeningId, JobOpeningUpdateRequest jobOpeningUpdateRequest){
         if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
-
-        Gugun gugun = gugunRepository.findById(jobOpeningDto.getGugunResponse().getId()).get();
-        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(jobOpeningDto.getJobChildCategoryResponse().getId()).get();
-
-        Optional<JobOpening> optionalJobOpening = jobOpeningRepository.findById(jobOpeningId);
-        optionalJobOpening.orElseThrow(()->new NotFoundException("not found jobOpening"));
-
-        if (optionalJobOpening.isPresent()){
-            optionalJobOpening.get().update(jobOpeningDto,gugun,jobChildCategory);
-
-//            Optional<Company> optionalCompany = companyRepository.findById(1L);
-            CompanyDto companyDto = new CompanyDto(company);
-
-            JobOpeningDto jobOpeningDto1 = new JobOpeningDto(optionalJobOpening.get(),
-                    companyDto,
-                    GugunResponse.response(gugun),
-                    JobChildCategoryResponse.response(jobChildCategory));
-
-            return jobOpeningDto1;
-        }else{
-            return null;
-        }
+        Gugun gugun = gugunRepository.findById(jobOpeningUpdateRequest.getGugunId()).orElseThrow(() -> new NotFoundException("not found gugun"));
+        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(jobOpeningUpdateRequest.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jcc"));
+        JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found jobOpening"));
+        jobOpening.update(jobOpeningUpdateRequest,gugun,jobChildCategory);
     }
 
     //회사 공고 삭제
@@ -210,35 +163,20 @@ public class CompanyService {
     public void deleteJobOpening(Company company, Long jobOpeningId){
         if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
-
-        Optional<JobOpening> optionalJobOpening = jobOpeningRepository.findById(jobOpeningId);
-        optionalJobOpening.orElseThrow(()->new NotFoundException("not found JobOpening"));
-
         jobOpeningRepository.deleteById(jobOpeningId);
     }
 
     //회사 공고 지원자 목록
     @Transactional
-    public List<ApplyDto> getappliyList(Company company, Long jobOpeningId){
+    public List<ApplyResponse> getappliyList(Company company, Long jobOpeningId){
         if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
-
         JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found Apply"));
-        JobOpeningDto jobOpeningDto = new JobOpeningDto(
-                jobOpening,
-                new CompanyDto(company),
-                GugunResponse.response(jobOpening.getGugun()),
-                JobChildCategoryResponse.response(jobOpening.getJobChildCategory())
-                );
-
         List<Apply> applyList = applyRepository.findByJobOpening(jobOpening);
-        List<ApplyDto> applyDtoList = applyList.stream().map(a->new ApplyDto(
-                a,
-                jobOpeningDto,
-                UserResponse.response(a.getUser())
+        List<ApplyResponse> applyResponseList = applyList.stream().map(a->ApplyResponse.response(
+                a
         )).collect(Collectors.toList());
-
-        return  applyDtoList;
+        return  applyResponseList;
     }
 
     //회사 공고 지원자 상세목록
@@ -246,7 +184,6 @@ public class CompanyService {
     public UserResponse getapplicant(Company company, Long applyId){
         if(company.getId() != applyRepository.findById(applyId).get().getJobOpening().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
-
         Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found Apply"));
         UserResponse userResponse = UserResponse.response(apply.getUser());
 
@@ -255,15 +192,10 @@ public class CompanyService {
 
     //회사 공고 지원자 상태수정
     @Transactional
-    public Apply updateapply(Company company, Long applyId, ApplyDto applyDto){
+    public void updateapply(Company company, Long applyId, ApplyUpdateRequest applyUpdateRequest){
         if(company.getId() != applyRepository.findById(applyId).get().getJobOpening().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
-
         Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found Apply"));
-        apply.update(applyDto,apply.getUser(), apply.getJobOpening());
-
-        return apply;
-
+        apply.update(applyUpdateRequest,apply.getUser(), apply.getJobOpening());
     }
-
 }

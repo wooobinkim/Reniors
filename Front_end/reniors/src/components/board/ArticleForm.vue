@@ -1,5 +1,4 @@
 <template>
-
     <div class="container">
       
       <form @submit.prevent="onSubmit" class="form-group row-cols-8" >

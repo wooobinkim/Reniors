@@ -14,7 +14,6 @@ export default{
     props:{
         article: Object,
     },
-    components:{},
     data(){
         return{
             article_pk : this.$route.params.article_pk,

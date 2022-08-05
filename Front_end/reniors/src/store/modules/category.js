@@ -8,7 +8,6 @@ export default{
         childs: [],
         sido: [],
         gugun: [],
-
     },
 
     getters: {

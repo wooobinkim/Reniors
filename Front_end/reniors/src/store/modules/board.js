@@ -17,11 +17,6 @@ export default{
     
     getters: {
         isLoggedIn: state => !!state.token,
-        authHeader : state => ({
-             Authorization : `JWT ${state.token}`,
-             "Content-Type": "Application/json"
-            }),
-        currentUser: state=> state.currentUser,
         article: state => state.article,
         articles: state => state.articles,
         isArticle: state => !_.isEmpty(state.article),

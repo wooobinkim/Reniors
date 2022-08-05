@@ -33,12 +33,10 @@ public class User {
     @Column(name = "user_id")
     private long id;
 
-    @NotNull
     @Column(length = 100)
     private String userAppId;
 
-    @NotNull
-    @Column(length = 50)
+    @Column(length = 200)
     private String userAppPwd;
 
     @Column(length = 100)
@@ -90,14 +88,18 @@ public class User {
     @Column(length = 100)
     private String portfolioPath;
 
+    // 회원 - 게시판 연관관계
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Board> boards = new ArrayList<>();
 
+    // 회원 - 댓글 연관관계
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
+
     // 회원 - 경력사항 연관관계
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CareerDetail> careerDetails = new ArrayList<>();
+
     // 회원 - 수상경력 연관관계
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Award> awards = new ArrayList<>();
@@ -120,6 +122,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
+
    public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
         User user = new User();
         user.userAppId = userAppId;
@@ -141,10 +144,8 @@ public class User {
         return user;
     }
 
-    public void update(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
-        this.userAppId = userAppId;
+    public void update(String userAppPwd, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
         this.userAppPwd = userAppPwd;
-        this.kakaoId = kakaoId;
         this.name = name;
         this.birth = birth;
         this.gender = gender;

@@ -23,7 +23,7 @@ export default{
     data(){
         return{
             article_pk: this.$route.params.jobBoardId
-        };
+        }
     },
     computed: {
         ...mapGetters(['article', 'isAuthor', 'currentUser'])

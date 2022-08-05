@@ -1,5 +1,4 @@
 import axios from 'axios'
-import drf from '@/api/drf'
 import _ from 'lodash'
 
 const YOUTUBE_API_KEY = 'AIzaSyAF4F4t4ryCtxtxMrF0LgKNNXCITQVyi7E'
@@ -7,6 +6,7 @@ const YOUTUBE_API_KEY = 'AIzaSyAF4F4t4ryCtxtxMrF0LgKNNXCITQVyi7E'
 export default {
   namespaced: true,
   state: {
+    isLogin: false,
     hotJobopenings: [
       {
         id: 1,
@@ -54,39 +54,29 @@ export default {
       },
     ],
     youtubes: [],
-    isJobopenings: false,
     isYoutube: false,
   },
   getters: {
+    isLogin: state => state.isLogin,
     hotJobopenings: state => state.hotJobopenings,
     newJobopenings: state => state.newJobopenings,
     recommendJobopenings: state => state.recommendJobopenings,
-    isJobopenings: state => !_.isEmpty(state.hotJobopenings) && !_.isEmpty(state.newJobopenings) && !_.isEmpty(state.recommendJobopenings),
     youtubes: state => state.youtubes,
     isYoutube: state => !_.isEmpty(state.youtubes),
   },
   mutations: {
-    JOBOPENINGS: (state, jobopenings) => {
-      state.hotJobopenings = jobopenings.hotJobopenings
-      state.newJobopenings = jobopenings.newJobopenings
-      state.recommendJobopenings = jobopenings.recommendJobopenings
-    },
+    IS_LOGIN: (state, value) => state.isLogin = value,
     YOUTUBES: (state, youtubes) => state.youtubes = youtubes,
     DUMMY: () => 0,
   },
   actions: {
-    async fetchHome({ commit, dispatch }, keyword) {
-      console.log('home fetch execute')
-      // 어떤 요청을 보내야 hot, new를 받을 수 잇는지 모르겠어서 임시로 전체 공고 불러옴
-      const hotJobopenings = (await axios.get(drf.jobopening.get())).data.content
-      const newJobopenings = (await axios.get(drf.jobopening.get())).data.content
-      const recommendJobopenings = (await axios.get(drf.jobopening.get())).data.content
-
-      console.log(hotJobopenings)
-      commit('JOBOPENINGS', { hotJobopenings, newJobopenings, recommendJobopenings })      
-      // youtube dispatch
-      dispatch('fetchYoutubes', keyword)
-
+    login({ commit }) {
+      console.log('login')
+      commit('IS_LOGIN', true)
+    },
+    logout({ commit }) {
+      console.log('logout')
+      commit('IS_LOGIN', false)
     },
     async fetchYoutubes({ commit }, keyword) {
       console.log('fetch execute')

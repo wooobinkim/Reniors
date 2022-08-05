@@ -13,7 +13,7 @@ export default{
     data(){
         return{
             content: '',
-        };
+        }
     },
     computed: {
         ...mapGetters(['article'])

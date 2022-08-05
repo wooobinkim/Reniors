@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed } from '@vue/runtime-core'
 import { useStore } from 'vuex'
 import JobopeningItem from './JobopeningItem.vue'
 
@@ -18,7 +18,7 @@ export default {
     JobopeningItem,
   },
   setup() {
-    const store = useStore()
+    const store = useStore
 
     console.log(store)
     const fetchJobopenings = () => store.dispatch('jobopening/fetchJobopenings')

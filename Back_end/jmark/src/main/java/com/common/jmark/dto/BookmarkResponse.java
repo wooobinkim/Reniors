@@ -1,9 +1,7 @@
 package com.common.jmark.dto;
 
 import com.common.jmark.domain.entity.Bookmark;
-import com.common.jmark.dto.category.GugunResponse;
-import com.common.jmark.dto.category.JobChildCategoryResponse;
-import com.common.jmark.dto.user.UserResponse;
+import com.common.jmark.dto.JobOpening.JobOpeningResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,17 +12,10 @@ import lombok.NoArgsConstructor;
 public class BookmarkResponse {
     private Long id;
 
-    private UserResponse userResponse;
-
-    private JobOpeningDto jobOpeningDto;
+    private JobOpeningResponse jobOpeningResponse;
 
     public static BookmarkResponse response(Bookmark bookmark) {
         return new BookmarkResponse(bookmark.getId(),
-                UserResponse.response(bookmark.getUser()),
-                new JobOpeningDto(bookmark.getJobOpening(),
-                        new CompanyDto(bookmark.getJobOpening().getCompany()),
-                        GugunResponse.response(bookmark.getJobOpening().getGugun()),
-                        JobChildCategoryResponse.response(bookmark.getJobOpening().getJobChildCategory())
-                        ));
+                JobOpeningResponse.response(bookmark.getJobOpening()));
     }
 }

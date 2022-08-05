@@ -16,6 +16,12 @@ import java.util.Date;
 public class UserResponse {
     private Long id;
 
+    private String userAppId;
+
+    private String userAppPwd;
+
+    private String kakaoId;
+
     private String name;
 
     private Date birth;
@@ -41,6 +47,6 @@ public class UserResponse {
     private String portfolioPath;
 
     public static UserResponse response(User user){
-        return new UserResponse(user.getId(), user.getName(),user.getBirth(), user.getGender(),user.getPhone(), user.getTotalCareer(), user.getProfileImgName(), user.getProfileImgPath(), user.getAddress(), user.getIsOpen(), user.getLastEdu(), user.getPortfolioName(),user.getPortfolioPath());
+        return new UserResponse(user.getId(), user.getUserAppId(), user.getUserAppPwd(), user.getKakaoId(), user.getName(),user.getBirth(), user.getGender(),user.getPhone(), user.getTotalCareer(), user.getProfileImgName(), user.getProfileImgPath(), user.getAddress(), user.getIsOpen(), user.getLastEdu(), user.getPortfolioName(),user.getPortfolioPath());
     }
 }

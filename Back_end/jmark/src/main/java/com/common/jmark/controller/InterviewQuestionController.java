@@ -1,9 +1,7 @@
 package com.common.jmark.controller;
 
 import com.common.jmark.common.config.web.LoginUser;
-import com.common.jmark.domain.entity.InterviewQuestion.Question;
 import com.common.jmark.domain.entity.user.User;
-import com.common.jmark.dto.CompanyDto;
 import com.common.jmark.dto.interviewQuestion.AnswerCreateRequest;
 import com.common.jmark.dto.interviewQuestion.AnswerUpdateRequest;
 import com.common.jmark.dto.interviewQuestion.QuestionCreateRequest;
@@ -19,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import javax.xml.stream.events.EntityReference;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -31,6 +29,13 @@ public class InterviewQuestionController {
 
     private final QuestionService questionService;
     private final AnswerService answerService;
+
+    @PostMapping("/admin")
+    @ApiIgnore
+    public void createQuestionList(
+            @RequestBody List<QuestionCreateRequest> requestList){
+        questionService.createList(requestList);
+    }
 
     //인터뷰 질문 리스트 조회
     @GetMapping

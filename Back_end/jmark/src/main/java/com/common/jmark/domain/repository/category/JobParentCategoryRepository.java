@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface JobParentCategoryRepository extends JpaRepository<JobParentCategory, Long> {
 
     Optional<JobParentCategory> findByName(String name);
+    Optional<JobParentCategory> findByCode(Long code);
 }
