@@ -32,7 +32,7 @@ export default {
     const isJobopenings = computed(() => store.getters['jobopening/isJobopenings'])
 
     return {
-      jobopenings,
+      jobopenings, isJobopenings,
     };
   },
 };
