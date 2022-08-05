@@ -9,10 +9,8 @@ import com.common.jmark.dto.Company.CompanyCreateRequest;
 import com.common.jmark.dto.Company.CompanyResponse;
 import com.common.jmark.dto.Company.CompanyUpdateRequest;
 import com.common.jmark.dto.Company.CompanyLoginRequest;
-import com.common.jmark.dto.JobOpening.JobOpeningCreateRequest;
-import com.common.jmark.dto.JobOpening.JobOpeningDetailResponse;
-import com.common.jmark.dto.JobOpening.JobOpeningResponse;
-import com.common.jmark.dto.JobOpening.JobOpeningUpdateRequest;
+import com.common.jmark.dto.JobOpening.*;
+
 import com.common.jmark.dto.user.UserResponse;
 import com.common.jmark.service.CompanyService;
 import io.swagger.annotations.Api;
@@ -98,7 +96,9 @@ public class CompanyController {
     @ApiOperation(value = "회사 공고목록", notes = "회사가 올린 공고 목록들을 가져온다.")
 
     public ResponseEntity<?> getJobOpeningList(@ApiIgnore @LoginCompany Company company){
-        List<JobOpeningResponse> jobOpeningList = companyService.getJobOpeningList(company);
+
+        List<JobOpeningCompanyResponse> jobOpeningList = companyService.getJobOpeningList(company);
+
 
         return ResponseEntity.status(HttpStatus.OK).body(jobOpeningList);
     }

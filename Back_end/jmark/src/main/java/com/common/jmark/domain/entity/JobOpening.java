@@ -10,6 +10,7 @@ import com.sun.istack.NotNull;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,11 +29,14 @@ public class JobOpening{
     private Long id;
 
     @NotNull
-    @CreatedDate
+//    @CreatedDate
+    @DateTimeFormat(pattern = "YYYY-MM-DD")
     private Date createdDate;
 
     @NotNull
-    @CreatedDate
+//    @CreatedDate
+    @DateTimeFormat(pattern = "YYYY-MM-DD")
+
     private Date finishedDate;
 
     @NotNull

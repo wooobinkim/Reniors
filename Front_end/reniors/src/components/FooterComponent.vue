@@ -26,12 +26,10 @@
 <script>
 export default {
   name: "FooterComponent",
-}
+};
 </script>
 
 <style>
-
-
 .footer {
   position: fixed;
   display: flex;
@@ -48,7 +46,7 @@ export default {
   color: #2c3e50;
   text-decoration: none;
 }
-.footroute p{
+.footroute p {
   font-size: 12px;
   margin: 0px 0px 4px;
 }
