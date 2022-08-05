@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <router-link class="footroute" active-class="active" :to="{name: 'home'}">
+    <router-link class="footroute" :to="{name: 'home'}">
       <i class="bi bi-house"></i>
       <p>home</p>
     </router-link> 

@@ -108,22 +108,22 @@ const routes = [
     ],
   },
   {
-    path: '/boards',
+    path: '/boards/:category_id',
     component: BoardMain,
     name: 'boardMain',
   },
   {
-    path: '/boards/:board_id',
+    path: '/boards/:category_id/:board_id',
     component: BoardDetail,
     name: 'boardDetail',
   },
   {
-    path: '/boards/create',
+    path: '/boards/:category_id/create',
     component: BoardCreate,
     name: 'boardCreate'
   },
   {
-    path: '/boards/:board_id/update',
+    path: '/boards/:category_id/:board_id/update',
     component: BoardUpdate,
     name: 'boardUpdate'
   },
