@@ -44,10 +44,10 @@ export default {
       console.log(data)
       commit('JOBOPENINGS', data)
     },
-    selectJobopening({ state, commit }, id) {
+    async selectJobopening({ commit }, id) {
       console.log('select jobopening')
-      const data = state.jobopenings.find(jobopening => jobopening.id === id)
-      console.log(state.jobopenings)
+      const response = await axios.get(drf.jobopening.detail(id))
+      const data = response.data
       console.log(data)
       commit('SELECTJOB', data)
     },

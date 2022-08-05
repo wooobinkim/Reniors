@@ -1,11 +1,11 @@
 <template>
-  <div class="jobopening-item">
+  <router-link class="jobopening-item" :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }">
     <div>
       <p class="jobopening-item-company">{{ jobopening.companyName }}</p>
       <p class="jobopening-item-title">{{ jobopening.title }}</p>
     </div>
     <p class="jobopening-item-period">{{ createDate }} ~ {{ finishedDate }}</p>
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -65,6 +65,7 @@ export default {
   margin: 10px 10px;
   padding: 10px;
   height: 150px;
+  text-decoration: none;
 }
 
 .jobopening-item p {
@@ -77,6 +78,7 @@ export default {
   -webkit-box-orient: vertical;
   overflow: hidden;
   -webkit-line-clamp: 1;
+  color: black;
 }
 
 .jobopening-item-title {

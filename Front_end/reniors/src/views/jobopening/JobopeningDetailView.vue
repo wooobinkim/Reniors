@@ -31,7 +31,7 @@ export default {
     const jobopeningId = useRoute().params.jobopeningId
 
     const selectJobopening = () => store.dispatch('jobopening/selectJobopening', jobopeningId)
-    // selectJobopening()
+    selectJobopening()
 
     return {
       jobopeningId, selectJobopening
