@@ -33,6 +33,7 @@ public class RecommendConditionServiceImpl implements RecommendConditionService 
     public Long create(Long userId, RecommendConditionCreateRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
+
         if (recommendConditionRepository.findByUserId(userId).isPresent()) {
             throw new DuplicateException(String.format("%s님의 추천 조건이 이미 존재합니다.", user.getName()));
         }

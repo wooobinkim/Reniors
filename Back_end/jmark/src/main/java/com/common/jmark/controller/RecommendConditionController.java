@@ -24,6 +24,7 @@ import java.util.Map;
 public class RecommendConditionController {
     private final RecommendConditionService recommendConditionService;
 
+
     @PostMapping
     @ApiOperation(value = "추천 조건 생성", notes = "해당 유저의 추천 조건을 생성합니다.")
     public ResponseEntity<?> create(
@@ -36,6 +37,7 @@ public class RecommendConditionController {
         return ResponseEntity.ok(response);
     }
 
+
     @GetMapping
     @ApiOperation(value = "추천 조건 조회", notes = "해당 유저의 추천 조건을 조회합니다.")
     public ResponseEntity<?> read(
@@ -43,6 +45,7 @@ public class RecommendConditionController {
     ) {
         return ResponseEntity.ok(recommendConditionService.read(user.getId()));
     }
+
 
     @PutMapping
     @ApiOperation(value = "추천 조건 수정", notes = "해당 유저의 추천 조건을 수정합니다.")

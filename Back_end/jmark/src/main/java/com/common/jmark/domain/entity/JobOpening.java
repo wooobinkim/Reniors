@@ -36,6 +36,7 @@ public class JobOpening{
     @NotNull
 //    @CreatedDate
     @DateTimeFormat(pattern = "YYYY-MM-DD")
+
     private Date finishedDate;
 
     @NotNull

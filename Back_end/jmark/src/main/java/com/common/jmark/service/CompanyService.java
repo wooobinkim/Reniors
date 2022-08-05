@@ -175,6 +175,7 @@ public class CompanyService {
         List<ApplyResponse> applyResponseList = applyList.stream().map(a->ApplyResponse.response(
                 a
         )).collect(Collectors.toList());
+
         return  applyResponseList;
     }
 
@@ -183,6 +184,7 @@ public class CompanyService {
     public UserResponse getapplicant(Company company, Long applyId){
         if(company.getId() != applyRepository.findById(applyId).get().getJobOpening().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
+
         Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found Apply"));
         UserResponse userResponse = UserResponse.response(apply.getUser());
 
@@ -194,6 +196,7 @@ public class CompanyService {
     public void updateapply(Company company, Long applyId, ApplyUpdateRequest applyUpdateRequest){
         if(company.getId() != applyRepository.findById(applyId).get().getJobOpening().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
+
         Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found Apply"));
         apply.update(applyUpdateRequest,apply.getUser(), apply.getJobOpening());
     }
