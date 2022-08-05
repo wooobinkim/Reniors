@@ -31,7 +31,7 @@ export default {
   resume: {
     get: userId => HOST + RESUME + `/${userId}`,
     edit: userId => HOST + RESUME + `/${userId}`,
-    career: resumeId => HOST + RESUME + `/${resumeId}` + '/career',
+    career: () => HOST + RESUME + '/career',
     careerEdit: (resumeId, careerDetailId) => HOST + RESUME + `/${resumeId}` + '/career' + `/${careerDetailId}`,
     awards: resumeId => HOST + RESUME + `/${resumeId}` + '/awards',
     awardsEdit: (resumeId, awardCareerId) => HOST + RESUME + `/${resumeId}` + '/awards' + `${awardCareerId}`,

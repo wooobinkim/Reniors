@@ -19,6 +19,7 @@
       <p class="text1">경력사항</p>
       <p class="text2">경력사항을 입력해주세요.</p>
       <div style="width:312px; margin:0 auto;">
+        <resume-career-detail></resume-career-detail>
         <resume-career-form v-for="i in cnt" :key="i" :cnt = 'cnt'></resume-career-form>
         <!-- <resume-career-form :cnt = 'cnt'></resume-career-form> -->
         <button class="add" @click="add"><img class="plus" style="margin-bottom: 5px" src="@/assets/plus.svg" alt="plus">  경력 추가</button>
@@ -36,10 +37,11 @@
 </template>
 <script>
 import ResumeCareerForm from '@/components/resume/ResumeCareerForm.vue'
+import ResumeCareerDetail from '@/components/resume/ResumeCareerDetail.vue'
 
 export default {
   name: 'ResumeStepTwo',
-  components: { ResumeCareerForm },
+  components: { ResumeCareerForm, ResumeCareerDetail },
   data() {
     return {
       example: '',
