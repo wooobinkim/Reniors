@@ -1,4 +1,4 @@
-package com.common.jmark.dto;
+package com.common.jmark.dto.Eval;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -8,10 +8,8 @@ import lombok.Setter;
 @Data
 @Setter(AccessLevel.NONE)
 @NoArgsConstructor
-public class JobOpeningSearchDto {
+public class EvalQuestionUpdateRequest {
 
     private String contents;
-    private int minSalary;
-    private Long jobChildCategoryId;
-    private Long guGunId;
+
 }

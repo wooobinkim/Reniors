@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +21,11 @@ public class Sido {
     @Column(name = "sido_id")
     private Long id;
 
+    @NotNull
+    @Column(length = 50)
     private String name;
 
+    @NotNull
     private Long code;
 
     @OneToMany(mappedBy = "sido", cascade = CascadeType.ALL, orphanRemoval = true)

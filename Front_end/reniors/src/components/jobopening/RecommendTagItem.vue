@@ -1,6 +1,6 @@
 <template>
   <div class="recommend-tag-item">
-    {{ name }}
+    {{ tag }}
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
   name: 'RecommendTagItem',
   props: {
-    name: String,
+    tag: String,
   }
 }
 </script>

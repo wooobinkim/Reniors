@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +22,16 @@ public class Gugun {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "gugun_id")
     private Long id;
+
+    @NotNull
+    @Column(length = 50)
     private String name;
 
+    @NotNull
     private Long code;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sido")
+    @JoinColumn(name = "sido_id")
     private Sido sido;
 
     @OneToMany(mappedBy = "gugun")

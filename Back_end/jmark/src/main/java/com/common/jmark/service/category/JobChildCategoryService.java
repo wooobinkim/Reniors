@@ -2,10 +2,13 @@ package com.common.jmark.service.category;
 
 import com.common.jmark.common.exception.DuplicateException;
 import com.common.jmark.common.exception.NotFoundException;
+import com.common.jmark.domain.entity.category.Gugun;
 import com.common.jmark.domain.entity.category.JobChildCategory;
 import com.common.jmark.domain.entity.category.JobParentCategory;
+import com.common.jmark.domain.entity.category.Sido;
 import com.common.jmark.domain.repository.category.JobChildCategoryRepository;
 import com.common.jmark.domain.repository.category.JobParentCategoryRepository;
+import com.common.jmark.dto.category.GugunCreateRequest;
 import com.common.jmark.dto.category.JobChildCategoryCreateRequest;
 import com.common.jmark.dto.category.JobChildCategoryResponse;
 import com.common.jmark.dto.category.JobChildCategoryUpdateRequest;
@@ -26,6 +29,16 @@ public class JobChildCategoryService{
     private final JobParentCategoryRepository jobParentCategoryRepository;
     private final JobChildCategoryRepository jobChildCategoryRepository;
 
+
+    @Transactional
+    public void createList(List<JobChildCategoryCreateRequest> requestList){
+        requestList.forEach(request -> {
+            JobParentCategory jpc = jobParentCategoryRepository.findByCode(request.getCode())
+                    .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
+            JobChildCategory jcc = JobChildCategory.create(request.getName(), request.getCode(), jpc);
+            jobChildCategoryRepository.save(jcc);
+        });
+    }
     @Transactional
     public Long create(Long jpcId, JobChildCategoryCreateRequest request) {
         JobParentCategory jpc = jobParentCategoryRepository.findById(jpcId)
@@ -33,7 +46,7 @@ public class JobChildCategoryService{
         if(jobChildCategoryRepository.findByName(request.getName()).isPresent()){
             throw new DuplicateException(String.format("%s는 이미 존재하는 카테고리입니다.",request.getName()));
         }
-        JobChildCategory jcc = JobChildCategory.create(request.getName(), jpc);
+        JobChildCategory jcc = JobChildCategory.create(request.getName(),request.getCode(), jpc);
         return jobChildCategoryRepository.save(jcc).getId();
     }
 
@@ -46,7 +59,7 @@ public class JobChildCategoryService{
         if(jobChildCategoryRepository.findByName(request.getName()).isPresent()){
             throw new DuplicateException(String.format("%s는 이미 존재하는 카테고리입니다.", request.getName()));
         }
-        jcc.update(request.getName(), jpc);
+        jcc.update(request.getName(), jcc.getCode(), jpc);
     }
 
     @Transactional

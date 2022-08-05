@@ -1,4 +1,4 @@
-package com.common.jmark.dto;
+package com.common.jmark.dto.interviewQuestion;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompanyLoginRequest {
-
+public class QuestionCreateRequest {
     @NotBlank
-    private String companyAppId;
-
-    @NotBlank
-    private String companyAppPwd;
+    private String question;
 }

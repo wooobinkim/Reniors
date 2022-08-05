@@ -1,5 +1,6 @@
 package com.common.jmark.service.recommend;
 
+import com.common.jmark.common.exception.DuplicateException;
 import com.common.jmark.common.exception.NotFoundException;
 import com.common.jmark.domain.entity.category.Gugun;
 import com.common.jmark.domain.entity.category.JobChildCategory;
@@ -15,8 +16,6 @@ import com.common.jmark.dto.recommend.RecommendConditionUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 import static com.common.jmark.common.exception.NotFoundException.*;
 
@@ -34,6 +33,9 @@ public class RecommendConditionServiceImpl implements RecommendConditionService 
     public Long create(Long userId, RecommendConditionCreateRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
+        if (recommendConditionRepository.findByUserId(userId).isPresent()) {
+            throw new DuplicateException(String.format("%s님의 추천 조건이 이미 존재합니다.", user.getName()));
+        }
         JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(request.getJobChildCategoryId())
                 .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
         Gugun gugun = gugunRepository.findById(request.getGugunId())
@@ -44,8 +46,8 @@ public class RecommendConditionServiceImpl implements RecommendConditionService 
 
     @Override
     @Transactional
-    public void update(Long recommendConditionId, RecommendConditionUpdateRequest request) {
-        RecommendCondition recommendCondition = recommendConditionRepository.findById(recommendConditionId)
+    public void update(Long userId, RecommendConditionUpdateRequest request) {
+        RecommendCondition recommendCondition = recommendConditionRepository.findByUserId(userId)
                 .orElseThrow(()->new NotFoundException(RECOMMEND_CONDITION_NOT_FOUND));
         JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(request.getJobChildCategoryId())
                 .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
@@ -56,8 +58,8 @@ public class RecommendConditionServiceImpl implements RecommendConditionService 
 
     @Override
     @Transactional
-    public void delete(Long recommendConditionId) {
-        RecommendCondition recommendCondition = recommendConditionRepository.findById(recommendConditionId)
+    public void delete(Long userId) {
+        RecommendCondition recommendCondition = recommendConditionRepository.findByUserId(userId)
                 .orElseThrow(()->new NotFoundException(RECOMMEND_CONDITION_NOT_FOUND));
         recommendConditionRepository.delete(recommendCondition);
     }
@@ -65,9 +67,7 @@ public class RecommendConditionServiceImpl implements RecommendConditionService 
     @Override
     @Transactional
     public RecommendConditionResponse read(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
-        RecommendConditionResponse recommendConditionResponse = RecommendConditionResponse.response(recommendConditionRepository.findByUser(user).get());
+        RecommendConditionResponse recommendConditionResponse = RecommendConditionResponse.response(recommendConditionRepository.findByUserId(userId).get());
         return recommendConditionResponse;
     }
 }

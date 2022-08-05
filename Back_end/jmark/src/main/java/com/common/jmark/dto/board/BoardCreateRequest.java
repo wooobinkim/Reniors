@@ -20,7 +20,4 @@ public class BoardCreateRequest {
 
     @NotNull
     Long categoryId;
-
-    @NotNull
-    Long userId;
 }

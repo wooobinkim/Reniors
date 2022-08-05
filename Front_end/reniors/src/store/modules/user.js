@@ -53,8 +53,10 @@ export const user = {
 
     // error 커밋 추가
     login({ dispatch }, credentials) {
+      console.log(credentials);
       axios({
         // url 수정
+        
         url: "https://i7b307.p.ssafy.io/api/company/login",
         method: "post",
         data: credentials,

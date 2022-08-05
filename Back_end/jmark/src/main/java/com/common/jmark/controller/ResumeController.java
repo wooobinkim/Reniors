@@ -1,16 +1,18 @@
 package com.common.jmark.controller;
 
+import com.common.jmark.common.config.web.LoginUser;
+import com.common.jmark.domain.entity.user.User;
 import com.common.jmark.dto.resume.*;
 import com.common.jmark.service.resume.AwardService;
 import com.common.jmark.service.resume.CareerDetailService;
 import com.common.jmark.service.resume.LicenseService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -25,68 +27,84 @@ public class ResumeController {
     private final CareerDetailService careerDetailService;
     private final LicenseService licenseService;
 
-    @ApiOperation(value = "경력사항 추가", notes = "기업명, 재직 시작 날짜, 재직 종료 날짜, 직무 및 업무내용, 해당 User 정보를 서버에 넘겨주세요")
-    @ApiImplicitParam(name = "request", value = "경력사항의 기업명, 재직 시작 날짜, 재직 종료 날짜, 직무 및 업무내용, 해당 User의 userId")
-    @PostMapping("/{userId}/career")
-    public ResponseEntity<?> createCareer (
-            @PathVariable Long userId,
+    @PostMapping("/career")
+    @ApiOperation(value = "경력사항 추가", notes = "경력사항을 추가합니다.")
+    public ResponseEntity<?> createCareer(
+            @ApiIgnore @LoginUser User user,
             @Valid @RequestBody CareerDetailCreateRequest request
-            ) {
-        Long careerDetailId = careerDetailService.create(userId, request);
+    ) {
+        Long careerDetailId = careerDetailService.create(user.getId(), request);
         Map<String, Long> response = new HashMap<>();
         response.put("careerDetailId", careerDetailId);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{userId}/career")
-    public ResponseEntity<?> readCareer (
-            @PathVariable Long userId
+    @GetMapping("/career")
+    @ApiOperation(value = "경력사항 조회", notes = "경력사항을 조회합니다.")
+    public ResponseEntity<?> readCareerList(
+            @ApiIgnore @LoginUser User user
     ) {
-        return ResponseEntity.ok(careerDetailService.read(userId));
+        return ResponseEntity.ok(careerDetailService.readList(user.getId()));
     }
 
-    @PutMapping("/{userId}/career/{careerDetailId}")
-    public ResponseEntity<?> updateCareer (
-//            @PathVariable Long userId,
+    @GetMapping("/career/{careerDetailId}")
+    @ApiOperation(value = "경력사항 상세 조회", notes = "경력사항을 상세 조회합니다.")
+    public ResponseEntity<?> readCareer(
+            @PathVariable Long careerDetailId
+    ) {
+        return ResponseEntity.ok(careerDetailService.read(careerDetailId));
+    }
+
+    @PutMapping("/career/{careerDetailId}")
+    @ApiOperation(value = "경력사항 수정", notes = "경력사항을 수정합니다.")
+    public ResponseEntity<?> updateCareer(
             @PathVariable Long careerDetailId,
             @Valid @RequestBody CareerDetailUpdateRequest request
-            ) {
+    ) {
         careerDetailService.update(careerDetailId, request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @DeleteMapping("/{userId}/career/{careerDetailId}")
-    public ResponseEntity<Map<String, Long>> deleteCareer (
-//            @PathVariable Long userId,
+    @DeleteMapping("/career/{careerDetailId}")
+    @ApiOperation(value = "경력사항 삭제", notes = "경력사항을 삭제합니다.")
+    public ResponseEntity<Map<String, Long>> deleteCareer(
             @PathVariable Long careerDetailId
     ) {
         careerDetailService.delete(careerDetailId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @ApiOperation(value = "수상경력 추가", notes = "수상경력명, 수상날짜, 해당 User의 userId를 서버에 넘겨주세요")
-    @ApiImplicitParam(name = "request", value = "수상경력의 수상경력명, 수상날짜, 해당 User의 userId")
-    @PostMapping("/{userId}/awards")
+    @PostMapping("/awards")
+    @ApiOperation(value = "수상경력 추가", notes = "수상경력을 추가합니다.")
     public ResponseEntity<?> createAward(
-            @PathVariable Long userId,
+            @ApiIgnore @LoginUser User user,
             @Valid @RequestBody AwardCreateRequest request
     ) {
-        Long awardId = awardService.create(userId, request);
+        Long awardId = awardService.create(user.getId(), request);
         Map<String, Long> response = new HashMap<>();
         response.put("awardId", awardId);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{userId}/awards")
-    public ResponseEntity<?> readAward (
-            @PathVariable Long userId
+    @GetMapping("/awards")
+    @ApiOperation(value = "수상경력 조회", notes = "수상경력을 조회합니다.")
+    public ResponseEntity<?> readAwardList(
+            @ApiIgnore @LoginUser User user
     ) {
-        return ResponseEntity.ok(awardService.read(userId));
+        return ResponseEntity.ok(awardService.readList(user.getId()));
     }
 
-    @PutMapping("/{userId}/awards/{awardId}")
-    public ResponseEntity<?> updateAward (
-//            @PathVariable Long userId,
+    @GetMapping("/awards/{awardId}")
+    @ApiOperation(value = "수상경력 상세 조회", notes = "수상경력을 상세 조회합니다.")
+    public ResponseEntity<?> readAward(
+            @PathVariable Long awardId
+    ) {
+        return ResponseEntity.ok(awardService.read(awardId));
+    }
+
+    @PutMapping("/awards/{awardId}")
+    @ApiOperation(value = "수상경력 수정", notes = "수상경력을 수정합니다.")
+    public ResponseEntity<?> updateAward(
             @PathVariable Long awardId,
             @Valid @RequestBody AwardUpdateRequest request
     ) {
@@ -94,50 +112,60 @@ public class ResumeController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @DeleteMapping("/{userId}/awards/{awardId}")
-    public ResponseEntity<Map<String, Long>> deleteAward (
-//            @PathVariable Long userId,
+    @DeleteMapping("/awards/{awardId}")
+    @ApiOperation(value = "수상경력 삭제", notes = "수상경력을 삭제합니다.")
+    public ResponseEntity<Map<String, Long>> deleteAward(
             @PathVariable Long awardId
     ) {
         awardService.delete(awardId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @ApiOperation(value = "자격증 추가", notes = "자격증명, 취득일자, 자격증 등급, 해당 User의 userId를 서버에 넘겨주세요")
-    @ApiImplicitParam(name = "request", value = "수상경력의 자격증명, 취득일자, 자격증 등급, 해당 User의 userId")
-    @PostMapping("/{userId}/license")
-    public ResponseEntity<?> createLicense (
-            @PathVariable Long userId,
+    @PostMapping("/license")
+    @ApiOperation(value = "자격증 추가", notes = "자격증을 추가합니다.")
+    public ResponseEntity<?> createLicense(
+            @ApiIgnore @LoginUser User user,
             @Valid @RequestBody LicenseCreateRequest request
     ) {
-        Long licenseId = licenseService.create(userId, request);
+        Long licenseId = licenseService.create(user.getId(), request);
         Map<String, Long> response = new HashMap<>();
         response.put("licenseId", licenseId);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{userId}/license")
-    public ResponseEntity<?> readLicense (
-            @PathVariable Long userId
+    @GetMapping("/license")
+    @ApiOperation(value = "자격증 조회", notes = "자격증을 조회합니다.")
+    public ResponseEntity<?> readLicenseList(
+            @ApiIgnore @LoginUser User user
     ) {
-        return ResponseEntity.ok(licenseService.read(userId));
+        return ResponseEntity.ok(licenseService.readList(user.getId()));
     }
 
-    @PutMapping("/{userId}/license/{licenseId}")
-    public ResponseEntity<?> updateLicense (
-//            @PathVariable Long userId,
+    @GetMapping("/license/{licenseId}")
+    @ApiOperation(value = "자격증 상세 조회", notes = "자격증을 상세 조회합니다.")
+    public ResponseEntity<?> readLicense(
+            @PathVariable Long licenseId
+    ) {
+        return ResponseEntity.ok(licenseService.read(licenseId));
+    }
+
+    @PutMapping("/license/{licenseId}")
+    @ApiOperation(value = "자격증 수정", notes = "자격증을 수정합니다.")
+    public ResponseEntity<?> updateLicense(
             @PathVariable Long licenseId,
             @Valid @RequestBody LicenseUpdateRequest request
     ) {
         licenseService.update(licenseId, request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-    @DeleteMapping("/{userId}/license/{licenseId}")
-    public ResponseEntity<Map<String, Long>> deleteLicense (
-//            @PathVariable Long userId,
+    @DeleteMapping("/license/{licenseId}")
+    @ApiOperation(value = "자격증 삭제", notes = "자격증을 삭제합니다.")
+    public ResponseEntity<Map<String, Long>> deleteLicense(
             @PathVariable Long licenseId
     ) {
         licenseService.delete(licenseId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    // 포트폴리오 추가/삭제 구현 필요
 }

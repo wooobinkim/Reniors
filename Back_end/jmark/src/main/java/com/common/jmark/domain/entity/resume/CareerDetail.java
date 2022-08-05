@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -18,12 +19,15 @@ public class CareerDetail {
     @Column(name = "career_detail_id")
     private Long id;
 
+    @NotNull
+    @Column(length = 50)
     private String companyName;
 
     private Date startedAt;
 
     private Date finishedAt;
 
+    @Column(length = 100)
     private String jobContents;
 
     @ManyToOne(fetch = FetchType.LAZY)

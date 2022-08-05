@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface RecommendConditionRepository extends JpaRepository<RecommendCondition, Long> {
-    Optional<RecommendCondition> findByUser(User user);
+    Optional<RecommendCondition> findByUserId(Long userId);
 }

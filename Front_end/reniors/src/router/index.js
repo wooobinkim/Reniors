@@ -10,10 +10,13 @@ import HomeView from "../views/home/HomeView.vue";
 import CompanyHomeView from "@/views/home/CompanyHomeView.vue";
 // import CompanyInterviewView from "@/views/CompanyInterviewView.vue";
 import CompanyJobOpeningView from "@/views/CompanyJobOpeningView.vue";
+
 // import CompanyMyPageView from "@/views/CompanyMyPageView.vue";
 
 import CompanyJobOpeningList from "@/components/Company/JobOpening/JobOpeningList.vue";
 import CompanyJobOpeningRegist from "@/components/Company/JobOpening/JobOpeningRegist.vue";
+import CompanyJobOpeningDetail from "@/components/Company/JobOpening/JobOpeningDetail.vue";
+import CompanyJobOpeningUpdate from "@/components/Company/JobOpening/JobOpeningUpdate.vue";
 // import CompanyInterview from "@/components/Company/Interview/CompanyInterview.vue";
 // import CompanyMyPage from "@/components/Company/MyPage/CompanyMyPage.vue";
 
@@ -93,6 +96,16 @@ const routes = [
         path: "regist",
         name: "companyjobopeningregist",
         component: CompanyJobOpeningRegist,
+      },
+      {
+        path: "detail/:no",
+        name: "companyjobopeningdetail",
+        component: CompanyJobOpeningDetail,
+      },
+      {
+        path: "update/:no",
+        name: "companyjobopeningupdate",
+        component: CompanyJobOpeningUpdate,
       },
     ],
   },

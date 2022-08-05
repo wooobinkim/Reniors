@@ -1,21 +1,25 @@
 package com.common.jmark.domain.entity;
 
-import com.common.jmark.dto.EvalQuestionDto;
+import com.common.jmark.dto.Eval.EvalQuestionCreateRequest;
+import com.common.jmark.dto.Eval.EvalQuestionUpdateRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EvalQuestion {
-
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "eval_question_id")
     private Long id;
 
+    @NotNull
+    @Column(length = 500)
     private String contents;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -23,14 +27,12 @@ public class EvalQuestion {
     Eval eval;
 
 
-    public EvalQuestion(EvalQuestionDto evalQuestionDto, Eval eval) {
-        this.id = evalQuestionDto.getId();
-        this.contents = evalQuestionDto.getContents();
+    public EvalQuestion(EvalQuestionCreateRequest evalQuestionCreateRequest, Eval eval) {
+        this.contents = evalQuestionCreateRequest.getContents();
         this.eval = eval;
     }
 
-    public void update(EvalQuestionDto evalQuestionDto, Eval eval) {
-        this.contents = evalQuestionDto.getContents();
-        this.eval = eval;
+    public void update(EvalQuestionUpdateRequest evalQuestionUpdateRequest) {
+        this.contents = evalQuestionUpdateRequest.getContents();
     }
 }

@@ -9,6 +9,7 @@ const BOARD = '/boards'
 const ROOM = '/rooms'
 const CATEGORY = '/categories'
 const PRACTICE = '/practice'
+const QEUSTION = '/questions'
 
 export default {
   user: {
@@ -32,13 +33,13 @@ export default {
     get: userId => HOST + RESUME + `/${userId}`,
     edit: userId => HOST + RESUME + `/${userId}`,
     career: resumeId => HOST + RESUME + `/${resumeId}` + '/career',
-    careerEdit: (resumeId, careerDatailId) => HOST + RESUME + `/${resumeId}` + '/career' + `/${careerDetailId}`,
+    // careerEdit: (resumeId, careerDatailId) => HOST + RESUME + `/${resumeId}` + '/career' + `/${careerDetailId}`,
     awards: resumeId => HOST + RESUME + `/${resumeId}` + '/awards',
     awardsEdit: (resumeId, awardCareerId) => HOST + RESUME + `/${resumeId}` + '/awards' + `${awardCareerId}`,
     license: resumeId => HOST + RESUME + `/${resumeId}` + '/license',
     licenseEdit: (resumeId, licenseId) => HOST + RESUME + `/${resumeId}` + '/license' + `/${licenseId}`,
     portfolio: resumeId => HOST + RESUME + `/${resumeId}` + 'portfolio',
-    portfolio: (resumeId, portfolioName) => HOST + RESUME + `/${resumeId}` + 'portfolio' + `/${portfolioName}`,
+    // portfolio: (resumeId, portfolioName) => HOST + RESUME + `/${resumeId}` + 'portfolio' + `/${portfolioName}`,
   },
   company: {
     signup: () => HOST + COMPANY,
@@ -76,7 +77,7 @@ export default {
     get: companyId => HOST + ROOM + `/${companyId}`,
     edit: roomId => HOST + ROOM + `/${roomId}`,
     users: roomId => HOST + ROOM + `/${roomId}` + '/users',
-    evalhistory: roomId => HOST + ROOM + '/evalhistory',
+    // evalhistory: roomId => HOST + ROOM + '/evalhistory',
   },
   category: {
     sido: () => HOST + CATEGORY + '/sido',
@@ -94,4 +95,12 @@ export default {
     video: (userId) => HOST + PRACTICE + '/list' + `/${userId}`,
     videoDetail: (practiceInterviewId) => HOST + PRACTICE + `/${practiceInterviewId}`,
   },
+  question: {
+    get: () => HOST + QEUSTION,
+    new: () => HOST + QEUSTION,
+    edit: (questionId) => HOST + QEUSTION + `${questionId}`,
+    answerPost: (questionId) => HOST + QEUSTION + `${questionId}` + 'answers',
+    answer: (questionId, answerId) => HOST + QEUSTION + `${questionId}` + 'answers' + `${answerId}`,
+
+  }
 }

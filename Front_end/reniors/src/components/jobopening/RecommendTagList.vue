@@ -4,11 +4,13 @@
       <h2>조건에 맞는 <span>추천 공고</span>입니다</h2>
       <button>재설정</button>
     </div>
-    <RecommendTagItem v-for="(name, index) in names" :key="index" :name="name" />
+    <RecommendTagItem v-for="(tag, index) in tags" :key="index" :tag="tag" />
   </div>
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 import RecommendTagItem from './RecommendTagItem.vue'
 
 export default {
@@ -17,12 +19,12 @@ export default {
     RecommendTagItem,
   },
   setup() {
-    const names = [
-      '#서울 송파구', '#연봉 3000', '#주5일', '#웹디자인', '#백엔드'
-    ]
+    const store = useStore()
+
+    const tags = computed(() => store.getters['jobopening/tags'])
 
     return {
-      names,
+      tags
     }
   }
 }

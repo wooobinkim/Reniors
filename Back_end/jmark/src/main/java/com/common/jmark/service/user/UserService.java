@@ -11,21 +11,25 @@ import java.util.List;
 public interface UserService {
     String loginUser(UserLoginRequest request);
 
-    // 아이디 찾기
+    // 카카오 회원가입
 
-    // 비밀번호 찾기
+    // 카카오 로그인
 
     Long createUser(UserCreateRequest request);
 
     UserResponse readUser(User user);
 
+    List<UserResponse> readUserList();
+
     void updateUser(Long userId, UserUpdateRequest request);
 
     void deleteUser(Long userId);
 
-    List<User> readUserList();
+    // 아이디 찾기
+    String findIdByPhone(String name, String phone);
+
+    // 비밀번호 찾기
+    String findPwdByUserAppId(String name, String userAppId);
 
     User validateUser(User user);
-
-
 }

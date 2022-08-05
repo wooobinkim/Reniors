@@ -13,5 +13,7 @@ public interface AwardService {
 
     void delete(Long awardId);
 
-    List<AwardResponse> read(Long userId);
+    List<AwardResponse> readList(Long userId);
+
+    AwardResponse read(Long awardId);
 }

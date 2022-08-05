@@ -21,13 +21,10 @@ public class LicenseResponse {
 
     private String grade;
 
-    private UserResponse userResponse;
-
     public static LicenseResponse response(License license) {
         return new LicenseResponse(license.getId(),
                 license.getName(),
                 license.getPassedAt(),
-                license.getGrade(),
-                UserResponse.response(license.getUser()));
+                license.getGrade());
     }
 }

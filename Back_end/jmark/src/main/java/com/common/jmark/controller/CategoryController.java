@@ -35,12 +35,23 @@ public class CategoryController {
             @RequestBody List<SidoCreateRequest> requestList){
         sidoService.createList(requestList);
     }
-
     @PostMapping("/admin/gugun")
     @ApiIgnore
     public void createGugunList(
             @RequestBody List<GugunCreateRequest> requestList){
         gugunService.createList(requestList);
+    }
+    @PostMapping("/admin/jpc")
+    @ApiIgnore
+    public void createJPCList(
+            @RequestBody List<JobParentCategoryCreateRequest> requestList){
+        jobParentCategoryService.createList(requestList);
+    }
+    @PostMapping("/admin/jcc")
+    @ApiIgnore
+    public void createJCCList(
+            @RequestBody List<JobChildCategoryCreateRequest> requestList){
+        jobChildCategoryService.createList(requestList);
     }
 
     @PostMapping("/sido")

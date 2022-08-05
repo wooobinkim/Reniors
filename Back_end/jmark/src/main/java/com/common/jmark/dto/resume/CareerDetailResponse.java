@@ -23,14 +23,11 @@ public class CareerDetailResponse {
 
     private String jobContents;
 
-    private UserResponse userResponse;
-
     public static CareerDetailResponse response(CareerDetail careerDetail) {
         return new CareerDetailResponse(careerDetail.getId(),
                 careerDetail.getCompanyName(),
                 careerDetail.getStartedAt(),
                 careerDetail.getFinishedAt(),
-                careerDetail.getJobContents(),
-                UserResponse.response(careerDetail.getUser()));
+                careerDetail.getJobContents());
     }
 }
