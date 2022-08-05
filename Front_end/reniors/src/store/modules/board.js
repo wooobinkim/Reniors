@@ -149,7 +149,7 @@ export default{
                 router.push({name:'boardDetail', params:{'category_id': categoryId, 'board_id': getters.boardId}})
             })
         },
-        updateComment({commit, getters, dispatch}, { categoryId, boardId, commentId, contents}) {
+        updateComment({ getters, dispatch}, { categoryId, boardId, commentId, contents}) {
             axios({
                 url: drf.board.commentEdit(boardId, commentId),
                 method: 'put',
@@ -158,11 +158,8 @@ export default{
                 }),
                 headers: getters.authHeader,
             })
-            .then(
+            .then(()=>{
                 dispatch('fetchComments', boardId)
-            )
-            .then(res => {
-                commit ('SET_COMMENT', res.data)
                 router.push({name:'boardDetail', params:{'category_id': categoryId, 'board_id': boardId}})
             })
         },

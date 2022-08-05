@@ -38,12 +38,17 @@ export default{
     computed: {
         ...mapGetters(['currentUser', 'isAuthor']),     
     },
+    watch:{
+        comment: function(){
+            this.fetchComments(this.boardId)
+        }
+    },
     setup(){},
     created(){},
     mounted(){},
     unmounted(){},
     methods:{
-        ...mapActions(['updateComment', 'deleteComment']),
+        ...mapActions(['updateComment', 'deleteComment', 'fetchComments']),
         switchIsEditing(){
             this.isEditing = !this.isEditing
         },
