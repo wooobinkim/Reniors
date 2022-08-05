@@ -112,6 +112,13 @@ const routes = [
     name: 'ResumeStepFive' 
   },
 
+  // condition
+  {
+    path: "/condition",
+    name: "Condition",
+    component: () => import("@/views/condition/ConditionView.vue")
+  },
+
   // jobopening
   {
     path: "/jobopening",
