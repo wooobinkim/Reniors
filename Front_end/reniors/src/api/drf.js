@@ -33,18 +33,16 @@ export default {
     recruithistory: (userId) => HOST + USER + `/${userId}` + "/recruithistory",
   },
   resume: {
-    get: (userId) => HOST + RESUME + `/${userId}`,
-    edit: (userId) => HOST + RESUME + `/${userId}`,
-    career: (resumeId) => HOST + RESUME + `/${resumeId}` + "/career",
-    // careerEdit: (resumeId, careerDatailId) => HOST + RESUME + `/${resumeId}` + '/career' + `/${careerDetailId}`,
-    awards: (resumeId) => HOST + RESUME + `/${resumeId}` + "/awards",
-    awardsEdit: (resumeId, awardCareerId) =>
-      HOST + RESUME + `/${resumeId}` + "/awards" + `${awardCareerId}`,
-    license: (resumeId) => HOST + RESUME + `/${resumeId}` + "/license",
-    licenseEdit: (resumeId, licenseId) =>
-      HOST + RESUME + `/${resumeId}` + "/license" + `/${licenseId}`,
-    portfolio: (resumeId) => HOST + RESUME + `/${resumeId}` + "portfolio",
-    // portfolio: (resumeId, portfolioName) => HOST + RESUME + `/${resumeId}` + 'portfolio' + `/${portfolioName}`,
+    get: userId => HOST + RESUME + `/${userId}`,
+    edit: userId => HOST + RESUME + `/${userId}`,
+    career: () => HOST + RESUME + '/career',
+    careerEdit: (resumeId, careerDetailId) => HOST + RESUME + `/${resumeId}` + '/career' + `/${careerDetailId}`,
+    awards: resumeId => HOST + RESUME + `/${resumeId}` + '/awards',
+    awardsEdit: (resumeId, awardCareerId) => HOST + RESUME + `/${resumeId}` + '/awards' + `${awardCareerId}`,
+    license: resumeId => HOST + RESUME + `/${resumeId}` + '/license',
+    licenseEdit: (resumeId, licenseId) => HOST + RESUME + `/${resumeId}` + '/license' + `/${licenseId}`,
+    portfolios: resumeId => HOST + RESUME + `/${resumeId}` + 'portfolio',
+    portfolio: (resumeId, portfolioName) => HOST + RESUME + `/${resumeId}` + 'portfolio' + `/${portfolioName}`,
   },
   company: {
     signup: () => HOST + COMPANY,

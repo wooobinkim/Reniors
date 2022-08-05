@@ -7,7 +7,8 @@ import board from "./modules/board";
 import category from "./modules/category";
 import practice from "./modules/practice";
 import company from "./modules/company";
+import resume from './modules/resume'
 
 export default createStore({
-  modules: { home, user, board, jobopening, category, practice, company },
+  modules: { home, user, board, jobopening, category, practice, company, resume },
 });

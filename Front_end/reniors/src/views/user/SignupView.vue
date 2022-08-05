@@ -5,12 +5,12 @@
         <img style="width: 40%; margin: 10px" src="@/assets/logo.png" alt="logo" >
         <br>
         <div style="float: right">
-          <img class="order" v-if="page===1" src="@/assets/one_active.png" alt="order">
-          <img class="order" v-else src="@/assets/one.png" alt="order">
-          <img class="order" v-if="page===2" src="@/assets/two_active.png" alt="order">
-          <img class="order" v-else src="@/assets/two.png" alt="order">
-          <img class="order" v-if="page===3" src="@/assets/three_active.png" alt="order">
-          <img class="order" v-else src="@/assets/three.png" alt="order">
+          <img class="order" v-if="page===1" src="@/assets/one_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/one.svg" alt="order">
+          <img class="order" v-if="page===2" src="@/assets/two_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/two.svg" alt="order">
+          <img class="order" v-if="page===3" src="@/assets/three_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/three.svg" alt="order">
         </div>
 
       </div>
@@ -209,8 +209,9 @@ export default {
   .signupform {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
+    height: 600px;
     /* min-height: 100vh; */
   }
 
@@ -239,10 +240,10 @@ export default {
   }
 
   footer {
+    position: fixed;
+    bottom: 30px;
     width: 100%;
     height: 50px;
-    bottom: 0px;
-    position: absolute;
     display: flex;
     justify-content: space-between;
   }

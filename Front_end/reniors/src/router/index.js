@@ -1,13 +1,17 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router'
+import ResumeStepOne from '../components/resume/ResumeStepOne.vue'
+import ResumeStepTwo from '../components/resume/ResumeStepTwo.vue'
+import ResumeStepThree from '../components/resume/ResumeStepThree.vue'
+import ResumeStepFour from '../components/resume/ResumeStepFour.vue'
+import ResumeStepFive from '../components/resume/ResumeStepFive.vue'
+import LoginView from '../views/user/LoginView.vue'
+import SignupView from '../views/user/SignupView.vue'
+import SignupCompleteView from '../views/user/SignupCompleteView.vue'
+import FindPasswordView from '../views/user/FindPasswordView.vue'
+import FindUsernameView from '../views/user/FindUsernameView.vue'
 
 import CompanyHomeView from "@/views/home/CompanyHomeView.vue";
 import HomeView from "../views/home/HomeView.vue";
-import FindPasswordView from "../views/user/FindPasswordView.vue";
-import FindUsernameView from "../views/user/FindUsernameView.vue";
-import LoginView from "../views/user/LoginView.vue";
-import ResumeEditView from "../views/user/ResumeEditView.vue";
-import SignupCompleteView from "../views/user/SignupCompleteView.vue";
-import SignupView from "../views/user/SignupView.vue";
 // import CompanyInterviewView from "@/views/CompanyInterviewView.vue";
 import CompanyJobOpeningView from "@/views/CompanyJobOpeningView.vue";
 
@@ -83,9 +87,29 @@ const routes = [
 
   // resume
   {
-    path: "/resume/edit",
-    name: "ResumeEdit",
-    component: ResumeEditView,
+    path: "/resume/edit/1",
+    component: ResumeStepOne,
+    name: "ResumeStepOne",
+  },
+  {
+    path: '/resume/edit/2',
+    component: ResumeStepTwo,
+    name: 'ResumeStepTwo' 
+  },
+  {
+    path: '/resume/edit/3',
+    component: ResumeStepThree,
+    name: 'ResumeStepThree' 
+  },
+  {
+    path: '/resume/edit/4',
+    component: ResumeStepFour,
+    name: 'ResumeStepFour' 
+  },
+  {
+    path: '/resume/edit/5',
+    component: ResumeStepFive,
+    name: 'ResumeStepFive' 
   },
 
   // jobopening
