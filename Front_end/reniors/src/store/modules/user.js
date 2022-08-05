@@ -21,7 +21,10 @@ export const user = {
       currentUser: state => state.currentUser,
       authError: state => state.authError,
       // Authorization: `Token ${state.token}`
-      authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
+      authHeader: state => ({ 
+        Authorization: `Bearer ${state.token}`,
+        'Content-type' : 'Application/JSON',
+     }),
 
       profile: state => state.profile,      
     },
@@ -71,6 +74,24 @@ export const user = {
           router.push({ name: 'about'})
         })
           // error 부분 추가
+      },
+
+      updateUser({ commit, getters }, userEdit){
+        console.log(userEdit)
+        console.log(getters.authError)
+        axios({
+          url: 'https://i7b307.p.ssafy.io/api/users',
+          method: 'put',
+          data: JSON.stringify(userEdit),
+          headers: getters.authHeader,
+        })
+        .then(res => {
+          commit('SET_CURRENT_USER', res.data)
+          router.push({name: 'ResumeStepTwo'})
+        })
+        .catch(
+          console.log('실패!')
+        )
       },
 
       // 추가

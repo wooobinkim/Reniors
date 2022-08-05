@@ -2,17 +2,18 @@
   <div>
     <div class="career">
       <p class="forminfo">기업명</p>
-      <b-form-input class="mb-3" type="text" placeholder="기업명" ></b-form-input>
+      <b-form-input class="mb-3" type="text" placeholder="기업명" v-model="career.companyName"></b-form-input>
       <p class="forminfo">퇴사날짜</p>
-      <b-form-input class="mb-3" type="date" placeholder="생년-월-일" ></b-form-input>
+      <b-form-input class="mb-3" type="date" placeholder="생년-월-일" v-model="career.finishedAt"></b-form-input>
       <p class="forminfo">퇴사날짜</p>
-      <b-form-input class="mb-3" type="date" placeholder="생년-월-일" ></b-form-input>
+      <b-form-input class="mb-3" type="date" placeholder="생년-월-일" v-model="career.startedAt"></b-form-input>
       <p class="forminfo">상세내용</p>
       <b-form-textarea
         id="textarea-default"
         class="mb-3"
         placeholder="맡으신 직무와 업무에 대해 입력해주세요"
         rows="8"
+        v-model="career.jobContent"
       ></b-form-textarea>
       <button>저장</button>
     </div>
@@ -26,7 +27,13 @@ export default {
   },
   data() {
     return {
-      example: '',
+      career: {
+        companyName: '',
+        finishedAt: '',
+        jobContent: '',
+        startedAt: '',
+
+      }
     }
   },
   setup() {},
