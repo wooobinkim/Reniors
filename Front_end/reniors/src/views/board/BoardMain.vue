@@ -2,9 +2,12 @@
   <div>  
     <board-head-slider></board-head-slider>
     <p></p>
-    <router-link :to="{name: 'boardCreate', params:{category_id: category_id}}">
-      <button>글쓰기</button>
-    </router-link>
+    <div v-if="isLogginedIn">
+      <router-link :to="{name: 'boardCreate', params:{category_id: category_id}}">
+        <button>글쓰기</button>
+      </router-link>
+
+    </div>
     <article-item
       v-for="article in articles"
       :key="article.boardId"
@@ -29,7 +32,7 @@ export default{
         }
     },
     computed:{
-      ...mapGetters(['articles'])
+      ...mapGetters(['articles', 'isLogginedIn'])
     },
     methods:{
       ...mapActions(['fetchArticles'])
