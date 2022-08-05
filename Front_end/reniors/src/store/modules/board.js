@@ -64,8 +64,8 @@ export default{
             .catch(err => console.error(err.response))
         },
 
-        createArticle({getters, commit, dispatch}, {categoryId, contents, title}){
-            axios({
+        async createArticle({getters, dispatch}, {categoryId, contents, title}){
+            await axios({
                 url: drf.board.new(),
                 method: 'post',
                 data: JSON.stringify({
@@ -76,11 +76,16 @@ export default{
                 headers: getters.authHeader,
             })
             .then(res => {
+                console.log(res);
                 dispatch('fetchArticle', res.data.boardId)
-            })
-            .then(res => {
-                commit('SET_ARTICLE', res.data)
-                router.push({name:'boardDetail', params:{'category_id': categoryId, 'board_id': getters.article.boardId}})
+
+                router.push({
+                  name: "boardDetail",
+                  params: {
+                    category_id: categoryId,
+                    board_id: res.data.boardId,
+                  },
+                });
             })
         },
         updateArticle({getters, dispatch, commit}, {categoryId, article_pk, title, contents}) {
@@ -158,7 +163,7 @@ export default{
             )
             .then(res => {
                 commit ('SET_COMMENT', res.data)
-                router.push({name:'boardDetail', params:{'category_id': categoryId, 'board_id': getters.boardId}})
+                router.push({name:'boardDetail', params:{'category_id': categoryId, 'board_id': boardId}})
             })
         },
         deleteComment({commit, getters, dispatch}, {categoryId, boardId, commentId}) {
