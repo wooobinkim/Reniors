@@ -9,6 +9,7 @@ const BOARD = '/boards'
 const ROOM = '/rooms'
 const CATEGORY = '/categories'
 const PRACTICE = '/practice'
+const CONDITION = '/jobopening/condition'
 
 export default {
   user: {
@@ -63,6 +64,11 @@ export default {
     detail: jobOpeningId => HOST + JOB + `/${jobOpeningId}`,
     bookmark: jobOpeningId => HOST + JOB + `/${jobOpeningId}` + '/bookmark',
     applicant: jobOpeningId => HOST + JOB + `/${jobOpeningId}` + '/applicant',
+  },
+  condition: {
+    new: () => HOST + CONDITION,
+    get: () => HOST + CONDITION,
+    detail: (searchConditionId) => HOST + CONDITION + `/${searchConditionId}`,
   },
   board: {
     get: () => HOST + BOARD + '/list',
