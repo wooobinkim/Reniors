@@ -17,6 +17,7 @@ import BoardDetail from "../views/board/BoardDetail.vue"
 import BoardCreate from "../views/board/BoardCreate.vue"
 import BoardUpdate from "../views/board/BoardUpdate.vue"
 
+
 import VideoMain from "../views/video/VideoMain.vue"
 
 import QuestionAnswer from "../views/practice/QuestionAnswer.vue"
