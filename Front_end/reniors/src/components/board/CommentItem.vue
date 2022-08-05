@@ -63,7 +63,7 @@ export default{
                 commentId: this.comment.commentId,
                 contents: this.contents
             })
-            
+
         }
 
 
