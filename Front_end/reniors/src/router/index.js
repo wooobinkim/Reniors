@@ -1,24 +1,42 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import LoginView from "../views/user/LoginView.vue";
-import SignupView from "../views/user/SignupView.vue";
-import SignupCompleteView from "../views/user/SignupCompleteView.vue";
+import CompanyHomeView from "@/views/home/CompanyHomeView.vue";
+import HomeView from "../views/home/HomeView.vue";
 import FindPasswordView from "../views/user/FindPasswordView.vue";
 import FindUsernameView from "../views/user/FindUsernameView.vue";
+import LoginView from "../views/user/LoginView.vue";
 import ResumeEditView from "../views/user/ResumeEditView.vue";
-import HomeView from "../views/home/HomeView.vue";
-import CompanyHomeView from "@/views/home/CompanyHomeView.vue";
+import SignupCompleteView from "../views/user/SignupCompleteView.vue";
+import SignupView from "../views/user/SignupView.vue";
 // import CompanyInterviewView from "@/views/CompanyInterviewView.vue";
 import CompanyJobOpeningView from "@/views/CompanyJobOpeningView.vue";
 
 // import CompanyMyPageView from "@/views/CompanyMyPageView.vue";
 
+import CompanyJobOpeningDetail from "@/components/Company/JobOpening/JobOpeningDetail.vue";
 import CompanyJobOpeningList from "@/components/Company/JobOpening/JobOpeningList.vue";
 import CompanyJobOpeningRegist from "@/components/Company/JobOpening/JobOpeningRegist.vue";
-import CompanyJobOpeningDetail from "@/components/Company/JobOpening/JobOpeningDetail.vue";
 import CompanyJobOpeningUpdate from "@/components/Company/JobOpening/JobOpeningUpdate.vue";
 // import CompanyInterview from "@/components/Company/Interview/CompanyInterview.vue";
 // import CompanyMyPage from "@/components/Company/MyPage/CompanyMyPage.vue";
+
+
+//boards
+import BoardMain from "@/views/board/BoardMain.vue"
+import BoardDetail from "@/views/board/BoardDetail.vue"
+import BoardCreate from "@/views/board/BoardCreate.vue"
+import BoardUpdate from "@/views/board/BoardUpdate.vue"
+
+//video
+import VideoMain from "@/views/video/VideoMain.vue"
+
+//practice
+import QuestionList from "@/views/practice/QuestionList"
+import QuestionAnswer from "@/views/practice/QuestionAnswer"
+import VideoPractice from "@/views/practice/VideoPractice"
+import VideoPracticeList from "@/views/practice/VideoPracticeList"
+
+
 
 const routes = [
   {
@@ -108,6 +126,55 @@ const routes = [
         component: CompanyJobOpeningUpdate,
       },
     ],
+  },
+  {
+    path: "/boards/:category_id",
+    component: BoardMain,
+    name: "boardMain",
+  },
+  {
+    path: "/boards/:category_id/:board_id",
+    component: BoardDetail,
+    name: "boardDetail",
+  },
+  {
+    path: "/boards/:category_id/create",
+    component: BoardCreate,
+    name: "boardCreate",
+  },
+  {
+    path: "/boards/:category_id/:board_id/update",
+    component: BoardUpdate,
+    name: "boardUpdate",
+  },
+
+  //video
+  {
+    path: "/video",
+    component: VideoMain,
+    name: "VideoMain",
+  },
+
+  //video practice
+  {
+    path: "/practice/questions",
+    name: "QuestionList",
+    component: QuestionList,
+  },
+  {
+    path: "/practice/question/:question_id/answer",
+    component: QuestionAnswer,
+    name: "QuestionAnswer",
+  },
+  {
+    path: "/practice/videopractices",
+    component: VideoPracticeList,
+    name: "VideoPracticeList",
+  },
+  {
+    path: "/practice/videopractice",
+    component: VideoPractice,
+    name: "VideoPractice",
   },
 ];
 

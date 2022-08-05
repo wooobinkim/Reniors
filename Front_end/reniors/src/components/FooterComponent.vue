@@ -1,10 +1,25 @@
 <template>
   <div class="footer">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">채용공고</router-link> |
-    <router-link to="/mypage">MyPage</router-link> |
-    <router-link to="/community">커뮤니티</router-link> |
-    <router-link to="/about">면접</router-link>
+    <router-link class="footroute" :to="{name: 'home'}">
+      <i class="bi bi-house"></i>
+      <p>home</p>
+    </router-link> 
+    <router-link class="footroute" :to="{name:'companyjobopening'}">
+      <i class="bi bi-file-earmark-text"></i>
+      <p>채용공고</p>
+    </router-link> 
+    <router-link class="footroute" to="/mypage">
+      <i class="bi bi-person"></i>
+      <p>MyPage</p>
+    </router-link> 
+    <router-link class="footroute" :to="{name: 'boardMain', params:{'category_id' : 1}}">
+      <i class="bi bi-chat-left-quote"></i>
+      <p>커뮤니티</p>
+    </router-link> 
+    <router-link class="footroute" :to="{name: 'QuestionList'}">
+      <i class="bi bi-camera-video"></i>
+      <p>면접/연습</p>
+    </router-link>
   </div>
 </template>
 

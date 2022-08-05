@@ -1,7 +1,8 @@
 <template>
   <form @submit.prevent="onSubmit" class="comment-list-form">
     <label for="comment"></label>
-    <button class="btn btn-group">댓글 작성</button>
+    <input type="text" id="content" placeholder="내용을 입력해주세요." v-model="content">
+    <button type="submit">등록</button>
   </form>
 </template>
 <script>
@@ -26,7 +27,8 @@ export default{
         ...mapActions(['createComment']),
         onSubmit() {
             this.createComment({
-                article_pk: this.article_pk,
+                boardId: this.$route.params.board_id,
+                categoryId: this.$route.params.category_id,
                 content: this.content
                 })
             this.content= ''
