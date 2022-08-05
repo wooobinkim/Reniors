@@ -85,6 +85,11 @@ const routes = [
     component: () => import("../views/jobopening/JobopeningView.vue"),
   },
   {
+    path: "/jobopening/:jobopeningId",
+    name: "JobopeningDetail",
+    component: () => import("../views/jobopening/JobopeningDetailView.vue"),
+  },
+  {
     path: "/company",
     name: "company",
     component: CompanyHomeView,
