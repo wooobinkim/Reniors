@@ -12,7 +12,9 @@
         </div>
         <div class="condition-item-preview">
           <p>{{ condition.region }}</p>
+          <p>직종: 몰라</p>
         </div>
+        <button class="condition-item-button" @click="popover">더 보기</button>
         <div class="condition-item-popover">
           <p>고용형태 {{ condition.typeEmployment }}</p>
         </div>
@@ -49,6 +51,15 @@ export default {
       else return datas
     })
 
+    const popover = (event) => {
+      if (event.target.innerText === '더 보기') event.target.innerText = '닫기'
+      else event.target.innerText = '더 보기'
+      event.target.parentElement.classList.toggle('popover-active')
+      event.target.classList.toggle('active')
+      event.target.nextSibling.classList.toggle('active')
+      console.log(event)
+    }
+
     const options = {
       padding: 50,
       arrows: false,
@@ -57,11 +68,11 @@ export default {
       wheelSleep: 500,
       isNavigation: true,
       width : 360,
-      height : 140,
       gap : '1rem',
     }
 
     return {
+      popover,
       conditions, options,
     }
   },
@@ -72,15 +83,26 @@ export default {
 @import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 
 .splide__track--nav>.splide__list>.splide__slide {
+  position: relative;
   border: none;
   border-radius: 0.5rem;
+  height: 140px;
   margin: 5px;
+  margin-bottom: 15px;
   padding: 10px;
+  transition: all ease 1s;
 }
 
 .splide__track--nav>.splide__list>.splide__slide.is-active {
   border: none;
   box-shadow: 0px 0px 3px var(--color-black-1);
+}
+.splide__track--nav>.splide__list>.splide__slide.is-active.popover-active {
+  height: 200px;
+}
+
+.splide__track--nav>.splide__list>.splide__slide.is-active>button {
+  box-shadow: 0px 1.5px 2px var(--color-black-2);
 }
 
 .condition-list {
@@ -104,5 +126,25 @@ export default {
   border: 1px dashed black !important;
   background-color: var(--color-green-4);
   font-weight: bold;
+}
+
+.condition-item-popover {
+  display: none;
+}
+
+.condition-item-popover.active {
+  display: block;
+}
+
+.condition-item-button {
+  position: absolute;
+  bottom: 0;
+  width: 56px;
+  height: 26px;
+  transform: translate(-50%, 50%);
+  border: 1px solid var(--color-yellow-1);
+  border-radius: 1rem;
+  background-color: white;
+  font-size: 12px;
 }
 </style>
