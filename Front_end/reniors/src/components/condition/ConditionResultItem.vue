@@ -10,7 +10,7 @@
       <p>i</p><p>유성구 봉명동</p>
       <p>t</p><p>주 5일 9:00~18:00</p>
     </div>
-    <p class="condition-result-item-bookmark" @click="bookmark">📌</p>
+    <font-awesome-icon icon="fa-regular fa-bookmark" class="condition-result-item-bookmark" @click="bookmark"/>
   </div>
 </template>
 
