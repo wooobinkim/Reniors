@@ -10,7 +10,12 @@
             <i>delete</i>
           </div>
         </div>
-        <p>{{ condition.region }}</p>
+        <div class="condition-item-preview">
+          <p>{{ condition.region }}</p>
+        </div>
+        <div class="condition-item-popover">
+          <p>고용형태 {{ condition.typeEmployment }}</p>
+        </div>
       </SplideSlide>
       <SplideSlide class="condition-item-create">
         <i>아이콘</i>
@@ -39,7 +44,7 @@ export default {
     const conditions = computed(() => {
       const datas = store.getters['condition/conditions']
       if (_.isEmpty(datas?.value)) {
-        return [{ region: '서울' }]
+        return [{ region: '서울', typeEmployment: '정규직' }, { region: '아산', typeEmployment: '비정규직' }, { region: '대전', typeEmployment: '노예' },]
       }
       else return datas
     })
@@ -68,6 +73,7 @@ export default {
 
 .splide__track--nav>.splide__list>.splide__slide {
   border: none;
+  border-radius: 0.5rem;
   margin: 5px;
   padding: 10px;
 }
@@ -75,6 +81,10 @@ export default {
 .splide__track--nav>.splide__list>.splide__slide.is-active {
   border: none;
   box-shadow: 0px 0px 3px var(--color-black-1);
+}
+
+.condition-list {
+  margin-bottom: 10px;
 }
 
 .condition-item {
@@ -85,10 +95,6 @@ export default {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
-}
-
-.condition-list li {
-  border-radius: 0.5rem;
 }
 
 .condition-item-create {
