@@ -197,11 +197,11 @@ export default{
             .then(res => {
                 if('jobChildCategoryResponse' in res.data) {
                     commit('SET_INTEREST', res.data.jobChildCategoryResponse)
+                    console.log(res.data.jobChildCategoryResponse);
                 }else{
-                    commit("SET_INTEREST", {});
+                    commit("SET_INTEREST", '');
                 }
             })
-            .catch(err => console.error(err.response))
 
         },
 

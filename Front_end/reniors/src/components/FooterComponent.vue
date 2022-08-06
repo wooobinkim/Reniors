@@ -12,11 +12,11 @@
       <i class="bi bi-person"></i>
       <p>MyPage</p>
     </router-link> 
-    <router-link  v-if="interest" class="footroute" :to="{name: 'boardMain', params:{'category_id' : 3}}">
+    <router-link  v-if="inter.id !== 1" class="footroute" :to="{name: 'boardMain', params:{'category_id' : inter.id}}">
       <i class="bi bi-chat-left-quote"></i>
       <p>커뮤니티</p>
     </router-link> 
-    <router-link v-if="!interest" class="footroute" :to="{name: 'boardMain', params:{'category_id' : 1}}">
+    <router-link v-if="inter.id === 1" class="footroute" :to="{name: 'boardMain', params:{'category_id' : 1}}">
       <i class="bi bi-chat-left-quote"></i>
       <p>커뮤니티</p>
     </router-link> 
@@ -31,6 +31,11 @@
 import { mapActions, mapGetters } from 'vuex';
 export default {
   name: "FooterComponent",
+  data(){
+    return{
+      inter: {id: 1},
+    }
+  },
   methods:{
     ...mapActions(['fetchInterest'])
   },
@@ -38,8 +43,8 @@ export default {
     this.fetchInterest()
   },
   computed:{
-    ...mapGetters(['interest']),
-  }
+    ...mapGetters({inter : 'interest'}),
+  },
 };
 </script>
 
