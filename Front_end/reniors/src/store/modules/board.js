@@ -10,6 +10,8 @@ export default{
         articles: [],
         comment: {},
         comments: [],
+        interest:{},
+        parents: []
 
     },
     
@@ -22,6 +24,9 @@ export default{
         },
         comment: state => state.comment,
         comments: state => state.comments,
+        interest: state => state.interest,
+        parents: state => state.parents,
+
     },
 
     mutations: {
@@ -31,6 +36,8 @@ export default{
         SET_ARTICLES: (state, articles) => state.articles = articles,
         SET_COMMENT: (state, comment) => state.comment = comment,
         SET_COMMENTS: (state, comments) => state.comments = comments,
+        SET_INTEREST: (state, interest) => state.interest = interest,
+        SET_PARENTS: (state, parents) => state.parents = parents
 
     },
 
@@ -48,7 +55,6 @@ export default{
                 headers: getters.authHeader,
             })
             .then(res => {
-                console.log(res.data)
                 commit ('SET_ARTICLES', res.data)
             })
         },
@@ -179,7 +185,37 @@ export default{
                 })
             }
         },
-            
+        
+        // category 분류할 때 관심직무 불러오려고 
+        // recommendcondition에서 만들면 지울거 ㅇㅇ
+        fetchInterest({commit, getters}){
+            axios({
+              url: "https://i7b307.p.ssafy.io/api/recommendcondition",
+              method:'get',
+              headers: getters.authHeader,
+            })
+            .then(res => {
+                if('jobChildCategoryResponse' in res.data) {
+                    commit('SET_INTEREST', res.data.jobChildCategoryResponse)
+                }else{
+                    commit("SET_INTEREST", {});
+                }
+            })
+            .catch(err => console.error(err.response))
+
+        },
+
+        //직무 대분류 가져오기
+        fetchParents({commit, getters}) {
+            axios({
+                url: drf.category.jobsLarge(),
+                method:'get',
+                headers: getters.authHeader,
+            })
+            .then(res => {
+                commit('SET_PARENTS', res.data)
+            })
+        }
         
 
     },
