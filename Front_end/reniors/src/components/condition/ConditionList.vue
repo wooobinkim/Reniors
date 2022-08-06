@@ -68,11 +68,13 @@ export default {
 
 .splide__track--nav>.splide__list>.splide__slide {
   border: none;
+  margin: 5px;
   padding: 10px;
 }
 
 .splide__track--nav>.splide__list>.splide__slide.is-active {
   border: none;
+  box-shadow: 0px 0px 3px var(--color-black-1);
 }
 
 .condition-item {
