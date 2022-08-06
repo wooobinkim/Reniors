@@ -1,8 +1,11 @@
 <template>
   <div>
-    <div class="question">
-        <p>Q{{idx + 1}}. {{question}}</p>
-    </div>
+    <router-link :to="{name: 'QuestionAnswer', params:{question_id: id}}">
+        <div class="question">
+            <p>Q{{idx + 1}}. {{question}}</p>
+        </div>
+
+    </router-link>
   </div>
 </template>
 <script>
@@ -13,6 +16,7 @@ export default{
     props: {
         'question': String,
         'idx' : Number,
+        'id': Number,
     },
     data(){
         return{
@@ -28,6 +32,10 @@ export default{
 </script>
 
 <style scoped>
+a{
+    text-decoration: none;
+    color: black;
+}
 .question{
     margin:4px 20px;
     padding-left: 8px;

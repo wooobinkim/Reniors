@@ -40,7 +40,7 @@ public class CommentService {
     public void update(Long commentId, CommentUpdateRequest request, User user) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(()->new NotFoundException(COMMENT_NOT_FOUND));
-        if(comment.getUser() == user) {
+        if(comment.getUser().getId() == user.getId()) {
             comment.update(request.getContents());
         }else{
             throw new NotAuthException(USER_NO_AUTH);
@@ -51,7 +51,7 @@ public class CommentService {
     public void delete(Long commentId, User user) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(()->new NotFoundException(COMMENT_NOT_FOUND));
-        if(comment.getUser() == user) {
+        if(comment.getUser().getId() == user.getId()) {
             commentRepository.delete(comment);
         }else{
             throw new NotAuthException(USER_NO_AUTH);

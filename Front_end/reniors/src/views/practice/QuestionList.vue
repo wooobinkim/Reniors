@@ -18,10 +18,11 @@
         :key="idx"
         :question="question.question"
         :idx="idx"
+        :id="question.id"
     ></question-item>
   </div>
 </template>
-<script>
+<script> 
 
 import QuestionItem from '@/components/practice/QuestionItem.vue';
 import { mapActions, mapGetters } from 'vuex';
@@ -57,6 +58,7 @@ export default{
 .rl:hover{
     font-weight: bold;
 }
+
 .head2{
     background-color: #FF843E;
     height: 48px;
@@ -64,6 +66,11 @@ export default{
     align-items: center;
     justify-content: space-around;
 }
+
+.head2 a.router-link-exact-active{
+    font-weight: bold;
+}
+
 .question{
     margin:4px 20px;
     padding-left: 8px;

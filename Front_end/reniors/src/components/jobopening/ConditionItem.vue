@@ -10,7 +10,7 @@ export default {
   name: 'ConditionItem',
   props: {
     left: String,
-    right: String,
+    right: [String, Number],
   }
 }
 </script>

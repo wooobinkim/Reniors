@@ -6,8 +6,6 @@ import drf from '@/api/drf'
 
 export default{
     state: {
-        token: localStorage.getItem('jwt') || '',
-        currentUser: {},
         article: {},
         articles: [],
         comment: {},
@@ -16,12 +14,11 @@ export default{
     },
     
     getters: {
-        isLoggedIn: state => !!state.token,
         article: state => state.article,
         articles: state => state.articles,
         isArticle: state => !_.isEmpty(state.article),
         isAuthor: (state, getters) => {
-            return state.article.user?.pk === getters.currentUser.pk
+            return state.article.userId === getters.currentUser.id
         },
         comment: state => state.comment,
         comments: state => state.comments,
@@ -38,49 +35,12 @@ export default{
     },
 
     actions: {
-        createArticle({getters, commit}, article){
-            axios({
-                url: drf.board.new(),
-                method: 'post',
-                data: {article},
-                headers: getters.authHeader,
-            })
-            .then(res => {
-                commit('SET_ARTICLE', res.data)
-                router.push({name:'boardDetail', params:{board_id: getters.article.pk}, query: {timestamp: Date.now()}})
-            })
-        },
-        updateArticle({commit, getters}, {article_pk, title, content}) {
-            axios({
-                url: drf.board.detail(article_pk),
-                method: 'put',
-                data: {title, content},
-                headers: getters.authHeader,
-            })
-            .then(res => {
-                commit ('SET_ARTICLE', res.data)
-                router.push({name: 'boardDetail', params:{ board_id:article_pk}, query: {timestamp: Date.now()}})
-            })
-        },
-        deleteArticle({commit, getters}, {article_pk}) {
-            if (confirm('정말 삭제하시겠습니까?')) {
-                axios({
-                    url: drf.board.detail(article_pk),
-                    method: 'delete',
-                    headers: getters.authHeader,
-                })
-                .then(() => {
-                    commit ('SET_ARTICLE', {})
-                    router.push({name: 'board', params: {}})
-                })
-            }
-        },
-        fetchArticles({commit, getters}) {
+        fetchArticles({commit, getters}, categoryId) {
             axios({
                 url: drf.board.get(),
                 method: 'post',
                 data: JSON.stringify({
-                    "categoryId": 1,
+                    "categoryId": categoryId,
                     "boardId": null,
                     "name": null,
                     "title": null
@@ -88,9 +48,9 @@ export default{
                 headers: getters.authHeader,
             })
             .then(res => {
+                console.log(res.data)
                 commit ('SET_ARTICLES', res.data)
             })
-            .catch(err => console.error(err.response))
         },
         fetchArticle({commit, getters}, article_pk) {
             axios({
@@ -104,45 +64,62 @@ export default{
             .catch(err => console.error(err.response))
         },
 
-        createComment({getters, commit}, {article_pk, content}){
-            const comment = {content}
-            axios({
-                url: drf.board.comment(article_pk),
+        async createArticle({getters, dispatch}, {categoryId, contents, title}){
+            await axios({
+                url: drf.board.new(),
                 method: 'post',
-                data: comment,
+                data: JSON.stringify({
+                    'categoryId':categoryId, 
+                    'contents' : contents, 
+                    'title' :title
+                }),
                 headers: getters.authHeader,
             })
             .then(res => {
-                commit('SET_COMMENT', res.data)
-                router.push({name:'boardDetail', params:{board_id: getters.article.pk}})
+                console.log(res);
+                dispatch('fetchArticle', res.data.boardId)
+
+                router.push({
+                  name: "boardDetail",
+                  params: {
+                    category_id: categoryId,
+                    board_id: res.data.boardId,
+                  },
+                });
             })
         },
-        updateComment({commit, getters}, { article_pk, comment_pk, content}) {
-            const comment = {content}
+        updateArticle({getters, dispatch, commit}, {categoryId, article_pk, title, contents}) {
             axios({
-                url: drf.board.commentEdit(article_pk, comment_pk),
+                url: drf.board.detail(article_pk),
                 method: 'put',
-                data: comment,
+                data: JSON.stringify({
+                    'title': title, 
+                    'contents': contents
+                }),
                 headers: getters.authHeader,
             })
+            .then(
+                dispatch('fetchArticle', article_pk)
+            )
             .then(res => {
-                commit ('SET_COMMENT', res.data)
+                commit('SET_ARTICLE', res.data)
+                router.push({name:'boardDetail', params:{'category_id': categoryId, 'board_id': getters.article.boardId}})
             })
         },
-        deleteComment({commit, getters}, {article_pk, comment_pk}) {
+        deleteArticle({commit, getters}, {article_pk, categoryId}) {
             if (confirm('정말 삭제하시겠습니까?')) {
                 axios({
-                    url: drf.board.commentEdit(article_pk, comment_pk),
+                    url: drf.board.detail(article_pk),
                     method: 'delete',
-                    data: {},
                     headers: getters.authHeader,
                 })
-                .then(res => {
-                    commit ('SET_COMMENT', res.data)
-                    router.push({name:'boardDetail', params:{board_id: getters.article.pk}})
+                .then(() => {
+                    commit ('SET_ARTICLE', {})
+                    router.push({name: 'boardMain', params: {'category_id': categoryId}})
                 })
             }
         },
+        
         fetchComments({commit, getters}, article_pk) {
             axios({
                 url: drf.board.comment(article_pk),
@@ -153,7 +130,56 @@ export default{
                 commit ('SET_COMMENTS', res.data)
             })
             .catch(err => console.error(err.response))
-        },      
+        },  
+
+        createComment({getters, commit, dispatch}, {categoryId, boardId, content}){
+            axios({
+                url: drf.board.comment(boardId),
+                method: 'post',
+                data: JSON.stringify({
+                    'contents' : content
+                }),
+                headers: getters.authHeader,
+            })
+            .then(
+                dispatch('fetchComments', boardId)
+            )
+            .then(res => {
+                commit('SET_COMMENTS', res.data)
+                router.push({name:'boardDetail', params:{'category_id': categoryId, 'board_id': getters.boardId}})
+            })
+        },
+        updateComment({ getters, dispatch}, { categoryId, boardId, commentId, contents}) {
+            axios({
+                url: drf.board.commentEdit(boardId, commentId),
+                method: 'put',
+                data: JSON.stringify({
+                    "contents" : contents
+                }),
+                headers: getters.authHeader,
+            })
+            .then(()=>{
+                dispatch('fetchComments', boardId)
+                router.push({name:'boardDetail', params:{'category_id': categoryId, 'board_id': boardId}})
+            })
+        },
+        deleteComment({commit, getters, dispatch}, {categoryId, boardId, commentId}) {
+            if (confirm('정말 삭제하시겠습니까?')) {
+                axios({
+                    url: drf.board.commentEdit(boardId, commentId),
+                    method: 'delete',
+                    headers: getters.authHeader,
+                })
+                .then(
+                    dispatch('fetchComments', boardId)
+                )
+                .then(res => {
+                    commit ('SET_COMMENT', res.data)
+                    router.push({name:'boardDetail', params:{'category_id': categoryId, 'board_id': getters.boardId}})
+                })
+            }
+        },
+            
         
 
     },

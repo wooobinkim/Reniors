@@ -52,7 +52,7 @@ export default {
     },
 
     // error 커밋 추가
-    login({ dispatch }, credentials) {
+    companylogin({ dispatch }, credentials) {
       console.log(credentials);
       axios({
         // url 수정
@@ -96,9 +96,9 @@ export default {
           console.log(error);
         });
     },
-    updateJobOpening: ({ commit }, no, jobopening) => {
+    updateJobOpening: ({ commit }, data) => {
       http
-        .put(`/company/jobopening/${no}`, jobopening)
+        .put(`/company/jobopening/${data.no}`, data.jobopening)
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
         })
