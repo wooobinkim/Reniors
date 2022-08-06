@@ -121,12 +121,12 @@ const routes = [
     component: () => import("@/views/condition/ConditionView.vue"),
     children: [
       {
-        path: "/create",
+        path: "create",
         name: "ConditionCreate",
         component: () => import("@/views/condition/ConditionCreateView.vue")
       },
       {
-        path: "/result",
+        path: "result",
         name: "ConditionResult",
         component: () => import("@/views/condition/ConditionResultView.vue")
       }

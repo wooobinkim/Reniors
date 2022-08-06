@@ -2,8 +2,6 @@
   <div>
     <HeaderComponent />
     <ConditionList />
-    <router-link to="/create">create</router-link>
-    <router-link to="/result">result</router-link>
     <router-view></router-view>
   </div>
 </template>

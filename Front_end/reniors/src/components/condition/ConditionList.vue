@@ -2,7 +2,7 @@
   <div>
     <hr>
     <Splide class="condition-list" :options="options">
-      <SplideSlide class="condition-item" v-for="(condition, index) in conditions" :key="index">
+      <SplideSlide class="condition-item" v-for="(condition, index) in conditions" :key="index" @click="routeResult">
         <div class="condition-item-header">
           <p class="condition-item-number">맞춤공고{{ index+1 }}</p>
           <div>
@@ -26,7 +26,7 @@
           <p>{{ condition.typeEmployment }}</p>
         </div>
       </SplideSlide>
-      <SplideSlide class="condition-item-create">
+      <SplideSlide class="condition-item-create" @click="routeCreate">
         <i>아이콘</i>
         <p>당신의 맞춤 공고를 만들어 보세요 !</p>
       </SplideSlide>
@@ -37,6 +37,7 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import { Splide, SplideSlide } from '@splidejs/vue-splide'
 import _ from 'lodash'
 
@@ -47,6 +48,14 @@ export default {
   },
   setup() {
     const store = useStore()
+    const router = useRouter()
+
+    const routeCreate = (event) => {
+      if (event.currentTarget.classList.contains('is-active')) router.push({ name: 'ConditionCreate' })
+    }
+    const routeResult = (event) => {
+      if (event.currentTarget.classList.contains('is-active')) router.push({ name: 'ConditionResult' })
+    }
 
     const fetchConditions = () => store.dispatch('condition/fetchConditions')
     fetchConditions()
@@ -76,7 +85,7 @@ export default {
     }
 
     return {
-      popover,
+      popover, routeCreate, routeResult,
       conditions, options,
     }
   },
