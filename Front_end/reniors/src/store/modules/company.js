@@ -126,6 +126,16 @@ export default {
           console.log(error);
         });
     },
+    deleteJobOpening: ({ commit }, no) => {
+      http
+        .delete(`/company/jobopening/${no}`)
+        .then(({ data }) => {
+          commit("SET_JOBOPENING", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 
   modules: {},
