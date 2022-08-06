@@ -118,7 +118,19 @@ const routes = [
   {
     path: "/condition",
     name: "Condition",
-    component: () => import("@/views/condition/ConditionView.vue")
+    component: () => import("@/views/condition/ConditionView.vue"),
+    children: [
+      {
+        path: "/create",
+        name: "ConditionCreate",
+        component: () => import("@/views/condition/ConditionCreateView.vue")
+      },
+      {
+        path: "/result",
+        name: "ConditionResult",
+        component: () => import("@/views/condition/ConditionResultView.vue")
+      }
+    ]
   },
 
   // jobopening
