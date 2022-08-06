@@ -64,15 +64,12 @@ export default {
       event.target.parentElement.classList.toggle('popover-active')
       event.target.classList.toggle('active')
       event.target.nextSibling.classList.toggle('active')
-      console.log(event)
     }
 
     const options = {
       padding: 50,
       arrows: false,
       pagination: false,
-      wheel: true,
-      wheelSleep: 500,
       isNavigation: true,
       width : 360,
       gap : '1rem',
@@ -97,7 +94,7 @@ export default {
   margin: 5px;
   margin-bottom: 15px;
   padding: 10px;
-  transition: all ease 0.5s;
+  transition: height ease 0.5s;
 }
 
 .splide__track--nav>.splide__list>.splide__slide.is-active {
