@@ -16,7 +16,14 @@
         </div>
         <button class="condition-item-button" @click="popover">더 보기</button>
         <div class="condition-item-popover">
-          <p>고용형태 {{ condition.typeEmployment }}</p>
+          <p>고용형태</p>
+          <p>{{ condition.typeEmployment }}</p>
+          <p>최종학력</p>
+          <p>{{ condition.typeEmployment }}</p>
+          <p>경력</p>
+          <p>{{ condition.typeEmployment }}</p>
+          <p>근무일수</p>
+          <p>{{ condition.typeEmployment }}</p>
         </div>
       </SplideSlide>
       <SplideSlide class="condition-item-create">
@@ -90,15 +97,15 @@ export default {
   margin: 5px;
   margin-bottom: 15px;
   padding: 10px;
-  transition: all ease 1s;
+  transition: all ease 0.5s;
 }
 
 .splide__track--nav>.splide__list>.splide__slide.is-active {
   border: none;
   box-shadow: 0px 0px 3px var(--color-black-1);
 }
-.splide__track--nav>.splide__list>.splide__slide.is-active.popover-active {
-  height: 200px;
+.splide__track--nav>.splide__list>.splide__slide.popover-active {
+  height: 225px;
 }
 
 .splide__track--nav>.splide__list>.splide__slide.is-active>button {
@@ -130,10 +137,20 @@ export default {
 
 .condition-item-popover {
   display: none;
+  border-radius: 0.4rem;
+  background-color: white;
+  padding: 10px 20px;
 }
 
 .condition-item-popover.active {
-  display: block;
+  display: grid;
+  grid-template-columns: 80px 140px;
+}
+
+.condition-item-popover p {
+  margin: 0;
+  font-size: 12px;
+  text-align: start;
 }
 
 .condition-item-button {
