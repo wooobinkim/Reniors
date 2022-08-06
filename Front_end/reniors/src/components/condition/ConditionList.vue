@@ -14,7 +14,7 @@
           <p>{{ condition.region }}</p>
           <p>직종: 몰라</p>
         </div>
-        <button class="condition-item-button" @click="popover">더 보기</button>
+        <button class="condition-item-button" @click.stop="popover">더 보기</button>
         <div class="condition-item-popover">
           <p>고용형태</p>
           <p>{{ condition.typeEmployment }}</p>
