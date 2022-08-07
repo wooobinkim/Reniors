@@ -1,5 +1,6 @@
 <template>
   <div class="footer">
+
     <router-link class="footroute" :to="{name: 'home'}">
       <i class="bi bi-house"></i>
       <p>home</p>
@@ -24,26 +25,29 @@
       <i class="bi bi-camera-video"></i>
       <p>면접/연습</p>
     </router-link>
+    
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions,  mapGetters,  } from 'vuex';
 export default {
   name: "FooterComponent",
   data(){
     return{
       inter: {id: 1},
+      check : false
     }
   },
   methods:{
-    ...mapActions(['fetchInterest'])
+    ...mapActions(['fetchInterest']),
+
   },
   created(){
     this.fetchInterest()
   },
   computed:{
-    ...mapGetters({inter : 'interest'}),
+    ...mapGetters({inter:'interest'}),
   },
 };
 </script>
