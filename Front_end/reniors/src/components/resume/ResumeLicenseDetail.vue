@@ -1,50 +1,46 @@
 <template>
   <div>
     <div class="box">
-      <button @click="deleteCareer(this.career.id)" style="margin-right: 4px"><img class="DELETE" src="@/assets/DELETE.svg" alt="DELETE"></button>
-      <button @click="updateCareer"><img class="EDIT" src="@/assets/EDIT.svg" alt="EDIT"></button>
-      <p class="title">입사날짜</p>
-      <p class="contents">{{ this.start }}</p>
-      <p class="title">퇴사날짜</p>
-      <p class="contents">{{ this.finish }}</p>      
-      <p class="title" >기업</p>
-      <p class="contents" style="font-weight : 700">{{ this.career.companyName }}</p>
-      <hr>
-      <p class="contents">{{ this.career.jobContents }}</p>
+      <button @click="deleteLicense(this.license.id)" style="margin-right: 4px"><img class="DELETE" src="@/assets/DELETE.svg" alt="DELETE"></button>
+      <button @click="updateLicense"><img class="EDIT" src="@/assets/EDIT.svg" alt="EDIT"></button>
+      <p class="name">{{ this.license.name }}</p>
+
+      <p class="title">등급</p>
+      <p class="contents">{{ this.license.grade  }}</p>      
+      <p class="title">취득 날짜</p>
+      <p class="contents">{{ this.pass }}</p>
     
     </div>
-    <resume-career-form v-show="editshow" :career="career" @test="test" action="update"></resume-career-form>
+    <resume-license-form v-show="editshow" :license="license" @test="test" action="update"></resume-license-form>
   </div>
 </template>
 <script>
-import ResumeCareerForm from '@/components/resume/ResumeCareerForm.vue'
+import ResumeLicenseForm from '@/components/resume/ResumeLicenseForm.vue'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'ResumeCareerDetail',
   props: {
-    career: Object
+    license: Object
   },
   components: {
-    ResumeCareerForm
+    ResumeLicenseForm
   },
   data() {
-    var start = this.career.startedAt.substring(0,10)
-    var finish = this.career.finishedAt.substring(0,10)
+    var pass = this.license.passedAt.substring(0,10)
     return {
-      start, finish,
+      pass,
       editshow: false
     }
   },
   methods: {
-    ...mapActions(['deleteCareer']),
-    updateCareer(){
+    ...mapActions(['deleteLicense']),
+    updateLicense(){
       this.editshow = !(this.editshow)},
     test(){
       console.log('뒤집어지셈')
       this.editshow = !(this.editshow)
     }
-
   },
   setup() {},
   created() {},
@@ -73,6 +69,13 @@ p {
   margin-bottom: 1px;
   margin-left: 1px;
   color: #6D6D6D;
+}
+
+.name {
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: black;
+
 }
 
 .contents {

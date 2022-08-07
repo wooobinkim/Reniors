@@ -20,7 +20,6 @@
       <div style="width:312px; margin:0 auto;">
         <resume-career-detail v-for="career in careers" :career="career" :key="career.id"></resume-career-detail>
         <hr>
-    
         <resume-career-form v-if="formshow" @show="show" :career="career" action="create"></resume-career-form>
         <!-- <resume-career-form :cnt = 'cnt'></resume-career-form> -->
         <div v-show="formshow==false">
