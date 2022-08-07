@@ -42,6 +42,8 @@ import QuestionAnswer from "@/views/practice/QuestionAnswer"
 import VideoPractice from "@/views/practice/VideoPractice"
 import VideoPracticeList from "@/views/practice/VideoPracticeList"
 
+//interview
+import OpenVidu from "@/views/openvidu/OpenVidu.vue"
 
 
 const routes = [
@@ -226,6 +228,13 @@ const routes = [
     component: VideoPractice,
     name: "VideoPractice",
   },
+
+  //open vidu
+  {
+    path: "/interview",
+    component: OpenVidu,
+    name: "openVidu"
+  }
 ];
 
 const router = createRouter({
