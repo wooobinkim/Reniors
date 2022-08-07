@@ -1,5 +1,5 @@
 import axios from "axios"
-import drf from '@/api/drf'
+// import drf from '@/api/drf'
 import router from "@/router"
 
 export default{
@@ -24,49 +24,57 @@ export default{
     actions: {
         fetchQuestions({getters, commit}) {
             axios({
-                url: drf.question.get(),
-                method: 'get',
-                headers: getters.authHeader,
+              url: "https://i7b307.p.ssafy.io/api" + "/questions",
+              method: "get",
+              headers: getters.authHeader,
             })
-            .then(res => {
-                commit('SET_QUESTIONS', res.data)
-            })
-            .catch(err => console.error(err.response))
+              .then((res) => {
+                commit("SET_QUESTIONS", res.data);
+              })
+              .catch((err) => console.error(err.response));
         },
         createAnswer({getters, commit}, {questionId, content}) {
             axios({
-                url: drf.question.answerPost(questionId),
-                method: 'post',
-                data: {content},
-                headers: getters.authHeader,
-            })
-            .then(res => {
-                commit('SET_ANSWER', res.data)
-                router.push({name: 'QuestionList'})
-            })
+              url: "https://i7b307.p.ssafy.io/api" + "/questions" + `/${questionId}` + "/answers",
+              method: "post",
+              data: { content },
+              headers: getters.authHeader,
+            }).then((res) => {
+              commit("SET_ANSWER", res.data);
+              router.push({ name: "QuestionList" });
+            });
         },
         fetchAnswer({getters, commit}, {questionId, answerId}) {
             axios({
-                url: drf.question.answer(questionId, answerId),
-                method: 'get',
-                headers: getters.authHeader,
+              url:
+                "https://i7b307.p.ssafy.io/api" +
+                "/questions" +
+                `/${questionId}` +
+                "/answers" +
+                `/${answerId}`,
+              method: "get",
+              headers: getters.authHeader,
             })
-            .then(res => {
-                commit('SET_ANSWER', res.data)
-            })
-            .catch(err => console.error(err.response))
+              .then((res) => {
+                commit("SET_ANSWER", res.data);
+              })
+              .catch((err) => console.error(err.response));
         },
         updateAnswer({getters, commit}, {questionId, answerId, content}) {
             axios({
-                url: drf.question.answer(questionId, answerId),
-                method: 'put',
-                data: {content},
-                headers: getters.authHeader,
-            })
-            .then(res =>{
-                commit('SET_ANSWER', res.data)
-                router.push({name: 'QuestionList'})
-            })
+              url:
+                "https://i7b307.p.ssafy.io/api" +
+                "/questions" +
+                `/${questionId}` +
+                "/answers" +
+                `/${answerId}`,
+              method: "put",
+              data: { content },
+              headers: getters.authHeader,
+            }).then((res) => {
+              commit("SET_ANSWER", res.data);
+              router.push({ name: "QuestionList" });
+            });
         },
 
     }
