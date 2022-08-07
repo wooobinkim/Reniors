@@ -9,7 +9,7 @@
       }"
       >수정</router-link
     >
-    <button @click="deletejobopening()">공고올리기</button>
+    <button @click="deletejobopening()">삭제</button>
   </div>
 </template>
 

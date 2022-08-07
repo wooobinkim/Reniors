@@ -78,6 +78,7 @@
         <router-link class="link" :to="{ name: 'Signup' }"
           >회원가입</router-link
         >
+        <router-link :to="{ name: 'companyregist' }">회사 회원가입</router-link>
       </div>
     </div>
   </div>
