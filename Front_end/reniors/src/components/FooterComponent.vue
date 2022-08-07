@@ -21,7 +21,7 @@
       <i class="bi bi-chat-left-quote"></i>
       <p>커뮤니티</p>
     </router-link> 
-    <router-link class="footroute" :to="{name: 'QuestionList'}">
+    <router-link class="footroute" :to="{name: 'VideoMain'}">
       <i class="bi bi-camera-video"></i>
       <p>면접/연습</p>
     </router-link>

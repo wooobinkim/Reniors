@@ -1,7 +1,7 @@
 <template>
   <div class="list">
     <div class="one">
-        <router-link to="/" >
+        <router-link :to="{ name:'openVidu' }" >
             <button class="btn1">면접</button>
         </router-link>
 

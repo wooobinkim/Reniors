@@ -20,6 +20,7 @@
     "core-js": "^3.8.3",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
+    "openvidu-browser": "^2.22.0",
     "vue": "^3.2.37",
     "vue-jwt-decode": "^0.1.0",
     "vue-router": "^4.0.3",
