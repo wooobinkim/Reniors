@@ -1,41 +1,39 @@
 <template>
   <div>
     <div class="box">
-      <button @click="deleteLicense(this.license.id)" style="margin-right: 4px"><img class="DELETE" src="@/assets/DELETE.svg" alt="DELETE"></button>
-      <button @click="updateLicense"><img class="EDIT" src="@/assets/EDIT.svg" alt="EDIT"></button>
-      <p class="name">{{ this.license.name }}</p>
+      <button @click="deleteAward(this.award.id)" style="margin-right: 4px"><img class="DELETE" src="@/assets/DELETE.svg" alt="DELETE"></button>
+      <button @click="updateAward"><img class="EDIT" src="@/assets/EDIT.svg" alt="EDIT"></button>
+      <p class="name">{{ this.award.name }}</p>
 
-      <p class="title">등급</p>
-      <p class="contents">{{ this.license.grade  }}</p>      
       <p class="title">취득 날짜</p>
-      <p class="contents">{{ this.pass }}</p>
+      <p class="contents">{{ this.date }}</p>
     
     </div>
-    <resume-license-form v-show="editshow" :license="license" @test="test" action="update"></resume-license-form>
+    <resume-award-form v-show="editshow" :award="award" @test="test" action="update"></resume-award-form>
   </div>
 </template>
 <script>
-import ResumeLicenseForm from '@/components/resume/ResumeLicenseForm.vue'
+import ResumeAwardForm from '@/components/resume/ResumeAwardForm.vue'
 import { mapActions } from 'vuex'
 
 export default {
-  name: 'ResumeLicenseDetail',
+  name: 'ResumeAwardDetail',
   props: {
-    license: Object
+    award: Object
   },
   components: {
-    ResumeLicenseForm
+    ResumeAwardForm
   },
   data() {
-    var pass = this.license.passedAt.substring(0,10)
+    var date = this.award.awardedAt.substring(0,10)
     return {
-      pass,
+      date,
       editshow: false
     }
   },
   methods: {
-    ...mapActions(['deleteLicense']),
-    updateLicense(){
+    ...mapActions(['deleteAward']),
+    updateAward(){
       this.editshow = !(this.editshow)},
     test(){
       console.log('뒤집어지셈')
