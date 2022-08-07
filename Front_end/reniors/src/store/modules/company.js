@@ -13,6 +13,9 @@ export default {
     datastate: "",
     jobopeninglist: [],
     jobopening: null,
+    companyinfo: {},
+    applylist: [],
+    applyuser: null,
   },
 
   getters: {
@@ -37,6 +40,17 @@ export default {
     },
     SET_JOBOPENING(state, data) {
       state.jobopening = data;
+    },
+    SET_COMPANY(state, data) {
+      state.companyinfo = data;
+    },
+    SET_APPLY_LIST(state, datas) {
+      datas.forEach((data) => {
+        state.applylist.push(data);
+      });
+    },
+    SET_APPLY_USER(state, data) {
+      state.applyuser = data;
     },
   },
 
@@ -70,20 +84,35 @@ export default {
       // error 부분 추가
     },
 
-    // error 커밋 추가
-    async signup(credentials) {
-      await axios({
-        // url 수정
-        url: "",
-        method: "post",
-        data: credentials,
-      })
-        // .then(res) < 수정
-        .then(() => {
-          // 더 로직이 있을지도..
-          router.push({ name: "login" });
+    registCompany: ({ commit }, company) => {
+      http
+        .post(`/company`, JSON.stringify(company))
+        .then(({ data }) => {
+          commit("SET_DATASTATE", data);
+        })
+        .catch((error) => {
+          console.log(error);
         });
-      // error 부분 추가
+    },
+    getCompany: ({ commit }) => {
+      http
+        .get(`/company`)
+        .then(({ data }) => {
+          commit("SET_COMPANY", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    updateCompany: ({ commit }, company) => {
+      http
+        .put(`/company`, JSON.stringify(company))
+        .then(({ data }) => {
+          commit("SET_DATASTATE", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
 
     registJobOpening: ({ commit }, jobopening) => {
@@ -121,6 +150,39 @@ export default {
         .get(`/company/jobopening/${no}`)
         .then(({ data }) => {
           commit("SET_JOBOPENING", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    deleteJobOpening: ({ commit }, no) => {
+      http
+        .delete(`/company/jobopening/${no}`)
+        .then(({ data }) => {
+          commit("SET_JOBOPENING", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getapplylist: ({ commit }, no) => {
+      http
+        .get(`/company/jobopening/${no}/apply`)
+        .then(({ data }) => {
+          commit("SET_APPLY_LIST", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    updateApply: ({ commit }, data) => {
+      http
+        .put(
+          `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
+          data.apply
+        )
+        .then(({ data }) => {
+          commit("SET_DATASTATE", data);
         })
         .catch((error) => {
           console.log(error);

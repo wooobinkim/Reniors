@@ -33,6 +33,15 @@ export default {
       { value: "프리랜서", text: "프리랜서" },
       { value: "아르바이트", text: "아르바이트" },
     ],
+    typecompanies: [
+      { value: null, text: "선택하세요" },
+      { value: "중소기업", text: "중소기업" },
+      { value: "중견기업", text: "중견기업" },
+      { value: "강소기업", text: "강소기업" },
+      { value: "대기업", text: "대기업" },
+      { value: "공기업", text: "공기업" },
+      { value: "상장기업", text: "상장기업" },
+    ],
   },
 
   getters: {},

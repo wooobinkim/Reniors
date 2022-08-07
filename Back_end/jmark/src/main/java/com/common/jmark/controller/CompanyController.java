@@ -136,6 +136,15 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
+    //회사 공고 끝내기
+    @PutMapping("/jobopening/{jobOpeningId}/finish")
+    @ApiOperation(value = "회사 공고끝내기", notes = "회사가 올린 공고를 끝낸다.")
+    public ResponseEntity<?> finishJobOpening(@ApiIgnore @LoginCompany Company company, @PathVariable("jobOpeningId") Long jobOpeningId){
+        companyService.finishJobOpening(company,jobOpeningId);
+
+        return ResponseEntity.status(HttpStatus.OK).body("success");
+    }
+
     //회사 공고 지원자 목록
     @GetMapping("/jobopening/{jobOpeningId}/apply")
     @ApiOperation(value = "공고 지원자 목록", notes = "올린 공고의 지원자 목록을 가져온다.")

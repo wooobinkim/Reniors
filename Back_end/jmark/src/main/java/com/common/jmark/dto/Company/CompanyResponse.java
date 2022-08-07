@@ -20,6 +20,7 @@ public class CompanyResponse {
     private String companyImgPath;
     private String companyNum;
     private String companyPhone;
+    private String representative;
     private String representativePhone;
     private TypeCompany typeCompany;
 
@@ -36,6 +37,7 @@ public class CompanyResponse {
                 company.getCompanyImgPath(),
                 company.getCompanyNum(),
                 company.getCompanyPhone(),
+                company.getRepresentative(),
                 company.getRepresentativePhone(),
                 company.getTypeCompany()
         );

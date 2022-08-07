@@ -1,14 +1,14 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import ResumeStepOne from '../components/resume/ResumeStepOne.vue'
-import ResumeStepTwo from '../components/resume/ResumeStepTwo.vue'
-import ResumeStepThree from '../components/resume/ResumeStepThree.vue'
-import ResumeStepFour from '../components/resume/ResumeStepFour.vue'
-import ResumeStepFive from '../components/resume/ResumeStepFive.vue'
-import LoginView from '../views/user/LoginView.vue'
-import SignupView from '../views/user/SignupView.vue'
-import SignupCompleteView from '../views/user/SignupCompleteView.vue'
-import FindPasswordView from '../views/user/FindPasswordView.vue'
-import FindUsernameView from '../views/user/FindUsernameView.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import ResumeStepOne from "../components/resume/ResumeStepOne.vue";
+import ResumeStepTwo from "../components/resume/ResumeStepTwo.vue";
+import ResumeStepThree from "../components/resume/ResumeStepThree.vue";
+import ResumeStepFour from "../components/resume/ResumeStepFour.vue";
+import ResumeStepFive from "../components/resume/ResumeStepFive.vue";
+import LoginView from "../views/user/LoginView.vue";
+import SignupView from "../views/user/SignupView.vue";
+import SignupCompleteView from "../views/user/SignupCompleteView.vue";
+import FindPasswordView from "../views/user/FindPasswordView.vue";
+import FindUsernameView from "../views/user/FindUsernameView.vue";
 
 import CompanyHomeView from "@/views/home/CompanyHomeView.vue";
 import HomeView from "../views/home/HomeView.vue";
@@ -17,24 +17,25 @@ import CompanyJobOpeningView from "@/views/CompanyJobOpeningView.vue";
 
 // import CompanyMyPageView from "@/views/CompanyMyPageView.vue";
 
+import CompanyMyPage from "@/components/Company/Info/CompanyMyPage.vue";
+import CompanyRegist from "@/components/Company/Info/CompanyRegist.vue";
+import CompanyUpdate from "@/components/Company/Info/CompanyUpdate.vue";
 import CompanyJobOpeningDetail from "@/components/Company/JobOpening/JobOpeningDetail.vue";
-
-
 import CompanyJobOpeningList from "@/components/Company/JobOpening/JobOpeningList.vue";
 import CompanyJobOpeningRegist from "@/components/Company/JobOpening/JobOpeningRegist.vue";
 import CompanyJobOpeningUpdate from "@/components/Company/JobOpening/JobOpeningUpdate.vue";
+import ApplyList from "@/components/Company/JobOpening/ApplyList.vue";
 // import CompanyInterview from "@/components/Company/Interview/CompanyInterview.vue";
 // import CompanyMyPage from "@/components/Company/MyPage/CompanyMyPage.vue";
 
-
 //boards
-import BoardMain from "@/views/board/BoardMain.vue"
-import BoardDetail from "@/views/board/BoardDetail.vue"
-import BoardCreate from "@/views/board/BoardCreate.vue"
-import BoardUpdate from "@/views/board/BoardUpdate.vue"
+import BoardMain from "@/views/board/BoardMain.vue";
+import BoardDetail from "@/views/board/BoardDetail.vue";
+import BoardCreate from "@/views/board/BoardCreate.vue";
+import BoardUpdate from "@/views/board/BoardUpdate.vue";
 
 //video
-import VideoMain from "@/views/video/VideoMain.vue"
+import VideoMain from "@/views/video/VideoMain.vue";
 
 //practice
 import QuestionList from "@/views/practice/QuestionList"
@@ -96,24 +97,24 @@ const routes = [
     name: "ResumeStepOne",
   },
   {
-    path: '/resume/edit/2',
+    path: "/resume/edit/2",
     component: ResumeStepTwo,
-    name: 'ResumeStepTwo' 
+    name: "ResumeStepTwo",
   },
   {
-    path: '/resume/edit/3',
+    path: "/resume/edit/3",
     component: ResumeStepThree,
-    name: 'ResumeStepThree' 
+    name: "ResumeStepThree",
   },
   {
-    path: '/resume/edit/4',
+    path: "/resume/edit/4",
     component: ResumeStepFour,
-    name: 'ResumeStepFour' 
+    name: "ResumeStepFour",
   },
   {
-    path: '/resume/edit/5',
+    path: "/resume/edit/5",
     component: ResumeStepFive,
-    name: 'ResumeStepFive' 
+    name: "ResumeStepFive",
   },
 
   // condition
@@ -125,14 +126,14 @@ const routes = [
       {
         path: "create",
         name: "ConditionCreate",
-        component: () => import("@/views/condition/ConditionCreateView.vue")
+        component: () => import("@/views/condition/ConditionCreateView.vue"),
       },
       {
         path: "result",
         name: "ConditionResult",
-        component: () => import("@/views/condition/ConditionResultView.vue")
-      }
-    ]
+        component: () => import("@/views/condition/ConditionResultView.vue"),
+      },
+    ],
   },
 
   // jobopening
@@ -150,6 +151,28 @@ const routes = [
     path: "/company",
     name: "company",
     component: CompanyHomeView,
+  },
+  {
+    path: "/company/regist",
+    name: "companyregist",
+    component: CompanyRegist,
+  },
+  {
+    path: "/company/mypage",
+    name: "companymypage",
+    component: CompanyMyPage,
+    // children: [
+    //   {
+    //     path: "update",
+    //     name: "companyupdate",
+    //     component: CompanyUpdate,
+    //   },
+    // ],
+  },
+  {
+    path: "/company/mypage/update",
+    name: "companyupdate",
+    component: CompanyUpdate,
   },
   {
     path: "/company/jobopening",
@@ -177,8 +200,14 @@ const routes = [
         name: "companyjobopeningupdate",
         component: CompanyJobOpeningUpdate,
       },
+      {
+        path: "apply/list/:no",
+        name: "applylist",
+        component: ApplyList,
+      },
     ],
   },
+
   {
     path: "/boards/:category_id",
     component: BoardMain,
