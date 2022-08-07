@@ -14,7 +14,7 @@
           class="mb-3"
           placeholder="맡으신 직무와 업무에 대해 입력해주세요"
           rows="8"
-          v-model="career.jobContent"
+          v-model="career.jobContents"
         ></b-form-textarea>
         <button>저장</button>
       </div>
@@ -35,7 +35,7 @@ export default {
       career: {
         companyName: '',
         finishedAt: '',
-        jobContent: '',
+        jobContents: '',
         startedAt: '',
 
       }
@@ -79,5 +79,8 @@ export default {
     border: none;
     border-radius: 10px;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
+  }
+  form {
+    margin-top: 20px;
   }
 </style>

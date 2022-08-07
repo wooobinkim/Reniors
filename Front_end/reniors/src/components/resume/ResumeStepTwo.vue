@@ -4,7 +4,7 @@
       <div style="margin-top: 16px; padding: 10px; background-color: #F9F9F9;">
         <span class="title">이력서 작성</span>
       </div>
-    
+
       <div style="float: right; margin-top: 5px">
         <img class="order" src="@/assets/one.svg" alt="order">
         <img class="order" src="@/assets/two_active.svg" alt="order">
@@ -13,13 +13,12 @@
         <img class="order" src="@/assets/five.svg" alt="order">          
       </div>
     </header>
-
     <div class="content">
       <img class="two" src="@/assets/bigtwo.svg" alt="two">
       <p class="text1">경력사항</p>
       <p class="text2">경력사항을 입력해주세요.</p>
       <div style="width:312px; margin:0 auto;">
-        <resume-career-detail></resume-career-detail>
+        <resume-career-detail v-for="info in career" :info="info" :key="info"></resume-career-detail>
         <resume-career-form v-for="i in cnt" :key="i" :cnt = 'cnt'></resume-career-form>
         <!-- <resume-career-form :cnt = 'cnt'></resume-career-form> -->
         <button class="add" @click="add"><img class="plus" style="margin-bottom: 5px" src="@/assets/plus.svg" alt="plus">  경력 추가</button>
@@ -29,7 +28,7 @@
         <button style="background-color: #FFC0A3" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepOne' }">이전</router-link></button>
         <button style="background-color: #FF843E" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepThree' }">다음</router-link></button>
       </footer>
-    
+
 
     </div>
 
@@ -38,21 +37,27 @@
 <script>
 import ResumeCareerForm from '@/components/resume/ResumeCareerForm.vue'
 import ResumeCareerDetail from '@/components/resume/ResumeCareerDetail.vue'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'ResumeStepTwo',
   components: { ResumeCareerForm, ResumeCareerDetail },
   data() {
     return {
-      example: '',
       cnt: 1,
     }
   },
+  computed: {
+    ...mapGetters(['career']),
+  },
   setup() {},
-  created() {},
+  created() {
+    this.fetchCareer()
+  },
   mounted() {},
   unmounted() {},
   methods: {
+    ...mapActions(['fetchCareer']),
     add(){
       this.cnt += 1
     }

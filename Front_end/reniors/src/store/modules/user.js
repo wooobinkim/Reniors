@@ -76,7 +76,7 @@ export const user = {
           // error 부분 추가
       },
 
-      updateUser({ commit, getters }, userEdit){
+      updateUser({ dispatch , getters }, userEdit){
         console.log(userEdit)
         console.log(getters.authError)
         axios({
@@ -85,13 +85,13 @@ export const user = {
           data: JSON.stringify(userEdit),
           headers: getters.authHeader,
         })
-        .then(res => {
-          commit('SET_CURRENT_USER', res.data)
+        .then(() => {
           router.push({name: 'ResumeStepTwo'})
+          dispatch('fetchCurrentUser')
         })
-        .catch(
+        .catch(() => {
           console.log('실패!')
-        )
+        })
       },
 
       // 추가
