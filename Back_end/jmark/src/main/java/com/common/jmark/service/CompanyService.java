@@ -165,6 +165,16 @@ public class CompanyService {
         jobOpeningRepository.deleteById(jobOpeningId);
     }
 
+    //회사 공고 끝내기
+    @Transactional
+    public void finishJobOpening(Company company, Long jobOpeningId){
+        if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
+            throw new NotAuthException(COMPANY_NO_AUTH);
+
+        JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found jobopening"));
+        jobOpening.finish();
+    }
+
     //회사 공고 지원자 목록
     @Transactional
     public List<ApplyResponse> getappliyList(Company company, Long jobOpeningId){

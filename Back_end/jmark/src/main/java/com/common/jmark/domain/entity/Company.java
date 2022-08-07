@@ -59,6 +59,10 @@ public class Company{
     private String companyPhone;
 
     @NotNull
+    @Column(length = 50)
+    private String representative;
+
+    @NotNull
     @Column(length = 30)
     private String representativePhone;
 
@@ -73,7 +77,7 @@ public class Company{
     @OneToMany(mappedBy = "company")
     private List<Eval> evals = new ArrayList<>();
 
-    public static Company create(String name, String companyAppId, String companyAppPwd, String establishedAt, String companyUrl, String address, String companyImgName, String companyImgPath, String companyNum, String companyPhone, String representativePhone, TypeCompany typeCompany) {
+    public static Company create(String name, String companyAppId, String companyAppPwd, String establishedAt, String companyUrl, String address, String companyImgName, String companyImgPath, String companyNum, String companyPhone,String representative, String representativePhone, TypeCompany typeCompany) {
         Company company = new Company();
         company.name = name;
         company.companyAppId = companyAppId;
@@ -85,6 +89,7 @@ public class Company{
         company.companyImgPath = companyImgPath;
         company.companyNum = companyNum;
         company.companyPhone = companyPhone;
+        company.representative = representative;
         company.representativePhone = representativePhone;
         company.typeCompany = typeCompany;
         return company;
@@ -101,6 +106,7 @@ public class Company{
         this.companyImgPath = companyUpdateRequest.getCompanyImgPath();
         this.companyNum = companyUpdateRequest.getCompanyNum();
         this.companyPhone = companyUpdateRequest.getCompanyPhone();
+        this.representative = companyUpdateRequest.getRepresentative();
         this.representativePhone = companyUpdateRequest.getRepresentativePhone();
         this.typeCompany = companyUpdateRequest.getTypeCompany();
     }

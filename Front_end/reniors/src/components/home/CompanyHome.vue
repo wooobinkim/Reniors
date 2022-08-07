@@ -2,7 +2,7 @@
   <router-link :to="{ name: 'companyjobopening' }">채용관리</router-link>
 
   <div>면접</div>
-  <div>마이페이지</div>
+  <router-link :to="{ name: 'companymypage' }">마이페이지</router-link>
 </template>
 
 <script>

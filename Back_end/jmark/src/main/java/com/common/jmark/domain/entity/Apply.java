@@ -6,6 +6,7 @@ import com.common.jmark.dto.Apply.ApplyUpdateRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -24,6 +25,7 @@ public class Apply {
     @Enumerated(EnumType.STRING)
     private JobOpeningProcess jobOpeningProcess;
 
+    @DateTimeFormat(pattern = "YYYY-MM-DD hh:mm")
     private Date interviewDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
