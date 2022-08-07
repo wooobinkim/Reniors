@@ -31,6 +31,11 @@ export default{
           category_id : this.$route.params.category_id
         }
     },
+    watch:{
+      $route: function(from){
+        this.fetchArticles(from.params.category_id)
+      }
+    },
     computed:{
       ...mapGetters(['articles', 'isLogginedIn'])
     },
