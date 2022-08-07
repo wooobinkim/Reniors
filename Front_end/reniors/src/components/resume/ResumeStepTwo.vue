@@ -18,10 +18,15 @@
       <p class="text1">경력사항</p>
       <p class="text2">경력사항을 입력해주세요.</p>
       <div style="width:312px; margin:0 auto;">
-        <resume-career-detail v-for="info in career" :info="info" :key="info"></resume-career-detail>
-        <resume-career-form v-for="i in cnt" :key="i" :cnt = 'cnt'></resume-career-form>
+        <resume-career-detail v-for="career in careers" :career="career" :key="career.id"></resume-career-detail>
+        <hr>
+    
+        <resume-career-form v-if="formshow" @show="show" :career="career" action="create"></resume-career-form>
         <!-- <resume-career-form :cnt = 'cnt'></resume-career-form> -->
-        <button class="add" @click="add"><img class="plus" style="margin-bottom: 5px" src="@/assets/plus.svg" alt="plus">  경력 추가</button>
+        <div v-show="formshow==false">
+          <button class="add" @click="show"><img class="plus" style="margin-bottom: 5px" src="@/assets/plus.svg" alt="plus">경력 추가</button>
+        </div>
+       
         
       </div>
       <footer>
@@ -44,11 +49,17 @@ export default {
   components: { ResumeCareerForm, ResumeCareerDetail },
   data() {
     return {
-      cnt: 1,
+      career: {
+        companyName: '',
+        finishedAt: '',
+        jobContents: '',
+        startedAt: '',
+      },
+      formshow: true
     }
   },
   computed: {
-    ...mapGetters(['career']),
+    ...mapGetters(['careers']),
   },
   setup() {},
   created() {
@@ -58,8 +69,8 @@ export default {
   unmounted() {},
   methods: {
     ...mapActions(['fetchCareer']),
-    add(){
-      this.cnt += 1
+    show(){
+      this.formshow = !(this.formshow)
     }
   }
 }

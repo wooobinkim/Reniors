@@ -1,41 +1,48 @@
 <template>
   <div>
     <div class="box">
-      <button @click="deleteCareer(this.info.id)" style="margin-right: 4px"><img class="DELETE" src="@/assets/DELETE.svg" alt="DELETE"></button>
-      <button @click="Undate()"><img class="EDIT" src="@/assets/EDIT.svg" alt="EDIT"></button>
+      <button @click="deleteCareer(this.career.id)" style="margin-right: 4px"><img class="DELETE" src="@/assets/DELETE.svg" alt="DELETE"></button>
+      <button @click="updateCareer"><img class="EDIT" src="@/assets/EDIT.svg" alt="EDIT"></button>
       <p class="title">입사날짜</p>
       <p class="contents">{{ this.start }}</p>
       <p class="title">퇴사날짜</p>
       <p class="contents">{{ this.finish }}</p>      
       <p class="title">기업</p>
-      <p class="contents">{{ this.info.companyName }}</p>
+      <p class="contents">{{ this.career.companyName }}</p>
       <hr>
-      <p class="contents">{{ this.info.jobContents }}</p>
+      <p class="contents">{{ this.career.jobContents }}</p>
     
     </div>
-    
+    <resume-career-form v-show="editshow" :career="career" @test="test" action="update"></resume-career-form>
   </div>
 </template>
 <script>
+import ResumeCareerForm from '@/components/resume/ResumeCareerForm.vue'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'ResumeCareerDetail',
   props: {
-    info: Object
+    career: Object
   },
-
+  components: {
+    ResumeCareerForm
+  },
   data() {
-    var start = this.info.startedAt.substring(0,10)
-    var finish = this.info.finishedAt.substring(0,10)
+    var start = this.career.startedAt.substring(0,10)
+    var finish = this.career.finishedAt.substring(0,10)
     return {
-      start, finish
+      start, finish,
+      editshow: false
     }
   },
   methods: {
-    ...mapActions(['deleteCareer', 'updateCareer']),
-    Update(){
-
+    ...mapActions(['deleteCareer']),
+    updateCareer(){
+      this.editshow = !(this.editshow)},
+    test(){
+      console.log('뒤집어지셈')
+      this.editshow = !(this.editshow)
     }
 
   },
