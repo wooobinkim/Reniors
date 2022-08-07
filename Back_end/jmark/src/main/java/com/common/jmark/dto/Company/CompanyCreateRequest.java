@@ -21,6 +21,7 @@ public class CompanyCreateRequest {
     private String companyImgPath;
     private String companyNum;
     private String companyPhone;
+    private String representative;
     private String representativePhone;
     private TypeCompany typeCompany;
 
