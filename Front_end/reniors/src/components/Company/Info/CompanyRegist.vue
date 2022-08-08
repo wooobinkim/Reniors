@@ -150,7 +150,7 @@
       <button @click="thirdprev()">이전</button>
       <button @click="registcompany()">완료</button>
     </div>
-    
+    <img src="https://i7b307.p.ssafy.io/images/company/2" alt="">
   </div>
 </template>
 
@@ -202,12 +202,9 @@ export default {
         alert("비밀번호가 동일하지 않습니다.");
       } else {
         const formData = new FormData();
-        console.log(this.companyImg[0]);
-        console.log(this.company);
         formData.append("img",this.companyImg[0]);
-        formData.append("data",new Blob([this.company]),{type : "application/json"});
-        
-        console.log(formData);
+        formData.append("data",new Blob([JSON.stringify(this.company)],{type : "application/json"}));
+
         this.registCompany(formData);
         this.$router.push({ name: "Login" });
       }
