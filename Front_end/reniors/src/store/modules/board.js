@@ -51,6 +51,7 @@ export default {
         }),
         headers: getters.authHeader,
       }).then((res) => {
+        console.log(categoryId)
         commit("SET_ARTICLES", res.data);
       });
     },
