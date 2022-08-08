@@ -44,6 +44,11 @@ export default{
     methods:{
         ...mapActions(['createArticle', 'updateArticle']),
         onSubmit(){
+            if(!this.title && !this.contents || (!this.title && this.contents)){
+                alert('제목을 입력해주세요.')
+            } else if(!this.contents){
+                alert('내용을 입력해주세요.')
+            }
             if (this.action === 'create') {
                 this.createArticle({ 
                     categoryId: this.category_pk,
