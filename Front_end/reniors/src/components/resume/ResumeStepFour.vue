@@ -19,8 +19,13 @@
       <p class="text1">수상경력</p>
       <p class="text2">수상경력을 입력해주세요.</p>
       <div style="width:312px; margin:0 auto;">
-        <resume-award-form v-for="i in cnt" :key="i" :cnt = 'cnt'></resume-award-form>
-        <button class="add" @click="add"><img class="plus" style="margin-bottom: 5px" src="@/assets/plus.svg" alt="plus">  수상경력 추가</button>
+        <resume-award-detail v-for="award in awards" :award="award" :key="award.id"></resume-award-detail>
+        <hr>
+        <resume-award-form v-if="formshow" @show="show" :award="award" action="create"></resume-award-form>
+        <div v-show="formshow==false">
+          <button class="add" @click="show"><img class="plus" style="margin-bottom: 5px" src="@/assets/plus.svg" alt="plus">  수상경력 추가</button>
+        </div>
+
       </div>
       <footer>
         <button style="background-color: #FFC0A3" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepThree' }">이전</router-link></button>
@@ -32,23 +37,34 @@
 </template>
 <script>
 import ResumeAwardForm from '@/components/resume/ResumeAwardForm.vue'
+import ResumeAwardDetail from '@/components/resume/ResumeAwardDetail.vue'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'ResumeStepFour',
-  components: { ResumeAwardForm },
+  components: { ResumeAwardForm, ResumeAwardDetail },
   data() {
     return {
-      example: '',
-      cnt: 1
+      award: {
+        name: '',
+        awardedAt: '',
+      },
+      formshow: true
     }
   },
+  computed: {
+    ...mapGetters(['awards']),
+  },
   setup() {},
-  created() {},
+  created() {
+    this.fetchAward()
+  },
   mounted() {},
   unmounted() {},
   methods: {
-      add(){
-      this.cnt += 1
+    ...mapActions(['fetchAward']),
+    show(){
+      this.formshow = !(this.formshow)
     }
   }
 }

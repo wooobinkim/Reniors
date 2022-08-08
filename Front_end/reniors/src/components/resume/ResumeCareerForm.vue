@@ -1,20 +1,20 @@
 <template>
   <div>
-    <form @submit.prevent="createCareer(career)">
+    <form @submit.prevent="onSubmit">
       <div class="career">
         <p class="forminfo">기업명</p>
-        <b-form-input class="mb-3" type="text" placeholder="기업명" v-model="career.companyName"></b-form-input>
+        <b-form-input class="mb-3" type="text" placeholder="기업명" v-model="newCareer.companyName"></b-form-input>
         <p class="forminfo">퇴사날짜</p>
-        <b-form-input class="mb-3" type="date" placeholder="생년-월-일" v-model="career.finishedAt"></b-form-input>
+        <b-form-input class="mb-3" type="date" placeholder="생년-월-일" v-model="newCareer.finishedAt"></b-form-input>
         <p class="forminfo">퇴사날짜</p>
-        <b-form-input class="mb-3" type="date" placeholder="생년-월-일" v-model="career.startedAt"></b-form-input>
+        <b-form-input class="mb-3" type="date" placeholder="생년-월-일" v-model="newCareer.startedAt"></b-form-input>
         <p class="forminfo">상세내용</p>
         <b-form-textarea
           id="textarea-default"
           class="mb-3"
           placeholder="맡으신 직무와 업무에 대해 입력해주세요"
           rows="8"
-          v-model="career.jobContent"
+          v-model="newCareer.jobContents"
         ></b-form-textarea>
         <button>저장</button>
       </div>
@@ -28,16 +28,16 @@ import { mapActions } from 'vuex'
 export default {
   components: {},
   props: {
-    cnt: Number,
+    career: Object,
+    action: String,
   },
   data() {
     return {
-      career: {
-        companyName: '',
-        finishedAt: '',
-        jobContent: '',
-        startedAt: '',
-
+      newCareer: {
+        companyName: this.career.companyName,
+        finishedAt: this.career.finishedAt,
+        jobContents: this.career.jobContents,
+        startedAt: this.career.startedAt,
       }
     }
   },
@@ -46,8 +46,23 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
-    ...mapActions(['createCareer'])
+    ...mapActions(['createCareer', 'updateCareer']),
+    onSubmit(){
+      if (this.action === 'create'){
+        this.createCareer(this.newCareer)
+        this.$emit("show")
+      } else if (this.action === 'update'){
+        const payload = {
+          id: this.career.id,
+          ...this.newCareer
+        }
+        console.log(payload)
+        this.updateCareer(payload)
+        this.$emit("test")
+      }
+  
   }
+ }
 }
 </script>
 
@@ -79,5 +94,8 @@ export default {
     border: none;
     border-radius: 10px;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
+  }
+  form {
+    margin-top: 20px;
   }
 </style>

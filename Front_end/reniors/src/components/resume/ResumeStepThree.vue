@@ -4,7 +4,7 @@
       <div style="margin-top: 16px; padding: 10px; background-color: #F9F9F9;">
         <span class="title">이력서 작성</span>
       </div>
-    
+
       <div style="float: right; margin-top: 5px">
         <img class="order" src="@/assets/one.svg" alt="order">
         <img class="order" src="@/assets/two.svg" alt="order">
@@ -19,9 +19,16 @@
       <p class="text1">자격증</p>
       <p class="text2">자격증 정보를 입력해주세요.</p>
       <div style="width:312px; margin:0 auto;">
-        <resume-license-form v-for="i in cnt" :key="i" :cnt = 'cnt'></resume-license-form>
-        <button class="add" @click="add"><img class="plus" style="margin-bottom: 5px" src="@/assets/plus.svg" alt="plus">  자격증 추가</button>
+        <resume-license-detail v-for="license in licenses" :license="license" :key="license.id"></resume-license-detail>
+        <hr>
+        <resume-license-form v-if="formshow" @show="show" :license="license" action="create"></resume-license-form>
+
+        <div v-show="formshow==false">
+          <button class="add" @click="show"><img class="plus" style="margin-bottom: 5px" src="@/assets/plus.svg" alt="plus">  자격증 추가</button>
+        </div>
+        
       </div>
+
       <footer>
         <button style="background-color: #FFC0A3" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepTwo' }">이전</router-link></button>
         <button style="background-color: #FF843E" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepFour' }">다음</router-link></button>
@@ -31,24 +38,36 @@
   </div>
 </template>
 <script>
+import ResumeLicenseDetail from '@/components/resume/ResumeLicenseDetail.vue'
 import ResumeLicenseForm from '@/components/resume/ResumeLicenseForm.vue'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'ResumeStepThree',
-  components: { ResumeLicenseForm },
+  components: { ResumeLicenseForm, ResumeLicenseDetail },
   data() {
     return {
-      example: '',
-      cnt: 1
+      license: {
+        grade: '',
+        name: '',
+        passedAt: '',
+      },
+      formshow: true
     }
   },
+  computed: {
+    ...mapGetters(['licenses']),
+  },
   setup() {},
-  created() {},
+  created() {
+    this.fetchLicense()
+  },
   mounted() {},
   unmounted() {},
   methods: {
-      add(){
-      this.cnt += 1
+    ...mapActions(['fetchLicense']),
+    show(){
+    this.formshow = !(this.formshow)
     }
   }
 }
