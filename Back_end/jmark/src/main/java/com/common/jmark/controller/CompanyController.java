@@ -20,8 +20,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -33,14 +36,20 @@ public class CompanyController {
     private final JwtUtil jwtUtil;
 
     //회사 회원가입
-    @PostMapping
+    @PostMapping(consumes = {"multipart/form-data"})
     @ApiOperation(value = "회사 회원가입", notes = "회사아이디로 회원가입을 한다.")
-    public ResponseEntity<?> postCompany(@RequestBody CompanyCreateRequest companyCreateRequest){
+    public ResponseEntity<?> postCompany(
+            @RequestPart(value = "img", required = false) MultipartFile file,
+            @RequestPart(value = "data")  CompanyCreateRequest companyCreateRequest) throws IOException {
+        if(file != null) {
+            // TODO : 파일경로 수정
+            //File dest = new File("C:/temp/image/" + companyCreateRequest.getCompanyNum());
+            File dest = new File("/home/ubuntu/images/company/" + companyCreateRequest.getCompanyNum());
+            file.transferTo(dest);
+        }
         Long companyId = companyService.postCompany(companyCreateRequest);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(companyId);
     }
-
     @PostMapping("/login")
     @ApiOperation(value = "회사 로그인", notes = "회사 아이디로 로그인을 한다.")
     public ResponseEntity<?> loginCompany(@RequestBody CompanyLoginRequest companyLoginRequest){

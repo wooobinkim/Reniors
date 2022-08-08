@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Setter(AccessLevel.NONE)
@@ -17,8 +18,6 @@ public class CompanyCreateRequest {
     private String establishedAt;
     private String companyUrl;
     private String address;
-    private String companyImgName;
-    private String companyImgPath;
     private String companyNum;
     private String companyPhone;
     private String representative;
