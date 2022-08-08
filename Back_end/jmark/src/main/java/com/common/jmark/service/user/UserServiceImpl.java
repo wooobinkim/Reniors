@@ -64,13 +64,10 @@ public class UserServiceImpl implements UserService {
                     request.getGender(),
                     request.getPhone(),
                     request.getTotalCareer(),
-                    request.getProfileImgName(),
-                    request.getProfileImgPath(),
                     request.getAddress(),
+                    request.getExtraAddress(),
                     request.getIsOpen(),
-                    request.getLastEdu(),
-                    request.getPortfolioName(),
-                    request.getPortfolioPath()
+                    request.getLastEdu()
             );
             return userRepository.save(saveUser).getId();
         }
@@ -110,13 +107,10 @@ public class UserServiceImpl implements UserService {
                 request.getGender(),
                 request.getPhone(),
                 request.getTotalCareer(),
-                request.getProfileImgName(),
-                request.getProfileImgPath(),
                 request.getAddress(),
+                request.getExtraAddress(),
                 request.getIsOpen(),
-                request.getLastEdu(),
-                request.getPortfolioName(),
-                request.getPortfolioPath()
+                request.getLastEdu()
         );
         userRepository.save(user);
     }

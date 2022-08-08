@@ -21,8 +21,6 @@ public class JobOpeningResponse {
     private String title;
     private IsFinish isFinish;
     private String companyName;
-    private String companyImgName;
-    private String companyImgPath;
 
 
     public static JobOpeningResponse response(JobOpening jobOpening){
@@ -32,9 +30,7 @@ public class JobOpeningResponse {
                 jobOpening.getFinishedDate(),
                 jobOpening.getTitle(),
                 jobOpening.getIsFinish(),
-                jobOpening.getCompany().getName(),
-                jobOpening.getCompany().getCompanyImgName(),
-                jobOpening.getCompany().getCompanyImgPath()
+                jobOpening.getCompany().getName()
         );
     }
 }

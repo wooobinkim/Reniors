@@ -83,7 +83,8 @@ public class BoardService {
 
         List<Board> boardList = jpaQueryFactory.selectFrom(b)
                 .where(
-                        booleanBuilder
+                        booleanBuilder,
+                        b.category.id.eq(boardSearchRequest.getCategoryId())
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
