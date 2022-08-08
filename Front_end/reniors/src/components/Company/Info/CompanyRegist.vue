@@ -150,7 +150,7 @@
       <button @click="thirdprev()">이전</button>
       <button @click="registcompany()">완료</button>
     </div>
-    <img src="https://i7b307.p.ssafy.io/images/company/2" alt="">
+    <!-- <img src="https://i7b307.p.ssafy.io/images/company/2" alt=""> -->
   </div>
 </template>
 
