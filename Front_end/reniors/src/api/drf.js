@@ -41,8 +41,8 @@ export default {
     awardsEdit: (awardDetailId) => HOST + RESUME + '/awards' + `/${awardDetailId}`,
     license: () => HOST + RESUME + '/license',
     licenseEdit: (licenseDetailId) => HOST + RESUME + '/license' + `/${licenseDetailId}`,
-    portfolios: resumeId => HOST + RESUME + `/${resumeId}` + 'portfolio',
-    portfolio: (resumeId, portfolioName) => HOST + RESUME + `/${resumeId}` + 'portfolio' + `/${portfolioName}`,
+    // portfolios: resumeId => HOST + RESUME + `/${resumeId}` + 'portfolio',
+    // portfolio: (resumeId, portfolioName) => HOST + RESUME + `/${resumeId}` + 'portfolio' + `/${portfolioName}`,
   },
   company: {
     signup: () => HOST + COMPANY,
