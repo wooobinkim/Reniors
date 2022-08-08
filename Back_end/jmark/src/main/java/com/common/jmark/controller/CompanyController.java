@@ -174,4 +174,5 @@ public class CompanyController {
 
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
+
 }

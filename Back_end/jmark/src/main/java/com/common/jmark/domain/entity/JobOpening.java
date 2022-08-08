@@ -91,6 +91,9 @@ public class JobOpening{
     @OneToMany(mappedBy = "jobOpening")
     private List<Apply> applies = new ArrayList<>();
 
+    @OneToMany(mappedBy = "jobOpening")
+    private List<Eval> evals = new ArrayList<>();
+
     //공고 - 고용형태 연관관계
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "type_employment_id")
