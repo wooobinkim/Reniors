@@ -203,7 +203,10 @@ public class CompanyService {
     public void updateapply(Company company, Long applyId, ApplyUpdateRequest applyUpdateRequest){
         if(company.getId() != applyRepository.findById(applyId).get().getJobOpening().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
+        System.out.println("applyUpdateRequest = " + applyUpdateRequest);
         Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found Apply"));
+
         apply.update(applyUpdateRequest,apply.getUser(), apply.getJobOpening());
+        System.out.println("apply.getInterviewDate() = " + apply.getInterviewDate());
     }
 }
