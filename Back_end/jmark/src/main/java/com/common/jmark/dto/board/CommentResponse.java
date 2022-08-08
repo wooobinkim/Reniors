@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class CommentResponse {
 
     @NotBlank
-    Long commnetId;
+    Long commentId;
 
     @NotBlank
     String contents;
