@@ -64,6 +64,7 @@ public class CompanyService {
                 request.getCompanyImgPath(),
                 request.getCompanyNum(),
                 request.getCompanyPhone(),
+                request.getRepresentative(),
                 request.getRepresentativePhone(),
                 request.getTypeCompany()
         );
