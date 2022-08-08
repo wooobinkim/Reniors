@@ -7,6 +7,7 @@ import com.common.jmark.domain.entity.SearchCondition;
 import com.common.jmark.domain.entity.Type.Gender;
 import com.common.jmark.domain.entity.Type.IsOpen;
 import com.common.jmark.domain.entity.Type.Role;
+import com.common.jmark.domain.entity.UserEval;
 import com.common.jmark.domain.entity.board.Board;
 import com.common.jmark.domain.entity.board.Comment;
 import com.common.jmark.domain.entity.recommend.RecommendCondition;
@@ -122,6 +123,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserEval> userEvals = new ArrayList<>();
 
    public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
         User user = new User();

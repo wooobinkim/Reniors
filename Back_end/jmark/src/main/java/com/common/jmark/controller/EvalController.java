@@ -125,8 +125,32 @@ public class EvalController {
     }
 
     //유저 평가 입력
+    @PostMapping("/{evalId}/usereval/{userId}")
+    @ApiOperation(value = "유저 평가 입력", notes = "유저에 대한 평가 입력")
+    public ResponseEntity<?> postUserEval(@ApiIgnore @LoginCompany Company company,
+                                          @RequestBody UserEvalCreateRequest userEvalCreateRequest,
+                                          @PathVariable("user_id")Long userId){
+        Long userEvalId = evalService.postUserEval(company, userEvalCreateRequest, userId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(userEvalId);
+    }
     //유저 평가 조회
+    @GetMapping("/{evalId}/usereval/{userId}")
+    @ApiOperation(value = "유저 평가 조회", notes = "유저에 대한 평가 조회")
+    public ResponseEntity<?> getUserEvalList(@ApiIgnore @LoginCompany Company company,  @PathVariable("user_id")Long userId, @PathVariable("eval_id")Long evalId){
+        List<UserEvalResponse> userEvalList = evalService.getUserEvalList(company, userId, evalId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(userEvalList);
+    }
+
     //유저 평가 삭제
+    @DeleteMapping("/{evalId}/usereval/{userId}")
+    @ApiOperation(value = "유저 평가 삭제", notes = "유저에 대한 평가 삭제")
+    public ResponseEntity<?> deleteUserEval(@ApiIgnore @LoginCompany Company company,  @PathVariable("user_id")Long userId, @PathVariable("eval_id")Long evalId){
+        evalService.deleteUserEval(company, userId, evalId);
+
+        return ResponseEntity.status(HttpStatus.OK).body("success");
+    }
 
 
 }
