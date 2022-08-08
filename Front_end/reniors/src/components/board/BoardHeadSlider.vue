@@ -23,7 +23,6 @@ export default{
     },
     setup(){},
     created(){
-        console.log('erqwer af');
         this.fetchParents(),
         this.fetchInterest()
     },

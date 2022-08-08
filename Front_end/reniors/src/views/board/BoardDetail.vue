@@ -13,7 +13,7 @@
         <div>
             <p  class="title2">{{article.title}}</p>
             <div class="bottom">
-                <img src="" alt="">
+                <img class="person" src="https://i7b307.p.ssafy.io/images/user/1" alt="person">
                 <p  class="userName">{{article.userName}} |</p>
                 <p class="time">{{article.updatedAt.slice(0,4)}}.{{article.updatedAt.slice(5,7)}}.{{article.updatedAt.slice(8,10)}}</p>
             </div>
@@ -106,6 +106,7 @@ export default{
     margin: 16px;
     display: flex;
 }
+
 .title2{
     margin: 0 8px;
     font-size: 18px;
@@ -116,6 +117,12 @@ export default{
 }
 .bottom{
     display: flex;
+}
+.person{
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin: 0 4px;
 }
 .userName{
     margin: 0 8px;
@@ -136,8 +143,7 @@ export default{
 
 }
 .contents{
-    height: 300px;
-    display: fles;
+    display: flex;
     justify-content: center;
     align-items: center;
     text-align: left;
@@ -145,6 +151,6 @@ export default{
 }
 .contents p{
     font-size: 14px;
-    margin: 8px;
+    margin: 8px 8px 16px 8px;
 }
 </style>

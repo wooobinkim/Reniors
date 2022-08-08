@@ -2,7 +2,8 @@
   <div>  
     <board-head-slider></board-head-slider>
     <div class="title">
-      <p>{{parents[category_id - 1].name}}</p>
+      <!-- <p>{{parents[category_id - 1].name}}</p> -->
+      <p>{{jobname}}</p>
       <div v-if="isLogginedIn">
         <router-link :to="{name: 'boardCreate', params:{category_id: category_id}}">
           <i class="bi bi-plus-circle-fill" style="color:#FFD39B; font-size: 24px; margin:0 16px"></i>
@@ -30,12 +31,17 @@ export default{
     },
     data(){
         return{
-          category_id : this.$route.params.category_id
+          category_id : Number(this.$route.params.category_id),
+          jobname: ""
+          // j`obname:""
         }
     },
     watch:{
       $route: function(from){
         this.fetchArticles(from.params.category_id)
+        // console.log(this.parents[Number(from.params.category_id) -1].name);
+        this.jobname = this.parents[Number(from.params.category_id) -1].name
+        // console.log(this.jobname);
       }
     },
     computed:{
@@ -45,9 +51,11 @@ export default{
       ...mapActions(['fetchArticles'])
     },
     created(){
-      console.log("----------------------------------");
-      console.log(this.category_id);
+      // console.log("----------------------------------");
+      // console.log(this.category_id);
+      console.log(this.parents);
       this.fetchArticles(this.category_id)
+      this.jobname = this.parents[this.$route.params.category_id - 1].name
     },
     mounted(){},
     unmounted(){},
