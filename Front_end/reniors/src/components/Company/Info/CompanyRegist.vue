@@ -139,15 +139,18 @@
       <div class="mb-3 mt-3">
         <label class="form-label">회사이미지</label>
         <input
-          type="text"
+          type="file"
           class="form-control"
           placeholder="이미지를 선택해주세요"
-          v-model="company.companyImgName"
+          ref = "img"
+          @change="changeImg()"
         />
       </div>
+      
       <button @click="thirdprev()">이전</button>
       <button @click="registcompany()">완료</button>
     </div>
+    
   </div>
 </template>
 
@@ -165,13 +168,12 @@ export default {
         establishedAt: "",
         companyUrl: "",
         address: "",
-        companyImgName: "",
-        companyImgPath: "",
         companyNum: "",
         companyPhone: "",
         representativePhone: "",
         typeCompany: "",
       },
+      companyImg:"",
     };
   },
   computed: {
@@ -191,11 +193,22 @@ export default {
     thirdprev() {
       this.pagenum = 2;
     },
+    changeImg(){
+      this.companyImg = this.$refs.img.files;
+      // console.log(this.companyImg);
+    },
     registcompany() {
       if (this.company.companyAppPwd != this.comfirmcompanyAppPwd) {
         alert("비밀번호가 동일하지 않습니다.");
       } else {
-        this.registCompany(this.company);
+        const formData = new FormData();
+        console.log(this.companyImg[0]);
+        console.log(this.company);
+        formData.append("img",this.companyImg[0]);
+        formData.append("data",new Blob([this.company]),{type : "application/json"});
+        
+        console.log(formData);
+        this.registCompany(formData);
         this.$router.push({ name: "Login" });
       }
     },
