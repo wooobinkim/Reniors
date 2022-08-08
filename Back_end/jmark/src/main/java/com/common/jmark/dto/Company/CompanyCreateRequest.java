@@ -18,6 +18,7 @@ public class CompanyCreateRequest {
     private String establishedAt;
     private String companyUrl;
     private String address;
+    private String extraAddress;
     private String companyNum;
     private String companyPhone;
     private String representative;

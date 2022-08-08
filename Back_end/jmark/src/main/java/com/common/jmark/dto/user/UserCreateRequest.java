@@ -41,6 +41,8 @@ public class UserCreateRequest {
     @NotBlank
     private String address;
 
+    private String extraAddress;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private IsOpen isOpen;

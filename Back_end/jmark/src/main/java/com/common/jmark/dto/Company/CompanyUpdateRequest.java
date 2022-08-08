@@ -17,8 +17,7 @@ public class CompanyUpdateRequest {
     private String establishedAt;
     private String companyUrl;
     private String address;
-    private String companyImgName;
-    private String companyImgPath;
+    private String extraAddress;
     private String companyNum;
     private String companyPhone;
     private String representative;

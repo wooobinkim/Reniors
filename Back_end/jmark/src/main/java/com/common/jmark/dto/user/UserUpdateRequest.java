@@ -34,12 +34,10 @@ public class UserUpdateRequest {
 
     private int totalCareer;
 
-    private String profileImgName;
-
-    private String profileImgPath;
-
     @NotBlank
     private String address;
+
+    private String extraAddress;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -48,7 +46,4 @@ public class UserUpdateRequest {
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
 
-    private String portfolioName;
-
-    private String portfolioPath;
 }

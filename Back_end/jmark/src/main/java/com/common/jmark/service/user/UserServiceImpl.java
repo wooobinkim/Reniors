@@ -65,6 +65,7 @@ public class UserServiceImpl implements UserService {
                     request.getPhone(),
                     request.getTotalCareer(),
                     request.getAddress(),
+                    request.getExtraAddress(),
                     request.getIsOpen(),
                     request.getLastEdu()
             );
@@ -107,6 +108,7 @@ public class UserServiceImpl implements UserService {
                 request.getPhone(),
                 request.getTotalCareer(),
                 request.getAddress(),
+                request.getExtraAddress(),
                 request.getIsOpen(),
                 request.getLastEdu()
         );

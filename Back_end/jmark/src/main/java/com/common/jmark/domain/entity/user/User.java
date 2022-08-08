@@ -68,6 +68,8 @@ public class User {
     @Column(length = 100)
     private String address;
 
+    private String extraAddress;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private IsOpen isOpen;
@@ -113,7 +115,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserEval> userEvals = new ArrayList<>();
 
-   public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String address, IsOpen isOpen, LastEdu lastEdu) {
+   public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu) {
         User user = new User();
         user.userAppId = userAppId;
         user.userAppPwd = userAppPwd;
@@ -125,12 +127,13 @@ public class User {
         user.role = Role.ROLE_USER;
         user.totalCareer = totalCareer;
         user.address = address;
+        user.extraAddress = extraAddress;
         user.isOpen = isOpen;
         user.lastEdu = lastEdu;
         return user;
     }
 
-    public void update(String userAppPwd, String name, Date birth, Gender gender, String phone, int totalCareer, String address, IsOpen isOpen, LastEdu lastEdu) {
+    public void update(String userAppPwd, String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu) {
         this.userAppPwd = userAppPwd;
         this.name = name;
         this.birth = birth;
@@ -138,6 +141,7 @@ public class User {
         this.phone = phone;
         this.totalCareer = totalCareer;
         this.address = address;
+        this.extraAddress = extraAddress;
         this.isOpen = isOpen;
         this.lastEdu = lastEdu;
     }

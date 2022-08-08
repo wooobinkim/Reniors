@@ -16,6 +16,7 @@ public class CompanyResponse {
     private String establishedAt;
     private String companyUrl;
     private String address;
+    private String extraAddress;
     private String companyNum;
     private String companyPhone;
     private String representative;
@@ -31,6 +32,7 @@ public class CompanyResponse {
                 company.getEstablishedAt(),
                 company.getCompanyUrl(),
                 company.getAddress(),
+                company.getExtraAddress(),
                 company.getCompanyNum(),
                 company.getCompanyPhone(),
                 company.getRepresentative(),

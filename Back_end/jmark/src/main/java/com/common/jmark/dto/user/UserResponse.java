@@ -34,11 +34,13 @@ public class UserResponse {
 
     private String address;
 
+    private String extraAddress;
+
     private IsOpen isOpen;
 
     private LastEdu lastEdu;
 
     public static UserResponse response(User user){
-        return new UserResponse(user.getId(), user.getUserAppId(), user.getUserAppPwd(), user.getKakaoId(), user.getName(),user.getBirth(), user.getGender(),user.getPhone(), user.getTotalCareer(), user.getAddress(), user.getIsOpen(), user.getLastEdu());
+        return new UserResponse(user.getId(), user.getUserAppId(), user.getUserAppPwd(), user.getKakaoId(), user.getName(),user.getBirth(), user.getGender(),user.getPhone(), user.getTotalCareer(), user.getAddress(), user.getExtraAddress(), user.getIsOpen(), user.getLastEdu());
     }
 }

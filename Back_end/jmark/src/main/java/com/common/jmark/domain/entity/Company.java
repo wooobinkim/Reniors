@@ -42,6 +42,9 @@ public class Company{
     @Column(length = 100)
     private String address;
 
+    private String extraAddress;
+
+
     @NotNull
     @Column(length = 100)
     private String companyNum;
