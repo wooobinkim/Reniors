@@ -144,8 +144,7 @@ public class User {
         return user;
     }
 
-    public void update(String userAppPwd, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
-        this.userAppPwd = userAppPwd;
+    public void update(String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
         this.name = name;
         this.birth = birth;
         this.gender = gender;
@@ -158,5 +157,9 @@ public class User {
         this.lastEdu = lastEdu;
         this.portfolioName = portfolioName;
         this.portfolioPath = portfolioPath;
+    }
+
+    public void updatePwd(String newPwd) {
+       this.userAppPwd = newPwd;
     }
 }
