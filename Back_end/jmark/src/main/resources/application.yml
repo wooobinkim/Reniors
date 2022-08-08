@@ -21,7 +21,9 @@ spring:
 #    password: ssafy
 
     username: root
+
 #    password: root
+
     password: Common7333!
 
   jpa:
