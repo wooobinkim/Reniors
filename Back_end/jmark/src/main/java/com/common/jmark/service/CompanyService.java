@@ -60,8 +60,6 @@ public class CompanyService {
                 request.getEstablishedAt(),
                 request.getCompanyUrl(),
                 request.getAddress(),
-                request.getCompanyImgName(),
-                request.getCompanyImgPath(),
                 request.getCompanyNum(),
                 request.getCompanyPhone(),
                 request.getRepresentative(),

@@ -21,8 +21,8 @@ spring:
 #    password: ssafy
 
     username: root
-#       password: root
-    password: Common7333!
+    password: root
+    #password: Common7333!
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -30,12 +30,24 @@ spring:
     show-sql: true
     hibernate:
       format_sql: true
-      ddl-auto: none
+      #ddl-auto: none
+      ddl-auto: create
 
   # swagger 설정
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+
+# TODO : 파일 사이즈 및 경로 재지정 필요
+  servlet:
+    multipart:
+      file-size-threshold: 1MB
+
+      max-file-size: 100MB
+      max-request-size: 100MB
+      location: /home/ubuntu/
+      #location: C:/Temp #임시 저장 공간
 
 token:
   # 일단 하루
