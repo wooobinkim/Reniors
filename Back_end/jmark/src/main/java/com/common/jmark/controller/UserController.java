@@ -50,7 +50,7 @@ public class UserController {
         Long userId = userService.createUser(request);
         if(file != null) {
             // TODO : 파일경로 수정
-            //File dest = new File("C:/temp/image/" + companyCreateRequest.getCompanyNum());
+//            File dest = new File("C:/temp/image/" + userId);
             File dest = new File("/home/ubuntu/images/user/" + userId);
             file.transferTo(dest);
         }
