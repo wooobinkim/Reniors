@@ -17,13 +17,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/jmark?serverTimezone=UTC&characterEncoding=UTF-8
 
-#    username: ssafy
-#    password: ssafy
+    #    username: ssafy
+    #    password: ssafy
 
     username: root
-
-#    password: root
-
+    #password: root
     password: Common7333!
 
   jpa:
@@ -41,7 +39,7 @@ spring:
       matching-strategy: ant_path_matcher
 
 
-# TODO : 파일 사이즈 및 경로 재지정 필요
+  # TODO : 파일 사이즈 및 경로 재지정 필요
   servlet:
     multipart:
       file-size-threshold: 1MB
