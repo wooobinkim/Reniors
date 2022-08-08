@@ -133,8 +133,7 @@ public class User {
         return user;
     }
 
-    public void update(String userAppPwd, String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu) {
-        this.userAppPwd = userAppPwd;
+    public void update(String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu) {
         this.name = name;
         this.birth = birth;
         this.gender = gender;
@@ -144,5 +143,9 @@ public class User {
         this.extraAddress = extraAddress;
         this.isOpen = isOpen;
         this.lastEdu = lastEdu;
+    }
+
+    public void updatePwd(String newPwd) {
+       this.userAppPwd = newPwd;
     }
 }
