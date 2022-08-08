@@ -1,4 +1,5 @@
 import http from "@/api/http";
+// import multipart from "@/api/multipart";
 import router from "@/router";
 import axios from "axios";
 // import jobopening from "./jobopening";
@@ -84,15 +85,30 @@ export default {
       // error 부분 추가
     },
 
-    registCompany: ({ commit }, company) => {
-      http
-        .post(`/company`, JSON.stringify(company))
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+    registCompany: ({ commit }, formData) => {
+        // console.log(formData);
+        axios({
+            url:"https://i7b307.p.ssafy.io/api/company",
+            method : "post",
+            data : formData,
+            headers : {
+                "Content-Type": "multipart/form-data",
+                // Authorization: "Bearer " + token,
+            }
+        }).then((res)=>{
+            console.log(res);
+            console.log(commit);
+        }).catch((error)=>{
+            console.log(error);
         })
-        .catch((error) => {
-          console.log(error);
-        });
+    //    multipart
+    //     .post(`/company`, formData)
+    //     .then(({ data }) => {
+    //       commit("SET_DATASTATE", data);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
     },
     getCompany: ({ commit }) => {
       http
