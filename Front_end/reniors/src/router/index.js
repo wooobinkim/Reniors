@@ -4,11 +4,14 @@ import ResumeStepTwo from "../components/resume/ResumeStepTwo.vue";
 import ResumeStepThree from "../components/resume/ResumeStepThree.vue";
 import ResumeStepFour from "../components/resume/ResumeStepFour.vue";
 import ResumeStepFive from "../components/resume/ResumeStepFive.vue";
+import ResumeDetail from "../components/resume/ResumeDetail.vue";
 import LoginView from "../views/user/LoginView.vue";
 import SignupView from "../views/user/SignupView.vue";
 import SignupCompleteView from "../views/user/SignupCompleteView.vue";
 import FindPasswordView from "../views/user/FindPasswordView.vue";
 import FindUsernameView from "../views/user/FindUsernameView.vue";
+import MyPageView from "../views/user/MyPageView.vue";
+import MyinfoEdit from "../components/user/MyinfoEdit.vue";
 
 import CompanyHomeView from "@/views/home/CompanyHomeView.vue";
 import HomeView from "../views/home/HomeView.vue";
@@ -89,8 +92,25 @@ const routes = [
     name: "FindUsername",
     component: FindUsernameView,
   },
+  {
+    path: "/mypage",
+    name: "MyPage",
+    component: MyPageView,
+  },  
+  {
+    path: "/myinfo",
+    name: "MyinfoEdit",
+    component: MyinfoEdit,
+  },  
+
+
 
   // resume
+  {
+    path: "/resume/detail",
+    component: ResumeDetail,
+    name: "ResumeDetail",
+  },
   {
     path: "/resume/edit/1",
     component: ResumeStepOne,
