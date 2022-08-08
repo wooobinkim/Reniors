@@ -267,7 +267,9 @@ export default {
 
   footer {
     position: fixed;
-    bottom: 30px;
+    transform: translate(-50%, 0);
+    bottom: 60px;
+    left: 50%;
     width: 100%;
     height: 50px;
     display: flex;
