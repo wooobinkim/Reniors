@@ -43,9 +43,11 @@ spring:
   servlet:
     multipart:
       file-size-threshold: 1MB
-      location: C:/Temp #임시 저장 공간
+
       max-file-size: 100MB
       max-request-size: 100MB
+      location: /home/ubuntu/
+      #location: C:/Temp #임시 저장 공간
 
 token:
   # 일단 하루

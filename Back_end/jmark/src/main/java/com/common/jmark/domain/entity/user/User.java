@@ -64,14 +64,6 @@ public class User {
     private int totalCareer;
 
     @NotNull
-    @Column(length = 50)
-    private String profileImgName;
-
-    @NotNull
-    @Column(length = 100)
-    private String profileImgPath;
-
-    @NotNull
     @Column(length = 100)
     private String address;
 
@@ -81,12 +73,6 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
-
-    @Column(length = 100)
-    private String portfolioName;
-
-    @Column(length = 100)
-    private String portfolioPath;
 
     // 회원 - 게시판 연관관계
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -123,7 +109,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
 
-   public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
+   public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String address, IsOpen isOpen, LastEdu lastEdu) {
         User user = new User();
         user.userAppId = userAppId;
         user.userAppPwd = userAppPwd;
@@ -134,29 +120,21 @@ public class User {
         user.phone = phone;
         user.role = Role.ROLE_USER;
         user.totalCareer = totalCareer;
-        user.profileImgName = profileImgName;
-        user.profileImgPath = profileImgPath;
         user.address = address;
         user.isOpen = isOpen;
         user.lastEdu = lastEdu;
-        user.portfolioName = portfolioName;
-        user.portfolioPath = portfolioPath;
         return user;
     }
 
-    public void update(String userAppPwd, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
+    public void update(String userAppPwd, String name, Date birth, Gender gender, String phone, int totalCareer, String address, IsOpen isOpen, LastEdu lastEdu) {
         this.userAppPwd = userAppPwd;
         this.name = name;
         this.birth = birth;
         this.gender = gender;
         this.phone = phone;
         this.totalCareer = totalCareer;
-        this.profileImgName = profileImgName;
-        this.profileImgPath = profileImgPath;
         this.address = address;
         this.isOpen = isOpen;
         this.lastEdu = lastEdu;
-        this.portfolioName = portfolioName;
-        this.portfolioPath = portfolioPath;
     }
 }

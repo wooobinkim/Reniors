@@ -40,7 +40,7 @@ public class CompanyController {
     @ApiOperation(value = "회사 회원가입", notes = "회사아이디로 회원가입을 한다.")
     public ResponseEntity<?> postCompany(
             @RequestPart(value = "img", required = false) MultipartFile file,
-            @RequestPart(value = "data")  CompanyCreateRequest companyCreateRequest) throws IOException {
+            @RequestPart(value = "data")  CompanyCreateRequest companyCreateRequest) throws Exception {
         Long companyId = companyService.postCompany(companyCreateRequest);
         if(file != null) {
             // TODO : 파일경로 수정
