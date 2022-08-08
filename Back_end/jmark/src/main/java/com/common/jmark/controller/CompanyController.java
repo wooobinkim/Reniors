@@ -41,12 +41,11 @@ public class CompanyController {
     public ResponseEntity<?> postCompany(
             @RequestPart(value = "img", required = false) MultipartFile file,
             @RequestPart(value = "data")  CompanyCreateRequest companyCreateRequest) throws Exception {
-        System.out.println("회사회원가입");
         Long companyId = companyService.postCompany(companyCreateRequest);
         if(file != null) {
             // TODO : 파일경로 수정
-            File dest = new File("C:/temp/image/" + companyCreateRequest.getCompanyNum());
-//            File dest = new File("/home/ubuntu/images/company/" + companyId);
+//            File dest = new File("C:/temp/image/" + companyCreateRequest.getCompanyNum());
+            File dest = new File("/home/ubuntu/images/company/" + companyId);
             file.transferTo(dest);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(companyId);

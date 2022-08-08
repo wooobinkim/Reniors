@@ -3,6 +3,7 @@ package com.common.jmark.domain.entity;
 import com.common.jmark.domain.entity.Enum.JobOpeningProcess;
 import com.common.jmark.domain.entity.user.User;
 import com.common.jmark.dto.Apply.ApplyUpdateRequest;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ public class Apply {
     @Enumerated(EnumType.STRING)
     private JobOpeningProcess jobOpeningProcess;
 
-    @DateTimeFormat(pattern = "YYYY-MM-DD hh:mm")
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
     private Date interviewDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
