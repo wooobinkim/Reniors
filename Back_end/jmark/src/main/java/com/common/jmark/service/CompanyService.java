@@ -21,10 +21,7 @@ import com.common.jmark.dto.Company.CompanyCreateRequest;
 import com.common.jmark.dto.Company.CompanyResponse;
 import com.common.jmark.dto.Company.CompanyUpdateRequest;
 import com.common.jmark.dto.Company.CompanyLoginRequest;
-import com.common.jmark.dto.JobOpening.JobOpeningCreateRequest;
-import com.common.jmark.dto.JobOpening.JobOpeningDetailResponse;
-import com.common.jmark.dto.JobOpening.JobOpeningResponse;
-import com.common.jmark.dto.JobOpening.JobOpeningUpdateRequest;
+import com.common.jmark.dto.JobOpening.*;
 import com.common.jmark.dto.user.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -63,10 +60,9 @@ public class CompanyService {
                 request.getEstablishedAt(),
                 request.getCompanyUrl(),
                 request.getAddress(),
-                request.getCompanyImgName(),
-                request.getCompanyImgPath(),
                 request.getCompanyNum(),
                 request.getCompanyPhone(),
+                request.getRepresentative(),
                 request.getRepresentativePhone(),
                 request.getTypeCompany()
         );
@@ -120,10 +116,12 @@ public class CompanyService {
 
     //회사 공고 목록
     @Transactional
-    public List<JobOpeningResponse> getJobOpeningList(Company company){
+    public List<JobOpeningCompanyResponse> getJobOpeningList(Company company){
 
             List<JobOpening> jobOpeningList = jobOpeningRepository.findByCompany(company);
-            List<JobOpeningResponse> jobOpeningResponses = jobOpeningList.stream().map(j->JobOpeningResponse.response(
+
+
+            List<JobOpeningCompanyResponse> jobOpeningResponses = jobOpeningList.stream().map(j->JobOpeningCompanyResponse.response(
                     j
             )).collect(Collectors.toList());
             return jobOpeningResponses;
@@ -166,6 +164,16 @@ public class CompanyService {
         jobOpeningRepository.deleteById(jobOpeningId);
     }
 
+    //회사 공고 끝내기
+    @Transactional
+    public void finishJobOpening(Company company, Long jobOpeningId){
+        if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
+            throw new NotAuthException(COMPANY_NO_AUTH);
+
+        JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found jobopening"));
+        jobOpening.finish();
+    }
+
     //회사 공고 지원자 목록
     @Transactional
     public List<ApplyResponse> getappliyList(Company company, Long jobOpeningId){
@@ -195,7 +203,10 @@ public class CompanyService {
     public void updateapply(Company company, Long applyId, ApplyUpdateRequest applyUpdateRequest){
         if(company.getId() != applyRepository.findById(applyId).get().getJobOpening().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
+        System.out.println("applyUpdateRequest = " + applyUpdateRequest);
         Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found Apply"));
+
         apply.update(applyUpdateRequest,apply.getUser(), apply.getJobOpening());
+        System.out.println("apply.getInterviewDate() = " + apply.getInterviewDate());
     }
 }

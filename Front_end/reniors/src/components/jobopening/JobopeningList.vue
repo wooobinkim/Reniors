@@ -1,24 +1,28 @@
 <template>
   <div class="jobopening-list">
     <div v-if="isJobopenings">
-      <JobopeningItem v-for="jobopening in jobopenings" :key="jobopening.job_opening_id" :jobopening="jobopening" />
+      <JobopeningItem
+        v-for="jobopening in jobopenings"
+        :key="jobopening.job_opening_id"
+        :jobopening="jobopening"
+      />
     </div>
     <div v-else>아직 채용공고가 없어요!</div>
   </div>
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 import JobopeningItem from './JobopeningItem.vue'
 
 export default {
-  name: 'JobopeningList',
+  name: "JobopeningList",
   components: {
     JobopeningItem,
   },
   setup() {
-    const store = useStore
+    const store = useStore()
 
     console.log(store)
     const fetchJobopenings = () => store.dispatch('jobopening/fetchJobopenings')
@@ -28,10 +32,10 @@ export default {
     const isJobopenings = computed(() => store.getters['jobopening/isJobopenings'])
 
     return {
-      jobopenings, isJobopenings
-    }
-  }
-}
+      jobopenings, isJobopenings,
+    };
+  },
+};
 </script>
 
 <style>

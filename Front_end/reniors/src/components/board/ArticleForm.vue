@@ -6,11 +6,11 @@
       <br>
         <div>
           <label for="title" style="text-align:start">제목</label>
-          <input type="text" class="form-control my-0" id="title" placeholder="제목을 입력해주세요." v-model="newArticle.title">
+          <input type="text" class="form-control my-0" id="title" placeholder="제목을 입력해주세요." v-model="title">
         </div>
         <div class="form-group">
           <label for="content">내용</label>
-          <input style="height: 150px; vertical-align:text-top ;" type="text" class="form-control" id="content" placeholder="내용을 입력해주세요." v-model="newArticle.contents">
+          <input style="height: 150px; vertical-align:text-top ;" type="text" class="form-control" id="content" placeholder="내용을 입력해주세요." v-model="contents">
         </div>
         <br>
         <br>
@@ -28,14 +28,13 @@ export default{
     props: {
         article: Object,
         action: String,
-        category_pk: null
     },
     data(){
         return{
-            newArticle: {
-                title: this.article.title,
-                contents: this.article.content,
-            }
+            category_pk: this.$route.params.category_id,
+            title: this.article.title,
+            contents: this.article.contents,
+
         };
     },
     setup(){},
@@ -45,14 +44,25 @@ export default{
     methods:{
         ...mapActions(['createArticle', 'updateArticle']),
         onSubmit(){
+            if(!this.title && !this.contents || (!this.title && this.contents)){
+                alert('제목을 입력해주세요.')
+            } else if(!this.contents){
+                alert('내용을 입력해주세요.')
+            }
             if (this.action === 'create') {
-                this.createArticle({ article: this.newArticle})
+                this.createArticle({ 
+                    categoryId: this.category_pk,
+                    contents: this.contents,
+                    title: this.title,
+                })
             } else if (this.action === 'update') {
-                const payload = {
-                    article_pk : this.article_pk,
-                    ...this.newArticle
-                }
-                this.updateArticle(payload)
+                this.updateArticle({
+                    categoryId: this.category_pk,
+                    article_pk: this.article.boardId,
+                    title: this.title,
+                    contents: this.contents,
+
+                })
             }
         }
     }

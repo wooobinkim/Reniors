@@ -2,7 +2,6 @@ import axios from "axios"
 import { API_BASE_URL } from "@/config"
 
 function apiInstance(){
-  console.log('api')
   const instance = axios.create({
     baseURL: API_BASE_URL,
     headers: {

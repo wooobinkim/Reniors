@@ -2,12 +2,10 @@ package com.common.jmark.service;
 
 import com.common.jmark.common.exception.NotAuthException;
 import com.common.jmark.common.exception.NotFoundException;
-import com.common.jmark.domain.entity.Company;
-import com.common.jmark.domain.entity.Eval;
-import com.common.jmark.domain.entity.EvalQuestion;
-import com.common.jmark.domain.repository.CompanyRepository;
-import com.common.jmark.domain.repository.EvalQuestionRepository;
-import com.common.jmark.domain.repository.EvalRepository;
+import com.common.jmark.domain.entity.*;
+import com.common.jmark.domain.entity.user.User;
+import com.common.jmark.domain.repository.*;
+import com.common.jmark.domain.repository.user.UserRepository;
 import com.common.jmark.dto.Eval.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,12 +28,16 @@ public class EvalService {
     private final EvalRepository evalRepository;
     private final EvalQuestionRepository evalQuestionRepository;
     private final CompanyRepository companyRepository;
+    private final UserEvalRepository userEvalRepository;
+    private final UserRepository userRepository;
+    private final JobOpeningRepository jobOpeningRepository;
 
     //평가 폼 등록
     @Transactional
     public Long postEval(Company company, EvalCreateRequest evalCreateRequest){
+        JobOpening jobopening = jobOpeningRepository.findById(evalCreateRequest.getJobOpeningId()).orElseThrow(() -> new NotFoundException("not found jobopening"));
 
-        Eval eval = new Eval(evalCreateRequest, company);
+        Eval eval = new Eval(evalCreateRequest, company,jobopening);
         Long id = evalRepository.save(eval).getId();
 
         return id;
@@ -165,7 +168,47 @@ public class EvalService {
 
 
     //유저 평가 입력
+    @Transactional
+    public Long postUserEval(Company company, UserEvalCreateRequest userEvalCreateRequest,Long userId){
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("not found user"));
+        EvalQuestion evalquestion = evalQuestionRepository.findById(userEvalCreateRequest.getEvalQuestionId()).orElseThrow(() -> new NotFoundException("not found evalquestion"));
+
+        UserEval userEval = new UserEval(userEvalCreateRequest,user,evalquestion);
+        Long id = userEvalRepository.save(userEval).getId();
+
+        return id;
+    }
+
     //유저 평가 조회
+    @Transactional
+    public List<UserEvalResponse> getUserEvalList(Company company, Long userId, Long evalId){
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("not found user"));
+        List<UserEval> userEvalList = userEvalRepository.findByUser(user);
+        List<UserEvalResponse> userEvalResponses = new ArrayList<>();
+        for (UserEval userEval : userEvalList) {
+            if(userEval.getEvalQuestion().getEval().getId() == evalId){
+                userEvalResponses.add(UserEvalResponse.response(userEval));
+            }
+        }
+//        List<UserEvalResponse> userEvalResponses = userEvalList.stream().map(u->UserEvalResponse.response(
+//         u
+//        )).collect(Collectors.toList());
+
+        return userEvalResponses;
+    }
+
     //유저 평가 삭제
+    @Transactional
+    public void deleteUserEval(Company company, Long userId, Long evalId){
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("not found user"));
+        List<UserEval> userEvalList = userEvalRepository.findByUser(user);
+
+        for (UserEval userEval : userEvalList) {
+            if(userEval.getEvalQuestion().getEval().getId() == evalId){
+                userEvalRepository.deleteById(userEval.getId());
+            }
+        }
+
+    }
 
 }

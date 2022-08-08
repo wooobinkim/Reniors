@@ -1,18 +1,20 @@
 <template>
-  <div class="comment-list-item d-flex justify-content-between align-items-center">
-        
-    <span v-if="!isEditing">{{ payload.content }}</span>
-    <span v-if="isEditing">
-      <input type="text" v-model="payload.content">
-      <button @click="onUpdate" class="btn btn-open" >Update</button> |
-      <button @click="switchIsEditing" class=" btn btn-close" ></button>
+  <div>
+    <span v-if="!isEditing">
+        {{ comment.contents }} | {{comment.userName}}
     </span>
 
-    <span v-if="currentUser.pk === comment.user.pk && !isEditing">
-      <button @click="switchIsEditing" class="btn btn-open">Edit </button>
-      <button @click="onDelete(payload)" class=" btn btn-open">Delete</button>
+    <span v-if="isEditing">
+        <input type="text" v-model="contents">
+        <button @click="onUpdate" class="btn-open">수정</button>
+        <button @click="switchIsEditing" class="btn-close"></button>
     </span>
-    <hr>
+
+    <span v-if="currentUser.id === comment.userId && !isEditing">
+        <button @click="switchIsEditing" class="btn-open">수정</button>
+        <button @click="onDelete()">삭제</button>
+    </span>
+    
   </div>
 </template>
 <script>
@@ -22,38 +24,53 @@ export default{
     name:'CommentItem',
     components:{},
     props: {
-        comment: Object,
+        'comment': Object,
     },
     data(){
         return{
             isEditing: false,
-            payload: {
-                article_pk: this.comment.article,
-                comment_pk: this.comment.pk,
-                content: this.comment.content
-            }
+            contents: this.comment.contents,
+            categoryId: this.$route.params.category_id,
+            boardId: this.$route.params.board_id,
+
         };
     },
     computed: {
         ...mapGetters(['currentUser', 'isAuthor']),     
+    },
+    watch:{
+        comment: function(){
+            this.fetchComments(this.boardId)
+        }
     },
     setup(){},
     created(){},
     mounted(){},
     unmounted(){},
     methods:{
-        ...mapActions(['updateComment', 'deleteComment']),
-        switchIsEditing() {
+        ...mapActions(['updateComment', 'deleteComment', 'fetchComments']),
+        switchIsEditing(){
             this.isEditing = !this.isEditing
         },
-        onUpdate() {
-            this.updateComment(this.payload)
+        onUpdate(){
+            this.updateComment({
+                categoryId: this.categoryId,
+                boardId: this.boardId,
+                commentId: this.comment.commentId,
+                contents: this.contents
+            })
             this.isEditing = false
         },
-        onDelete(payload){
-            this.deleteComment(payload)
-            this.$router.go()
+        onDelete(){
+            this.deleteComment({
+                categoryId: this.categoryId,
+                boardId: this.boardId,
+                commentId: this.comment.commentId,
+                contents: this.contents
+            })
+
         }
+
 
     }
 }

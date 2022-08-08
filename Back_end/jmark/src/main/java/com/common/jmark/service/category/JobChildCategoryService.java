@@ -33,7 +33,7 @@ public class JobChildCategoryService{
     @Transactional
     public void createList(List<JobChildCategoryCreateRequest> requestList){
         requestList.forEach(request -> {
-            JobParentCategory jpc = jobParentCategoryRepository.findByCode(Long.parseLong(request.getCode().toString().substring(0,2)))
+            JobParentCategory jpc = jobParentCategoryRepository.findByCode(request.getCode())
                     .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
             JobChildCategory jcc = JobChildCategory.create(request.getName(), request.getCode(), jpc);
             jobChildCategoryRepository.save(jcc);
