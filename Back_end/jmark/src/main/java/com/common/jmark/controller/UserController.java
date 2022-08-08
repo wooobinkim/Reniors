@@ -79,11 +79,19 @@ public class UserController {
 
     @PutMapping
     @ApiOperation(value = "회원 정보 수정", notes = "유저의 정보를 수정합니다.")
+    // TODO : image 수정 추가
     public ResponseEntity<?> updateUser(
             @ApiIgnore @LoginUser User user,
-            @Valid @RequestBody UserUpdateRequest request
-    ) {
+            @RequestPart(value = "img", required = false) MultipartFile file,
+            @Valid @RequestPart UserUpdateRequest request
+    ) throws Exception {
         userService.updateUser(user.getId(), request);
+        if(file != null) {
+            // TODO : 파일경로 수정
+            //File dest = new File("C:/temp/image/" + companyCreateRequest.getCompanyNum());
+            File dest = new File("/home/ubuntu/images/company/" + user.getId());
+            file.transferTo(dest);
+        }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

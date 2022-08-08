@@ -73,11 +73,18 @@ public class CompanyController {
     //회사정보 수정
     @PutMapping()
     @ApiOperation(value = "회사 정보수정", notes = "회사 정보를 수정한다.")
-
-    public ResponseEntity<?> updateCompany(@ApiIgnore @LoginCompany Company company, @RequestBody CompanyUpdateRequest companyUpdateRequest){
-       companyService.updateCompany(company, companyUpdateRequest);
-
-
+    // TODO : image 수정 추가
+    public ResponseEntity<?> updateCompany(
+            @ApiIgnore @LoginCompany Company company,
+            @RequestPart(value = "img", required = false) MultipartFile file,
+            @RequestPart(value = "data") CompanyUpdateRequest companyUpdateRequest) throws Exception {
+        companyService.updateCompany(company, companyUpdateRequest);
+        if(file != null) {
+            // TODO : 파일경로 수정
+            //File dest = new File("C:/temp/image/" + companyCreateRequest.getCompanyNum());
+            File dest = new File("/home/ubuntu/images/company/" + company.getId());
+            file.transferTo(dest);
+        }
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
