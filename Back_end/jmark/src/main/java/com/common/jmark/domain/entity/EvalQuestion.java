@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,6 +28,8 @@ public class EvalQuestion {
     @JoinColumn(name = "eval_id")
     Eval eval;
 
+    @OneToMany(mappedBy = "evalQuestion")
+    private List<UserEval> userEvals = new ArrayList<>();
 
     public EvalQuestion(EvalQuestionCreateRequest evalQuestionCreateRequest, Eval eval) {
         this.contents = evalQuestionCreateRequest.getContents();
