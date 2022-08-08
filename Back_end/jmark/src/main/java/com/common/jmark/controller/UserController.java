@@ -44,8 +44,8 @@ public class UserController {
     @PostMapping(path="/regist",consumes = {"multipart/form-data"})
     @ApiOperation(value = "자체 서비스 회원가입", notes = "회원가입에 필요한 정보를 입력하고 회원으로 가입합니다.")
     public ResponseEntity<?> registUser(
-            @RequestPart(value = "img", required = false) MultipartFile file,
-            @Valid @RequestPart(value = "data") UserCreateRequest request
+            @RequestPart(value = "img", required = false) final MultipartFile file,
+            @Valid @RequestPart(value = "data", required = true) final UserCreateRequest request
     ) throws Exception {
         Long userId = userService.createUser(request);
         if(file != null) {

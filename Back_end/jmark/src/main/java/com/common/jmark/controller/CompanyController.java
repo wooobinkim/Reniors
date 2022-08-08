@@ -44,8 +44,8 @@ public class CompanyController {
         Long companyId = companyService.postCompany(companyCreateRequest);
         if(file != null) {
             // TODO : 파일경로 수정
-            //File dest = new File("C:/temp/image/" + companyCreateRequest.getCompanyNum());
-            File dest = new File("/home/ubuntu/images/company/" + companyId);
+            File dest = new File("C:/temp/image/" + companyId);
+            //File dest = new File("/home/ubuntu/images/company/" + companyId);
             file.transferTo(dest);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(companyId);
