@@ -13,9 +13,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,12 +41,19 @@ public class UserController {
                 .build();
     }
 
-    @PostMapping("/regist")
+    @PostMapping(path="/regist",consumes = {"multipart/form-data"})
     @ApiOperation(value = "자체 서비스 회원가입", notes = "회원가입에 필요한 정보를 입력하고 회원으로 가입합니다.")
     public ResponseEntity<?> registUser(
-            @Valid @RequestBody UserCreateRequest request
-    ) {
+            @RequestPart(value = "img", required = false) MultipartFile file,
+            @Valid @RequestPart(value = "data") UserCreateRequest request
+    ) throws Exception {
         Long userId = userService.createUser(request);
+        if(file != null) {
+            // TODO : 파일경로 수정
+            //File dest = new File("C:/temp/image/" + companyCreateRequest.getCompanyNum());
+            File dest = new File("/home/ubuntu/images/user/" + userId);
+            file.transferTo(dest);
+        }
         Map<String, Long> response = new HashMap<>();
         response.put("userId", userId);
         return ResponseEntity.ok(response);
@@ -69,11 +79,19 @@ public class UserController {
 
     @PutMapping
     @ApiOperation(value = "회원 정보 수정", notes = "유저의 정보를 수정합니다.")
+    // TODO : image 수정 추가
     public ResponseEntity<?> updateUser(
             @ApiIgnore @LoginUser User user,
-            @Valid @RequestBody UserUpdateRequest request
-    ) {
+            @RequestPart(value = "img", required = false) MultipartFile file,
+            @Valid @RequestPart UserUpdateRequest request
+    ) throws Exception {
         userService.updateUser(user.getId(), request);
+        if(file != null) {
+            // TODO : 파일경로 수정
+            //File dest = new File("C:/temp/image/" + companyCreateRequest.getCompanyNum());
+            File dest = new File("/home/ubuntu/images/company/" + user.getId());
+            file.transferTo(dest);
+        }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

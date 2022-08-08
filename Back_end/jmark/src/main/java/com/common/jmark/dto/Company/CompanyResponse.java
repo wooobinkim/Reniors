@@ -16,8 +16,7 @@ public class CompanyResponse {
     private String establishedAt;
     private String companyUrl;
     private String address;
-    private String companyImgName;
-    private String companyImgPath;
+    private String extraAddress;
     private String companyNum;
     private String companyPhone;
     private String representative;
@@ -33,8 +32,7 @@ public class CompanyResponse {
                 company.getEstablishedAt(),
                 company.getCompanyUrl(),
                 company.getAddress(),
-                company.getCompanyImgName(),
-                company.getCompanyImgPath(),
+                company.getExtraAddress(),
                 company.getCompanyNum(),
                 company.getCompanyPhone(),
                 company.getRepresentative(),
