@@ -2,7 +2,7 @@
   <div>
     <ul class="jobList">
         <li class="jobItem" v-for="(job, index) in parents" :key="index" :job="job">
-            <router-link :to="{name: boardMain, params:{category_id: job.id}}">
+            <router-link :to="{name: 'boardMain', params:{category_id: job.id}}">
                 <p>{{ job.name }}</p>
             </router-link>
         </li>
@@ -23,6 +23,7 @@ export default{
     },
     setup(){},
     created(){
+        console.log('erqwer af');
         this.fetchParents(),
         this.fetchInterest()
     },
@@ -65,7 +66,7 @@ export default{
 .jobItem a{
     text-decoration: none;
 }
-.jobItem a.router-link-exact-active p{
+.jobItem a.router-link-active p{
     color: white;
     font-weight: bold;
     font-size: 16px;

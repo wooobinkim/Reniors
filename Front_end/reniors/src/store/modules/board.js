@@ -12,6 +12,7 @@ export default {
     comments: [],
     interest: {},
     parents: [],
+    parent: {},
   },
 
   getters: {
@@ -25,6 +26,7 @@ export default {
     comments: (state) => state.comments,
     interest: (state) => state.interest,
     parents: (state) => state.parents,
+    parent: (state) => state.parent,
   },
 
   mutations: {
@@ -36,10 +38,12 @@ export default {
     SET_COMMENTS: (state, comments) => (state.comments = comments),
     SET_INTEREST: (state, interest) => (state.interest = interest),
     SET_PARENTS: (state, parents) => (state.parents = parents),
+    SET_PARENT: (state, parent) => (state.parent = parent),
   },
 
   actions: {
     fetchArticles({ commit, getters }, categoryId) {
+        console.log(categoryId)
       axios({
         url: drf.board.get(),
         method: "post",
@@ -51,7 +55,7 @@ export default {
         }),
         headers: getters.authHeader,
       }).then((res) => {
-        console.log(categoryId)
+        console.log(res);
         commit("SET_ARTICLES", res.data);
       });
     },
@@ -225,11 +229,13 @@ export default {
 
     //직무 대분류 가져오기
     fetchParents({ commit, getters }) {
+        console.log('parents');
       axios({
         url: drf.category.jobsLarge(),
         method: "get",
         headers: getters.authHeader,
       }).then((res) => {
+        console.log(res);
         commit("SET_PARENTS", res.data);
       });
     },
