@@ -50,11 +50,11 @@ public class UserController {
             @Valid @RequestPart(value = "data", required = true) final UserCreateRequest request
     ) throws Exception {
         // TODO : URL 추가
-        String userProfile = "user/userBaseProfile.png";
+        String userProfile = "userBaseProfile.png";
         if(file != null) {
             userProfile = awsS3Service.uploadFile(file, "user/");
         }
-        Long userId = userService.createUser(request, baseURL, userProfile);
+        Long userId = userService.createUser(request, baseURL+"user/", userProfile);
         Map<String, Long> response = new HashMap<>();
         response.put("userId", userId);
         return ResponseEntity.ok(response);
@@ -92,12 +92,12 @@ public class UserController {
             @Valid @RequestPart UserUpdateRequest request
     ) throws Exception {
         // TODO : URL 추가
-        String userProfile = "user/userBaseProfile.png";
+        String userProfile = "userBaseProfile.png";
         // 프로필사진을 바꿀 것인지 확인
         if(file != null && request.isChangeProfile()) {
             userProfile = awsS3Service.uploadFile(file, "user/");
         }
-        userService.updateUser(user.getId(), request, baseURL, userProfile);
+        userService.updateUser(user.getId(), request, baseURL+"user/", userProfile);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

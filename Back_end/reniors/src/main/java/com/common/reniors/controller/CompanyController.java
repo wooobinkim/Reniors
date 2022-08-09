@@ -44,11 +44,11 @@ public class CompanyController {
     public ResponseEntity<?> postCompany(
             @RequestPart(value = "img", required = false) MultipartFile file,
             @RequestPart(value = "data")  CompanyCreateRequest companyCreateRequest) throws Exception {
-        String companyProfile = "company/companyBaseProfile.png";
+        String companyProfile = "companyBaseProfile.png";
         if(file != null) {
             companyProfile = awsS3Service.uploadFile(file, "company/");
         }
-        Long companyId = companyService.postCompany(companyCreateRequest, baseURL, companyProfile);
+        Long companyId = companyService.postCompany(companyCreateRequest, baseURL+"company/", companyProfile);
         return ResponseEntity.status(HttpStatus.CREATED).body(companyId);
     }
     @PostMapping("/login")
@@ -76,11 +76,11 @@ public class CompanyController {
             @ApiIgnore @LoginCompany Company company,
             @RequestPart(value = "img", required = false) MultipartFile file,
             @RequestPart(value = "data") CompanyUpdateRequest companyUpdateRequest) throws Exception {
-        String companyProfile = "company/companyBaseProfile.png";
+        String companyProfile = "companyBaseProfile.png";
         if(file != null && companyUpdateRequest.isChangeProfile()) {
             companyProfile = awsS3Service.uploadFile(file, "company/");
         }
-        companyService.updateCompany(company, companyUpdateRequest, baseURL, companyProfile);
+        companyService.updateCompany(company, companyUpdateRequest, baseURL+"company/", companyProfile);
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 

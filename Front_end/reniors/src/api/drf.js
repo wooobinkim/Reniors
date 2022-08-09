@@ -84,7 +84,7 @@ export default {
     detail: (jobOpeningId) => HOST + JOB + `/${jobOpeningId}`,
     apply: (jobopeningId) => HOST + JOB + `/${jobopeningId}` + '/apply',
     getBookmark: () => HOST + JOB + '/bookmark',
-    bookmark: (jobOpeningId) => HOST + JOB + `/${jobOpeningId}` + "/bookmark",
+    addBookmark: (jobOpeningId) => HOST + JOB + '/bookmark' + `/${jobOpeningId}`,
     applicant: (jobOpeningId) => HOST + JOB + `/${jobOpeningId}` + "/applicant",
   },
   condition: {

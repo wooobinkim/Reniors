@@ -1,5 +1,5 @@
 <template>
-  <div>  
+  <div style="width:360px">  
     <board-head-slider></board-head-slider>
     <div class="title">
       <p>{{jobname}}</p>
