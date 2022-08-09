@@ -19,7 +19,7 @@ export default {
 }
 
 .header-logo {
-  width: 80%;
+  max-width: 300px;
   height: 120px;
 }
 
