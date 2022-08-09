@@ -1,6 +1,6 @@
 package com.common.reniors.dto.company;
 
-import com.common.reniors.domain.entity.Type.typeCompany;
+import com.common.reniors.domain.entity.Type.TypeCompany;
 import lombok.*;
 
 @Data
@@ -22,7 +22,7 @@ public class CompanyResponse {
     private String companyProfile;
     private String representative;
     private String representativePhone;
-    private typeCompany typeCompany;
+    private TypeCompany typeCompany;
 
     public static CompanyResponse response(com.common.reniors.domain.entity.Company company){
         return new CompanyResponse(

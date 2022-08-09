@@ -1,6 +1,6 @@
 package com.common.reniors.domain.entity;
 
-import com.common.reniors.domain.entity.Type.typeCompany;
+import com.common.reniors.domain.entity.Type.TypeCompany;
 import com.common.reniors.dto.company.CompanyUpdateRequest;
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -62,7 +62,7 @@ public class Company{
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private typeCompany typeCompany;
+    private TypeCompany typeCompany;
 
     @NotBlank
     private String baseURL;
@@ -75,7 +75,7 @@ public class Company{
     private List<JobOpening> jobOpenings = new ArrayList<>();
 
 
-    public static Company create(String name, String companyAppId, String companyAppPwd, String establishedAt, String companyUrl, String address, String companyNum, String companyPhone,String representative, String baseURL, String companyProfile, String representativePhone, typeCompany typeCompany) {
+    public static Company create(String name, String companyAppId, String companyAppPwd, String establishedAt, String companyUrl, String address, String companyNum, String companyPhone,String representative, String baseURL, String companyProfile, String representativePhone, TypeCompany typeCompany) {
         Company company = new Company();
         company.name = name;
         company.companyAppId = companyAppId;

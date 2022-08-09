@@ -1,6 +1,6 @@
 package com.common.reniors.domain.entity;
 
-import com.common.reniors.domain.entity.Type.typeEmployment;
+import com.common.reniors.domain.entity.Type.TypeEmployment;
 import com.common.reniors.domain.entity.Type.LastEdu;
 import com.common.reniors.domain.entity.category.JobChildCategory;
 import com.common.reniors.domain.entity.user.User;
@@ -35,7 +35,7 @@ public class SearchCondition {
     private int workingDay;
 
     @Enumerated(EnumType.STRING)
-    private typeEmployment typeEmployment;
+    private TypeEmployment typeEmployment;
 
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
