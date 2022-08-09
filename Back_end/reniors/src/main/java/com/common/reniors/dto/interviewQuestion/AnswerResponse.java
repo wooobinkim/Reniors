@@ -16,10 +16,16 @@ public class AnswerResponse {
     @NotNull
     private Long id;
 
+    @NotNull
+    private Long userId;
+
+    @NotNull
+    private Long questionId;
+
     @NotBlank
     private String answer;
 
     public static AnswerResponse response(Answer answer){
-        return new AnswerResponse(answer.getId(), answer.getAnswer());
+        return new AnswerResponse(answer.getId(), answer.getUser().getId(), answer.getQuestion().getId(), answer.getAnswer());
     }
 }

@@ -8,12 +8,16 @@ import com.common.reniors.domain.entity.user.User;
 import com.common.reniors.domain.repository.interviewQuestion.AnswerRepository;
 import com.common.reniors.domain.repository.interviewQuestion.QuestionRepository;
 import com.common.reniors.domain.repository.user.UserRepository;
+import com.common.reniors.dto.category.GugunResponse;
 import com.common.reniors.dto.interviewQuestion.AnswerCreateRequest;
 import com.common.reniors.dto.interviewQuestion.AnswerResponse;
 import com.common.reniors.dto.interviewQuestion.AnswerUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.common.reniors.common.exception.NotAuthException.USER_NO_AUTH;
 import static com.common.reniors.common.exception.NotFoundException.ANSWER_NOT_FOUND;
@@ -71,5 +75,15 @@ public class AnswerService {
         Answer answer = answerRepository.findByQuestionAndUser(question, user)
                 .orElseThrow(()->new NotFoundException(ANSWER_NOT_FOUND));
         return AnswerResponse.response(answer);
+    }
+
+    @Transactional
+    public List<AnswerResponse> getAnswerList(User user){
+        List<AnswerResponse> answers = answerRepository.findByUser(user).stream()
+                .filter(a -> a.getAnswer()!=null)
+                .filter(a -> a.getAnswer()!="")
+                .map(AnswerResponse::response)
+                .collect(Collectors.toList());
+        return answers;
     }
 }
