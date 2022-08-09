@@ -1,5 +1,6 @@
 package com.common.reniors.domain.entity.user;
 
+import com.common.reniors.domain.entity.Room;
 import com.common.reniors.domain.entity.Type.LastEdu;
 import com.common.reniors.domain.entity.Apply;
 import com.common.reniors.domain.entity.interviewQuestion.Answer;
@@ -121,6 +122,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserEval> userEvals = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Room> rooms = new ArrayList<>();
 
    public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu, String baseURL, String userProfile) {
         User user = new User();
