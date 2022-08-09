@@ -6,41 +6,42 @@
         </router-link>
         <p>답변 작성</p>
     </div>
+
     <div class="question">
-            <p>Q{{question_id}}. {{questions[question_id-1].question}}</p>
+            <p>Q{{question_id}}. {{questions[questionId-1].question}}</p>
     </div>
     <answer-form
-        :answerObject="answerObject"
-        action="create"
+        :answerObject="answer"
+        action="update"
         
     ></answer-form>
-    </div>
-
+  </div>
 </template>
 <script>
 
+
 import AnswerForm from '@/components/practice/AnswerForm.vue'
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default{ 
-    name:'QuestionAnwer',
+    name:'AnswerUpdate',
     components:{ AnswerForm },
     data(){
         return{
-            question_id: this.$route.params.question_id,
-            answerObject: {
-                answer: '',
-            }
+            questionId: this.$route.params.question_id,
         };
     },
     setup(){},
     created(){
+        this.fetchAnswer(this.questionId)
     },
     mounted(){},
     unmounted(){},
-    methods:{},
+    methods:{
+        ...mapActions(['fetchAnswer'])
+    },
     computed:{
-        ...mapGetters(['questions'])
+        ...mapGetters(['answer', 'questions'])
     }
 }
 </script>

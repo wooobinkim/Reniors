@@ -1,46 +1,60 @@
 <template>
-  <div>
+  <div class="total">
     <div class="head2">
         <router-link  class="mx-3 rl" :to="{name: 'QuestionList'}">답변 작성</router-link>
         <router-link  class="mx-3 rl" :to="{name: 'VideoPracticeList'}">화상 연습</router-link>
     </div>
-    <div>
-        <p class="my-0" style="text-align:start">
+    <div class="headsub">
+        <p class="my-0" style="text-align:start; font-size: 14px;">
             해당 질문을 눌러
         </p>
-        <p style="text-align:start">
+        <p style="text-align:start; font-size: 14px;">
             화상면접을 경험해보세요!
         </p>
     </div>
 
-    <question-item
+    <video-question
         v-for="(question,idx) in questions"
         :key="idx"
         :question="question.question"
         :idx="idx"
-    ></question-item>
+        :id="question.id"
+    ></video-question>
 
   </div>
 </template>
 <script>
 
+import VideoQuestion from '@/components/practice/VideoQuestion.vue'
+import { mapActions, mapGetters } from 'vuex';
 export default{ 
     name:'VideoPracticeList',
-    components:{},
+    components:{ VideoQuestion },
     data(){
         return{
             sampleData:''
         };
     },
     setup(){},
-    created(){},
-    mounted(){},
-    unmounted(){},
-    methods:{}
+    created(){
+        this.fetchQuestions()
+    },
+    computed:{
+        ...mapGetters(['questions'])
+    },
+    methods:{
+        ...mapActions(['fetchQuestions'])
+    }
 }
 </script>
 
 <style scoped>
+.total{
+    background-color: #FFF5F0;
+}
+.headsub{
+    margin: 16px 16px 8px 16px;
+}
 .rl{
     text-decoration:none;
     color: white;

@@ -2,7 +2,6 @@
   <div>  
     <board-head-slider></board-head-slider>
     <div class="title">
-      <!-- <p>{{parents[category_id - 1].name}}</p> -->
       <p>{{jobname}}</p>
       <div v-if="isLogginedIn">
         <router-link :to="{name: 'boardCreate', params:{category_id: category_id}}">
@@ -33,15 +32,14 @@ export default{
         return{
           category_id : Number(this.$route.params.category_id),
           jobname: ""
-          // j`obname:""
         }
     },
     watch:{
       $route: function(from){
-        this.fetchArticles(from.params.category_id)
-        // console.log(this.parents[Number(from.params.category_id) -1].name);
-        this.jobname = this.parents[Number(from.params.category_id) -1].name
-        // console.log(this.jobname);
+        if ((from.path).includes('boards')) {
+          this.fetchArticles(from.params.category_id)
+          this.jobname = this.parents[Number(from.params.category_id) -1].name
+        }
       }
     },
     computed:{
@@ -51,9 +49,6 @@ export default{
       ...mapActions(['fetchArticles'])
     },
     created(){
-      // console.log("----------------------------------");
-      // console.log(this.category_id);
-      console.log(this.parents);
       this.fetchArticles(this.category_id)
       this.jobname = this.parents[this.$route.params.category_id - 1].name
     },

@@ -1,20 +1,13 @@
 <template>
   <div class="total">
-    <div v-if="!checklist.includes(id)">
-        <router-link :to="{name: 'QuestionAnswer', params:{question_id: id}}">
+    <div >
+        <router-link to='/'>
             <div class="question">
                 <p>Q{{idx + 1}}. {{question}}</p>
             </div>
         </router-link>
     </div>
-    <div v-if="checklist.includes(id)">
-        <router-link :to="{name: 'AnswerUpdate', params:{question_id: id}}">
-            <div class="question2">
-                <p>Q{{idx + 1}}. {{question}}</p>
-                <i class="bi bi-check-circle-fill" style="color:#37BF99; margin: 0 16px;"></i>
-            </div>
-        </router-link>
-    </div>
+
   </div>
 </template>
 <script>
@@ -27,7 +20,6 @@ export default{
         'question': String,
         'idx' : Number,
         'id': Number,
-        'checklist' : Array
     },
     data(){
         return{

@@ -113,8 +113,8 @@ export default {
           router.push({
             name: "boardDetail",
             params: {
-              category_id: categoryId,
-              board_id: getters.article.boardId,
+              'category_id': categoryId,
+              'board_id': article_pk,
             },
           });
         });
