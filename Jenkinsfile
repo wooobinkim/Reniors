@@ -29,6 +29,7 @@ pipeline{
         stage('Build') {
             steps {
                 sh "cd /var/jenkins_home/workspace/reniors_jenkins/Back_end/reniors/"
+                sh "ls -ll"
                 sleep 1
                 sh "docker build -t ${BACK_NAME} ."
                 sh "cd /var/jenkins_home/workspace/reniors_jenkins/Front_end/reniors/"
