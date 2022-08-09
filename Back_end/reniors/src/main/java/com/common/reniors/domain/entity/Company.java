@@ -72,9 +72,7 @@ public class Company{
     //회사 - 공고 연관관계
     @OneToMany(mappedBy = "company")
     private List<JobOpening> jobOpenings = new ArrayList<>();
-
-    @OneToMany(mappedBy = "company")
-    private List<Eval> evals = new ArrayList<>();
+    
 
     public static Company create(String name, String companyAppId, String companyAppPwd, String establishedAt, String companyUrl, String address, String companyNum, String companyPhone,String representative, String baseURL, String companyProfile, String representativePhone, com.common.reniors.domain.entity.Type.Company typeCompany) {
         Company company = new Company();

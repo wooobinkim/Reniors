@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter(AccessLevel.NONE)
 @NoArgsConstructor
 public class EvalQuestionCreateRequest {
-
+    private Long jobOpeningId;
     private String contents;
-
 }

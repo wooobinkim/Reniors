@@ -1,4 +1,5 @@
 <template>
+  <img style="width: 80%" alt="logo" src="@/assets/logo.png" />
   <div>
     <router-link :to="{ name: 'companyjobopening' }">채용관리</router-link>
   </div>

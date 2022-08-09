@@ -25,84 +25,18 @@ import static com.common.reniors.common.exception.NotAuthException.COMPANY_NO_AU
 @RequiredArgsConstructor
 public class EvalService {
 
-    private final EvalRepository evalRepository;
     private final EvalQuestionRepository evalQuestionRepository;
     private final CompanyRepository companyRepository;
     private final UserEvalRepository userEvalRepository;
     private final UserRepository userRepository;
     private final JobOpeningRepository jobOpeningRepository;
 
-    //평가 폼 등록
-    @Transactional
-    public Long postEval(Company company, EvalCreateRequest evalCreateRequest){
-        JobOpening jobopening = jobOpeningRepository.findById(evalCreateRequest.getJobOpeningId()).orElseThrow(() -> new NotFoundException("not found jobopening"));
-
-        Eval eval = new Eval(evalCreateRequest, company,jobopening);
-        Long id = evalRepository.save(eval).getId();
-
-        return id;
-
-    }
-
-    @Transactional
-    //평가 폼 전체조회
-    public Page<EvalResponse> getEvalList(Company company, Pageable pageable){
-        //토큰쓰기
-            List<Eval> evalPage = evalRepository.findByCompany(company);
-            List<EvalResponse> evalResponseList = evalPage.stream().map(e->EvalResponse.response(
-                    e
-            )).collect(Collectors.toList());
-
-            long total = evalResponseList.size();
-            Page evalDtoPage = new PageImpl(evalResponseList,pageable,total);
-
-            return evalDtoPage;
-
-    }
-
-    //평가 폼 상세조회
-    @Transactional
-    public EvalResponse getEval(Company company, Long evalId){
-        if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
-            throw new NotAuthException(COMPANY_NO_AUTH);
-
-        Eval eval = evalRepository.findById(evalId).orElseThrow(() -> new NotFoundException("not found eval"));
-
-        EvalResponse evalResponse = EvalResponse.response(eval);
-
-        return evalResponse;
-
-    }
-
-    //평가 폼 수정
-    @Transactional
-    public void updateEval(Company company, Long evalId, EvalUpdateRequest evalUpdateRequest){
-        if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
-            throw new NotAuthException(COMPANY_NO_AUTH);
-
-        Eval eval = evalRepository.findById(evalId).orElseThrow(() -> new NotFoundException("not found eval"));
-        eval.update(evalUpdateRequest);
-    }
-
-    //평가 폼 삭제
-    @Transactional
-    public void deleteEval(Company company, Long evalId){
-        if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
-            throw new NotAuthException(COMPANY_NO_AUTH);
-
-        evalRepository.deleteById(evalId);
-    }
 
     //평가 질문 등록
     @Transactional
-    public Long postEvalQuestion(Company company, Long evalId, EvalQuestionCreateRequest evalQuestionCreateRequest){
-        if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
-            throw new NotAuthException(COMPANY_NO_AUTH);
-
-        Eval eval = evalRepository.findById(evalId).orElseThrow(() -> new NotFoundException("not found eval"));
-
-
-            EvalQuestion evalQuestion = new EvalQuestion(evalQuestionCreateRequest,eval);
+    public Long postEvalQuestion(Company company, EvalQuestionCreateRequest evalQuestionCreateRequest){
+        JobOpening jobOpening = jobOpeningRepository.findById(evalQuestionCreateRequest.getJobOpeningId()).orElseThrow(() -> new NotFoundException("not found jobOpening"));
+        EvalQuestion evalQuestion = new EvalQuestion(evalQuestionCreateRequest,jobOpening);
 
         Long id = evalQuestionRepository.save(evalQuestion).getId();
 
@@ -112,16 +46,11 @@ public class EvalService {
 
     //평가 질문 조회
     @Transactional
-    public List<EvalQuestionResponse> getEvalQuestionList(Company company, Long evalId){
-        if (company.getId() != evalRepository.findById(evalId).get().getCompany().getId())
-            throw new NotAuthException(COMPANY_NO_AUTH);
+    public List<EvalQuestionResponse> getEvalQuestionList(Company company, Long jobOpeningId){
+        JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found jobOpening"));
+        List<EvalQuestion> evalQuestions = evalQuestionRepository.findByJobOpening(jobOpening);
 
-        Eval eval = evalRepository.findById(evalId).orElseThrow(() -> new NotFoundException("not found eval"));
-
-        List<EvalQuestion> evalQuestionList = evalQuestionRepository.findByEval(eval);
-
-
-        List<EvalQuestionResponse> evalQuestionResponses = evalQuestionList.stream().map(e->EvalQuestionResponse.response(e)
+        List<EvalQuestionResponse> evalQuestionResponses = evalQuestions.stream().map(e->EvalQuestionResponse.response(e)
         ).collect(Collectors.toList());
 
         return evalQuestionResponses;
@@ -130,13 +59,8 @@ public class EvalService {
 
     //평가 질문 상세조회
     @Transactional
-    public EvalQuestionResponse getEvalQuestion(Company company, Long evalId, Long evalQuestionId){
-        if (company.getId() != evalQuestionRepository.findById(evalQuestionId).get().getEval().getCompany().getId())
-            throw new NotAuthException(COMPANY_NO_AUTH);
-
+    public EvalQuestionResponse getEvalQuestion(Company company, Long evalQuestionId){
         EvalQuestion evalQuestion = evalQuestionRepository.findById(evalQuestionId).orElseThrow(() -> new NotFoundException("not found evalQuestion"));
-        Eval eval = evalRepository.findById(evalId).orElseThrow(() -> new NotFoundException("not found eval"));
-
 
         EvalQuestionResponse evalQuestionResponse = EvalQuestionResponse.response(evalQuestion);
 
@@ -147,12 +71,8 @@ public class EvalService {
 
     //평가 질문 수정
     @Transactional
-    public void updateEvalQuestion(Company company, Long evalId, Long evalQuestionId, EvalQuestionUpdateRequest evalQuestionUpdateRequest){
-        if (company.getId() != evalQuestionRepository.findById(evalQuestionId).get().getEval().getCompany().getId())
-            throw new NotAuthException(COMPANY_NO_AUTH);
-
+    public void updateEvalQuestion(Company company, Long evalQuestionId, EvalQuestionUpdateRequest evalQuestionUpdateRequest){
         EvalQuestion evalQuestion = evalQuestionRepository.findById(evalQuestionId).orElseThrow(() -> new NotFoundException("not found evalQuestion"));
-        Eval eval = evalRepository.findById(evalId).orElseThrow(() -> new NotFoundException("not found eval"));
 
         evalQuestion.update(evalQuestionUpdateRequest);
     }
@@ -160,9 +80,6 @@ public class EvalService {
     //평가 질문 삭제
     @Transactional
     public void deleteEvalQuestion(Company company, Long evalQuestionId){
-        if (company.getId() != evalQuestionRepository.findById(evalQuestionId).get().getEval().getCompany().getId())
-            throw new NotAuthException(COMPANY_NO_AUTH);
-
         evalQuestionRepository.deleteById(evalQuestionId);
     }
 
@@ -181,12 +98,12 @@ public class EvalService {
 
     //유저 평가 조회
     @Transactional
-    public List<UserEvalResponse> getUserEvalList(Company company, Long userId, Long evalId){
+    public List<UserEvalResponse> getUserEvalList(Company company, Long userId, Long jobOpeningId){
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("not found user"));
         List<UserEval> userEvalList = userEvalRepository.findByUser(user);
         List<UserEvalResponse> userEvalResponses = new ArrayList<>();
         for (UserEval userEval : userEvalList) {
-            if(userEval.getEvalQuestion().getEval().getId() == evalId){
+            if(userEval.getEvalQuestion().getJobOpening().getId() == jobOpeningId){
                 userEvalResponses.add(UserEvalResponse.response(userEval));
             }
         }
@@ -199,12 +116,12 @@ public class EvalService {
 
     //유저 평가 삭제
     @Transactional
-    public void deleteUserEval(Company company, Long userId, Long evalId){
+    public void deleteUserEval(Company company, Long userId, Long jobOpeningId){
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("not found user"));
         List<UserEval> userEvalList = userEvalRepository.findByUser(user);
 
         for (UserEval userEval : userEvalList) {
-            if(userEval.getEvalQuestion().getEval().getId() == evalId){
+            if(userEval.getEvalQuestion().getJobOpening().getId() == jobOpeningId){
                 userEvalRepository.deleteById(userEval.getId());
             }
         }

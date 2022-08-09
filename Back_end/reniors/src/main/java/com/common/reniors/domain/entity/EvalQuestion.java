@@ -24,16 +24,17 @@ public class EvalQuestion {
     @Column(length = 500)
     private String contents;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "eval_id")
-    Eval eval;
 
     @OneToMany(mappedBy = "evalQuestion")
     private List<UserEval> userEvals = new ArrayList<>();
 
-    public EvalQuestion(EvalQuestionCreateRequest evalQuestionCreateRequest, Eval eval) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_opening_id")
+    private JobOpening jobOpening;
+
+    public EvalQuestion(EvalQuestionCreateRequest evalQuestionCreateRequest, JobOpening jobOpening) {
         this.contents = evalQuestionCreateRequest.getContents();
-        this.eval = eval;
+        this.jobOpening = jobOpening;
     }
 
     public void update(EvalQuestionUpdateRequest evalQuestionUpdateRequest) {
