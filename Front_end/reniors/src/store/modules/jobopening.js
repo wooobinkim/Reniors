@@ -44,13 +44,15 @@ export default {
       console.log(response)
     },
     async fetchBookmark({ commit, getters }) {
-      const Axios = axios.create({ headers: getters.authHeader })
+      const Axios = axios.create({ headers: getters.authHeader})
       const response = await Axios.get(drf.jobopening.getBookmark())
       commit('BOOKMARKS', response.data)
       console.log(response)
     },
-    async bookmark() {
-      console.log('bookmark')
+    async addBookmark({ getters }, id) {
+      const Axios = axios.create({ headers: getters.authHeader })
+      const response = await Axios.post(drf.jobopening.addBookmark(id))
+      console.log(response)
     }
   },
 }
