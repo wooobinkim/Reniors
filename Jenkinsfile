@@ -17,9 +17,9 @@ pipeline{
                         sleep 1
                         sh "docker rm ${BACK_CONTAINER_NAME}"
                         sleep 1
-                        sh "docker stop ${BACK_CONTAINER_NAME}"
+                        sh "docker stop ${FRONT_CONTAINER_NAME}"
                         sleep 1
-                        sh "docker rm ${BACK_CONTAINER_NAME}"
+                        sh "docker rm ${FRONT_CONTAINER_NAME}"
                     }catch(e){
                         sh 'exit 0'
                     }

@@ -102,6 +102,14 @@ public class InterviewQuestionController {
         return ResponseEntity.ok(answerService.getAnswer(questionId, user));
     }
 
+    @GetMapping("/answers/list")
+    @ApiOperation(value = "인터뷰 답변 조회", notes = "예상 질문에 작성한 답변을 조회한다.")
+    public ResponseEntity<?> getAnswerList(
+            @ApiIgnore @LoginUser User user
+    ){
+        return ResponseEntity.ok(answerService.getAnswerList(user));
+    }
+
     // 답변 수정
     @PutMapping("/{questionId}/answers")
     @ApiOperation(value = "인터뷰 질문 답변 수정", notes = "예상 질문에 작성한 답변을 수정한다.")
