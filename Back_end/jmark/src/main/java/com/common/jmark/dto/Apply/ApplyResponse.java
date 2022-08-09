@@ -1,7 +1,7 @@
 package com.common.jmark.dto.Apply;
 
 import com.common.jmark.domain.entity.Apply;
-import com.common.jmark.domain.entity.Enum.JobOpeningProcess;
+import com.common.jmark.domain.entity.Type.JobOpeningProcess;
 import com.common.jmark.domain.entity.Type.Gender;
 import lombok.*;
 

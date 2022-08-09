@@ -1,9 +1,7 @@
 package com.common.jmark.controller;
 
 import com.common.jmark.common.config.web.LoginUser;
-import com.common.jmark.domain.entity.Enum.JobOpeningProcess;
 import com.common.jmark.domain.entity.user.User;
-import com.common.jmark.dto.*;
 import com.common.jmark.dto.Apply.ApplyResponse;
 import com.common.jmark.dto.JobOpening.*;
 import com.common.jmark.service.JobOpeningService;

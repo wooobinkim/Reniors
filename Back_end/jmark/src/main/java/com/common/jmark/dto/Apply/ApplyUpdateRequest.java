@@ -1,6 +1,6 @@
 package com.common.jmark.dto.Apply;
 
-import com.common.jmark.domain.entity.Enum.JobOpeningProcess;
+import com.common.jmark.domain.entity.Type.JobOpeningProcess;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;

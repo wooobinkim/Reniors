@@ -1,12 +1,10 @@
 package com.common.jmark.dto.Company;
 
-import com.common.jmark.domain.entity.Company;
-import com.common.jmark.domain.entity.Enum.TypeCompany;
+import com.common.jmark.domain.entity.Type.Company;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Setter(AccessLevel.NONE)
@@ -23,6 +21,6 @@ public class CompanyCreateRequest {
     private String companyPhone;
     private String representative;
     private String representativePhone;
-    private TypeCompany typeCompany;
+    private Company company;
 
 }

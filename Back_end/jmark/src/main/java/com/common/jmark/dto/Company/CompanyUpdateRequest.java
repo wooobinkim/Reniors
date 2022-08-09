@@ -1,7 +1,6 @@
 package com.common.jmark.dto.Company;
 
-import com.common.jmark.domain.entity.Company;
-import com.common.jmark.domain.entity.Enum.TypeCompany;
+import com.common.jmark.domain.entity.Type.Company;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +21,6 @@ public class CompanyUpdateRequest {
     private String companyPhone;
     private String representative;
     private String representativePhone;
-    private TypeCompany typeCompany;
+    private Company company;
     private boolean changeProfile;
 }

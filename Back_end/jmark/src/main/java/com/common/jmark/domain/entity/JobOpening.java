@@ -1,7 +1,7 @@
 package com.common.jmark.domain.entity;
 
-import com.common.jmark.domain.entity.Enum.LastEdu;
-import com.common.jmark.domain.entity.Enum.TypeEmployment;
+import com.common.jmark.domain.entity.Type.LastEdu;
+import com.common.jmark.domain.entity.Type.Employment;
 import com.common.jmark.domain.entity.Type.IsFinish;
 import com.common.jmark.domain.entity.category.Gugun;
 import com.common.jmark.domain.entity.category.JobChildCategory;
@@ -9,7 +9,6 @@ import com.common.jmark.dto.JobOpening.JobOpeningCreateRequest;
 import com.common.jmark.dto.JobOpening.JobOpeningUpdateRequest;
 import com.sun.istack.NotNull;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -70,7 +69,7 @@ public class JobOpening{
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private TypeEmployment typeEmployment;
+    private Employment employment;
 
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
@@ -114,7 +113,7 @@ public class JobOpening{
         this.minSalary = jobOpeningCreateRequest.getMinSalary();
         this.jobPosition = jobOpeningCreateRequest.getJobPosition();
         this.workingDay = jobOpeningCreateRequest.getWorkingDay();
-        this.typeEmployment = jobOpeningCreateRequest.getTypeEmployment();
+        this.employment = jobOpeningCreateRequest.getEmployment();
         this.lastEdu=jobOpeningCreateRequest.getLastEdu();
         this.isFinish = IsFinish.F;
         this.company = company;
@@ -132,7 +131,7 @@ public class JobOpening{
         this.minSalary = jobOpeningUpdateRequest.getMinSalary();
         this.jobPosition = jobOpeningUpdateRequest.getJobPosition();
         this.workingDay = jobOpeningUpdateRequest.getWorkingDay();
-        this.typeEmployment = jobOpeningUpdateRequest.getTypeEmployment();
+        this.employment = jobOpeningUpdateRequest.getEmployment();
         this.lastEdu=jobOpeningUpdateRequest.getLastEdu();
         this.gugun = gugun;
         this.jobChildCategory = jobChildCategory;

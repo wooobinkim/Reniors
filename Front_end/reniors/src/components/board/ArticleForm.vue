@@ -1,20 +1,17 @@
 <template>
-    <div class="container">
-      
-      <form @submit.prevent="onSubmit" class="form-group row-cols-8" >
-      <br>
-      <br>
-        <div>
-          <label for="title" style="text-align:start">제목</label>
-          <input type="text" class="form-control my-0" id="title" placeholder="제목을 입력해주세요." v-model="title">
+    <div>  
+      <form @submit.prevent="onSubmit" class="formGroup" >
+        <div class="box">
+          <label for="title">제목</label>
+          <input type="text" class="form-control title" id="title" placeholder="제목을 입력해주세요." v-model="title" size="320px" maxlength="50">
         </div>
-        <div class="form-group">
+        <div class="box">
           <label for="content">내용</label>
-          <input style="height: 150px; vertical-align:text-top ;" type="text" class="form-control" id="content" placeholder="내용을 입력해주세요." v-model="contents">
+          <textarea type="text" class="form-control content" id="content" placeholder="내용을 입력해주세요." v-model="contents"></textarea>
         </div>
-        <br>
-        <br>
-        <button type="submit" class="Btn">등록</button>
+        <div class="submit">
+            <button type="submit" class="Btn">등록</button>
+        </div>
       </form>
     </div>
 
@@ -69,26 +66,41 @@ export default{
 }
 </script>
 
-<style>
-.forminfo {
-    color: #8A8A8A;
-    font-weight: 400;
-    font-size: 13px;
-    margin-bottom: 5px;
-    text-align: left;
-  }
-
-  .Btn {
-    background-color: var(--color-red-2);
-    width: 100%;
+<style scoped>
+label{
+    display: flex;
+    justify-content: start;
+    font-size: 14px;
+    color: #3A3A3A;
+}
+.formGroup{
+    margin: 8px 4px 0 4px;
+}
+.box{
+    margin: 4px;
+}
+.title{
     height: 40px;
-    border-radius: 10px;
-    border: none;
-    color: white;
-    font-weight: bold;
+}
+.content{
+    height: 360px;
+    padding: 8px 10px 8px 10px;
+}
 
-    /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
-    cursor: pointer;
-  }
+.Btn {
+background-color:var(--color-red-2);
+height: 40px;
+width: 340px;
+margin: 8px 0;
+border-radius: 10px;
+border: none;
+color: white;
+font-weight: bold;
+font-size: 16px;
+
+/* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
+cursor: pointer;
+}
+
   
   </style>

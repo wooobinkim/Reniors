@@ -1,4 +1,5 @@
 import http from "@/api/http";
+import multipart from "@/api/multipart";
 import router from "@/router";
 import axios from "axios";
 // import jobopening from "./jobopening";
@@ -15,6 +16,7 @@ export default {
     jobopening: null,
     companyinfo: {},
     applylist: [],
+    interviewapplylist: [],
     applyuser: null,
   },
 
@@ -45,12 +47,24 @@ export default {
       state.companyinfo = data;
     },
     SET_APPLY_LIST(state, datas) {
-      datas.forEach((data) => {
-        state.applylist.push(data);
-      });
+      state.applylist = datas;
     },
     SET_APPLY_USER(state, data) {
       state.applyuser = data;
+    },
+    CLEAR_INTERVIEW_APPLY_LIST(state) {
+      state.interviewapplylist = [];
+    },
+    SET_INTERVIEW_APPLY_LIST(state, datas) {
+      datas.forEach((data) => {
+        if (
+          data.jobOpeningProcess == "면접" ||
+          data.jobOpeningProcess == "면접심사중"
+        ) {
+          state.interviewapplylist.push(data);
+        }
+      });
+      // state.interviewapplylist = datas;
     },
   },
 
@@ -84,9 +98,23 @@ export default {
       // error 부분 추가
     },
 
-    registCompany: ({ commit }, company) => {
-      http
-        .post(`/company`, JSON.stringify(company))
+    registCompany: ({ commit }, formData) => {
+      // axios({
+      //     url:"https://i7b307.p.ssafy.io/api/company",
+      //     method : "post",
+      //     data : formData,
+      //     headers : {
+      //         "Content-Type": "multipart/form-data",
+      //         // Authorization: "Bearer " + token,
+      //     }
+      // }).then((res)=>{
+      //     console.log(res);
+      //     console.log(commit);
+      // }).catch((error)=>{
+      //     console.log(error);
+      // })
+      multipart
+        .post(`/company`, formData)
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
         })
@@ -175,7 +203,35 @@ export default {
           console.log(error);
         });
     },
+    getinterviewapplylist: ({ commit }, no) => {
+      http
+        .get(`/company/jobopening/${no}/apply`)
+        .then(({ data }) => {
+          commit("SET_INTERVIEW_APPLY_LIST", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     updateApply: ({ commit }, data) => {
+      // console.log(data.apply);
+      // axios({
+      //   // url 수정
+      //   url: "http://localhost:8080/api/company/jobopening/1/apply/1",
+      //   method: "put",
+      //   data: data.apply,
+      //   headers:{
+      //     Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyLGNvbXBhbnkiLCJpYXQiOjE2NTk5NDU2NDUsImV4cCI6MTY2MTI0MTY0NX0.UWh7GHYqUG3L6P8puD-yUuG-WYhnMmXk3Z-6NuooyRE"
+      //   }
+      // }).then((res) => {
+      //   console.log(res);
+      //   console.log(commit);
+      //   // const token = res.headers["authorization"];
+      //   // dispatch("saveToken", token);
+      //   // dispatch("fetchCurrentUser");
+      //   // router 수정
+      //   // router.push({ name: "company" });
+      // });
       http
         .put(
           `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,

@@ -1,6 +1,6 @@
 package com.common.jmark.dto.user;
 
-import com.common.jmark.domain.entity.Enum.LastEdu;
+import com.common.jmark.domain.entity.Type.LastEdu;
 import com.common.jmark.domain.entity.Type.Gender;
 import com.common.jmark.domain.entity.Type.IsOpen;
 import com.common.jmark.domain.entity.user.User;

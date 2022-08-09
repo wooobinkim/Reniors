@@ -6,12 +6,15 @@
         <div class="condition-item-header">
           <p class="condition-item-number">맞춤공고{{ index+1 }}</p>
           <div>
-            <i>edit</i>
-            <i>delete</i>
+            <font-awesome-icon icon="fa-solid fa-gear" />
+            <font-awesome-icon icon="fa-regular fa-trash-can" />
           </div>
         </div>
         <div class="condition-item-preview">
-          <p>{{ condition.region }}</p>
+          <div class="condition-item-region">
+            <font-awesome-icon icon="fa-solid fa-location-dot" />
+            <p>{{ condition.region }}</p>
+          </div>
           <p>직종: 몰라</p>
         </div>
         <button class="condition-item-button" @click.stop="popover">더 보기</button>
@@ -130,6 +133,14 @@ export default {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
+}
+
+.condition-item-region {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  font-size: 20px;
+  height: 30px;
 }
 
 .condition-item-create {

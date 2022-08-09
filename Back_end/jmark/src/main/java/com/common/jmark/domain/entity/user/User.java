@@ -1,6 +1,6 @@
 package com.common.jmark.domain.entity.user;
 
-import com.common.jmark.domain.entity.Enum.LastEdu;
+import com.common.jmark.domain.entity.Type.LastEdu;
 import com.common.jmark.domain.entity.Apply;
 import com.common.jmark.domain.entity.InterviewQuestion.Answer;
 import com.common.jmark.domain.entity.SearchCondition;
@@ -142,8 +142,7 @@ public class User {
         return user;
     }
 
-    public void update(String userAppPwd, String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu, String baseURL, String userProfile) {
-        this.userAppPwd = userAppPwd;
+    public void update(String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu, String baseURL, String userProfile) {
         this.name = name;
         this.birth = birth;
         this.gender = gender;
@@ -156,4 +155,8 @@ public class User {
         this.baseURL = baseURL;
         this.userProfile = userProfile;
    }
+
+    public void updatePwd(String newPwd) {
+       this.userAppPwd = newPwd;
+    }
 }

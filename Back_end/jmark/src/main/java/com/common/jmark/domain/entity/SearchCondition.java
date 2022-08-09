@@ -1,7 +1,7 @@
 package com.common.jmark.domain.entity;
 
-import com.common.jmark.domain.entity.Enum.LastEdu;
-import com.common.jmark.domain.entity.Enum.TypeEmployment;
+import com.common.jmark.domain.entity.Type.Employment;
+import com.common.jmark.domain.entity.Type.LastEdu;
 import com.common.jmark.domain.entity.category.JobChildCategory;
 import com.common.jmark.domain.entity.user.User;
 import com.common.jmark.dto.JobOpening.SearchConditionCreateRequest;
@@ -35,7 +35,7 @@ public class SearchCondition {
     private int workingDay;
 
     @Enumerated(EnumType.STRING)
-    private TypeEmployment typeEmployment;
+    private Employment employment;
 
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
@@ -56,7 +56,7 @@ public class SearchCondition {
         this.minCareer = searchConditionCreateRequest.getMinCareer();
         this.minSalary = searchConditionCreateRequest.getMinSalary();
         this.workingDay = searchConditionCreateRequest.getWorkingDay();
-        this.typeEmployment = searchConditionCreateRequest.getTypeEmployment();
+        this.employment = searchConditionCreateRequest.getEmployment();
         this.lastEdu = searchConditionCreateRequest.getLastEdu();
         this.jobChildCategory = jobChildCategory;
         this.user = user;
@@ -67,7 +67,7 @@ public class SearchCondition {
         this.minCareer = searchConditionUpdateRequest.getMinCareer();
         this.minSalary = searchConditionUpdateRequest.getMinSalary();
         this.workingDay = searchConditionUpdateRequest.getWorkingDay();
-        this.typeEmployment = searchConditionUpdateRequest.getTypeEmployment();
+        this.employment = searchConditionUpdateRequest.getEmployment();
         this.lastEdu = searchConditionUpdateRequest.getLastEdu();
         this.jobChildCategory = jobChildCategory;
         this.user = user;

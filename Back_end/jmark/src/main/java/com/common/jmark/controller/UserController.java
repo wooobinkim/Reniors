@@ -3,6 +3,7 @@ package com.common.jmark.controller;
 import com.common.jmark.common.config.data.service.AwsS3Service;
 import com.common.jmark.common.config.web.LoginUser;
 import com.common.jmark.domain.entity.user.User;
+import com.common.jmark.dto.mail.MailDto;
 import com.common.jmark.dto.user.UserCreateRequest;
 import com.common.jmark.dto.user.UserLoginRequest;
 import com.common.jmark.dto.user.UserUpdateRequest;
@@ -29,12 +30,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Api(tags = {"회원 API"})
 public class UserController {
-
     private static final String baseURL = "https://reniors.s3.ap-northeast-2.amazonaws.com/";
-
     private final UserService userService;
     private final AwsS3Service awsS3Service;
 
+    // 자체 서비스 로그인
     @PostMapping("/login")
     @ApiOperation(value = "자체 서비스 로그인", notes = "아이디와 비밀번호를 입력하여 로그인합니다.")
     public ResponseEntity<?> loginUser(
@@ -67,6 +67,9 @@ public class UserController {
 
     // 카카오 로그인
 
+    // 카카오 회원 탈퇴
+
+    // 유저 상세 정보 조회
     @GetMapping
     @ApiOperation(value = "유저 상세 정보 조회", notes = "유저의 상세 정보를 조회합니다.")
     public ResponseEntity<?> readUser(
@@ -75,12 +78,14 @@ public class UserController {
         return ResponseEntity.ok(userService.readUser(user));
     }
 
+    // 유저 목록 조회
     @GetMapping("/list")
     @ApiOperation(value = "유저 목록 조회", notes = "유저 목록을 조회합니다.")
     public ResponseEntity<?> readUserList() {
         return ResponseEntity.ok(userService.readUserList());
     }
 
+    // 회원 정보 수정
     @PutMapping
     @ApiOperation(value = "회원 정보 수정", notes = "유저의 정보를 수정합니다.")
     // TODO : image 수정 추가
@@ -99,6 +104,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    // 회원 탈퇴
     @DeleteMapping
     @ApiOperation(value = "회원 탈퇴", notes = "유저의 정보를 삭제하고 회원을 탈퇴합니다.")
     public ResponseEntity<Map<String, Long>> deleteUser(
@@ -126,6 +132,24 @@ public class UserController {
             @PathVariable String name,
             @PathVariable String userAppId
     ) {
-        return ResponseEntity.ok(userService.findPwdByUserAppId(name, userAppId));
+        User user = userService.findByNameAndUserAppId(name, userAppId);
+        if (user.getUserAppId() != null && !user.getUserAppId().equals("")) {
+            MailDto mailDto = userService.createMailAndChangePwd(user.getUserAppId());
+            userService.mailSend(mailDto);
+        } else {
+            return ResponseEntity.ok("이메일 형식이 올바르지 않습니다.");
+        }
+        return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
+    }
+
+    // 비밀번호 변경
+    @PutMapping("/{userAppPwd}")
+    @ApiOperation(value = "회원 비밀번호 수정", notes = "유저의 비밀번호를 수정합니다.")
+    public ResponseEntity<?> updateUserPwd(
+            @ApiIgnore @LoginUser User user,
+            @PathVariable String userAppPwd
+    ) {
+        userService.updateUserPwd(user.getUserAppId(), userAppPwd);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

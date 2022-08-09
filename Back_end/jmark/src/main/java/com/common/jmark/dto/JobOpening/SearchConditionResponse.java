@@ -1,9 +1,8 @@
 package com.common.jmark.dto.JobOpening;
 
-import com.common.jmark.domain.entity.Enum.LastEdu;
-import com.common.jmark.domain.entity.Enum.TypeEmployment;
+import com.common.jmark.domain.entity.Type.Employment;
+import com.common.jmark.domain.entity.Type.LastEdu;
 import com.common.jmark.domain.entity.SearchCondition;
-import com.common.jmark.dto.category.JobChildCategoryResponse;
 import lombok.*;
 
 @Data
@@ -16,7 +15,7 @@ public class SearchConditionResponse {
     private int minCareer;
     private int minSalary;
     private int workingDay;
-    private TypeEmployment typeEmployment;
+    private Employment employment;
     private LastEdu lastEdu;
     private String jobChildCategory;
 
@@ -27,7 +26,7 @@ public class SearchConditionResponse {
                 searchCondition.getMinCareer(),
                 searchCondition.getMinSalary(),
                 searchCondition.getWorkingDay(),
-                searchCondition.getTypeEmployment(),
+                searchCondition.getEmployment(),
                 searchCondition.getLastEdu(),
                 searchCondition.getJobChildCategory().getName()
         );

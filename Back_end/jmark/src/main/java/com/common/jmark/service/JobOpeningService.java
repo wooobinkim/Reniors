@@ -8,12 +8,10 @@ import com.common.jmark.domain.entity.user.User;
 import com.common.jmark.domain.repository.*;
 import com.common.jmark.domain.repository.category.GugunRepository;
 import com.common.jmark.domain.repository.category.JobChildCategoryRepository;
-import com.common.jmark.dto.*;
 import com.common.jmark.dto.Apply.ApplyResponse;
 import com.common.jmark.dto.JobOpening.*;
 import com.common.jmark.dto.category.GugunResponse;
 import com.common.jmark.dto.category.JobChildCategoryResponse;
-import com.common.jmark.dto.user.UserResponse;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -186,7 +184,7 @@ public class JobOpeningService {
 //        if (jobOpeningSearchDto.getGuGunId() != null) booleanBuilder.and(j.gugun.id.eq(jobOpeningSearchDto.getGuGunId()));
 //        if (jobOpeningSearchDto.getJobChildCategoryId()!= null) booleanBuilder.and(j.jobChildCategory.id.eq(jobOpeningSearchDto.getJobChildCategoryId()));
             if (searchCondition.getLastEdu() != null) booleanBuilder.and(j.lastEdu.eq(searchCondition.getLastEdu()));
-            if (searchCondition.getTypeEmployment() != null) booleanBuilder.and(j.typeEmployment.eq(searchCondition.getTypeEmployment()));
+            if (searchCondition.getEmployment() != null) booleanBuilder.and(j.typeEmployment.eq(searchCondition.getEmployment()));
 
         List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
                 .where(

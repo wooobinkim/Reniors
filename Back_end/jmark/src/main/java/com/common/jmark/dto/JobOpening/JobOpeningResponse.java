@@ -1,7 +1,5 @@
 package com.common.jmark.dto.JobOpening;
 
-import com.common.jmark.domain.entity.Enum.LastEdu;
-import com.common.jmark.domain.entity.Enum.TypeEmployment;
 import com.common.jmark.domain.entity.JobOpening;
 import com.common.jmark.domain.entity.Type.IsFinish;
 import lombok.AllArgsConstructor;

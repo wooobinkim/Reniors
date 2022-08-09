@@ -61,7 +61,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentUser'])
+    ...mapGetters(['currentUser', 'isLogginedIn'])
   },
   setup() {},
   mounted() {},

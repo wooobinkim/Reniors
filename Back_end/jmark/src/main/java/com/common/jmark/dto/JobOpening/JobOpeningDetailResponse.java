@@ -1,7 +1,7 @@
 package com.common.jmark.dto.JobOpening;
 
-import com.common.jmark.domain.entity.Enum.LastEdu;
-import com.common.jmark.domain.entity.Enum.TypeEmployment;
+import com.common.jmark.domain.entity.Type.Employment;
+import com.common.jmark.domain.entity.Type.LastEdu;
 import com.common.jmark.domain.entity.JobOpening;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +25,7 @@ public class JobOpeningDetailResponse {
     private int minSalary;
     private String jobPosition;
     private int workingDay;
-    private TypeEmployment typeEmployment;
+    private Employment employment;
     private LastEdu lastEdu;
     private Long sidoId;
     private Long gugunId;
@@ -46,7 +46,7 @@ public class JobOpeningDetailResponse {
                 jobOpening.getMinSalary(),
                 jobOpening.getJobPosition(),
                 jobOpening.getWorkingDay(),
-                jobOpening.getTypeEmployment(),
+                jobOpening.getEmployment(),
                 jobOpening.getLastEdu(),
                 jobOpening.getGugun().getSido().getId(),
                 jobOpening.getGugun().getId(),

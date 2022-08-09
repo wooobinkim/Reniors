@@ -1,7 +1,6 @@
 package com.common.jmark.dto.Company;
 
-import com.common.jmark.domain.entity.Company;
-import com.common.jmark.domain.entity.Enum.TypeCompany;
+import com.common.jmark.domain.entity.Type.Company;
 import lombok.*;
 
 @Data
@@ -21,9 +20,9 @@ public class CompanyResponse {
     private String companyPhone;
     private String representative;
     private String representativePhone;
-    private TypeCompany typeCompany;
+    private Company company;
 
-    public static CompanyResponse response(Company company){
+    public static CompanyResponse response(com.common.jmark.domain.entity.Company company){
         return new CompanyResponse(
                 company.getId(),
                 company.getName(),
@@ -37,7 +36,7 @@ public class CompanyResponse {
                 company.getCompanyPhone(),
                 company.getRepresentative(),
                 company.getRepresentativePhone(),
-                company.getTypeCompany()
+                company.getCompany()
         );
     }
 
