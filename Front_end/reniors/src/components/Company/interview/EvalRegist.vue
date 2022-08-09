@@ -1,5 +1,7 @@
 <template>
-  <div>asdasd</div>
+  <div>
+    <div>면접<input type="text" /></div>
+  </div>
 </template>
 
 <script>
