@@ -1,14 +1,24 @@
 <template>
-  <div>
-    <router-link :to="{name: 'QuestionAnswer', params:{question_id: id}}">
-        <div class="question">
-            <p>Q{{idx + 1}}. {{question}}</p>
-        </div>
-
-    </router-link>
+  <div class="total">
+    <div v-if="!checklist.includes(id)">
+        <router-link :to="{name: 'QuestionAnswer', params:{question_id: id}}">
+            <div class="question">
+                <p>Q{{idx + 1}}. {{question}}</p>
+            </div>
+        </router-link>
+    </div>
+    <div v-if="checklist.includes(id)">
+        <router-link :to="{name: 'AnswerUpdate', params:{question_id: id}}">
+            <div class="question2">
+                <p>Q{{idx + 1}}. {{question}}</p>
+                <i class="bi bi-check-circle-fill" style="color:#37BF99; margin: 0 16px;"></i>
+            </div>
+        </router-link>
+    </div>
   </div>
 </template>
 <script>
+
 
 export default{ 
     name:'QuestionItem',
@@ -17,37 +27,57 @@ export default{
         'question': String,
         'idx' : Number,
         'id': Number,
+        'checklist' : Array
     },
     data(){
         return{
-            sampleData:''
         };
     },
-    setup(){},
-    created(){},
-    mounted(){},
-    unmounted(){},
-    methods:{}
+    
+
 }
 </script>
 
 <style scoped>
+.total{
+    display: flex;
+    justify-content: center;
+    
+}
 a{
     text-decoration: none;
     color: black;
 }
 .question{
-    margin:4px 20px;
+    margin:4px;
     padding-left: 8px;
     height: 88px;
-    width: 320px;
+    width: 336px;
     border-radius: 10px;
     border:1px solid #FF843E;
     box-shadow: 1px 1px 1px gray;
     display: flex;
     align-items: center;
+    background-color: white;
 }
 .question p{
+    margin: 0px 8px 0px;
+}
+.question2{
+    margin:4px;
+    padding-left: 8px;
+    height: 88px;
+    width: 336px;
+    border-radius: 10px;
+    border:1px solid #FF843E;
+    box-shadow: 1px 1px 1px gray;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+}
+.question2 p{
     margin: 0px 8px 0px;
 }
 </style>
