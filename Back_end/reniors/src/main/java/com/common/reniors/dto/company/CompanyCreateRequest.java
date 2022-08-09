@@ -1,6 +1,6 @@
 package com.common.reniors.dto.company;
 
-import com.common.reniors.domain.entity.Type.Company;
+import com.common.reniors.service.eval.Type.Company;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;

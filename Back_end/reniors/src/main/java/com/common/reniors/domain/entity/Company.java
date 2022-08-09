@@ -3,7 +3,6 @@ package com.common.reniors.domain.entity;
 import com.common.reniors.dto.company.CompanyUpdateRequest;
 import com.sun.istack.NotNull;
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -25,7 +24,6 @@ public class Company{
 
     @NotNull
     @Column(length = 100)
-    @UniqueElements
     private String companyAppId;
 
     @NotNull
@@ -63,7 +61,7 @@ public class Company{
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private com.common.reniors.domain.entity.Type.Company company;
+    private com.common.reniors.service.eval.Type.Company company;
 
     @NotBlank
     private String baseURL;
@@ -78,7 +76,7 @@ public class Company{
     @OneToMany(mappedBy = "company")
     private List<Eval> evals = new ArrayList<>();
 
-    public static Company create(String name, String companyAppId, String companyAppPwd, String establishedAt, String companyUrl, String address, String companyNum, String companyPhone,String representative, String baseURL, String companyProfile, String representativePhone, com.common.reniors.domain.entity.Type.Company typeCompany) {
+    public static Company create(String name, String companyAppId, String companyAppPwd, String establishedAt, String companyUrl, String address, String companyNum, String companyPhone,String representative, String baseURL, String companyProfile, String representativePhone, com.common.reniors.service.eval.Type.Company typeCompany) {
         Company company = new Company();
         company.name = name;
         company.companyAppId = companyAppId;

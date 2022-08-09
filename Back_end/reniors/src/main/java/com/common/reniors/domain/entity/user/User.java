@@ -1,12 +1,12 @@
 package com.common.reniors.domain.entity.user;
 
-import com.common.reniors.domain.entity.Type.LastEdu;
+import com.common.reniors.service.eval.Type.LastEdu;
 import com.common.reniors.domain.entity.Apply;
 import com.common.reniors.domain.entity.interviewQuestion.Answer;
 import com.common.reniors.domain.entity.SearchCondition;
-import com.common.reniors.domain.entity.Type.Gender;
-import com.common.reniors.domain.entity.Type.IsOpen;
-import com.common.reniors.domain.entity.Type.Role;
+import com.common.reniors.service.eval.Type.Gender;
+import com.common.reniors.service.eval.Type.IsOpen;
+import com.common.reniors.service.eval.Type.Role;
 import com.common.reniors.domain.entity.UserEval;
 import com.common.reniors.domain.entity.board.Board;
 import com.common.reniors.domain.entity.board.Comment;
