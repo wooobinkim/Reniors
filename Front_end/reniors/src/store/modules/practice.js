@@ -6,18 +6,27 @@ export default{
     state: {
         questions: [],
         answer: {},
+        checklist: []
 
     },
 
     getters: {
         questions: state => state.questions,
         answer: state => state.answer,
-
+        checklist: state => {
+          var list = []
+          for (let index = 0; index < state.checklist.length; index++) {
+              list.push(state.checklist[index].questionId)
+          }
+          console.log(list);
+          return list
+        }
     },
 
     mutations: {
         SET_QUESTIONS: (state, questions) => state.questions = questions,
         SET_ANSWER: (state, answer) => state.answer = answer,
+        SET_CHECKLIST: (state, checklist) => state.checklist = checklist,
 
     },
 
@@ -37,45 +46,55 @@ export default{
             axios({
               url: "https://i7b307.p.ssafy.io/api" + "/questions" + `/${questionId}` + "/answers",
               method: "post",
-              data: { content },
+              data: JSON.stringify({ answer: content }),
               headers: getters.authHeader,
             }).then((res) => {
               commit("SET_ANSWER", res.data);
               router.push({ name: "QuestionList" });
             });
         },
-        fetchAnswer({getters, commit}, {questionId, answerId}) {
+        fetchAnswer({getters, commit}, questionId) {
             axios({
               url:
                 "https://i7b307.p.ssafy.io/api" +
                 "/questions" +
                 `/${questionId}` +
-                "/answers" +
-                `/${answerId}`,
+                "/answers",
               method: "get",
               headers: getters.authHeader,
             })
-              .then((res) => {
-                commit("SET_ANSWER", res.data);
+              .then(
+                (res) => {
+                  commit("SET_ANSWER", res.data);
               })
-              .catch((err) => console.error(err.response));
         },
-        updateAnswer({getters, commit}, {questionId, answerId, content}) {
+        updateAnswer({getters, commit}, {questionId, content}) {
             axios({
               url:
                 "https://i7b307.p.ssafy.io/api" +
                 "/questions" +
                 `/${questionId}` +
-                "/answers" +
-                `/${answerId}`,
+                "/answers",
               method: "put",
-              data: { content },
+              data: JSON.stringify({ answer: content }),
               headers: getters.authHeader,
             }).then((res) => {
               commit("SET_ANSWER", res.data);
               router.push({ name: "QuestionList" });
             });
         },
+        fetchChecklist({getters, commit}) {
+          axios({
+            url:
+              "https://i7b307.p.ssafy.io/api" +
+              "/questions" + "/answers" + "/list",
+            method: "get",
+            headers: getters.authHeader,
+          })
+          .then((res) => {
+            commit("SET_CHECKLIST", res.data)
+          })
+        }
 
     }
 }

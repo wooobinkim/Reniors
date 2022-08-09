@@ -50,10 +50,11 @@ import BoardUpdate from "@/views/board/BoardUpdate.vue";
 import VideoMain from "@/views/video/VideoMain.vue";
 
 //practice
-import QuestionList from "@/views/practice/QuestionList";
-import QuestionAnswer from "@/views/practice/QuestionAnswer";
-import VideoPractice from "@/views/practice/VideoPractice";
-import VideoPracticeList from "@/views/practice/VideoPracticeList";
+import QuestionList from "@/views/practice/QuestionList.vue";
+import QuestionAnswer from "@/views/practice/QuestionAnswer.vue";
+import VideoPractice from "@/views/practice/VideoPractice.vue";
+import VideoPracticeList from "@/views/practice/VideoPracticeList.vue";
+import AnswerUpdate from "@/views/practice/AnswerUpdate.vue"
 
 //interview
 import OpenVidu from "@/views/openvidu/OpenVidu.vue";
@@ -318,6 +319,11 @@ const routes = [
     path: "/practice/question/:question_id/answer",
     component: QuestionAnswer,
     name: "QuestionAnswer",
+  },
+  {
+    path: "/practice/question/:question_id/answer/update",
+    component: AnswerUpdate,
+    name: "AnswerUpdate"
   },
   {
     path: "/practice/videopractices",

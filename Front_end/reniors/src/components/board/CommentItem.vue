@@ -12,15 +12,16 @@
         </div>
     </span>
 
-    <span v-if="isEditing">
-        <input type="text" v-model="contents">
-        <button @click="onUpdate" class="btn-open">수정</button>
-        <button @click="switchIsEditing" class="btn-close"></button>
+    <span v-if="isEditing" class="commentForm">
+        <img class="person" src="https://i7b307.p.ssafy.io/images/user/1" alt="person">
+        <input type="text" v-model="contents" style="">
+        <p @click="onUpdate" class="btn-open my-0" style="font-size:14px; color:#37BF99">수정</p>
+        <p @click="switchIsEditing" class="btn-close my-0"></p>
     </span>
 
-    <span v-if="currentUser.id === comment.userId && !isEditing">
-        <button @click="switchIsEditing" class="btn-open">수정</button>
-        <button @click="onDelete()">삭제</button>
+    <span v-if="currentUser.id === comment.userid && !isEditing" class="comed">
+        <p @click="switchIsEditing" class="btn-open" style=" color:#37BF99">수정</p>
+        <p @click="onDelete()" style="color:#f3620f">삭제</p>
     </span>
     
   </div>
@@ -85,8 +86,36 @@ export default{
 </script>
 
 <style scoped>
+.comed{
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    margin: 8px;
+}
+.comed p{
+    margin: 0 2px;
+    font-size: 14px;
+    
+}
+.commentForm{
+    width: 100%;
+    height: 32px;
+    display: flex;
+    margin: 8px 4px;
+    align-items: center;
+    justify-content: space-between;
+}
+input{
+    width: 75%;
+    border: solid 1px #8A8A8A;
+    height: 90%;
+    border-radius: 5px;
+    padding: 4px;
+}
 .total{
     border-bottom: solid 1px #FFD39B;
+    display: flex;
+    justify-content: space-between;
 }
 .content{
     height: 64px;
@@ -96,7 +125,7 @@ export default{
     margin: 0;
 }
 .title2{
-    margin: 0 8px;
+    margin: 4px 8px;
     font-size: 16px;
     display: flex;
     justify-content: start;
@@ -105,7 +134,7 @@ export default{
 }
 .bottom{
     display: flex;
-    margin: 0 4px;
+    margin: 2px 8px;
 }
 .person{
     width: 24px;
