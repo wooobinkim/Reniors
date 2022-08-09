@@ -1,7 +1,7 @@
 // import axios from "axios"
 // import drf from '@/api/drf'
 // import { apiInstance } from "./index.js";
-import http from "@/api/http";
+import http from "@/api/http"
 
 // const api = apiInstance();
 

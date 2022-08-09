@@ -65,6 +65,7 @@ export default{
     },
     created(){
         this.fetchArticle(this.articleId)
+        this.fetchComments(this.articleId)
     },
 }
 </script>
