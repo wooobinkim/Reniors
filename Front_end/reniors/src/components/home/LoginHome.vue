@@ -30,7 +30,7 @@ export default {
     const youtubes = computed(() => store.getters['home/youtubes'])
     const isYoutube = computed(() => store.getters['home/isYoutube'])
 
-    const logout = () => store.dispatch('home/logout')
+    const logout = () => store.dispatch('removeToken')
 
     return {
       recommendJobopenings, youtubes, isYoutube, logout

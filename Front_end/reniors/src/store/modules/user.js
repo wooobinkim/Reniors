@@ -1,3 +1,4 @@
+
 import router from '@/router'
 import axios from 'axios'
 // import jwt_decode from 'jwt-decode'
@@ -55,6 +56,7 @@ export const user = {
       removeToken({ commit }) {
         commit('SET_TOKEN', '')
         localStorage.setItem('token', '')
+        localStorage.setItem('vuex','')
       },
 
       // error 커밋 추가
@@ -75,6 +77,7 @@ export const user = {
         })
           // error 부분 추가
       },
+
 
       updateUser({ dispatch , getters }, userEdit){
         console.log(userEdit)
