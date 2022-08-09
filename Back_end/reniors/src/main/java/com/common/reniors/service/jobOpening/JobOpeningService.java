@@ -184,7 +184,7 @@ public class JobOpeningService {
 //        if (jobOpeningSearchDto.getGuGunId() != null) booleanBuilder.and(j.gugun.id.eq(jobOpeningSearchDto.getGuGunId()));
 //        if (jobOpeningSearchDto.getJobChildCategoryId()!= null) booleanBuilder.and(j.jobChildCategory.id.eq(jobOpeningSearchDto.getJobChildCategoryId()));
             if (searchCondition.getLastEdu() != null) booleanBuilder.and(j.lastEdu.eq(searchCondition.getLastEdu()));
-            if (searchCondition.getTypeEmployment() != null) booleanBuilder.and(j.employment.eq(searchCondition.getTypeEmployment()));
+            if (searchCondition.getTypeEmployment() != null) booleanBuilder.and(j.typeEmployment.eq(searchCondition.getTypeEmployment()));
 
         List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
                 .where(
