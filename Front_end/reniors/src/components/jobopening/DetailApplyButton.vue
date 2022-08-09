@@ -13,11 +13,14 @@ import { useStore } from 'vuex'
 
 export default {
   name: 'DetailApplyButton',
-  setup() {
+  props: {
+    jobopeningId: [String, Number],
+  },
+  setup(props) {
     const store = useStore()
 
     const apply = (login) => {
-      if (login === true) store.dispatch('jobopening/apply')
+      if (login === true) store.dispatch('jobopening/apply', props.jobopeningId)
     }
     const isLogin = computed(() => store.getters['isLogginedIn'])
 

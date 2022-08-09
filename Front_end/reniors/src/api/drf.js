@@ -82,6 +82,8 @@ export default {
   jobopening: {
     get: () => HOST + JOB + "/search",
     detail: (jobOpeningId) => HOST + JOB + `/${jobOpeningId}`,
+    apply: (jobopeningId) => HOST + JOB + `/${jobopeningId}` + '/apply',
+    getBookmark: () => HOST + JOB + '/bookmark',
     bookmark: (jobOpeningId) => HOST + JOB + `/${jobOpeningId}` + "/bookmark",
     applicant: (jobOpeningId) => HOST + JOB + `/${jobOpeningId}` + "/applicant",
   },

@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -21,6 +22,11 @@ export default {
   setup() {
     const store = useStore()
 
+    const isLogin = computed(() => store.getters['isLogginedIn'])
+    const fetchBookmark = () => store.dispatch('jobopening/fetchBookmark')
+    if (isLogin) {
+      fetchBookmark()
+    }
     const bookmark = () => store.dispatch('jobopening/bookmark')
 
     return {
