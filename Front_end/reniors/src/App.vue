@@ -1,6 +1,6 @@
 <template>
   <div class="container" >
-    <router-view style="width: 360px;" />
+    <router-view class="app-view" />
     <FooterComponent />
   </div>
 </template>
@@ -49,6 +49,16 @@ export default {
   flex-direction: column;
   align-items: center;
   padding-bottom: 64px;
+}
+
+.app-view {
+  width: 360px;
+}
+
+@media screen and (min-width: 720px) {
+  .app-view {
+    width: auto;
+  }
 }
 
 #app {
