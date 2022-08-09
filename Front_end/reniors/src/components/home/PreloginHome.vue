@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button @click="login" style="position: absolute; top: 100px; left: 100px;">login</button>
     <SearchBar />
     <HomeNotice :login="false" />
     <HomeInfo />
