@@ -13,14 +13,14 @@ import FindUsernameView from "../views/user/FindUsernameView.vue";
 import MyPageView from "../views/user/MyPageView.vue";
 import MyinfoEdit from "../components/user/MyinfoEdit.vue";
 
-import PreferSetting from "../components/user/PreferSetting"
+import PreferSetting from "../components/user/PreferSetting";
 
 import CompanyHomeView from "@/views/home/CompanyHomeView.vue";
 import HomeView from "../views/home/HomeView.vue";
 // import CompanyInterviewView from "@/views/CompanyInterviewView.vue";
 import CompanyInterviewView from "@/views/CompanyInterviewView.vue";
 import CompanyJobOpeningView from "@/views/CompanyJobOpeningView.vue";
-
+import CompanyMyPageView from "@/views/CompanyMyPageView.vue";
 // import CompanyMyPageView from "@/views/CompanyMyPageView.vue";
 
 import CompanyMyPage from "@/components/Company/Info/CompanyMyPage.vue";
@@ -34,6 +34,9 @@ import ApplyList from "@/components/Company/JobOpening/ApplyList.vue";
 import ResumeView from "@/components/Company/JobOpening/ResumeView.vue";
 import JobOpeningInterviewList from "@/components/Company/interview/JobOpeningInterviewList.vue";
 import CompanyInterviewList from "@/components/Company/interview/InterviewList.vue";
+import CompanyOpenVidu from "@/components/Company/interview/CompanyOpenVidu.vue";
+import EvalList from "@/components/Company/interview/EvalList.vue";
+import EvalRegist from "@/components/Company/interview/EvalRegist.vue";
 // import CompanyInterview from "@/components/Company/Interview/CompanyInterview.vue";
 // import CompanyMyPage from "@/components/Company/MyPage/CompanyMyPage.vue";
 
@@ -101,20 +104,18 @@ const routes = [
     path: "/mypage",
     name: "MyPage",
     component: MyPageView,
-  },  
+  },
   {
     path: "/myinfo",
     name: "MyinfoEdit",
     component: MyinfoEdit,
-  },  
+  },
 
   {
     path: "/setting/1",
     name: "PreferSetting",
     component: PreferSetting,
-  },  
-
-
+  },
 
   // resume
   {
@@ -184,26 +185,28 @@ const routes = [
     component: CompanyHomeView,
   },
   {
-    path: "/company/regist",
+    path: "/regist",
     name: "companyregist",
     component: CompanyRegist,
   },
+
   {
     path: "/company/mypage",
     name: "companymypage",
-    component: CompanyMyPage,
-    // children: [
-    //   {
-    //     path: "update",
-    //     name: "companyupdate",
-    //     component: CompanyUpdate,
-    //   },
-    // ],
-  },
-  {
-    path: "/company/mypage/update",
-    name: "companyupdate",
-    component: CompanyUpdate,
+    component: CompanyMyPageView,
+    redirect: "/company/mypage/main",
+    children: [
+      {
+        path: "main",
+        name: "companymypage",
+        component: CompanyMyPage,
+      },
+      {
+        path: "update",
+        name: "companyupdate",
+        component: CompanyUpdate,
+      },
+    ],
   },
   {
     path: "/company/jobopening",
@@ -247,7 +250,7 @@ const routes = [
     path: "/company/interview",
     name: "companyinterview",
     component: CompanyInterviewView,
-    redirect: "/company/interview/list",
+    // redirect: "/company/interview/list",
     children: [
       {
         path: "list",
@@ -258,6 +261,21 @@ const routes = [
         path: "interviewlist/:no",
         name: "companyinterviewlist",
         component: CompanyInterviewList,
+      },
+      {
+        path: "interviewroom/:no",
+        name: "companyopenvidu",
+        component: CompanyOpenVidu,
+      },
+      {
+        path: "evallist",
+        name: "companyeval",
+        component: EvalList,
+      },
+      {
+        path: "evalregist",
+        name: "evalregist",
+        component: EvalRegist,
       },
     ],
   },
@@ -313,6 +331,7 @@ const routes = [
   },
 
   //open vidu
+
   {
     path: "/interview",
     component: OpenVidu,

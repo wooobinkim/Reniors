@@ -1,9 +1,8 @@
 <template>
   <div>
-    <router-link
-      :to="{ name: 'companyinterviewlist', params: { no: jobopening.id } }"
-      >제목 : {{ jobopening.title }}</router-link
-    >
+    제목 : {{ jobopening.title }}
+    <button @click="interview()">면접일정 관리</button>
+    <button @click="eval()">면접평가 관리</button>
   </div>
 </template>
 
@@ -11,6 +10,20 @@
 export default {
   props: {
     jobopening: Object,
+  },
+  methods: {
+    interview() {
+      this.$router.push({
+        name: "companyinterviewlist",
+        params: { no: this.jobopening.id },
+      });
+    },
+    eval() {
+      this.$router.push({
+        name: "companyeval",
+        params: { no: this.jobopening.id },
+      });
+    },
   },
 };
 </script>
