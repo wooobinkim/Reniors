@@ -1,7 +1,7 @@
 package com.common.reniors.dto.jobOpening;
 
 import com.common.reniors.domain.entity.Type.LastEdu;
-import com.common.reniors.domain.entity.Type.Employment;
+import com.common.reniors.domain.entity.Type.typeEmployment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,7 @@ public class JobOpeningUpdateRequest {
     private int minSalary;
     private String jobPosition;
     private int workingDay;
-    private Employment employment;
+    private typeEmployment typeEmployment;
     private LastEdu lastEdu;
     private Long gugunId;
     private Long jobChildCategoryId;

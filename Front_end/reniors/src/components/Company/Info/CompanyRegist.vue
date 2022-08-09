@@ -142,11 +142,11 @@
           type="file"
           class="form-control"
           placeholder="이미지를 선택해주세요"
-          ref = "img"
+          ref="img"
           @change="changeImg()"
         />
       </div>
-      
+
       <button @click="thirdprev()">이전</button>
       <button @click="registcompany()">완료</button>
     </div>
@@ -173,7 +173,7 @@ export default {
         representativePhone: "",
         typeCompany: "",
       },
-      companyImg:"",
+      companyImg: "",
     };
   },
   computed: {
@@ -193,7 +193,7 @@ export default {
     thirdprev() {
       this.pagenum = 2;
     },
-    changeImg(){
+    changeImg() {
       this.companyImg = this.$refs.img.files;
       // console.log(this.companyImg);
     },

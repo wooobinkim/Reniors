@@ -144,6 +144,7 @@ export default {
     },
 
     registJobOpening: ({ commit }, jobopening) => {
+      console.log(jobopening);
       http
         .post(`/company/jobopening`, JSON.stringify(jobopening))
         .then(({ data }) => {

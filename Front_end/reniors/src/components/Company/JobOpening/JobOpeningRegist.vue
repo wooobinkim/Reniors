@@ -230,9 +230,13 @@ export default {
     ]),
     ...mapActions("company", ["registJobOpening"]),
     regist() {
-      this.jobopening.createdDate = new Date(moment(this.jobopening.createdDate).format("YYYY-MM-DD"));
-      this.jobopening.finishedDate = new Date(moment(this.jobopening.finishedDate).format("YYYY-MM-DD"));
-      
+      this.jobopening.createdDate = new Date(
+        moment(this.jobopening.createdDate).format("YYYY-MM-DD")
+      );
+      this.jobopening.finishedDate = new Date(
+        moment(this.jobopening.finishedDate).format("YYYY-MM-DD")
+      );
+
       this.registJobOpening(this.jobopening);
       this.$router.push({ name: "companyjobopeninglist" });
     },
