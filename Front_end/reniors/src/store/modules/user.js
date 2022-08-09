@@ -1,4 +1,5 @@
 
+import multipart from '@/api/multipart'
 import router from '@/router'
 import axios from 'axios'
 // import jwt_decode from 'jwt-decode'
@@ -169,10 +170,7 @@ export const user = {
             headers: getters.authHeader
           })
           .then(res => {
-            console.log('그냥')
-            console.log(res.data)
             commit('SET_CURRENT_USER', res.data)
-            console.log('proxy')
             console.log(getters.currentUser)
             // dispatch('fetchMypage', res.data.user_id)
           })
@@ -183,6 +181,19 @@ export const user = {
             }
           })
         }
+      },
+
+      registUser({commit}, formData) {
+        console.log(formData)
+        console.log(commit)
+        multipart
+          .post(`/users/regist`, formData)
+          .then(() => {
+            console.log('성공')
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
     },
 

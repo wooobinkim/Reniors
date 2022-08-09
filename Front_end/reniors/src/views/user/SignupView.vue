@@ -44,20 +44,40 @@
             <b-form-input class="mb-3" style="width:90%;" v-model="user.address" type="text" placeholder="주소 검색" ></b-form-input>
             <button class="search" style="margin-bottom:16px;" @click="execDaumPostcode()" type="button" value="우편번호 찾기" ><img src="@/assets/searching.png" alt="search"></button>
           </div>
-          <b-form-input class="mb-3" v-model="extraAddress" type="text" placeholder="상세주소를 입력해주세요" ></b-form-input>
+          <b-form-input class="mb-3" v-model="user.extraAddress" type="text" placeholder="상세주소를 입력해주세요" ></b-form-input>
           <!-- <b-form-input class="mb-3" v-model="credentials.address" type="text" placeholder="" ></b-form-input> -->
         </div>
 
         <div v-show="page===3">
           <p style="font-size: 14px">마지막 단계입니다!</p>
-          <p><span>최종학력</span>, <span>생년월일</span>, 성별을 입력해주세요!</p>
+          <p><span>최종학력</span>, <span>생년월일</span>, <span>성별</span>을 입력해주세요! <br><span>프로필 사진</span>도 넣어주시면 좋구요 :)</p>
+
           <br>
+          <!-- <p class="forminfo">최종학력</p>
+          <b-form-select class="mb-3" v-model="user.lastEdu" :options="lastEdu" ></b-form-select> -->
           <p class="forminfo">최종학력</p>
-          <b-form-select class="mb-3" v-model="user.lastEdu" :options="lastEdu" ></b-form-select>
+          <b-form-select class="mb-3" v-model="user.lastEdu">            
+            <option
+              v-for="lastedu in lastedus"
+              :value="lastedu.value"
+              :key="lastedu"
+            >
+              {{ lastedu.text }}
+            </option></b-form-select>
           <p class="forminfo">생년월일</p>
           <b-form-input class="mb-3" v-model="user.birth" type="date" placeholder="생년-월-일" ></b-form-input>
           <p class="forminfo">성별</p>
           <b-form-select class="mb-3" v-model="user.gender" :options="gender" ></b-form-select>
+          <div class="mb-3 mt-3">
+            <p class="forminfo">프로필 사진</p>
+            <input
+              type="file"
+              class="form-control"
+              placeholder="이미지를 선택해주세요"
+              ref = "img"
+              @change="changeImg()"
+            />
+          </div>
         </div>
 
         
@@ -65,7 +85,7 @@
           <button style="background-color: #FFC0A3;" type="button" v-show="page === 1"><router-link style="text-decoration:none; color: white;" :to="{ name: 'Login' }">이전</router-link></button>
           <button style="background-color: #FFC0A3;" type="button" v-show="page !== 1" @click="decreasePage">이전</button>
           <button type="button" v-show="page !== 3" @click="increasePage">다음</button>
-          <button @click="signup()" v-show="page === 3">완료!</button>
+          <button @click="regist()" v-show="page === 3">완료!</button>
         </footer>
       </div>
 
@@ -76,7 +96,7 @@
   </div>
 </template>
 <script>
-// import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 // import { register } from "@/api/user.js"
 import axios from 'axios'
 
@@ -92,8 +112,9 @@ export default {
         name: '',
         phone: '',
         address: '',
+        extraAddress: '',
         // extraAddress: '',
-        lastEdu: '',
+        lastEdu: null,
         birth: '',
         gender: '',
         isOpen: 'CLOSE',
@@ -105,12 +126,6 @@ export default {
         totalCareer: 0,        
         // 이력서 공개 여부
       },
-      lastEdu: [
-        // value 수정
-      { value: null, text: '최종학력을 선택해주세요.' },          
-      { value: '고교졸업이하', text: '고교졸업 이하' },
-      { value: 'b', text: 'Selected Option' },
-      ],
       gender: [
       { value: null, text: '성별을 선택해주세요.' },          
       { value: 'F', text: '여자' },
@@ -118,14 +133,19 @@ export default {
       ],
       page: 1,
       password: '',
-      extraAddress: ''
+      userImg:'',
+      
     }
   },
   setup() {},
   created() {},
   mounted() {},
   unmounted() {},
+  computed: {
+    ...mapState("category", ["lastedus"]),
+  },
   methods: {
+    ...mapActions(["registUser"]),
     // ...mapActions(['signup']),
     // confirm(){
     //   register(this.credentials, (response) => {
@@ -134,6 +154,39 @@ export default {
     //     }}
     //   )
     // },
+    changeImg(){
+      this.userImg = this.$refs.img.files;
+      console.log(this.userImg);
+    },
+    regist(){
+      if (this.user.userAppId == '') {
+        alert('사용하실 이메일을 입력해주세요.')
+      } else if (this.user.userAppPwd == '') {
+        alert('사용하실 패스워드를 입력해주세요.')
+      } else if (this.user.userAppPwd != this.password) {
+        alert('비밀번호를 다시 확인해주세요.')
+      } else if (this.user.name == '') {
+        alert('이름을 입력해주세요.')
+      } else if (this.user.phone== '') {
+        alert('전화번호를 입력해주세요.')
+      } else if (this.user.address == '') {
+        alert('주소를 입력해주세요.')
+      } else if (this.user.gender == '') {
+        alert('성별을 선택해주세요.')
+      } else {
+        const formData = new FormData()
+        formData.append('img',this.userImg[0])
+        formData.append('data',new Blob([JSON.stringify(this.user)],{type : "application/json"}))
+
+
+        this.registUser(formData)
+
+      }
+    },
+
+
+
+
     signup(){
       axios({
         // url 수정
@@ -146,8 +199,8 @@ export default {
         console.log('성공!')
         this.$router.push({ name: 'Login' })
       })
-      .catch((res) => {
-        console.log(res)
+      .catch((err) => {
+        console.log(err)
       })
       // error 부분 추가
     },
@@ -160,8 +213,8 @@ export default {
     execDaumPostcode() {
       new window.daum.Postcode({
         oncomplete: (data) => {
-          if (this.extraAddress !== "") {
-            this.extraAddress = "";
+          if (this.user.extraAddress !== "") {
+            this.user.extraAddress = "";
           }
           if (data.userSelectedType === "R") {
             // 사용자가 도로명 주소를 선택했을 경우
@@ -176,21 +229,21 @@ export default {
             // 법정동명이 있을 경우 추가한다. (법정리는 제외)
             // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
             if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
-              this.extraAddress += data.bname;
+              this.user.extraAddress += data.bname;
             }
             // 건물명이 있고, 공동주택일 경우 추가한다.
             if (data.buildingName !== "" && data.apartment === "Y") {
-              this.extraAddress +=
-                this.extraAddress !== ""
+              this.user.extraAddress +=
+                this.user.extraAddress !== ""
                   ? `, ${data.buildingName}`
                   : data.buildingName;
             }
             // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-            if (this.extraAddress !== "") {
-              this.extraAddress = `(${this.extraAddress})`;
+            if (this.user.extraAddress !== "") {
+              this.user.extraAddress = `(${this.user.extraAddress})`;
             }
           } else {
-            this.extraAddress = "";
+            this.user.extraAddress = "";
           }
         },
       }).open();
