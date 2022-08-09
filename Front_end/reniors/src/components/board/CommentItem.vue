@@ -1,7 +1,15 @@
 <template>
-  <div>
-    <span v-if="!isEditing">
-        {{ comment.contents }} | {{comment.userName}}
+  <div class="total">
+    <span v-if="!isEditing" class="content">
+        <div>
+            <p  class="title2">{{comment.contents}}</p>
+            <div class="bottom">
+                <img class="person" src="https://i7b307.p.ssafy.io/images/user/1" alt="person">
+                <p  class="userName">{{comment.userName}} |</p>
+                <p class="time">{{comment.updatedAt.slice(0,4)}}.{{comment.updatedAt.slice(5,7)}}.{{comment.updatedAt.slice(8,10)}}. {{(Number(comment.updatedAt.slice(11,13))+ 8)%24}}:{{comment.updatedAt.slice(14,16)}}</p>
+
+            </div>
+        </div>
     </span>
 
     <span v-if="isEditing">
@@ -75,3 +83,52 @@ export default{
     }
 }
 </script>
+
+<style scoped>
+.total{
+    border-bottom: solid 1px #FFD39B;
+}
+.content{
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin: 0;
+}
+.title2{
+    margin: 0 8px;
+    font-size: 18px;
+    display: flex;
+    justify-content: start;
+    font-weight: bold;
+
+}
+.bottom{
+    display: flex;
+    margin: 0 4px;
+}
+.person{
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    
+}
+.userName{
+    margin: 0 8px;
+    font-size: 14px;
+    color: #6D6D6D;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+}
+.time{
+    font-size: 12px;
+    color: #6D6D6D;
+    margin: 0;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+}
+</style>
