@@ -43,8 +43,10 @@ export default {
       const response = await axios.post(drf.jobopening.apply(jobopeningId))
       console.log(response)
     },
-    async fetchBookmark({ commit }) {
-      const response = await axios.get(drf.jobopening.getBookmark())
+    async fetchBookmark({ commit, getters }) {
+      const Axios = axios.create({ headers: getters.authHeader })
+      const response = await Axios.get(drf.jobopening.getBookmark())
+      commit('BOOKMARKS', response.data)
       console.log(response)
     },
     async bookmark() {

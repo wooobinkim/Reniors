@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar />
+    <NavBar :jobopeningId="jobopeningId"/>
     <b-tabs pills class="jobopening-detail-tab"
       active-nav-item-class="bg-transparent"
     >
