@@ -6,7 +6,7 @@
     </router-link>
     <div class="jobopening-navbar-right">
       <font-awesome-icon class="bookmark-icon" icon="fa-regular fa-bookmark" />
-      <font-awesome-icon class="bookmark-icon" icon="fa-solid fa-bookmark" @click="bookmark" />
+      <font-awesome-icon class="bookmark-icon" icon="fa-solid fa-bookmark" @click="addBookmark(jobopeningId)" />
       {{bookmarks}}
       <router-link to="profile" class="navbar-profile">
         <img src="" alt="">
@@ -33,10 +33,10 @@ export default {
       fetchBookmark()
     }
     const bookmarks = computed(() => store.getters['jobopening/bookmarks'])
-    const bookmark = () => store.dispatch('jobopening/bookmark')
+    const addBookmark = (jobopeningId) => store.dispatch('jobopening/addBookmark', jobopeningId)
 
     return {
-      bookmark, isLogin, bookmarks,
+      addBookmark, isLogin, bookmarks,
     }
   }
 }
