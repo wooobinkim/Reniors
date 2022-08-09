@@ -1,6 +1,6 @@
 package com.common.reniors.dto.apply;
 
-import com.common.reniors.service.eval.Type.JobOpeningProcess;
+import com.common.reniors.domain.entity.Type.JobOpeningProcess;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;

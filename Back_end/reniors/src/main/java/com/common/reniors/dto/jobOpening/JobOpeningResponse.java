@@ -1,7 +1,7 @@
 package com.common.reniors.dto.jobOpening;
 
 import com.common.reniors.domain.entity.JobOpening;
-import com.common.reniors.service.eval.Type.IsFinish;
+import com.common.reniors.domain.entity.Type.IsFinish;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
