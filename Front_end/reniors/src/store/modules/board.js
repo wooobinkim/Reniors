@@ -12,6 +12,7 @@ export default {
     comments: [],
     interest: {},
     parents: [],
+    parent: {},
   },
 
   getters: {
@@ -25,6 +26,7 @@ export default {
     comments: (state) => state.comments,
     interest: (state) => state.interest,
     parents: (state) => state.parents,
+    parent: (state) => state.parent,
   },
 
   mutations: {
@@ -36,6 +38,7 @@ export default {
     SET_COMMENTS: (state, comments) => (state.comments = comments),
     SET_INTEREST: (state, interest) => (state.interest = interest),
     SET_PARENTS: (state, parents) => (state.parents = parents),
+    SET_PARENT: (state, parent) => (state.parent = parent),
   },
 
   actions: {
@@ -51,7 +54,6 @@ export default {
         }),
         headers: getters.authHeader,
       }).then((res) => {
-        console.log(categoryId)
         commit("SET_ARTICLES", res.data);
       });
     },
@@ -81,7 +83,6 @@ export default {
         }),
         headers: getters.authHeader,
       }).then((res) => {
-        console.log(res);
         dispatch("fetchArticle", res.data.boardId);
 
         router.push({

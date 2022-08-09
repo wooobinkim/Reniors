@@ -1,13 +1,16 @@
 <template>
   <div>  
     <board-head-slider></board-head-slider>
-    <p></p>
-    <div v-if="isLogginedIn">
-      <router-link :to="{name: 'boardCreate', params:{category_id: category_id}}">
-        <button>글쓰기</button>
-      </router-link>
-
+    <div class="title">
+      <!-- <p>{{parents[category_id - 1].name}}</p> -->
+      <p>{{jobname}}</p>
+      <div v-if="isLogginedIn">
+        <router-link :to="{name: 'boardCreate', params:{category_id: category_id}}">
+          <i class="bi bi-plus-circle-fill" style="color:#FFD39B; font-size: 24px; margin:0 16px"></i>
+        </router-link>
+      </div>
     </div>
+    
     <article-item
       v-for="article in articles"
       :key="article.boardId"
@@ -28,22 +31,31 @@ export default{
     },
     data(){
         return{
-          category_id : this.$route.params.category_id
+          category_id : Number(this.$route.params.category_id),
+          jobname: ""
+          // j`obname:""
         }
     },
     watch:{
       $route: function(from){
         this.fetchArticles(from.params.category_id)
+        // console.log(this.parents[Number(from.params.category_id) -1].name);
+        this.jobname = this.parents[Number(from.params.category_id) -1].name
+        // console.log(this.jobname);
       }
     },
     computed:{
-      ...mapGetters(['articles', 'isLogginedIn'])
+      ...mapGetters(['articles', 'isLogginedIn', 'parents'])
     },
     methods:{
       ...mapActions(['fetchArticles'])
     },
     created(){
+      // console.log("----------------------------------");
+      // console.log(this.category_id);
+      console.log(this.parents);
       this.fetchArticles(this.category_id)
+      this.jobname = this.parents[this.$route.params.category_id - 1].name
     },
     mounted(){},
     unmounted(){},
@@ -51,3 +63,22 @@ export default{
     
 }
 </script>
+
+<style scoped>
+.title{
+  height: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid 2px;
+  border-bottom-color: #FF843E;
+}
+.title p{
+  font-size: 20px;
+  font-weight: bold;
+  color: #FFB400;
+  margin: 0 16px;
+}
+
+
+</style>

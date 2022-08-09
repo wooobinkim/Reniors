@@ -1,10 +1,7 @@
 <template>
-  <div class="comment-list container">
-    <comment-form></comment-form>
-
-    <br>
+  <div class="comment-list">
+  
     <div class="row">
-      <p>댓글목록</p>
       <comment-item  
         v-for="(comment, idx) in comments" 
         :comment="comment" 
@@ -12,11 +9,11 @@
       </comment-item>        
 
     </div>
+    <comment-form></comment-form>
 
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex';
 
 
 import CommentForm from './CommentForm.vue';
@@ -26,21 +23,20 @@ export default{
     components:{ CommentForm, CommentItem },
     data(){
         return{
-            articleId: this.$route.params.board_id
+          
         };
+    },
+    props:{
+      comments: Array,
     },
     setup(){},
     
     mounted(){},
     unmounted(){},
-    methods:{
-      ...mapActions(['fetchComments'])
-    },
-    created(){
-      this.fetchComments(this.articleId)
-    },
-    computed: {
-      ...mapGetters(['comments'])
-    }
+ 
 }
 </script>
+
+<style scoped>
+
+</style>

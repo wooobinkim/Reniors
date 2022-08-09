@@ -1,5 +1,6 @@
 <template>
-  <form @submit.prevent="onSubmit" class="comment-list-form">
+  <form @submit.prevent="onSubmit" class="commentForm">
+    <img class="person" src="https://i7b307.p.ssafy.io/images/user/1" alt="person">
     <label for="comment"></label>
     <input type="text" id="content" placeholder="내용을 입력해주세요." v-model="content">
     <button type="submit">등록</button>
@@ -26,6 +27,9 @@ export default{
     methods:{
         ...mapActions(['createComment']),
         onSubmit() {
+            if(!this.content){
+                alert('내용을 입력해주세요!')
+            } else{
             this.createComment({
                 boardId: this.$route.params.board_id,
                 categoryId: this.$route.params.category_id,
@@ -33,12 +37,20 @@ export default{
                 })
             this.content= ''
             this.$router.go()
+            }
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
+.commentForm{
+    height: 64px;
+    display: flex;
+    margin: 8px 4px;
+    align-items: center;
+    justify-content: space-between;
+}
 .commentInput{
    width: 500px;
   height: 32px;
@@ -48,6 +60,31 @@ export default{
   outline: none;
   padding-left: 10px;
   background-color: rgb(233, 233, 233);
+}
+input{
+    width: 75%;
+    border: solid 1px #8A8A8A;
+    height: 90%;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+button{
+    height: 90%;
+    background-color: #FFC0A3;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+button:hover{
+    background-color: #ff8432;
+}
+.person{
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    
 }
 
 </style>

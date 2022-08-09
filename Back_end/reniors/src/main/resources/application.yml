@@ -1,0 +1,87 @@
+server:
+  port: 8080
+  error:
+    whitelabel:
+      enabled: false
+
+  servlet:
+    context-path: /api
+#    encoding:
+#      charset: UTF-8
+#      enabled: true
+#      force: true
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jmark?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+
+    #    username: ssafy
+    #    password: ssafy
+
+    #username: b307
+    username: root
+    password: root
+    #password: Common7333!
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      format_sql: true
+      #ddl-auto: none
+      ddl-auto: none
+
+  # swagger 설정
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: reniors@naver.com
+    password: Common7333!
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
+
+  # TODO : 파일 사이즈 및 경로 재지정 필요
+  servlet:
+    multipart:
+      file-size-threshold: 1MB
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+token:
+  # 일단 하루
+  expiration_time: 1296000000
+  secret: secretcode
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
+
+cloud:
+  aws:
+    s3:
+      bucket: reniors
+    credentials:
+      access-key: AKIAXELMJ3LZ44JYCGKU
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false

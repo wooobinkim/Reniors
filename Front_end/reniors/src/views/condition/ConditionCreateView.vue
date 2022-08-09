@@ -59,7 +59,7 @@
       <input type="number" v-model="payload.minSalary" name="minSalary" id="minSalary" placeholder="숫자만 입력 가능합니다.">
       <div class="condition-create-info">
         <div class="condition-create-info-icon">
-          <i>저울</i>
+          <font-awesome-icon icon="fa-solid fa-scale-balanced" style="color: var(--color-red-1); font-size: 20px;"/>
         </div>
         <p>리니어즈는 고용상 성차별 모집 방지를 위해<br>성별, 연령 조건 설정 기능을 제공하지 않고 있습니다.</p>
       </div>
@@ -243,6 +243,9 @@ export default {
 }
 
 .condition-create-info-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 2rem;
   background-color: white;
   height: 40px;
