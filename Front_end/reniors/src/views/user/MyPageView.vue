@@ -9,7 +9,7 @@
     <br>
     <div style="width: 312px; margin: auto;">
       <div class="profileimg">
-        <img class="person" src="https://i7b307.p.ssafy.io/images/user/1" alt="person">
+        <img class="person" src="https://i7b307.p.ssafy.io/images/company/1" alt="person">
       </div>
       <br>
       <br>
