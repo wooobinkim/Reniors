@@ -96,7 +96,7 @@ export default{
     margin: 0;
 }
 .title2{
-    margin: 0 8px;
+    margin: 4px 8px;
     font-size: 16px;
     display: flex;
     justify-content: start;
@@ -105,7 +105,7 @@ export default{
 }
 .bottom{
     display: flex;
-    margin: 0 4px;
+    margin: 2px 8px;
 }
 .person{
     width: 24px;

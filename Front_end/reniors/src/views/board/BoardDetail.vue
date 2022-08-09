@@ -19,8 +19,8 @@
             </div>
         </div>
         <!-- 수정 삭제 -->
-        <div class="icons">
-            <div v-if="isAuthor">
+        <div v-if="isAuthor">
+            <div class="icons">
                 <router-link :to="{ name: 'boardUpdate', parmas:{'category_id': categoryId, 'board_id': articleId}}">
                     <i class="bi bi-pencil-square" style="font-size:20px ;  margin: 4px;color: #6d6d6d ;" ></i>
                 </router-link>
@@ -120,6 +120,7 @@ export default{
 }
 .bottom{
     display: flex;
+    margin: 0 0 0 8px;
 }
 .person{
     width: 24px;
@@ -147,7 +148,7 @@ export default{
 }
 .contents{
     display: flex;
-    justify-content: center;
+    
     align-items: center;
     text-align: left;
     border-bottom: solid 2px #FF843E;
@@ -155,5 +156,6 @@ export default{
 .contents p{
     font-size: 14px;
     margin: 8px 8px 16px 8px;
+    
 }
 </style>
