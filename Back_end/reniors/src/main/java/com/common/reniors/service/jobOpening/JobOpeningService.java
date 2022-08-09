@@ -8,7 +8,7 @@ import com.common.reniors.domain.entity.user.User;
 import com.common.reniors.domain.repository.*;
 import com.common.reniors.domain.repository.category.GugunRepository;
 import com.common.reniors.domain.repository.category.JobChildCategoryRepository;
-import com.common.reniors.dto.Apply.ApplyResponse;
+import com.common.reniors.dto.apply.ApplyResponse;
 import com.common.reniors.dto.jobOpening.*;
 import com.common.reniors.dto.category.GugunResponse;
 import com.common.reniors.dto.category.JobChildCategoryResponse;

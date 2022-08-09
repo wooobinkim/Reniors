@@ -2,7 +2,7 @@ package com.common.reniors.domain.entity;
 
 import com.common.reniors.service.eval.Type.JobOpeningProcess;
 import com.common.reniors.domain.entity.user.User;
-import com.common.reniors.dto.Apply.ApplyUpdateRequest;
+import com.common.reniors.dto.apply.ApplyUpdateRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Getter;

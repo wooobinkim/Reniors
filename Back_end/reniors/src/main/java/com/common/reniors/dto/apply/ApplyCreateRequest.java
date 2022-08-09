@@ -1,4 +1,4 @@
-package com.common.reniors.dto.Apply;
+package com.common.reniors.dto.apply;
 
 import lombok.AccessLevel;
 import lombok.Data;

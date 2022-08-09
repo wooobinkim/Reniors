@@ -2,11 +2,11 @@ pipeline{
     agent any
 
     environment {
-       BACK_CONTAINER_NAME="RENIORS_BACK"
-       BACK_NAME = "RENIORS_BACK"
+       BACK_CONTAINER_NAME="reniors_back"
+       BACK_NAME = "reniors_back"
 
-       FRONT_CONTAINER_NAME="RENIORS_FRONT"
-       FRONT_NAME = "RENIORS_FRONT"
+       FRONT_CONTAINER_NAME="reniors_front"
+       FRONT_NAME = "reniors_front"
     }
     stages {
         stage('Clean'){

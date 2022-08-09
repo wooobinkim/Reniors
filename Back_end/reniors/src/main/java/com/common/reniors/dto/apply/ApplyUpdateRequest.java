@@ -1,4 +1,4 @@
-package com.common.reniors.dto.Apply;
+package com.common.reniors.dto.apply;
 
 import com.common.reniors.service.eval.Type.JobOpeningProcess;
 import lombok.AccessLevel;

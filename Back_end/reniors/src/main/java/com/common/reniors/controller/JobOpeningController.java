@@ -2,7 +2,7 @@ package com.common.reniors.controller;
 
 import com.common.reniors.common.config.web.LoginUser;
 import com.common.reniors.domain.entity.user.User;
-import com.common.reniors.dto.Apply.ApplyResponse;
+import com.common.reniors.dto.apply.ApplyResponse;
 import com.common.reniors.dto.jobOpening.*;
 import com.common.reniors.service.bookmark.BookmarkService;
 import com.common.reniors.service.jobOpening.JobOpeningService;
