@@ -35,12 +35,6 @@ export default {
 </script>
 
 <style>
-.search-bar {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .home-header {
   color: var(--color-red-1);
   font-weight: bold;
@@ -65,11 +59,17 @@ export default {
 }
 
 @media screen and (min-width: 720px) {
+  .search-bar {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .home-search {
     align-self: center;
+    margin-top: 40px;
   }
   .home-search-text {
-    width: 600px;
+    width: 440px;
   }
 }
 
