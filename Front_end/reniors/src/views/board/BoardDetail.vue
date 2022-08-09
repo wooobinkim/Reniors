@@ -21,11 +21,11 @@
         <!-- 수정 삭제 -->
         <div class="icons">
             <div v-if="isAuthor">
-            </div>
                 <router-link :to="{ name: 'boardUpdate', parmas:{'category_id': categoryId, 'board_id': articleId}}">
                     <i class="bi bi-pencil-square" style="font-size:20px ;  margin: 4px;color: #6d6d6d ;" ></i>
                 </router-link>
-            <i class="bi bi-trash-fill" style="font-size:20px; color: #6d6d6d ; margin: 4px;"  @click="deleteArticle({article_pk: articleId, categoryId: categoryId})"></i>
+                <i class="bi bi-trash-fill" style="font-size:20px; color: #6d6d6d ; margin: 4px;"  @click="deleteArticle({article_pk: articleId, categoryId: categoryId})"></i>
+            </div>
         </div>
     </div>
 
