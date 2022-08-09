@@ -202,9 +202,12 @@ export default {
         alert("비밀번호가 동일하지 않습니다.");
       } else {
         const formData = new FormData();
-        formData.append("img",this.companyImg[0]);
-        formData.append("data",new Blob([JSON.stringify(this.company)],{type : "application/json"}));
-        console.log(formData)
+        formData.append("img", this.companyImg[0]);
+        formData.append(
+          "data",
+          new Blob([JSON.stringify(this.company)], { type: "application/json" })
+        );
+        console.log(this.company);
         this.registCompany(formData);
         this.$router.push({ name: "Login" });
       }

@@ -1,6 +1,6 @@
 package com.common.reniors.dto.jobOpening;
 
-import com.common.reniors.domain.entity.Type.typeEmployment;
+import com.common.reniors.domain.entity.Type.TypeEmployment;
 import com.common.reniors.domain.entity.Type.LastEdu;
 import com.common.reniors.domain.entity.SearchCondition;
 import lombok.*;
@@ -15,7 +15,7 @@ public class SearchConditionResponse {
     private int minCareer;
     private int minSalary;
     private int workingDay;
-    private typeEmployment typeEmployment;
+    private TypeEmployment typeEmployment;
     private LastEdu lastEdu;
     private String jobChildCategory;
 
