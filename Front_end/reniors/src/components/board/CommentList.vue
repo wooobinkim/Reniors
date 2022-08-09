@@ -23,7 +23,7 @@ export default{
     components:{ CommentForm, CommentItem },
     data(){
         return{
-            articleId: this.$route.params.board_id
+          
         };
     },
     props:{
