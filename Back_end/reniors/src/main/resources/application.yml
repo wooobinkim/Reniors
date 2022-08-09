@@ -47,31 +47,6 @@ spring:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
 
-  security:
-    oauth2.client:
-    oauth2:
-      client:
-        registration:
-          kakao:
-            clientId: 4e4c47797fd9117b5651478290547b4f
-            client-secret: fVNUoYh4Tm0P6jFVdcBFdIBS9gdS1u6l
-            clientAuthenticationMethod: post
-            authorizationGrantType: authorization_code
-            redirectUri: http://localhost:8080/api/users/login/kakao
-            scope:
-              - profile_nickname
-              - profile_image
-              - account_email
-              - gender
-              - birthday
-            clientName: Kakao
-        provider:
-          kakao:
-            authorizationUri: https://kauth.kakao.com/oauth/authorize
-            tokenUri: https://kauth.kakao.com/oauth/token
-            userInfoUri: https://kapi.kakao.com/v2/user/me
-            userNameAttribute: id
-
   # TODO : 파일 사이즈 및 경로 재지정 필요
   servlet:
     multipart:
