@@ -13,6 +13,8 @@ import FindUsernameView from "../views/user/FindUsernameView.vue";
 import MyPageView from "../views/user/MyPageView.vue";
 import MyinfoEdit from "../components/user/MyinfoEdit.vue";
 
+import PreferSetting from "../components/user/PreferSetting"
+
 import CompanyHomeView from "@/views/home/CompanyHomeView.vue";
 import HomeView from "../views/home/HomeView.vue";
 // import CompanyInterviewView from "@/views/CompanyInterviewView.vue";
@@ -101,6 +103,12 @@ const routes = [
     path: "/myinfo",
     name: "MyinfoEdit",
     component: MyinfoEdit,
+  },  
+
+  {
+    path: "/setting/1",
+    name: "PreferSetting",
+    component: PreferSetting,
   },  
 
 
