@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar />
+    <NavBar :jobopeningId="jobopeningId"/>
     <b-tabs pills class="jobopening-detail-tab"
       active-nav-item-class="bg-transparent"
     >
@@ -9,7 +9,7 @@
       <!-- 회사정보가 상세조회에서 넘어오지않음 -->
       <b-tab title="기업정보"><DetailInfo v-if="false"/></b-tab>
     </b-tabs>
-    <DetailApplyButton />
+    <DetailApplyButton :jobopeningId="jobopeningId"/>
   </div>
 </template>
 

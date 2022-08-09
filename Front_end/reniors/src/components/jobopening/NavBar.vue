@@ -5,7 +5,9 @@
       <h2>채용공고</h2>
     </router-link>
     <div class="jobopening-navbar-right">
-      <svg @click="bookmark" class="navbar-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M48 0H336C362.5 0 384 21.49 384 48V487.7C384 501.1 373.1 512 359.7 512C354.7 512 349.8 510.5 345.7 507.6L192 400L38.28 507.6C34.19 510.5 29.32 512 24.33 512C10.89 512 0 501.1 0 487.7V48C0 21.49 21.49 0 48 0z"/></svg>
+      <font-awesome-icon class="bookmark-icon" icon="fa-regular fa-bookmark" />
+      <font-awesome-icon class="bookmark-icon" icon="fa-solid fa-bookmark" @click="bookmark" />
+      {{bookmarks}}
       <router-link to="profile" class="navbar-profile">
         <img src="" alt="">
       </router-link>
@@ -14,17 +16,27 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
   name: 'NavBar',
+  props: {
+    jobopeningId: [String, Number],
+  },
   setup() {
     const store = useStore()
 
+    const isLogin = computed(() => store.getters['isLogginedIn'])
+    const fetchBookmark = () => store.dispatch('jobopening/fetchBookmark')
+    if (isLogin.value) {
+      fetchBookmark()
+    }
+    const bookmarks = computed(() => store.getters['jobopening/bookmarks'])
     const bookmark = () => store.dispatch('jobopening/bookmark')
 
     return {
-      bookmark
+      bookmark, isLogin, bookmarks,
     }
   }
 }
@@ -51,7 +63,13 @@ export default {
   width: 24px;
 }
 
-.jobopening-navbar-right > .navbar-svg:hover {
+.jobopening-navbar-right > .bookmark-icon {
+  height: 24px;
+  width: 24px;
+  color: var(--color-yellow-1);
+}
+
+.jobopening-navbar-right > .bookmark-icon:hover {
   cursor: pointer;
 }
 
