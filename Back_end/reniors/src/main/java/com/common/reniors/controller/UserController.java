@@ -54,7 +54,7 @@ public class UserController {
         if(file != null) {
             userProfile = awsS3Service.uploadFile(file, "user/");
         }
-        Long userId = userService.createUser(request, baseURL+"users/", userProfile);
+        Long userId = userService.createUser(request, baseURL+"user/", userProfile);
         Map<String, Long> response = new HashMap<>();
         response.put("userId", userId);
         return ResponseEntity.ok(response);
@@ -97,7 +97,7 @@ public class UserController {
         if(file != null && request.isChangeProfile()) {
             userProfile = awsS3Service.uploadFile(file, "user/");
         }
-        userService.updateUser(user.getId(), request, baseURL+"users/", userProfile);
+        userService.updateUser(user.getId(), request, baseURL+"user/", userProfile);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
