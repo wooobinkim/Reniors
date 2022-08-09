@@ -30,12 +30,8 @@ pipeline{
             steps {
                 sh "cd /var/jenkins_home/workspace/reniors_jenkins/"
                 sh "ls -ll"
-                sh "cd ./Back_end/reniors/"
-                sleep 1
-                sh "docker build -t ${BACK_NAME} ."
-                sh "cd /var/jenkins_home/workspace/reniors_jenkins/Front_end/reniors/"
-                sleep 1
-                sh "docker build -t ${FRONT_NAME} ."
+                sh "docker build -t ${BACK_NAME} ./Back_end/reniors/."
+                sh "docker build -t ${FRONT_NAME} ./Front_end/reniors/."
             }
         }
         stage('Deploy'){
