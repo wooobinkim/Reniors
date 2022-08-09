@@ -149,7 +149,7 @@ export default {
     position: fixed;
     left: 50%;
     transform: translate(-50%, 0);
-    bottom: 30px;
+    bottom: 60px;
   }
 
   footer > button {  
