@@ -35,7 +35,9 @@
     </div>
 
     <!-- 댓글 컴포넌트 -->
-    <comment-list></comment-list>
+    <comment-list
+        :comments="comments"
+    ></comment-list>
   </div>
 </template>
 <script>
@@ -53,13 +55,13 @@ export default{
         }
     },
     computed: {
-        ...mapGetters(['article', 'isAuthor', 'currentUser', 'parents'])
+        ...mapGetters(['article', 'isAuthor', 'currentUser', 'parents', 'comments'])
     },
     setup(){},
     mounted(){},
     unmounted(){},
     methods:{
-        ...mapActions(['fetchArticle', 'deleteArticle'])
+        ...mapActions(['fetchArticle', 'deleteArticle', 'fetchComments'])
     },
     created(){
         this.fetchArticle(this.articleId)

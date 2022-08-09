@@ -14,7 +14,6 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex';
 
 
 import CommentForm from './CommentForm.vue';
@@ -24,22 +23,17 @@ export default{
     components:{ CommentForm, CommentItem },
     data(){
         return{
-            articleId: this.$route.params.board_id
+          
         };
+    },
+    props:{
+      comments: Array,
     },
     setup(){},
     
     mounted(){},
     unmounted(){},
-    methods:{
-      ...mapActions(['fetchComments'])
-    },
-    created(){
-      this.fetchComments(this.articleId)
-    },
-    computed: {
-      ...mapGetters(['comments'])
-    }
+ 
 }
 </script>
 
