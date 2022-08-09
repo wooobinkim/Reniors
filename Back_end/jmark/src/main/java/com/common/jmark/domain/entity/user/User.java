@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
@@ -77,6 +78,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
 
+    @NotBlank
+    private String baseURL;
+
+    @NotBlank
+    private String userProfile;
+
     // 회원 - 게시판 연관관계
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Board> boards = new ArrayList<>();
@@ -115,7 +122,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserEval> userEvals = new ArrayList<>();
 
-   public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu) {
+   public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu, String baseURL, String userProfile) {
         User user = new User();
         user.userAppId = userAppId;
         user.userAppPwd = userAppPwd;
@@ -130,10 +137,12 @@ public class User {
         user.extraAddress = extraAddress;
         user.isOpen = isOpen;
         user.lastEdu = lastEdu;
+        user.baseURL = baseURL;
+        user.userProfile = userProfile;
         return user;
     }
 
-    public void update(String userAppPwd, String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu) {
+    public void update(String userAppPwd, String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu, String baseURL, String userProfile) {
         this.userAppPwd = userAppPwd;
         this.name = name;
         this.birth = birth;
@@ -144,5 +153,7 @@ public class User {
         this.extraAddress = extraAddress;
         this.isOpen = isOpen;
         this.lastEdu = lastEdu;
-    }
+        this.baseURL = baseURL;
+        this.userProfile = userProfile;
+   }
 }

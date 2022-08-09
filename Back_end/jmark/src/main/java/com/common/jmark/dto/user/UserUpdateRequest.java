@@ -46,4 +46,6 @@ public class UserUpdateRequest {
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
 
+    @NotNull
+    private boolean changeProfile;
 }

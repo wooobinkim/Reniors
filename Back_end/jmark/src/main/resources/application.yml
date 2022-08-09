@@ -20,9 +20,9 @@ spring:
 #    username: ssafy
 #    password: ssafy
 
-    username: root
-    password: root
-    #password: Common7333!
+    username: b307
+    #password: root
+    password: Common7333!
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -31,7 +31,7 @@ spring:
     hibernate:
       format_sql: true
       #ddl-auto: none
-      ddl-auto: create
+      ddl-auto: none
 
   # swagger 설정
   mvc:
@@ -63,3 +63,16 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+cloud:
+  aws:
+    s3:
+      bucket: reniors
+    credentials:
+      access-key: AKIAXELMJ3LZ44JYCGKU
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false

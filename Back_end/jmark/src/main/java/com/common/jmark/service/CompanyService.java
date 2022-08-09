@@ -49,7 +49,7 @@ public class CompanyService {
 
     //회사 회원가입
     @Transactional
-    public Long postCompany(CompanyCreateRequest request){
+    public Long postCompany(CompanyCreateRequest request, String baseURL ,String companyProfile){
         if (companyRepository.findByCompanyNum(request.getCompanyNum()).isPresent()) {
             throw new DuplicateException(String.format("%s은 이미 가입된 기업입니다.", request.getName()));
         } else {
@@ -63,6 +63,8 @@ public class CompanyService {
                 request.getCompanyNum(),
                 request.getCompanyPhone(),
                 request.getRepresentative(),
+                baseURL,
+                companyProfile,
                 request.getRepresentativePhone(),
                 request.getTypeCompany()
         );
@@ -94,8 +96,8 @@ public class CompanyService {
 
     //회사 정보수정
     @Transactional
-    public void updateCompany(Company company, CompanyUpdateRequest request){
-        company.update(request);
+    public void updateCompany(Company company, CompanyUpdateRequest request, String baseURL, String companyProfile){
+        company.update(request, baseURL, companyProfile);
     }
 
     //회사 탈퇴

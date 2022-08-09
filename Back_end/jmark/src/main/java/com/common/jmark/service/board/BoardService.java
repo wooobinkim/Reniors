@@ -103,6 +103,7 @@ public class BoardService {
     public BoardDetailResponse getBoardInfo(Long boardId){
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()->new NotFoundException(BOARD_NOT_FOUND));
-            return BoardDetailResponse.response(board);
+        board.viewsUp();
+        return BoardDetailResponse.response(board);
     }
 }

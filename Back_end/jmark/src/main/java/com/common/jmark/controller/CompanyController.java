@@ -1,5 +1,6 @@
 package com.common.jmark.controller;
 
+import com.common.jmark.common.config.data.service.AwsS3Service;
 import com.common.jmark.common.config.security.util.JwtUtil;
 import com.common.jmark.common.config.web.LoginCompany;
 import com.common.jmark.domain.entity.Company;
@@ -32,7 +33,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Api(tags={"회사 API"})
 public class CompanyController {
+
+    private static final String baseURL = "https://reniors.s3.ap-northeast-2.amazonaws.com/";
+
     private final CompanyService companyService;
+    private final AwsS3Service awsS3Service;
     private final JwtUtil jwtUtil;
 
     //회사 회원가입
@@ -41,20 +46,17 @@ public class CompanyController {
     public ResponseEntity<?> postCompany(
             @RequestPart(value = "img", required = false) MultipartFile file,
             @RequestPart(value = "data")  CompanyCreateRequest companyCreateRequest) throws Exception {
-        Long companyId = companyService.postCompany(companyCreateRequest);
+        String companyProfile = "company/companyBaseProfile.png";
         if(file != null) {
-            // TODO : 파일경로 수정
-            File dest = new File("C:/temp/image/" + companyId);
-            //File dest = new File("/home/ubuntu/images/company/" + companyId);
-            file.transferTo(dest);
+            companyProfile = awsS3Service.uploadFile(file, "company/");
         }
+        Long companyId = companyService.postCompany(companyCreateRequest, baseURL, companyProfile);
         return ResponseEntity.status(HttpStatus.CREATED).body(companyId);
     }
     @PostMapping("/login")
     @ApiOperation(value = "회사 로그인", notes = "회사 아이디로 로그인을 한다.")
     public ResponseEntity<?> loginCompany(@RequestBody CompanyLoginRequest companyLoginRequest){
         String accessToken = companyService.loginCompany(companyLoginRequest);
-
         return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.AUTHORIZATION,accessToken).build();
     }
 
@@ -64,8 +66,6 @@ public class CompanyController {
 
     public ResponseEntity<?> getCompany(@ApiIgnore @LoginCompany Company company){
         CompanyResponse companyResponse = companyService.getCompany(company);
-
-
         return ResponseEntity.status(HttpStatus.OK).body(companyResponse);
     }
 
@@ -78,13 +78,11 @@ public class CompanyController {
             @ApiIgnore @LoginCompany Company company,
             @RequestPart(value = "img", required = false) MultipartFile file,
             @RequestPart(value = "data") CompanyUpdateRequest companyUpdateRequest) throws Exception {
-        companyService.updateCompany(company, companyUpdateRequest);
-        if(file != null) {
-            // TODO : 파일경로 수정
-            //File dest = new File("C:/temp/image/" + companyCreateRequest.getCompanyNum());
-            File dest = new File("/home/ubuntu/images/company/" + company.getId());
-            file.transferTo(dest);
+        String companyProfile = "company/companyBaseProfile.png";
+        if(file != null && companyUpdateRequest.isChangeProfile()) {
+            companyProfile = awsS3Service.uploadFile(file, "company/");
         }
+        companyService.updateCompany(company, companyUpdateRequest, baseURL, companyProfile);
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
@@ -93,8 +91,8 @@ public class CompanyController {
     @DeleteMapping()
     @ApiOperation(value = "회사 탈퇴", notes = "회사 아이디 탈퇴한다.")
     public ResponseEntity<?> deleteCompany(@ApiIgnore @LoginCompany Company company){
+        awsS3Service.deleteFile(company.getCompanyProfile());
         companyService.deleteCompany(company);
-
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
@@ -103,7 +101,6 @@ public class CompanyController {
     @ApiOperation(value = "회사 공고 등록", notes = "회사가 공고를 등록한다.")
     public ResponseEntity<?> postJobOpening(@ApiIgnore @LoginCompany Company company, @RequestBody JobOpeningCreateRequest jobOpeningCreateRequest){
         Long jobOpeningId = companyService.postJobOpening(company, jobOpeningCreateRequest);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(jobOpeningId);
     }
 
@@ -112,10 +109,7 @@ public class CompanyController {
     @ApiOperation(value = "회사 공고목록", notes = "회사가 올린 공고 목록들을 가져온다.")
 
     public ResponseEntity<?> getJobOpeningList(@ApiIgnore @LoginCompany Company company){
-
         List<JobOpeningCompanyResponse> jobOpeningList = companyService.getJobOpeningList(company);
-
-
         return ResponseEntity.status(HttpStatus.OK).body(jobOpeningList);
     }
 
@@ -125,8 +119,6 @@ public class CompanyController {
 
     public ResponseEntity<?> getJobOpening(@ApiIgnore @LoginCompany Company company, @PathVariable("jobOpeningId") Long jobOpeningId){
         JobOpeningDetailResponse jobOpening = companyService.getJobOpening(company, jobOpeningId);
-
-
         return ResponseEntity.status(HttpStatus.OK).body(jobOpening);
     }
 
@@ -139,7 +131,6 @@ public class CompanyController {
 
        companyService.updateJobOpening(company, jobOpeningId, jobOpeningUpdateRequest);
 //        JobOpeningDto JobOpening= new JobOpeningDto(jobOpening);
-
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
@@ -148,7 +139,6 @@ public class CompanyController {
     @ApiOperation(value = "회사 공고삭제", notes = "회사가 올린 공고를 삭제한다.")
     public ResponseEntity<?> deleteJobOpening(@ApiIgnore @LoginCompany Company company, @PathVariable("jobOpeningId") Long jobOpeningId){
         companyService.deleteJobOpening(company,jobOpeningId);
-
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
@@ -157,7 +147,6 @@ public class CompanyController {
     @ApiOperation(value = "회사 공고끝내기", notes = "회사가 올린 공고를 끝낸다.")
     public ResponseEntity<?> finishJobOpening(@ApiIgnore @LoginCompany Company company, @PathVariable("jobOpeningId") Long jobOpeningId){
         companyService.finishJobOpening(company,jobOpeningId);
-
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
@@ -167,7 +156,6 @@ public class CompanyController {
 
     public ResponseEntity<?> getApplyList(@ApiIgnore @LoginCompany Company company, @PathVariable("jobOpeningId") Long jobOpeningId){
         List<ApplyResponse> applyList = companyService.getappliyList(company, jobOpeningId);
-
         return ResponseEntity.status(HttpStatus.OK).body(applyList);
     }
 
@@ -187,7 +175,6 @@ public class CompanyController {
                                          @RequestBody ApplyUpdateRequest applyUpdateRequest){
 
         companyService.updateapply(company, applyId, applyUpdateRequest);
-
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
