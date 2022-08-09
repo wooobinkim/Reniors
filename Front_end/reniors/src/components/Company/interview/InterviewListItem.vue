@@ -2,7 +2,9 @@
   <div>
     <div>{{ interviewapply.name }}</div>
     <div>{{ interviewapply.interviewDate }}</div>
-    <button>면접보기</button>
+    <router-link :to="{ name: 'companyopenvidu' }">
+      <button>면접보기</button>
+    </router-link>
   </div>
 </template>
 

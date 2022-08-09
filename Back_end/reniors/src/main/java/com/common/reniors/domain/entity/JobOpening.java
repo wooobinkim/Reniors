@@ -65,6 +65,8 @@ public class JobOpening{
     private String jobPosition;
 
     private int workingDay;
+
+    @Enumerated(EnumType.STRING)
     private IsFinish isFinish;
 
     @NotNull
@@ -91,10 +93,10 @@ public class JobOpening{
     private List<Apply> applies = new ArrayList<>();
 
     @OneToMany(mappedBy = "jobOpening")
-    private List<Eval> evals = new ArrayList<>();
+    private List<Room> rooms = new ArrayList<>();
 
     @OneToMany(mappedBy = "jobOpening")
-    private List<Room> rooms = new ArrayList<>();
+    private List<EvalQuestion> evalQuestions = new ArrayList<>();
 
     //공고 - 고용형태 연관관계
 //    @ManyToOne(fetch = FetchType.LAZY)
