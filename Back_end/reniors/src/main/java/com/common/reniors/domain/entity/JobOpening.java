@@ -1,7 +1,7 @@
 package com.common.reniors.domain.entity;
 
 import com.common.reniors.domain.entity.Type.LastEdu;
-import com.common.reniors.domain.entity.Type.Employment;
+import com.common.reniors.domain.entity.Type.typeEmployment;
 import com.common.reniors.domain.entity.Type.IsFinish;
 import com.common.reniors.domain.entity.category.Gugun;
 import com.common.reniors.domain.entity.category.JobChildCategory;
@@ -71,7 +71,7 @@ public class JobOpening{
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Employment employment;
+    private typeEmployment typeEmployment;
 
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
@@ -118,7 +118,7 @@ public class JobOpening{
         this.minSalary = jobOpeningCreateRequest.getMinSalary();
         this.jobPosition = jobOpeningCreateRequest.getJobPosition();
         this.workingDay = jobOpeningCreateRequest.getWorkingDay();
-        this.employment = jobOpeningCreateRequest.getEmployment();
+        this.typeEmployment = jobOpeningCreateRequest.getTypeEmployment();
         this.lastEdu=jobOpeningCreateRequest.getLastEdu();
         this.isFinish = IsFinish.F;
         this.company = company;
@@ -136,7 +136,7 @@ public class JobOpening{
         this.minSalary = jobOpeningUpdateRequest.getMinSalary();
         this.jobPosition = jobOpeningUpdateRequest.getJobPosition();
         this.workingDay = jobOpeningUpdateRequest.getWorkingDay();
-        this.employment = jobOpeningUpdateRequest.getEmployment();
+        this.typeEmployment = jobOpeningUpdateRequest.getTypeEmployment();
         this.lastEdu=jobOpeningUpdateRequest.getLastEdu();
         this.gugun = gugun;
         this.jobChildCategory = jobChildCategory;

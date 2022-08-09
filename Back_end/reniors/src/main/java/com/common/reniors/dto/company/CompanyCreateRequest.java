@@ -1,6 +1,6 @@
 package com.common.reniors.dto.company;
 
-import com.common.reniors.domain.entity.Type.Company;
+import com.common.reniors.domain.entity.Type.typeCompany;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +21,6 @@ public class CompanyCreateRequest {
     private String companyPhone;
     private String representative;
     private String representativePhone;
-    private Company company;
+    private typeCompany typeCompany;
 
 }
