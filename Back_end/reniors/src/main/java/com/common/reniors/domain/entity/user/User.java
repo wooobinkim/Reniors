@@ -1,11 +1,12 @@
 package com.common.reniors.domain.entity.user;
 
-import com.common.reniors.service.eval.Type.LastEdu;
+import com.common.reniors.domain.entity.Room;
 import com.common.reniors.domain.entity.Apply;
 import com.common.reniors.domain.entity.interviewQuestion.Answer;
 import com.common.reniors.domain.entity.SearchCondition;
 import com.common.reniors.service.eval.Type.Gender;
 import com.common.reniors.service.eval.Type.IsOpen;
+import com.common.reniors.service.eval.Type.LastEdu;
 import com.common.reniors.service.eval.Type.Role;
 import com.common.reniors.domain.entity.UserEval;
 import com.common.reniors.domain.entity.board.Board;
@@ -121,6 +122,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserEval> userEvals = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Room> rooms = new ArrayList<>();
 
    public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu, String baseURL, String userProfile) {
         User user = new User();
