@@ -1,12 +1,17 @@
 <template>
   <div>
     <div>{{ jobopeningdetail.title }}</div>
-    <apply-list-item
-      v-for="apply in applylist"
-      :key="apply.id"
-      :apply="apply"
-      :jobOpeningId="this.$route.params.no"
-    ></apply-list-item>
+
+    <template v-for="apply in applylist" :key="apply.id">
+      <div>
+        <input :value="apply.id" type="checkbox" v-model="passUser" />
+        <apply-list-item
+          :apply="apply"
+          :jobOpeningId="this.$route.params.no"
+        ></apply-list-item>
+      </div>
+    </template>
+    <button @click="pass()">합격자 등록</button>
   </div>
 </template>
 
@@ -18,6 +23,7 @@ export default {
   data() {
     return {
       jobopeningdetail: {},
+      passUser: [],
     };
   },
   created() {
@@ -33,7 +39,19 @@ export default {
     ...mapState("company", ["jobopening", "applylist"]),
   },
   methods: {
-    ...mapActions("company", ["getJobOpening", "getapplylist"]),
+    ...mapActions("company", ["getJobOpening", "getapplylist", "updateApply"]),
+    pass() {
+      this.passUser.forEach((data) => {
+        this.updateApply({
+          jobOpeningId: this.jobopeningdetail.id,
+          applyId: data,
+          apply: {
+            jobOpeningProcess: "최종합격",
+          },
+        });
+        this.$router.go();
+      });
+    },
   },
 };
 </script>

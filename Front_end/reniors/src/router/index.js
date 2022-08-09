@@ -16,6 +16,7 @@ import MyinfoEdit from "../components/user/MyinfoEdit.vue";
 import CompanyHomeView from "@/views/home/CompanyHomeView.vue";
 import HomeView from "../views/home/HomeView.vue";
 // import CompanyInterviewView from "@/views/CompanyInterviewView.vue";
+import CompanyInterviewView from "@/views/CompanyInterviewView.vue";
 import CompanyJobOpeningView from "@/views/CompanyJobOpeningView.vue";
 
 // import CompanyMyPageView from "@/views/CompanyMyPageView.vue";
@@ -28,6 +29,9 @@ import CompanyJobOpeningList from "@/components/Company/JobOpening/JobOpeningLis
 import CompanyJobOpeningRegist from "@/components/Company/JobOpening/JobOpeningRegist.vue";
 import CompanyJobOpeningUpdate from "@/components/Company/JobOpening/JobOpeningUpdate.vue";
 import ApplyList from "@/components/Company/JobOpening/ApplyList.vue";
+import ResumeView from "@/components/Company/JobOpening/ResumeView.vue";
+import JobOpeningInterviewList from "@/components/Company/interview/JobOpeningInterviewList.vue";
+import CompanyInterviewList from "@/components/Company/interview/InterviewList.vue";
 // import CompanyInterview from "@/components/Company/Interview/CompanyInterview.vue";
 // import CompanyMyPage from "@/components/Company/MyPage/CompanyMyPage.vue";
 
@@ -41,14 +45,13 @@ import BoardUpdate from "@/views/board/BoardUpdate.vue";
 import VideoMain from "@/views/video/VideoMain.vue";
 
 //practice
-import QuestionList from "@/views/practice/QuestionList"
-import QuestionAnswer from "@/views/practice/QuestionAnswer"
-import VideoPractice from "@/views/practice/VideoPractice"
-import VideoPracticeList from "@/views/practice/VideoPracticeList"
+import QuestionList from "@/views/practice/QuestionList";
+import QuestionAnswer from "@/views/practice/QuestionAnswer";
+import VideoPractice from "@/views/practice/VideoPractice";
+import VideoPracticeList from "@/views/practice/VideoPracticeList";
 
 //interview
-import OpenVidu from "@/views/openvidu/OpenVidu.vue"
-
+import OpenVidu from "@/views/openvidu/OpenVidu.vue";
 
 const routes = [
   {
@@ -225,6 +228,29 @@ const routes = [
         name: "applylist",
         component: ApplyList,
       },
+      {
+        path: "resume/:no",
+        name: "resumeview",
+        component: ResumeView,
+      },
+    ],
+  },
+  {
+    path: "/company/interview",
+    name: "companyinterview",
+    component: CompanyInterviewView,
+    redirect: "/company/interview/list",
+    children: [
+      {
+        path: "list",
+        name: "jobopeninginterviewlist",
+        component: JobOpeningInterviewList,
+      },
+      {
+        path: "interviewlist/:no",
+        name: "companyinterviewlist",
+        component: CompanyInterviewList,
+      },
     ],
   },
 
@@ -282,8 +308,8 @@ const routes = [
   {
     path: "/interview",
     component: OpenVidu,
-    name: "openVidu"
-  }
+    name: "openVidu",
+  },
 ];
 
 const router = createRouter({
