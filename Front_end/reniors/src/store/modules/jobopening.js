@@ -9,17 +9,20 @@ export default {
     tags: [ '#서울 송파구', '#연봉 3000', '#주5일', '#웹디자인', '#백엔드' ],
     jobopenings: [],
     selectedJobopening: {},
+    bookmarks: [],
   },
   getters: {
     tags: state => state.tags,
     isJobopenings: state => !_.isEmpty(state.jobopenings),
     jobopenings: state => state.jobopenings,
     selectedJobopening: state => state.selectedJobopening,
+    bookmarks: state => state.bookmarks,
   },
   mutations: {
     TAGS: (state, tags) => state.tags = tags,
     JOBOPENINGS: (state, jobopenings) => state.jobopenings = jobopenings,
-    SELECTJOB: (state, jobopening) => state.selectedJobopening = jobopening
+    SELECTJOB: (state, jobopening) => state.selectedJobopening = jobopening,
+    BOOKMARKS: (state, bookmarks) => state.bookmarks = bookmarks,
   },
   actions: {
     async fetchJobopenings({ commit }) {
@@ -36,8 +39,15 @@ export default {
       console.log(data)
       commit('SELECTJOB', data)
     },
-    async apply() {
-      console.log('apply')
+    async apply(_, jobopeningId) {
+      const response = await axios.post(drf.jobopening.apply(jobopeningId))
+      console.log(response)
+    },
+    async fetchBookmark({ commit, getters }) {
+      const Axios = axios.create({ headers: getters.authHeader })
+      const response = await Axios.get(drf.jobopening.getBookmark())
+      commit('BOOKMARKS', response.data)
+      console.log(response)
     },
     async bookmark() {
       console.log('bookmark')
