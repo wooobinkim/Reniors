@@ -20,6 +20,9 @@ public class BoardDetailResponse {
     @NotBlank
     String title;
 
+    @NotNull
+    Long userId;
+
     @NotBlank
     String contents;
 
@@ -29,6 +32,6 @@ public class BoardDetailResponse {
     @NotNull LocalDateTime updatedAt;
 
     public static BoardDetailResponse response(Board board){
-        return new BoardDetailResponse(board.getId(), board.getTitle(), board.getContents(), board.getUser().getName(), board.getUpdatedAt());
+        return new BoardDetailResponse(board.getId(), board.getTitle(),board.getUser().getId(), board.getContents(), board.getUser().getName(), board.getUpdatedAt());
     }
 }

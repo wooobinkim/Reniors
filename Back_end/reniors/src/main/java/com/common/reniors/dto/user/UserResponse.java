@@ -1,8 +1,8 @@
 package com.common.reniors.dto.user;
 
-import com.common.reniors.domain.entity.Type.LastEdu;
-import com.common.reniors.domain.entity.Type.Gender;
-import com.common.reniors.domain.entity.Type.IsOpen;
+import com.common.reniors.service.eval.Type.LastEdu;
+import com.common.reniors.service.eval.Type.Gender;
+import com.common.reniors.service.eval.Type.IsOpen;
 import com.common.reniors.domain.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;

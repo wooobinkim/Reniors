@@ -97,10 +97,10 @@ export default{
 }
 .title2{
     margin: 0 8px;
-    font-size: 18px;
+    font-size: 16px;
     display: flex;
     justify-content: start;
-    font-weight: bold;
+
 
 }
 .bottom{
