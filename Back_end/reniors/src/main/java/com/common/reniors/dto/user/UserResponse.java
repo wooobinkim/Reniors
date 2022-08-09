@@ -40,7 +40,11 @@ public class UserResponse {
 
     private LastEdu lastEdu;
 
+    private String baseURL;
+
+    private String userProfile;
+
     public static UserResponse response(User user){
-        return new UserResponse(user.getId(), user.getUserAppId(), user.getUserAppPwd(), user.getKakaoId(), user.getName(),user.getBirth(), user.getGender(),user.getPhone(), user.getTotalCareer(), user.getAddress(), user.getExtraAddress(), user.getIsOpen(), user.getLastEdu());
+        return new UserResponse(user.getId(), user.getUserAppId(), user.getUserAppPwd(), user.getKakaoId(), user.getName(),user.getBirth(), user.getGender(),user.getPhone(), user.getTotalCareer(), user.getAddress(), user.getExtraAddress(), user.getIsOpen(), user.getLastEdu(), user.getBaseURL(), user.getUserProfile());
     }
 }
