@@ -1,4 +1,4 @@
-package com.common.jmark.common.config.data;
+package com.common.jmark.common.config.data.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

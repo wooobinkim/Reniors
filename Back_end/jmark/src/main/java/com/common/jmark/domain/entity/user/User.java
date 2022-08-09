@@ -7,6 +7,7 @@ import com.common.jmark.domain.entity.SearchCondition;
 import com.common.jmark.domain.entity.Type.Gender;
 import com.common.jmark.domain.entity.Type.IsOpen;
 import com.common.jmark.domain.entity.Type.Role;
+import com.common.jmark.domain.entity.UserEval;
 import com.common.jmark.domain.entity.board.Board;
 import com.common.jmark.domain.entity.board.Comment;
 import com.common.jmark.domain.entity.recommend.RecommendCondition;
@@ -18,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,16 +66,10 @@ public class User {
     private int totalCareer;
 
     @NotNull
-    @Column(length = 50)
-    private String profileImgName;
-
-    @NotNull
-    @Column(length = 100)
-    private String profileImgPath;
-
-    @NotNull
     @Column(length = 100)
     private String address;
+
+    private String extraAddress;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -82,11 +78,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
 
-    @Column(length = 100)
-    private String portfolioName;
+    @NotBlank
+    private String baseURL;
 
-    @Column(length = 100)
-    private String portfolioPath;
+    @NotBlank
+    private String userProfile;
 
     // 회원 - 게시판 연관관계
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -123,7 +119,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
 
-   public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserEval> userEvals = new ArrayList<>();
+
+   public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu, String baseURL, String userProfile) {
         User user = new User();
         user.userAppId = userAppId;
         user.userAppPwd = userAppPwd;
@@ -134,29 +133,27 @@ public class User {
         user.phone = phone;
         user.role = Role.ROLE_USER;
         user.totalCareer = totalCareer;
-        user.profileImgName = profileImgName;
-        user.profileImgPath = profileImgPath;
         user.address = address;
+        user.extraAddress = extraAddress;
         user.isOpen = isOpen;
         user.lastEdu = lastEdu;
-        user.portfolioName = portfolioName;
-        user.portfolioPath = portfolioPath;
+        user.baseURL = baseURL;
+        user.userProfile = userProfile;
         return user;
     }
 
-    public void update(String userAppPwd, String name, Date birth, Gender gender, String phone, int totalCareer, String profileImgName, String profileImgPath, String address, IsOpen isOpen, LastEdu lastEdu, String portfolioName, String portfolioPath) {
+    public void update(String userAppPwd, String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu, String baseURL, String userProfile) {
         this.userAppPwd = userAppPwd;
         this.name = name;
         this.birth = birth;
         this.gender = gender;
         this.phone = phone;
         this.totalCareer = totalCareer;
-        this.profileImgName = profileImgName;
-        this.profileImgPath = profileImgPath;
         this.address = address;
+        this.extraAddress = extraAddress;
         this.isOpen = isOpen;
         this.lastEdu = lastEdu;
-        this.portfolioName = portfolioName;
-        this.portfolioPath = portfolioPath;
-    }
+        this.baseURL = baseURL;
+        this.userProfile = userProfile;
+   }
 }

@@ -32,21 +32,15 @@ public class UserResponse {
 
     private int totalCareer;
 
-    private String profileImgName;
-
-    private String profileImgPath;
-
     private String address;
+
+    private String extraAddress;
 
     private IsOpen isOpen;
 
     private LastEdu lastEdu;
 
-    private String portfolioName;
-
-    private String portfolioPath;
-
     public static UserResponse response(User user){
-        return new UserResponse(user.getId(), user.getUserAppId(), user.getUserAppPwd(), user.getKakaoId(), user.getName(),user.getBirth(), user.getGender(),user.getPhone(), user.getTotalCareer(), user.getProfileImgName(), user.getProfileImgPath(), user.getAddress(), user.getIsOpen(), user.getLastEdu(), user.getPortfolioName(),user.getPortfolioPath());
+        return new UserResponse(user.getId(), user.getUserAppId(), user.getUserAppPwd(), user.getKakaoId(), user.getName(),user.getBirth(), user.getGender(),user.getPhone(), user.getTotalCareer(), user.getAddress(), user.getExtraAddress(), user.getIsOpen(), user.getLastEdu());
     }
 }

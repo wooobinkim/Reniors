@@ -2,6 +2,7 @@ package com.common.jmark.domain.entity;
 
 import com.common.jmark.domain.entity.Enum.LastEdu;
 import com.common.jmark.domain.entity.Enum.TypeEmployment;
+import com.common.jmark.domain.entity.Type.IsFinish;
 import com.common.jmark.domain.entity.category.Gugun;
 import com.common.jmark.domain.entity.category.JobChildCategory;
 import com.common.jmark.dto.JobOpening.JobOpeningCreateRequest;
@@ -65,6 +66,7 @@ public class JobOpening{
     private String jobPosition;
 
     private int workingDay;
+    private IsFinish isFinish;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -89,6 +91,9 @@ public class JobOpening{
     @OneToMany(mappedBy = "jobOpening")
     private List<Apply> applies = new ArrayList<>();
 
+    @OneToMany(mappedBy = "jobOpening")
+    private List<Eval> evals = new ArrayList<>();
+
     //공고 - 고용형태 연관관계
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "type_employment_id")
@@ -111,6 +116,7 @@ public class JobOpening{
         this.workingDay = jobOpeningCreateRequest.getWorkingDay();
         this.typeEmployment = jobOpeningCreateRequest.getTypeEmployment();
         this.lastEdu=jobOpeningCreateRequest.getLastEdu();
+        this.isFinish = IsFinish.F;
         this.company = company;
         this.gugun = gugun;
         this.jobChildCategory = jobChildCategory;
@@ -130,6 +136,10 @@ public class JobOpening{
         this.lastEdu=jobOpeningUpdateRequest.getLastEdu();
         this.gugun = gugun;
         this.jobChildCategory = jobChildCategory;
+    }
+
+    public void finish(){
+        this.isFinish = IsFinish.T;
     }
 
 }

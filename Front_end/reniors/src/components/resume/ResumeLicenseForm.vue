@@ -1,30 +1,62 @@
 <template>
   <div>
-    <div class="license">
-      <p class="forminfo">자격증명</p>
-      <b-form-input class="mb-3" type="text" placeholder="자격증명을 입력해주세요." ></b-form-input>
-      <p class="forminfo">등급</p>
-      <b-form-select class="mb-3" :options="grade" ></b-form-select>
-      <p class="forminfo">취득일자</p>
-      <b-form-input class="mb-3" type="date" placeholder="생년-월-일" ></b-form-input>
-      <button>저장</button>
-    </div>
+    <form @submit.prevent="onSubmit">
+      <div class="license">
+        <p class="forminfo">자격증명</p>
+        <b-form-input class="mb-3" type="text" v-model="newLicense.name" placeholder="자격증명을 입력해주세요."></b-form-input>
+        <p class="forminfo">등급</p>
+        <b-form-select class="mb-3" :options="grade" v-model="newLicense.grade"></b-form-select>
+        <p class="forminfo">취득일자</p>
+        <b-form-input class="mb-3" type="date" v-model="newLicense.passedAt" placeholder="생년-월-일" ></b-form-input>
+        <button>저장</button>
+      </div>
+    </form>
 
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
   components: {},
+  props: {
+    license: Object,
+    action: String,
+  },
   data() {
     return {
-      example: '',
+      newLicense: {
+        grade: this.license.grade,
+        name: this.license.name,
+        passedAt: this.license.passedAt
+      },
+      grade: [
+        // value 수정
+      { value: null, text: '등급을 선택해주세요.' },          
+      { value: 'A', text: 'A' },
+      { value: 'B', text: 'B' },
+      ],
     }
   },
   setup() {},
   created() {},
   mounted() {},
   unmounted() {},
-  methods: {}
+  methods: {
+    ...mapActions(['createLicense', 'updateLicense']),
+    onSubmit(){
+      if (this.action === 'create'){
+        this.createLicense(this.newLicense)
+        this.$emit("show")
+      } else if (this.action === 'update'){
+        const payload = {
+          id: this.license.id,
+          ...this.newLicense
+        }
+        this.updateLicense(payload)
+        this.$emit("test")
+      }
+    }
+  }
 }
 </script>
 

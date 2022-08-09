@@ -22,12 +22,15 @@ public class BoardResponse {
     @NotBlank
     String title;
 
+    @NotNull
+    Long userId;
+
     @NotBlank
     String userName;
 
     @NotNull LocalDateTime updatedAt;
 
     public static BoardResponse response(Board board){
-        return new BoardResponse(board.getId(), board.getTitle(), board.getUser().getName(), board.getUpdatedAt());
+        return new BoardResponse(board.getId(), board.getTitle(),board.getUser().getId(), board.getUser().getName(), board.getUpdatedAt());
     }
 }

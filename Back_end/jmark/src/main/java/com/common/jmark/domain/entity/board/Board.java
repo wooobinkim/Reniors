@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class Board extends BaseEntity{
     @Column(columnDefinition = "TEXT")
     private String contents;
 
+    @NotNull
     private int views;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -47,6 +49,7 @@ public class Board extends BaseEntity{
         board.contents = contents;
         board.user = user;
         board.category = category;
+        board.views = 0;
         return board;
     }
 
@@ -55,4 +58,7 @@ public class Board extends BaseEntity{
         this.contents = contents;
     }
 
+    public void viewsUp(){
+        this.views++;
+    }
 }

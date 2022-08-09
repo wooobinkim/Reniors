@@ -16,21 +16,13 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/jmark?serverTimezone=UTC&characterEncoding=UTF-8
-<<<<<<< HEAD
 
 #    username: ssafy
 #    password: ssafy
 
-     username: root
-#       password: root
-
-   password: Common7333!
-
-=======
-    username: root
+    username: b307
     #password: root
     password: Common7333!
->>>>>>> 0d1c0e68eb77ea003e3be3125a1ad4965ba62b4d
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -38,12 +30,24 @@ spring:
     show-sql: true
     hibernate:
       format_sql: true
+      #ddl-auto: none
       ddl-auto: none
 
   # swagger 설정
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+
+# TODO : 파일 사이즈 및 경로 재지정 필요
+  servlet:
+    multipart:
+      file-size-threshold: 1MB
+
+      max-file-size: 100MB
+      max-request-size: 100MB
+      #location: /home/ubuntu/
+      location: C:/Temp #임시 저장 공간
 
 token:
   # 일단 하루
@@ -59,3 +63,16 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+cloud:
+  aws:
+    s3:
+      bucket: reniors
+    credentials:
+      access-key: AKIAXELMJ3LZ44JYCGKU
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false

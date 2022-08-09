@@ -1,31 +1,54 @@
 <template>
   <div>
-    <div class="award">
-      <p class="forminfo">수상명</p>
-      <b-form-input class="mb-3" type="text" placeholder="수상명" ></b-form-input>
-      <p class="forminfo">수상날짜</p>
-      <b-form-input class="mb-3" type="date" placeholder="생년-월-일" ></b-form-input>
-      <button>저장</button>
-    </div>
+    <form @submit.prevent="onSubmit">
+      <div class="award">
+        <p class="forminfo">수상명</p>
+        <b-form-input class="mb-3" type="text" v-model="newAward.name" placeholder="수상명" ></b-form-input>
+        <p class="forminfo">수상날짜</p>
+        <b-form-input class="mb-3" type="date" v-model="newAward.awardedAt" placeholder="생년-월-일" ></b-form-input>
+        <button>저장</button>
+      </div>
+    </form>
+
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'ResumeAwardForm',
   components: {},
   props: {
-    cnt: Number,
+    award: Object,
+    action: String,
   },
   data() {
     return {
-      example: '',
+      newAward : {
+        name: this.award.name,
+        awardedAt: this.award.awardedAt,
+      }
     }
   },
   setup() {},
   created() {},
   mounted() {},
   unmounted() {},
-  methods: {}
+  methods: {
+    ...mapActions(['createAward','updateAward']),
+    onSubmit(){
+      if (this.action ==='create'){
+        this.createAward(this.newAward)
+        this.$emit("show")
+      } else if (this.action === 'update'){
+        const payload = {
+          id: this.award.id,
+          ...this.newAward
+        }
+        this.updateAward(payload)
+        this.$emit("test")
+      }
+    }
+  }
 }
 </script>
 

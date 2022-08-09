@@ -11,4 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class EvalCreateRequest {
     private String name;
+    private Long jobOpeningId;
 }

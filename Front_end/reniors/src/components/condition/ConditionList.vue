@@ -2,7 +2,7 @@
   <div>
     <hr>
     <Splide class="condition-list" :options="options">
-      <SplideSlide class="condition-item" v-for="(condition, index) in conditions" :key="index">
+      <SplideSlide class="condition-item" v-for="(condition, index) in conditions" :key="index" @click="routeResult">
         <div class="condition-item-header">
           <p class="condition-item-number">맞춤공고{{ index+1 }}</p>
           <div>
@@ -14,7 +14,7 @@
           <p>{{ condition.region }}</p>
           <p>직종: 몰라</p>
         </div>
-        <button class="condition-item-button" @click="popover">더 보기</button>
+        <button class="condition-item-button" @click.stop="popover">더 보기</button>
         <div class="condition-item-popover">
           <p>고용형태</p>
           <p>{{ condition.typeEmployment }}</p>
@@ -26,7 +26,7 @@
           <p>{{ condition.typeEmployment }}</p>
         </div>
       </SplideSlide>
-      <SplideSlide class="condition-item-create">
+      <SplideSlide class="condition-item-create" @click="routeCreate">
         <i>아이콘</i>
         <p>당신의 맞춤 공고를 만들어 보세요 !</p>
       </SplideSlide>
@@ -37,6 +37,7 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import { Splide, SplideSlide } from '@splidejs/vue-splide'
 import _ from 'lodash'
 
@@ -47,6 +48,14 @@ export default {
   },
   setup() {
     const store = useStore()
+    const router = useRouter()
+
+    const routeCreate = (event) => {
+      if (event.currentTarget.classList.contains('is-active')) router.push({ name: 'ConditionCreate' })
+    }
+    const routeResult = (event) => {
+      if (event.currentTarget.classList.contains('is-active')) router.push({ name: 'ConditionResult' })
+    }
 
     const fetchConditions = () => store.dispatch('condition/fetchConditions')
     fetchConditions()
@@ -64,22 +73,19 @@ export default {
       event.target.parentElement.classList.toggle('popover-active')
       event.target.classList.toggle('active')
       event.target.nextSibling.classList.toggle('active')
-      console.log(event)
     }
 
     const options = {
       padding: 50,
       arrows: false,
       pagination: false,
-      wheel: true,
-      wheelSleep: 500,
       isNavigation: true,
       width : 360,
       gap : '1rem',
     }
 
     return {
-      popover,
+      popover, routeCreate, routeResult,
       conditions, options,
     }
   },
@@ -97,7 +103,7 @@ export default {
   margin: 5px;
   margin-bottom: 15px;
   padding: 10px;
-  transition: all ease 0.5s;
+  transition: height ease 0.5s;
 }
 
 .splide__track--nav>.splide__list>.splide__slide.is-active {

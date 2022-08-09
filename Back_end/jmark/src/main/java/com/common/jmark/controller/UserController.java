@@ -1,5 +1,6 @@
 package com.common.jmark.controller;
 
+import com.common.jmark.common.config.data.service.AwsS3Service;
 import com.common.jmark.common.config.web.LoginUser;
 import com.common.jmark.domain.entity.user.User;
 import com.common.jmark.dto.user.UserCreateRequest;
@@ -8,15 +9,19 @@ import com.common.jmark.dto.user.UserUpdateRequest;
 import com.common.jmark.service.user.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,7 +30,10 @@ import java.util.Map;
 @Api(tags = {"회원 API"})
 public class UserController {
 
+    private static final String baseURL = "https://reniors.s3.ap-northeast-2.amazonaws.com/";
+
     private final UserService userService;
+    private final AwsS3Service awsS3Service;
 
     @PostMapping("/login")
     @ApiOperation(value = "자체 서비스 로그인", notes = "아이디와 비밀번호를 입력하여 로그인합니다.")
@@ -38,12 +46,18 @@ public class UserController {
                 .build();
     }
 
-    @PostMapping("/regist")
+    @PostMapping(path="/regist",consumes = {"multipart/form-data"})
     @ApiOperation(value = "자체 서비스 회원가입", notes = "회원가입에 필요한 정보를 입력하고 회원으로 가입합니다.")
     public ResponseEntity<?> registUser(
-            @Valid @RequestBody UserCreateRequest request
-    ) {
-        Long userId = userService.createUser(request);
+            @RequestPart(value = "img", required = false) final MultipartFile file,
+            @Valid @RequestPart(value = "data", required = true) final UserCreateRequest request
+    ) throws Exception {
+        // TODO : URL 추가
+        String userProfile = "user/userBaseProfile.png";
+        if(file != null) {
+            userProfile = awsS3Service.uploadFile(file, "user/");
+        }
+        Long userId = userService.createUser(request, baseURL, userProfile);
         Map<String, Long> response = new HashMap<>();
         response.put("userId", userId);
         return ResponseEntity.ok(response);
@@ -69,11 +83,19 @@ public class UserController {
 
     @PutMapping
     @ApiOperation(value = "회원 정보 수정", notes = "유저의 정보를 수정합니다.")
+    // TODO : image 수정 추가
     public ResponseEntity<?> updateUser(
             @ApiIgnore @LoginUser User user,
-            @Valid @RequestBody UserUpdateRequest request
-    ) {
-        userService.updateUser(user.getId(), request);
+            @RequestPart(value = "img", required = false) MultipartFile file,
+            @Valid @RequestPart UserUpdateRequest request
+    ) throws Exception {
+        // TODO : URL 추가
+        String userProfile = "user/userBaseProfile.png";
+        // 프로필사진을 바꿀 것인지 확인
+        if(file != null && request.isChangeProfile()) {
+            userProfile = awsS3Service.uploadFile(file, "user/");
+        }
+        userService.updateUser(user.getId(), request, baseURL, userProfile);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -82,6 +104,7 @@ public class UserController {
     public ResponseEntity<Map<String, Long>> deleteUser(
             @ApiIgnore @LoginUser User user
     ) {
+        awsS3Service.deleteFile(user.getUserProfile());
         userService.deleteUser(user.getId());
         return ResponseEntity.status(HttpStatus.OK).build();
     }

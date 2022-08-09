@@ -49,7 +49,7 @@ public class CompanyService {
 
     //회사 회원가입
     @Transactional
-    public Long postCompany(CompanyCreateRequest request){
+    public Long postCompany(CompanyCreateRequest request, String baseURL ,String companyProfile){
         if (companyRepository.findByCompanyNum(request.getCompanyNum()).isPresent()) {
             throw new DuplicateException(String.format("%s은 이미 가입된 기업입니다.", request.getName()));
         } else {
@@ -60,10 +60,11 @@ public class CompanyService {
                 request.getEstablishedAt(),
                 request.getCompanyUrl(),
                 request.getAddress(),
-                request.getCompanyImgName(),
-                request.getCompanyImgPath(),
                 request.getCompanyNum(),
                 request.getCompanyPhone(),
+                request.getRepresentative(),
+                baseURL,
+                companyProfile,
                 request.getRepresentativePhone(),
                 request.getTypeCompany()
         );
@@ -95,8 +96,8 @@ public class CompanyService {
 
     //회사 정보수정
     @Transactional
-    public void updateCompany(Company company, CompanyUpdateRequest request){
-        company.update(request);
+    public void updateCompany(Company company, CompanyUpdateRequest request, String baseURL, String companyProfile){
+        company.update(request, baseURL, companyProfile);
     }
 
     //회사 탈퇴
@@ -163,6 +164,16 @@ public class CompanyService {
         if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
         jobOpeningRepository.deleteById(jobOpeningId);
+    }
+
+    //회사 공고 끝내기
+    @Transactional
+    public void finishJobOpening(Company company, Long jobOpeningId){
+        if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
+            throw new NotAuthException(COMPANY_NO_AUTH);
+
+        JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found jobopening"));
+        jobOpening.finish();
     }
 
     //회사 공고 지원자 목록

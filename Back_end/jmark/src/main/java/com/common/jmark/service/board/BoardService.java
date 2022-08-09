@@ -83,7 +83,8 @@ public class BoardService {
 
         List<Board> boardList = jpaQueryFactory.selectFrom(b)
                 .where(
-                        booleanBuilder
+                        booleanBuilder,
+                        b.category.id.eq(boardSearchRequest.getCategoryId())
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -102,6 +103,7 @@ public class BoardService {
     public BoardDetailResponse getBoardInfo(Long boardId){
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()->new NotFoundException(BOARD_NOT_FOUND));
-            return BoardDetailResponse.response(board);
+        board.viewsUp();
+        return BoardDetailResponse.response(board);
     }
 }
