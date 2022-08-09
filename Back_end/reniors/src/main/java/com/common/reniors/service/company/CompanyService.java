@@ -66,7 +66,7 @@ public class CompanyService {
                 baseURL,
                 companyProfile,
                 request.getRepresentativePhone(),
-                request.getCompany()
+                request.getTypeCompany()
         );
         return companyRepository.save(company).getId();
         }

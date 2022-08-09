@@ -1,6 +1,6 @@
 package com.common.reniors.dto.jobOpening;
 
-import com.common.reniors.domain.entity.Type.Employment;
+import com.common.reniors.domain.entity.Type.typeEmployment;
 import com.common.reniors.domain.entity.Type.LastEdu;
 import com.common.reniors.domain.entity.JobOpening;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class JobOpeningDetailResponse {
     private int minSalary;
     private String jobPosition;
     private int workingDay;
-    private Employment employment;
+    private typeEmployment typeEmployment;
     private LastEdu lastEdu;
     private Long sidoId;
     private Long gugunId;
@@ -46,7 +46,7 @@ public class JobOpeningDetailResponse {
                 jobOpening.getMinSalary(),
                 jobOpening.getJobPosition(),
                 jobOpening.getWorkingDay(),
-                jobOpening.getEmployment(),
+                jobOpening.getTypeEmployment(),
                 jobOpening.getLastEdu(),
                 jobOpening.getGugun().getSido().getId(),
                 jobOpening.getGugun().getId(),
