@@ -1,10 +1,14 @@
 <template>
   <div class="detail-apply-button">
-    <button @click="apply">지원하기</button>
+    <button @click="apply(isLogin)" 
+      :class="isLogin ? 'apply-active' : 'apply-deactive'" 
+      :title="isLogin ? '지원하기' : '로그인이 필요합니다.'"
+    >지원하기</button>
   </div>
 </template>
 
 <script>
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -12,10 +16,13 @@ export default {
   setup() {
     const store = useStore()
 
-    const apply = () => store.dispatch('jobopening/apply')
+    const apply = (login) => {
+      if (login === true) store.dispatch('jobopening/apply')
+    }
+    const isLogin = computed(() => store.getters['isLogginedIn'])
 
     return {
-      apply
+      apply, isLogin
     }
   }
 }
@@ -37,7 +44,18 @@ export default {
   width: 100%;
   border: none;
   border-radius: 0.5rem;
-  background-color: var(--color-red-1);
   color: white;
+}
+
+.detail-apply-button > button.apply-active {
+  background-color: var(--color-red-1);
+}
+
+.detail-apply-button > button.apply-deactive {
+  background-color: var(--color-red-3);
+}
+
+.detail-apply-button > button.apply-deactive:hover {
+  cursor: default;
 }
 </style>

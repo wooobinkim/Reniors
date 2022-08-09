@@ -18,21 +18,21 @@
       <ConditionItem left="모집기간" :right="period" />
       <ConditionItem left="경력" :right="jobopening.minCareer" />
       <ConditionItem left="학력" :right="jobopening.lastEdu" />
-      <ConditionItem left="성별" right="정보없음" />
+      <ConditionItem left="성별" right="null" />
     </div>
     <div class="jobopening-box">
       <h3>근무조건</h3>
       <hr>
       <ConditionItem left="급여" :right="jobopening.minSalary + '원'" />
-      <ConditionItem left="지역" :right="sidos?.find((sido) => sido.value===jobopening?.sidoId)?.name + ' ' + guguns?.find((gugun) => gugun.value===jobopening?.gugunId)?.name" />
-      <ConditionItem left="근무기간" right="정보없음" />
+      <ConditionItem left="지역" :right="sidos?.find((sido) => sido.value===jobopening?.sidoId)?.text + ' ' + guguns?.find((gugun) => gugun.value===jobopening?.gugunId)?.text" />
+      <ConditionItem left="근무기간" right="null" />
       <ConditionItem left="근무요일" :right="jobopening.workingDay" />
-      <ConditionItem left="근무시간" right="정보없음" />
+      <ConditionItem left="근무시간" right="null" />
     </div>
     <div class="jobopening-box">
       <h3>모집내용</h3>
       <hr>
-      <ConditionItem left="직책" :right="parents?.find((parent) => parent.id===jobopening?.jobParentCategory)?.name" />
+      <ConditionItem left="직책" :right="parents?.find((parent) => parent.value===jobopening?.jobParentCategory)?.text" />
       <ConditionItem left="직무" :right="jobopening.jobPosition" />
       <ConditionItem left="고용형태" :right="jobopening.typeEmployment" />
       <ConditionItem left="모집인원" :right="jobopening.numberPeople" />
@@ -58,14 +58,14 @@ export default {
 
     const fetchParents = () => store.dispatch('category/getJobParent')
     fetchParents()
-    const parents = computed(() => store.state.jobparents)
+    const parents = computed(() => store.state.category.jobparents)
 
     const fetchSido = () => store.dispatch('category/getSido')
     const fetchGugun = (sidoId) => store.dispatch('category/getGugun', sidoId)
     fetchSido()
     fetchGugun(jobopening.value.sidoId)
-    const sidos = computed(() => store.state.sidos)
-    const guguns = computed(() => store.state.guguns)
+    const sidos = computed(() => store.state.category.sidos)
+    const guguns = computed(() => store.state.category.guguns)
     return {
       jobopening, period, parents, sidos, guguns,
     }
