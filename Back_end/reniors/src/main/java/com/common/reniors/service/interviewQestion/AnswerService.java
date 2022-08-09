@@ -7,6 +7,7 @@ import com.common.reniors.domain.entity.interviewQuestion.Question;
 import com.common.reniors.domain.entity.user.User;
 import com.common.reniors.domain.repository.interviewQuestion.AnswerRepository;
 import com.common.reniors.domain.repository.interviewQuestion.QuestionRepository;
+import com.common.reniors.domain.repository.user.UserRepository;
 import com.common.reniors.dto.interviewQuestion.AnswerCreateRequest;
 import com.common.reniors.dto.interviewQuestion.AnswerResponse;
 import com.common.reniors.dto.interviewQuestion.AnswerUpdateRequest;
@@ -25,6 +26,7 @@ public class AnswerService {
 
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public Long create(Long questionId, AnswerCreateRequest request, User user) {
@@ -63,8 +65,10 @@ public class AnswerService {
     }
 
     @Transactional
-    public AnswerResponse getAnswer(Long answerId) {
-        Answer answer = answerRepository.findById(answerId)
+    public AnswerResponse getAnswer(Long questionId, User user) {
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(()->new NotFoundException(QUESTION_NOT_FOUND));
+        Answer answer = answerRepository.findByQuestionAndUser(question, user)
                 .orElseThrow(()->new NotFoundException(ANSWER_NOT_FOUND));
         return AnswerResponse.response(answer);
     }

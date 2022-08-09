@@ -93,7 +93,7 @@ public class JobOpening{
     @OneToMany(mappedBy = "jobOpening")
     private List<Eval> evals = new ArrayList<>();
 
-    @OneToMany(mappedBy = "jobopening")
+    @OneToMany(mappedBy = "jobOpening")
     private List<Room> rooms = new ArrayList<>();
 
     //공고 - 고용형태 연관관계

@@ -93,22 +93,20 @@ public class InterviewQuestionController {
     }
 
     // 답변 조회
-    @GetMapping("/{questionId}/answers/{answerId}")
+    @GetMapping("/{questionId}/answers")
     @ApiOperation(value = "인터뷰 답변 조회", notes = "예상 질문에 작성한 답변을 조회한다.")
     public ResponseEntity<?> getAnswer(
             @PathVariable("questionId") Long questionId,
-            @PathVariable("answerId") Long answerId,
             @ApiIgnore @LoginUser User user
     ){
-        return ResponseEntity.ok(answerService.getAnswer(answerId));
+        return ResponseEntity.ok(answerService.getAnswer(questionId, user));
     }
 
     // 답변 수정
-    @PutMapping("/{questionId}/answers/{answerId}")
+    @PutMapping("/{questionId}/answers")
     @ApiOperation(value = "인터뷰 질문 답변 수정", notes = "예상 질문에 작성한 답변을 수정한다.")
     public ResponseEntity<?> updateAnswer(
             @PathVariable("questionId") Long questionId,
-            @PathVariable("answerId") Long answerId,
             @ApiIgnore @LoginUser User user,
             @Valid @RequestBody AnswerUpdateRequest request
             ){
@@ -117,11 +115,10 @@ public class InterviewQuestionController {
     }
 
     // 답변 삭제
-    @DeleteMapping("/{questionId}/answers/{answerId}")
+    @DeleteMapping("/{questionId}/answers")
     @ApiOperation(value = "인터뷰 질문 답변 삭제", notes = "예상 질문에 작성한 답변을 삭제한다.")
     public ResponseEntity<?> deleteAnswer(
             @PathVariable("questionId") Long questionId,
-            @PathVariable("answerId") Long answerId,
             @ApiIgnore @LoginUser User user
     ){
         answerService.delete(questionId, user);
