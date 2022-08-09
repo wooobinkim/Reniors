@@ -3,11 +3,13 @@ package com.common.reniors.controller;
 import com.common.reniors.common.config.data.service.AwsS3Service;
 import com.common.reniors.common.config.web.LoginUser;
 import com.common.reniors.domain.entity.user.User;
+import com.common.reniors.dto.kakao.KakaoUserInfo;
 import com.common.reniors.dto.mail.MailDto;
 import com.common.reniors.dto.user.UserCreateRequest;
 import com.common.reniors.dto.user.UserLoginRequest;
 import com.common.reniors.dto.user.UserUpdateRequest;
 import com.common.reniors.service.user.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,11 +63,24 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    // 카카오 회원가입
-
-    // 카카오 로그인
+    // 카카오 회원가입/로그인
+    @GetMapping("/login/kakao")
+    @ApiOperation(value = "카카오 로그인/회원가입", notes = "카카오 계정으로 로그인/회원가입을 합니다.")
+    public ResponseEntity<?> kakaoLogin(
+            @RequestParam String code,
+            HttpServletResponse response
+    ) throws JsonProcessingException {
+        String accessToken = userService.kakaoLogin(code, response);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .build();
+    }
 
     // 카카오 회원 탈퇴
+
+    // 회원 로그아웃
+
+    // 카카오 로그아웃
 
     // 유저 상세 정보 조회
     @GetMapping
