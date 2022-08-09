@@ -9,7 +9,7 @@
     <br>
     <div style="width: 312px; margin: auto;">
       <div class="profileimg">
-        <img class="person" src="https://i7b307.p.ssafy.io/images/user/1" alt="person">
+        <img class="person" :src="this.currentUser.baseURL + this.currentUser.userProfile" alt="person">
       </div>
       <br>
       <br>
@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       apply: 1,
-      scrap: 2
+      scrap: 2, 
     }
   },
   computed: {
@@ -84,7 +84,7 @@ export default {
   }
   .person {
     width: 120px;
-    height: 120px;
+    height: 160px;
     border-radius: 500px;
     float: left;
   }
