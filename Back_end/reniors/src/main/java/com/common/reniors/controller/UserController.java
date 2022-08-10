@@ -46,6 +46,18 @@ public class UserController {
                 .build();
     }
 
+    // 아이디 중복 검사 로직
+    @GetMapping(path="/idCheck/{userAppId}")
+    @ApiOperation(value = "유저 아아디 중복 검사", notes = "아이디 중복 검사를 진행합니다.")
+    public ResponseEntity<?> idCheck(
+            @PathVariable String userAppId
+    ) {
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("res", userService.idCheck(userAppId));
+        return ResponseEntity.ok(response);
+    }
+
+    // 자체 서비스 회원가입
     @PostMapping(path="/regist",consumes = {"multipart/form-data"})
     @ApiOperation(value = "자체 서비스 회원가입", notes = "회원가입에 필요한 정보를 입력하고 회원으로 가입합니다.")
     public ResponseEntity<?> registUser(
