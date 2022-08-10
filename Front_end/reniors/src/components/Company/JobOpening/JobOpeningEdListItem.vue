@@ -1,9 +1,8 @@
 <template>
-  <div>제목 : {{ jobopening.title }}</div>
+  <div>
+    제목 : {{ jobopening.title }} / {{ jobopening.jobChildCategoryName }}
+  </div>
 
-  <router-link :to="{ name: 'applylist', params: { no: jobopening.id } }"
-    >지원자 수 :{{ jobopening.applies }}</router-link
-  >
   <div>
     <router-link
       :to="{ name: 'companyjobopeningdetail', params: { no: jobopening.id } }"

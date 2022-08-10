@@ -146,7 +146,7 @@ public class CompanyService {
 
     //회사 공고 상세조회
     @Transactional
-    public JobOpeningDetailResponse getJobOpening(Company company, Long jobOpeningId){
+    public JobOpeningCompanyResponse getJobOpening(Company company, Long jobOpeningId){
         if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
         JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found jobOpening"));
@@ -155,11 +155,12 @@ public class CompanyService {
 //            GugunResponse gugunResponse = GugunResponse.response(jobOpening1.getGugun());
 //            JobChildCategoryResponse jobChildCategoryResponse = JobChildCategoryResponse.response(jobOpening1.getJobChildCategory());
 //            CompanyDto companyDto = new CompanyDto(jobOpening1.getCompany());
-        JobOpeningDetailResponse response = JobOpeningDetailResponse.response(jobOpening);
+        JobOpeningCompanyResponse jobOpeningCompanyResponse = JobOpeningCompanyResponse.response(jobOpening);
+//        JobOpeningDetailResponse response = JobOpeningDetailResponse.response(jobOpening);
         //리턴할 Dto 세팅
 //            JobOpeningDto jobOpeningDto = new JobOpeningDto(jobOpening1,companyDto,gugunResponse,jobChildCategoryResponse);
 //            jobOpeningDto.setLinkEntity(companyDto,gugunResponse,jobChildCategoryResponse);
-            return response;
+            return jobOpeningCompanyResponse;
     }
 
     //회사 공고 수정
