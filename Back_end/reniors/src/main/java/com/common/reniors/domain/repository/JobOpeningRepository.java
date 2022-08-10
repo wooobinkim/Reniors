@@ -11,4 +11,5 @@ public interface JobOpeningRepository extends JpaRepository<JobOpening, Long>{
     List<JobOpening> findByCompany(Company company);
 //        Page<JobOpening> pageJobOpeningList(JobOpeningSearchDto jobOpeningSearchDto, Pageable pageable);
             List<JobOpening> findByCompanyId(Long companyId);
+            List<JobOpening> findTop10ByOrderByViewsDesc();
 }

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button @click="logout" style="position: absolute; top: 100px; left: 100px;">logout</button>
     <SearchBar />
     <HomeNotice :login="true"/>
     <HomeInfo />
@@ -45,5 +44,4 @@ export default {
 </script>
 
 <style>
-
 </style>

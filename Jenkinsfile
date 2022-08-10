@@ -14,11 +14,9 @@ pipeline{
                 script {
                     try{
                         sh "docker stop ${BACK_CONTAINER_NAME}"
-                        sleep 1
-                        sh "docker rm ${BACK_CONTAINER_NAME}"
-                        sleep 1
                         sh "docker stop ${FRONT_CONTAINER_NAME}"
                         sleep 1
+                        sh "docker rm ${BACK_CONTAINER_NAME}"
                         sh "docker rm ${FRONT_CONTAINER_NAME}"
                     }catch(e){
                         sh 'exit 0'
@@ -28,8 +26,6 @@ pipeline{
         }
         stage('Build') {
             steps {
-                sh "cd /var/jenkins_home/workspace/reniors_jenkins/"
-                sh "ls -ll"
                 sh "docker build -t ${BACK_NAME} ./Back_end/reniors/."
                 sh "docker build -t ${FRONT_NAME} ./Front_end/reniors/."
             }

@@ -142,11 +142,11 @@
           type="file"
           class="form-control"
           placeholder="이미지를 선택해주세요"
-          ref = "img"
+          ref="img"
           @change="changeImg()"
         />
       </div>
-      
+
       <button @click="thirdprev()">이전</button>
       <button @click="registcompany()">완료</button>
     </div>
@@ -173,7 +173,7 @@ export default {
         representativePhone: "",
         typeCompany: "",
       },
-      companyImg:"",
+      companyImg: "",
     };
   },
   computed: {
@@ -193,7 +193,7 @@ export default {
     thirdprev() {
       this.pagenum = 2;
     },
-    changeImg(){
+    changeImg() {
       this.companyImg = this.$refs.img.files;
       // console.log(this.companyImg);
     },
@@ -202,9 +202,12 @@ export default {
         alert("비밀번호가 동일하지 않습니다.");
       } else {
         const formData = new FormData();
-        formData.append("img",this.companyImg[0]);
-        formData.append("data",new Blob([JSON.stringify(this.company)],{type : "application/json"}));
-        console.log(formData)
+        formData.append("img", this.companyImg[0]);
+        formData.append(
+          "data",
+          new Blob([JSON.stringify(this.company)], { type: "application/json" })
+        );
+        console.log(this.company);
         this.registCompany(formData);
         this.$router.push({ name: "Login" });
       }

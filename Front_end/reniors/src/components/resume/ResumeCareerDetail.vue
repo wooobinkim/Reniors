@@ -23,7 +23,8 @@ import { mapActions } from 'vuex'
 export default {
   name: 'ResumeCareerDetail',
   props: {
-    career: Object
+    career: Object,
+    action: String,
   },
   components: {
     ResumeCareerForm

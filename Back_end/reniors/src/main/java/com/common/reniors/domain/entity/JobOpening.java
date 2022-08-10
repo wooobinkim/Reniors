@@ -1,7 +1,7 @@
 package com.common.reniors.domain.entity;
 
 import com.common.reniors.domain.entity.Type.LastEdu;
-import com.common.reniors.domain.entity.Type.Employment;
+import com.common.reniors.domain.entity.Type.TypeEmployment;
 import com.common.reniors.domain.entity.Type.IsFinish;
 import com.common.reniors.domain.entity.category.Gugun;
 import com.common.reniors.domain.entity.category.JobChildCategory;
@@ -66,12 +66,15 @@ public class JobOpening{
 
     private int workingDay;
 
+    @NotNull
+    private int views;
+
     @Enumerated(EnumType.STRING)
     private IsFinish isFinish;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Employment employment;
+    private TypeEmployment typeEmployment;
 
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
@@ -118,9 +121,10 @@ public class JobOpening{
         this.minSalary = jobOpeningCreateRequest.getMinSalary();
         this.jobPosition = jobOpeningCreateRequest.getJobPosition();
         this.workingDay = jobOpeningCreateRequest.getWorkingDay();
-        this.employment = jobOpeningCreateRequest.getEmployment();
+        this.typeEmployment = jobOpeningCreateRequest.getTypeEmployment();
         this.lastEdu=jobOpeningCreateRequest.getLastEdu();
         this.isFinish = IsFinish.F;
+        this.views = 0;
         this.company = company;
         this.gugun = gugun;
         this.jobChildCategory = jobChildCategory;
@@ -136,7 +140,7 @@ public class JobOpening{
         this.minSalary = jobOpeningUpdateRequest.getMinSalary();
         this.jobPosition = jobOpeningUpdateRequest.getJobPosition();
         this.workingDay = jobOpeningUpdateRequest.getWorkingDay();
-        this.employment = jobOpeningUpdateRequest.getEmployment();
+        this.typeEmployment = jobOpeningUpdateRequest.getTypeEmployment();
         this.lastEdu=jobOpeningUpdateRequest.getLastEdu();
         this.gugun = gugun;
         this.jobChildCategory = jobChildCategory;
@@ -145,5 +149,6 @@ public class JobOpening{
     public void finish(){
         this.isFinish = IsFinish.T;
     }
+    public void viewUp(){this.views+=1;}
 
 }

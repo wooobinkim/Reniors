@@ -1,6 +1,6 @@
 package com.common.reniors.domain.entity;
 
-import com.common.reniors.domain.entity.Type.Employment;
+import com.common.reniors.domain.entity.Type.TypeEmployment;
 import com.common.reniors.domain.entity.Type.LastEdu;
 import com.common.reniors.domain.entity.category.JobChildCategory;
 import com.common.reniors.domain.entity.user.User;
@@ -35,7 +35,7 @@ public class SearchCondition {
     private int workingDay;
 
     @Enumerated(EnumType.STRING)
-    private Employment employment;
+    private TypeEmployment typeEmployment;
 
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
@@ -56,7 +56,7 @@ public class SearchCondition {
         this.minCareer = searchConditionCreateRequest.getMinCareer();
         this.minSalary = searchConditionCreateRequest.getMinSalary();
         this.workingDay = searchConditionCreateRequest.getWorkingDay();
-        this.employment = searchConditionCreateRequest.getEmployment();
+        this.typeEmployment = searchConditionCreateRequest.getTypeEmployment();
         this.lastEdu = searchConditionCreateRequest.getLastEdu();
         this.jobChildCategory = jobChildCategory;
         this.user = user;
@@ -67,7 +67,7 @@ public class SearchCondition {
         this.minCareer = searchConditionUpdateRequest.getMinCareer();
         this.minSalary = searchConditionUpdateRequest.getMinSalary();
         this.workingDay = searchConditionUpdateRequest.getWorkingDay();
-        this.employment = searchConditionUpdateRequest.getEmployment();
+        this.typeEmployment = searchConditionUpdateRequest.getTypeEmployment();
         this.lastEdu = searchConditionUpdateRequest.getLastEdu();
         this.jobChildCategory = jobChildCategory;
         this.user = user;

@@ -68,9 +68,13 @@ export default {
     color: #888;
   }
 
+  p {
+    text-align: left;
+  }
+
   .license{
     margin: 20px;
-    height: 300px;
+    height: 340px;
     border-style: none none dashed none;
     border-width: 0.5px;
     border-color: #EAEAEA;

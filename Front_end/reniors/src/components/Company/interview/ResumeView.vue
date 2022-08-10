@@ -1,15 +1,16 @@
 <template>
-  <div>asd</div>
+  <div></div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 // import { mapActions } from "vuex";
 export default {
   computed: {},
-  methods: {
-    // ...mapActions("resume",[""])
-  },
   created() {},
+  methods: {
+    ...mapActions("resume", ["fetchCareer", "fetchLicense", "fetchAward"]),
+  },
 };
 </script>
 

@@ -1,5 +1,6 @@
 package com.common.reniors.domain.entity;
 
+import com.common.reniors.domain.entity.Type.TypeCompany;
 import com.common.reniors.dto.company.CompanyUpdateRequest;
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -61,7 +62,7 @@ public class Company{
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private com.common.reniors.domain.entity.Type.Company company;
+    private TypeCompany typeCompany;
 
     @NotBlank
     private String baseURL;
@@ -72,9 +73,9 @@ public class Company{
     //회사 - 공고 연관관계
     @OneToMany(mappedBy = "company")
     private List<JobOpening> jobOpenings = new ArrayList<>();
-    
 
-    public static Company create(String name, String companyAppId, String companyAppPwd, String establishedAt, String companyUrl, String address, String companyNum, String companyPhone,String representative, String baseURL, String companyProfile, String representativePhone, com.common.reniors.domain.entity.Type.Company typeCompany) {
+
+    public static Company create(String name, String companyAppId, String companyAppPwd, String establishedAt, String companyUrl, String address, String companyNum, String companyPhone,String representative, String baseURL, String companyProfile, String representativePhone, TypeCompany typeCompany) {
         Company company = new Company();
         company.name = name;
         company.companyAppId = companyAppId;
@@ -88,7 +89,7 @@ public class Company{
         company.baseURL = baseURL;
         company.companyProfile = companyProfile;
         company.representativePhone = representativePhone;
-        company.company = typeCompany;
+        company.typeCompany = typeCompany;
         return company;
 
         // https:// i7b307.p.ssafy.io/image/{company_id}
@@ -105,7 +106,7 @@ public class Company{
         this.companyPhone = companyUpdateRequest.getCompanyPhone();
         this.representative = companyUpdateRequest.getRepresentative();
         this.representativePhone = companyUpdateRequest.getRepresentativePhone();
-        this.company = companyUpdateRequest.getCompany();
+        this.typeCompany = companyUpdateRequest.getTypeCompany();
         this.baseURL = baseURL;
         this.companyProfile = companyUpdateRequest.isChangeProfile()?companyProfile:this.companyProfile;
     }

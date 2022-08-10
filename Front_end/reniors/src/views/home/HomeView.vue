@@ -30,4 +30,7 @@ export default {
 </script>
 
 <style>
+.home {
+  max-width: 720px;
+}
 </style>
