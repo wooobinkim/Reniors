@@ -43,11 +43,13 @@ export default {
       state.datastate = data;
     },
     CLEAR_JOBOPENING_LIST(state) {
-      state.interviewapplylist = [];
+      state.jobopeninglisting = [];
+      state.jobopeninglisted = [];
     },
     SET_JOBOPENING_LIST(state, datas) {
       datas.forEach((data) => {
-        if (data.is_finish == "F") {
+        console.log(data);
+        if (data.isFinish == "F") {
           state.jobopeninglisting.push(data);
         } else {
           state.jobopeninglisted.push(data);

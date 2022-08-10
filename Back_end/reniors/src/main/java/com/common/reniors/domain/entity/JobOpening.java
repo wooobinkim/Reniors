@@ -92,13 +92,13 @@ public class JobOpening{
     @JoinColumn(name = "gugun_id")
     private Gugun gugun;
 
-    @OneToMany(mappedBy = "jobOpening")
+    @OneToMany(mappedBy = "jobOpening", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Apply> applies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "jobOpening")
+    @OneToMany(mappedBy = "jobOpening", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms = new ArrayList<>();
 
-    @OneToMany(mappedBy = "jobOpening")
+    @OneToMany(mappedBy = "jobOpening", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EvalQuestion> evalQuestions = new ArrayList<>();
 
     //공고 - 고용형태 연관관계

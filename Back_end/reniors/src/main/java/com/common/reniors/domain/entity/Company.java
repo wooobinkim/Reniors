@@ -71,7 +71,7 @@ public class Company{
     private String companyProfile;
 
     //회사 - 공고 연관관계
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobOpening> jobOpenings = new ArrayList<>();
 
 
