@@ -28,8 +28,8 @@ pipeline{
         }
         stage('Build') {
             steps {
-                sh "cd /var/jenkins_home/workspace/reniors_jenkins/"
                 sh "ls -ll"
+                sh "cd /var/jenkins_home/workspace/reniors_jenkins/"
                 sh "docker build -t ${BACK_NAME} ./Back_end/reniors/."
                 sh "docker build -t ${FRONT_NAME} ./Front_end/reniors/."
             }
