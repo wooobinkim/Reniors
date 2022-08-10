@@ -2,12 +2,12 @@
   <div>
     <div>
       제목 : {{ jobopeningdetail.title }} /
-      {{ jobopeningdetail.jobChildCategory }}
+      {{ jobopeningdetail.jobChildCategoryName }}
     </div>
     <div>상세보기</div>
-    <div>지원자 수 : {{ applylist.length }}</div>
+    <div>지원자 수 : {{ jobopeningdetail.applies }}</div>
 
-    <template v-for="apply in applylist" :key="apply.id">
+    <!-- <template v-for="apply in applylist" :key="apply.id">
       <div>
         <input :value="apply.id" type="checkbox" v-model="passUser" />
         <apply-list-item
@@ -15,16 +15,16 @@
           :jobOpeningId="this.$route.params.no"
         ></apply-list-item>
       </div>
-    </template>
-    <button @click="pass()">합격자 등록</button>
+    </template> -->
+    <!-- <button @click="pass()">합격자 등록</button> -->
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
-import ApplyListItem from "./ApplyListItem.vue";
+// import ApplyListItem from "./ApplyListItem.vue";
 export default {
-  components: { ApplyListItem },
+  // components: { ApplyListItem },
   data() {
     return {
       jobopeningdetail: {},

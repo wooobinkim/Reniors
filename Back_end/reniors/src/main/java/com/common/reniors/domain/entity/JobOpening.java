@@ -1,5 +1,6 @@
 package com.common.reniors.domain.entity;
 
+import com.common.reniors.domain.entity.Type.JobOpeningProcess;
 import com.common.reniors.domain.entity.Type.LastEdu;
 import com.common.reniors.domain.entity.Type.TypeEmployment;
 import com.common.reniors.domain.entity.Type.IsFinish;
@@ -79,6 +80,9 @@ public class JobOpening{
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
 
+    @Enumerated(EnumType.STRING)
+    private JobOpeningProcess jobOpeningProcess;
+
     //공고 - 회사 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
@@ -125,6 +129,7 @@ public class JobOpening{
         this.lastEdu=jobOpeningCreateRequest.getLastEdu();
         this.isFinish = IsFinish.F;
         this.views = 0;
+        this.jobOpeningProcess = JobOpeningProcess.서류심사중;
         this.company = company;
         this.gugun = gugun;
         this.jobChildCategory = jobChildCategory;
@@ -150,5 +155,6 @@ public class JobOpening{
         this.isFinish = IsFinish.T;
     }
     public void viewUp(){this.views+=1;}
+    public void updateProgress(JobOpeningProcess jobOpeningProcess){this.jobOpeningProcess = jobOpeningProcess;}
 
 }
