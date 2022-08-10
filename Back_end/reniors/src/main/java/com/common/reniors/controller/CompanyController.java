@@ -129,7 +129,7 @@ public class CompanyController {
     @ApiOperation(value = "회사 공고상세조회", notes = "회사가 올린 공고 하나의 상세정보를 가져온다.")
 
     public ResponseEntity<?> getJobOpening(@ApiIgnore @LoginCompany Company company, @PathVariable("jobOpeningId") Long jobOpeningId){
-        JobOpeningDetailResponse jobOpening = companyService.getJobOpening(company, jobOpeningId);
+        JobOpeningCompanyResponse jobOpening = companyService.getJobOpening(company, jobOpeningId);
         return ResponseEntity.status(HttpStatus.OK).body(jobOpening);
     }
 
