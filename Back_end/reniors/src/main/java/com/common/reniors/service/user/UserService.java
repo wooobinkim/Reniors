@@ -140,7 +140,7 @@ public class UserService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "4e4c47797fd9117b5651478290547b4f");
-        body.add("redirect_uri", "http://localhost:8080/api/users/login/kakao");
+        body.add("redirect_uri", "https://i7b307.p.ssafy.io/api/users/login/kakao");
         body.add("code", code);
 
         // HTTP 요청 보내기

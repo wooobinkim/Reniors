@@ -64,7 +64,7 @@
 
       <!-- 카카오 로그인하기 구현 -->
       <div style="margin-top: 10px; margin-bottom: 25px">
-        <a href="https://kauth.kakao.com/oauth/authorize?client_id=4e4c47797fd9117b5651478290547b4f&redirect_uri=http://localhost:8080/api/users/login/kakao&response_type=code">
+        <a href="https://kauth.kakao.com/oauth/authorize?client_id=4e4c47797fd9117b5651478290547b4f&redirect_uri=https://i7b307.p.ssafy.io/api/users/login/kakao&response_type=code">
           <img src="@/assets/kakaologin.png" style="width: 80%" alt="kakao" />
         </a>
       </div>
