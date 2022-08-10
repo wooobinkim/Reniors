@@ -47,6 +47,15 @@ public class CompanyService {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
+    public Boolean idCheck(String companyAppId) {
+        if (companyRepository.findByCompanyAppId(companyAppId).isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     //회사 회원가입
     @Transactional
     public Long postCompany(CompanyCreateRequest request, String baseURL ,String companyProfile){
