@@ -4,10 +4,10 @@
       <div class="career">
         <p class="forminfo">기업명</p>
         <b-form-input class="mb-3" type="text" placeholder="기업명" v-model="newCareer.companyName"></b-form-input>
+        <p class="forminfo">입사날짜</p>
+        <b-form-input class="mb-3" type="date" placeholder="생년-월-일" v-model="newCareer.startedAt"></b-form-input>
         <p class="forminfo">퇴사날짜</p>
         <b-form-input class="mb-3" type="date" placeholder="생년-월-일" v-model="newCareer.finishedAt"></b-form-input>
-        <p class="forminfo">퇴사날짜</p>
-        <b-form-input class="mb-3" type="date" placeholder="생년-월-일" v-model="newCareer.startedAt"></b-form-input>
         <p class="forminfo">상세내용</p>
         <b-form-textarea
           id="textarea-default"
@@ -74,9 +74,13 @@ export default {
     color: #888;
   }
 
+  p {
+    text-align: left;
+  }
+
   .career{
     margin: 20px;
-    height: 550px;
+    height: 600px;
     border-style: none none dashed none;
     border-width: 0.5px;
     border-color: #EAEAEA;

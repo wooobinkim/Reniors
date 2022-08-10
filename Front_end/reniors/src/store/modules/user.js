@@ -57,7 +57,6 @@ export const user = {
       removeToken({ commit }) {
         commit('SET_TOKEN', '')
         localStorage.setItem('token', '')
-        localStorage.setItem('vuex','')
       },
 
       // error 커밋 추가
@@ -80,23 +79,19 @@ export const user = {
       },
 
 
-      updateUser({ dispatch , getters }, userEdit){
-        console.log(userEdit)
-        console.log(getters.authError)
-        axios({
-          url: 'https://i7b307.p.ssafy.io/api/users',
-          method: 'put',
-          data: JSON.stringify(userEdit),
-          headers: getters.authHeader,
-        })
-        .then(() => {
-          router.push({name: 'ResumeStepTwo'})
-          dispatch('fetchCurrentUser')
-        })
-        .catch(() => {
-          console.log('실패!')
-        })
-      },
+      updateUser({ dispatch }, formData) {
+        console.log(formData)
+        multipart
+          .put(`/users`, formData)
+          .then(() => {
+            dispatch('fetchCurrentUser')
+            router.push({name: 'ResumeStepTwo'})
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        },
+
 
       // 추가
       // async userConfirm({ commit }, credentials){
@@ -183,13 +178,14 @@ export const user = {
         }
       },
 
-      registUser({commit}, formData) {
+      registUser({ commit }, formData) {
         console.log(formData)
         console.log(commit)
         multipart
           .post(`/users/regist`, formData)
           .then(() => {
             console.log('성공')
+            router.push({name: 'Login'})
           })
           .catch((err) => {
             console.log(err)
