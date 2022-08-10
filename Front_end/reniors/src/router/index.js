@@ -31,7 +31,7 @@ import CompanyJobOpeningList from "@/components/Company/JobOpening/JobOpeningLis
 import CompanyJobOpeningRegist from "@/components/Company/JobOpening/JobOpeningRegist.vue";
 import CompanyJobOpeningUpdate from "@/components/Company/JobOpening/JobOpeningUpdate.vue";
 import ApplyList from "@/components/Company/JobOpening/ApplyList.vue";
-import ResumeView from "@/components/Company/JobOpening/ResumeView.vue";
+import ResumeView from "@/components/Company/interview/ResumeView.vue";
 import JobOpeningInterviewList from "@/components/Company/interview/JobOpeningInterviewList.vue";
 import CompanyInterviewList from "@/components/Company/interview/InterviewList.vue";
 import CompanyOpenVidu from "@/components/Company/interview/CompanyOpenVidu.vue";
@@ -253,7 +253,7 @@ const routes = [
     path: "/company/interview",
     name: "companyinterview",
     component: CompanyInterviewView,
-    // redirect: "/company/interview/list",
+    redirect: "/company/interview/list",
     children: [
       {
         path: "list",
@@ -271,7 +271,7 @@ const routes = [
         component: CompanyOpenVidu,
       },
       {
-        path: "evallist",
+        path: "evallist/:no",
         name: "companyeval",
         component: EvalList,
       },
@@ -325,7 +325,7 @@ const routes = [
   {
     path: "/practice/question/:question_id/answer/update",
     component: AnswerUpdate,
-    name: "AnswerUpdate"
+    name: "AnswerUpdate",
   },
   {
     path: "/practice/videopractices",

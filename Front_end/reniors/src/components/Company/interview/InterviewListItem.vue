@@ -3,7 +3,7 @@
     <div>{{ interviewapply.name }}</div>
     <div>{{ interviewapply.interviewDate }}</div>
     <router-link :to="{ name: 'companyopenvidu' }">
-      <button>면접보기</button>
+      <button @click="regist()">면접보기</button>
     </router-link>
   </div>
 </template>
@@ -12,6 +12,14 @@
 export default {
   props: {
     interviewapply: Object,
+  },
+  methods: {
+    regist() {
+      this.$store.commit(
+        "company/SET_INTERVIEWER_LIST",
+        this.interviewapply.userId
+      );
+    },
   },
 };
 </script>

@@ -62,6 +62,34 @@
           @click="updateMainVideoStreamManager(sub)"
         />
       </div>
+      <template v-if="videoflag">
+        <button @click="videoonoff()">비디오끄기</button>
+      </template>
+      <template v-if="!videoflag">
+        <button @click="videoonoff()">비디오켜기</button>
+      </template>
+      <template v-if="audioflag">
+        <button @click="audioonoff()">마이크끄기</button>
+      </template>
+      <template v-if="!audioflag">
+        <button @click="audioonoff()">마이크켜기</button>
+      </template>
+
+      <div>지원자 : {{ interviewer }}</div>
+      <template v-if="tab == 'resume'">
+        <div>
+          <resume-view></resume-view>
+        </div>
+      </template>
+      <template v-if="tab == 'eval'">
+        <div>
+          <openvidu-eval-list></openvidu-eval-list>
+        </div>
+      </template>
+      <div>
+        <span @click="changeresume()">이력서보기 | </span>
+        <span @click="changeeval()">평가하기</span>
+      </div>
     </div>
   </div>
 </template>
@@ -70,7 +98,9 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "@/components/openvidu/UserVideo.vue";
+import ResumeView from "@/components/Company/interview/ResumeView.vue";
 import { mapActions, mapState } from "vuex";
+import OpenviduEvalList from "@/components/Company/interview/OpenviduEvalList.vue";
 // import { mapActions } from "vuex";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -88,6 +118,8 @@ export default {
 
   components: {
     UserVideo,
+    OpenviduEvalList,
+    ResumeView,
   },
 
   data() {
@@ -98,13 +130,16 @@ export default {
       publisher: undefined,
       subscribers: [],
 
-      mySessionId: "Session" + this.$route.params.no,
+      mySessionId: "InterviewSession" + this.$route.params.no,
       myUserName: "",
+      videoflag: true,
+      audioflag: false,
+      tab: "resume",
       //   myUserName: "Participant" + Math.floor(Math.random() * 100),
     };
   },
   computed: {
-    ...mapState("company", ["companyinfo"]),
+    ...mapState("company", ["companyinfo", "interviewer"]),
   },
   watch: {
     companyinfo: function (data) {
@@ -117,6 +152,25 @@ export default {
 
   methods: {
     ...mapActions("company", ["getCompany"]),
+    changeresume() {
+      this.tab = "resume";
+    },
+    changeeval() {
+      this.tab = "eval";
+    },
+    videoonoff() {
+      this.videoflag = !this.videoflag;
+      this.publisher.publishVideo(this.videoflag);
+      // if (this.videoflag) {
+      //   this.session.publishVideo(this.publisher);
+      // } else {
+      //   this.session.unpublishVideo(this.publisher);
+      // }
+    },
+    audioonoff() {
+      this.audioflag = !this.audioflag;
+      this.publisher.publishAudio(this.audioflag);
+    },
     joinSession() {
       // --- Get an OpenVidu object ---
       this.OV = new OpenVidu();
@@ -158,7 +212,7 @@ export default {
             let publisher = this.OV.initPublisher(undefined, {
               audioSource: undefined, // The source of audio. If undefined default microphone
               videoSource: undefined, // The source of video. If undefined default webcam
-              publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+              publishAudio: false, // Whether you want to start publishing with your audio unmuted or not
               publishVideo: true, // Whether you want to start publishing with your video enabled or not
               resolution: "640x480", // The resolution of your video
               frameRate: 30, // The frame rate of your video

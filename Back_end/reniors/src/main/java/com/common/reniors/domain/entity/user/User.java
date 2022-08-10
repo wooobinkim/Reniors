@@ -2,7 +2,6 @@ package com.common.reniors.domain.entity.user;
 
 import com.common.reniors.domain.entity.Room;
 import com.common.reniors.domain.entity.Apply;
-import com.common.reniors.domain.entity.interviewQuestion.Answer;
 import com.common.reniors.domain.entity.SearchCondition;
 import com.common.reniors.domain.entity.Type.Gender;
 import com.common.reniors.domain.entity.Type.IsOpen;
@@ -11,6 +10,8 @@ import com.common.reniors.domain.entity.Type.Role;
 import com.common.reniors.domain.entity.UserEval;
 import com.common.reniors.domain.entity.board.Board;
 import com.common.reniors.domain.entity.board.Comment;
+import com.common.reniors.domain.entity.recoding.Recoding;
+import com.common.reniors.domain.entity.interviewQuestion.Answer;
 import com.common.reniors.domain.entity.recommend.RecommendCondition;
 import com.common.reniors.domain.entity.resume.Award;
 import com.common.reniors.domain.entity.resume.CareerDetail;
@@ -49,7 +50,6 @@ public class User {
     @Column(length = 50)
     private String name;
 
-    @NotNull
     private Date birth;
 
     @NotNull
@@ -76,6 +76,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private IsOpen isOpen;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
 
@@ -126,6 +127,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Recoding> recodings = new ArrayList<>();
+
    public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu, String baseURL, String userProfile) {
         User user = new User();
         user.userAppId = userAppId;
@@ -162,5 +166,22 @@ public class User {
 
     public void updatePwd(String newPwd) {
        this.userAppPwd = newPwd;
+    }
+
+    public static User createKakaoUser(String userAppId, String name, String userAppPwd, Gender gender, String baseURL, String userProfile) {
+       User user = new User();
+       user.userAppId = userAppId;
+       user.name = name;
+       user.userAppPwd = userAppPwd;
+       user.gender = gender;
+       user.phone = "01012345678";
+       user.role = Role.ROLE_USER;
+       user.address = "대전";
+       user.extraAddress = "서구";
+       user.isOpen = IsOpen.CLOSE;
+       user.lastEdu = LastEdu.학력무관;
+       user.baseURL = baseURL;
+       user.userProfile = userProfile;
+       return user;
     }
 }

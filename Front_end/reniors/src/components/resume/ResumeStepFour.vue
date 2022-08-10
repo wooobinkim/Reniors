@@ -9,8 +9,7 @@
         <img class="order" src="@/assets/one.svg" alt="order">
         <img class="order" src="@/assets/two.svg" alt="order">
         <img class="order" src="@/assets/three.svg" alt="order">
-        <img class="order" src="@/assets/four_active.svg" alt="order">
-        <img class="order" src="@/assets/five.svg" alt="order">          
+        <img class="order" src="@/assets/four_active.svg" alt="order">      
       </div>
     </header>
 
@@ -29,7 +28,7 @@
       </div>
       <footer>
         <button style="background-color: #FFC0A3" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepThree' }">이전</router-link></button>
-        <button style="background-color: #FF843E" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepFive' }">다음</router-link></button>
+        <button style="background-color: #FF843E" type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeDetail' }">완료!</router-link></button>
       </footer>
     </div>
 

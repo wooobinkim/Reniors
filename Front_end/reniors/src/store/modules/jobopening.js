@@ -1,6 +1,7 @@
 import axios from 'axios'
 import drf from '@/api/drf'
 import _ from 'lodash'
+import http from '@/api/http'
 
 
 export default {
@@ -10,6 +11,7 @@ export default {
     jobopenings: [],
     selectedJobopening: {},
     bookmarks: [],
+    applies: [],
   },
   getters: {
     tags: state => state.tags,
@@ -17,12 +19,14 @@ export default {
     jobopenings: state => state.jobopenings,
     selectedJobopening: state => state.selectedJobopening,
     bookmarks: state => state.bookmarks,
+    bookmarkId: state => state.bookmarks.find(bookmark => bookmark.jobOpeningResponse.id === state.selectedJobopening.id)?.id,
   },
   mutations: {
     TAGS: (state, tags) => state.tags = tags,
     JOBOPENINGS: (state, jobopenings) => state.jobopenings = jobopenings,
     SELECTJOB: (state, jobopening) => state.selectedJobopening = jobopening,
     BOOKMARKS: (state, bookmarks) => state.bookmarks = bookmarks,
+    APPLIES: (state, applies) => state.applies = applies,
   },
   actions: {
     async fetchJobopenings({ commit }) {
@@ -39,20 +43,29 @@ export default {
       console.log(data)
       commit('SELECTJOB', data)
     },
+    async fetchApply({ commit }) {
+      const response = await http.get('/jobopening/apply')
+      console.log(response)
+      commit('APPLIES', response.data)
+    },
     async apply(_, jobopeningId) {
-      const response = await axios.post(drf.jobopening.apply(jobopeningId))
+      const response = await http.post(`/jobopening/${jobopeningId}/apply`)
       console.log(response)
+      alert('지원 성공!')
     },
-    async fetchBookmark({ commit, getters }) {
-      const Axios = axios.create({ headers: getters.authHeader})
-      const response = await Axios.get(drf.jobopening.getBookmark())
+    async fetchBookmark({ commit }) {
+      const response = await http.get('/jobopening/bookmark')
       commit('BOOKMARKS', response.data)
-      console.log(response)
     },
-    async addBookmark({ getters }, id) {
-      const Axios = axios.create({ headers: getters.authHeader })
-      const response = await Axios.post(drf.jobopening.addBookmark(id))
+    async addBookmark({ dispatch }, id) {
+      const response = await http.post(`/jobopening/bookmark/${id}`)
       console.log(response)
+      dispatch('fetchBookmark')
+    },
+    async deleteBookmark({ dispatch }, id) {
+      const response = await http.delete(`/jobopening/bookmark/${id}`)
+      console.log(response)
+      dispatch('fetchBookmark')
     }
   },
 }

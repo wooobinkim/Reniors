@@ -18,6 +18,9 @@ export default {
     applylist: [],
     interviewapplylist: [],
     applyuser: null,
+    evalquestionlist: [],
+    userevallist: [],
+    interviewer: null,
   },
 
   getters: {
@@ -65,6 +68,15 @@ export default {
         }
       });
       // state.interviewapplylist = datas;
+    },
+    SET_EVAL_QUESTION_LIST(state, datas) {
+      state.evalquestionlist = datas;
+    },
+    SET_USER_EVAL_LIST(state, datas) {
+      state.userevallist = datas;
+    },
+    SET_INTERVIEWER_LIST(state, data) {
+      state.interviewer = data;
     },
   },
 
@@ -144,6 +156,7 @@ export default {
     },
 
     registJobOpening: ({ commit }, jobopening) => {
+      console.log(jobopening);
       http
         .post(`/company/jobopening`, JSON.stringify(jobopening))
         .then(({ data }) => {
@@ -237,6 +250,90 @@ export default {
           `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
           data.apply
         )
+        .then(({ data }) => {
+          commit("SET_DATASTATE", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    registRoom: ({ commit }, data) => {
+      http
+        .post(`/room/company`, JSON.stringify(data))
+        .then(({ data }) => {
+          commit("SET_DATASTATE", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    registEvalQuestion: ({ commit }, evalquestion) => {
+      http
+        .post(`/eval`, JSON.stringify(evalquestion))
+        .then(({ data }) => {
+          commit("SET_DATASTATE", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getEvalQuestionList: ({ commit }, no) => {
+      http
+        .get(`/eval/search/${no}`)
+        .then(({ data }) => {
+          console.log(data);
+          commit("SET_EVAL_QUESTION_LIST", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    updateEvalQuestion: ({ commit }, data) => {
+      http
+        .put(`/eval/${data.no}`, JSON.stringify(data.evalquestion))
+        .then(({ data }) => {
+          commit("SET_DATASTATE", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    deleteEvalQuestion: ({ commit }, no) => {
+      http
+        .delete(`/eval/${no}`)
+        .then(({ data }) => {
+          commit("SET_DATASTATE", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    registUserEval: ({ commit }, data) => {
+      http
+        .post(
+          `/eval/${data.jobOpeningId}/usereval/${data.userId}`,
+          JSON.stringify(data.usereval)
+        )
+        .then(({ data }) => {
+          commit("SET_DATASTATE", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getUserEvalList: ({ commit }, data) => {
+      http
+        .get(`/eval/${data.jobOpeningId}/usereval/${data.userId}`)
+        .then(({ data }) => {
+          commit("SET_USER_EVAL_LIST", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    deleteUserEvalList: ({ commit }, data) => {
+      http
+        .delete(`/eval/${data.jobOpeningId}/usereval/${data.userId}`)
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
         })

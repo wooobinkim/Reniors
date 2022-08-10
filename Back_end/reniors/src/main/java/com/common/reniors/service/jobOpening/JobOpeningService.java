@@ -4,10 +4,12 @@ import com.common.reniors.common.exception.NotFoundException;
 import com.common.reniors.domain.entity.*;
 import com.common.reniors.domain.entity.category.Gugun;
 import com.common.reniors.domain.entity.category.JobChildCategory;
+import com.common.reniors.domain.entity.recommend.RecommendCondition;
 import com.common.reniors.domain.entity.user.User;
 import com.common.reniors.domain.repository.*;
 import com.common.reniors.domain.repository.category.GugunRepository;
 import com.common.reniors.domain.repository.category.JobChildCategoryRepository;
+import com.common.reniors.domain.repository.recommend.RecommendConditionRepository;
 import com.common.reniors.dto.apply.ApplyResponse;
 import com.common.reniors.dto.jobOpening.*;
 import com.common.reniors.dto.category.GugunResponse;
@@ -18,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +41,7 @@ public class JobOpeningService {
     private final ApplyRepository applyRepository;
     private final HopeAreaRepository hopeAreaRepository;
     private final SearchConditionRepository searchConditionRepository;
+    private final RecommendConditionRepository recommendConditionRepository;
 
     @PersistenceContext
     EntityManager em;
@@ -157,9 +161,25 @@ public class JobOpeningService {
         return jobOpeningDtoPage;
     }
 
-    //채용공고 조건 조회
+    //공고 전체조회(조회수 탑10)
+    public List<JobOpeningResponse> getJobOpeningViewDesc(){
+        List<JobOpening> jobOpeningList = jobOpeningRepository.findTop10ByOrderByViewsDesc();
+
+
+        List<JobOpeningResponse> jobOpeningResponses = jobOpeningList.stream().map(j->JobOpeningResponse.response(
+                j
+        )).collect(Collectors.toList());
+
+//        long total = jobOpeningResponses.size();
+
+//        Page jobOpeningDtoPage = new PageImpl<>(jobOpeningResponses,pageable,total);
+
+        return jobOpeningResponses;
+    }
+
+    //채용공고 조회(조건포함)
     @Transactional
-    public Page<JobOpeningResponse> getJobOpeningConditionList(Long searchConditionId, Pageable pageable){
+    public Page<JobOpeningResponse> getJobOpeningConditionList(User user,Long searchConditionId, Pageable pageable){
         //조건검색을 위한 쿼리DSL 실행
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
         QJobOpening j = new QJobOpening("j");
@@ -184,7 +204,7 @@ public class JobOpeningService {
 //        if (jobOpeningSearchDto.getGuGunId() != null) booleanBuilder.and(j.gugun.id.eq(jobOpeningSearchDto.getGuGunId()));
 //        if (jobOpeningSearchDto.getJobChildCategoryId()!= null) booleanBuilder.and(j.jobChildCategory.id.eq(jobOpeningSearchDto.getJobChildCategoryId()));
             if (searchCondition.getLastEdu() != null) booleanBuilder.and(j.lastEdu.eq(searchCondition.getLastEdu()));
-            if (searchCondition.getEmployment() != null) booleanBuilder.and(j.employment.eq(searchCondition.getEmployment()));
+            if (searchCondition.getTypeEmployment() != null) booleanBuilder.and(j.typeEmployment.eq(searchCondition.getTypeEmployment()));
 
         List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
                 .where(
@@ -223,6 +243,79 @@ public class JobOpeningService {
         }
     }
 
+    //채용공고 조회(추천공고)
+    @Transactional
+    public Page<JobOpeningResponse> getJobOpeningRecommendList(User user,Long recommendConditionId, Pageable pageable){
+        //조건검색을 위한 쿼리DSL 실행
+        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
+        QJobOpening j = new QJobOpening("j");
+
+        RecommendCondition rc = recommendConditionRepository.findById(recommendConditionId).orElseThrow(() -> new NotFoundException("not found rc"));
+
+        List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
+                .where(
+                        (j.minSalary.goe(rc.getMinSalary())),
+                        (j.workingDay.loe(rc.getWorkingDay())),
+                        (j.jobChildCategory.eq(rc.getJobChildCategory())),
+                        (j.gugun.eq(rc.getGugun()))
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        //Entity -> Dto변환
+        if (jobOpeningList.size() != 0){
+            List<JobOpeningResponse> jobOpeningDtoList =
+                    jobOpeningList.stream().map(o->JobOpeningResponse.response(
+                            o
+                    )).collect(Collectors.toList());
+
+            long total = jobOpeningDtoList.size();
+
+            Page jobOpeningDtoPage = new PageImpl<>(jobOpeningDtoList,pageable,total);
+
+            return jobOpeningDtoPage;
+
+        }else{
+            return null;
+        }
+    }
+
+    //채용공고 조회(추천공고, 조회수 탑10)
+    @Transactional
+    public List<JobOpeningResponse> getJobOpeningListRecommendViewDesc(User user,Long recommendConditionId){
+        //조건검색을 위한 쿼리DSL 실행
+        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
+        QJobOpening j = new QJobOpening("j");
+
+        RecommendCondition rc = recommendConditionRepository.findById(recommendConditionId).orElseThrow(() -> new NotFoundException("not found rc"));
+
+        List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
+                .where(
+                        (j.minSalary.goe(rc.getMinSalary())),
+                        (j.workingDay.loe(rc.getWorkingDay())),
+                        (j.jobChildCategory.eq(rc.getJobChildCategory())),
+                        (j.gugun.eq(rc.getGugun()))
+                )
+                .offset(0)
+                .limit(10)
+                .fetch();
+
+        //Entity -> Dto변환
+        if (jobOpeningList.size() != 0){
+            List<JobOpeningResponse> jobOpeningDtoList =
+                    jobOpeningList.stream().map(o->JobOpeningResponse.response(
+                            o
+                    )).collect(Collectors.toList());
+
+
+            return jobOpeningDtoList;
+
+        }else{
+            return null;
+        }
+    }
+
     //채용공고 상세조회
     @Transactional
     public JobOpeningDetailResponse getJobOpening(Long jobOpeningId){
@@ -231,7 +324,7 @@ public class JobOpeningService {
 
         if (optionalJobOpening.isPresent()){
             JobOpening jobOpening1 = optionalJobOpening.get();
-
+            jobOpening1.viewUp();
             //연결된 엔티티 매핑
             GugunResponse gugunResponse = GugunResponse.response(jobOpening1.getGugun());
             JobChildCategoryResponse jobChildCategoryResponse = JobChildCategoryResponse.response(jobOpening1.getJobChildCategory());
