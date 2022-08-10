@@ -1,5 +1,6 @@
 import drf from '@/api/drf'
 import axios from 'axios'
+import http from '@/api/http'
 
 export default {
   namespaced: true,
@@ -14,7 +15,8 @@ export default {
   },
   actions: {
     async fetchConditions({ commit }) {
-      const response = await axios.get(drf.condition.get())
+      const response = await http.get(`/jobopening/condition`)
+      console.log(response.data)
       const data = response.data.content
       console.log(data)
       commit('CONDITIONS', data)

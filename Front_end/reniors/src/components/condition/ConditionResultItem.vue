@@ -7,8 +7,8 @@
       <p>연봉 <span>4000만원</span></p>
     </div>
     <div class="condition-result-item-region">
-      <p>i</p><p>유성구 봉명동</p>
-      <p>t</p><p>주 5일 9:00~18:00</p>
+      <font-awesome-icon icon="fa-solid fa-location-dot" /><p>유성구 봉명동</p>
+      <font-awesome-icon icon="fa-regular fa-clock" /><p>주 5일 9:00~18:00</p>
     </div>
     <font-awesome-icon icon="fa-regular fa-bookmark" class="condition-result-item-bookmark" @click="bookmark"/>
   </div>
