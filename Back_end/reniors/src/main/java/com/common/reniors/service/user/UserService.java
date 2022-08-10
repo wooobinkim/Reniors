@@ -6,13 +6,16 @@ import com.common.reniors.common.exception.NotFoundException;
 import com.common.reniors.common.exception.NotMatchException;
 import com.common.reniors.domain.entity.Type.Gender;
 import com.common.reniors.domain.entity.user.User;
+import com.common.reniors.domain.repository.resume.AwardRepository;
+import com.common.reniors.domain.repository.resume.CareerDetailRepository;
+import com.common.reniors.domain.repository.resume.LicenseRepository;
 import com.common.reniors.domain.repository.user.UserRepository;
 import com.common.reniors.dto.kakao.KakaoUserInfo;
 import com.common.reniors.dto.mail.MailDto;
-import com.common.reniors.dto.user.UserCreateRequest;
-import com.common.reniors.dto.user.UserLoginRequest;
-import com.common.reniors.dto.user.UserResponse;
-import com.common.reniors.dto.user.UserUpdateRequest;
+import com.common.reniors.dto.resume.AwardResponse;
+import com.common.reniors.dto.resume.CareerDetailResponse;
+import com.common.reniors.dto.resume.LicenseResponse;
+import com.common.reniors.dto.user.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,10 +27,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static com.common.reniors.common.exception.NotFoundException.USER_LIST_NOT_FOUND;
 import static com.common.reniors.common.exception.NotFoundException.USER_NOT_FOUND;
@@ -50,9 +50,11 @@ import static com.common.reniors.common.exception.NotMatchException.PASSWORD_NOT
 @Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
+    private final CareerDetailRepository careerDetailRepository;
+    private final AwardRepository awardRepository;
+    private final LicenseRepository licenseRepository;
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
-
     private final MailSender mailSender;
 
     @Value("${spring.mail.username}")
@@ -75,11 +77,18 @@ public class UserService {
         }
     }
 
+    @Transactional
+    public Boolean idCheck(String userAppId) {
+        if (userRepository.findByUserAppId(userAppId).isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     @Transactional
     public Long createUser(UserCreateRequest request, String baseURL, String userProfile) {
         if(userRepository.findByUserAppId(request.getUserAppId()).isPresent()){
-            // 카카오로 회원가입 되있을 시 생각
             throw new DuplicateException(String.format("%s는 이미 가입된 회원입니다.",request.getUserAppId()));
         }else {
             User saveUser = User.create(
@@ -265,6 +274,7 @@ public class UserService {
         );
         userRepository.save(user);
     }
+
     @Transactional
     public String findIdByPhone(String name, String phone) {
         User user = userRepository.findByNameAndPhone(name, phone)
@@ -326,7 +336,6 @@ public class UserService {
         user.updatePwd(passwordEncoder.encode(newPwd));
     }
 
-
     @Transactional
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId)
@@ -334,15 +343,21 @@ public class UserService {
         userRepository.delete(user);
     }
 
-
-
     @Transactional
-    public String findPwdByUserAppId(String name, String userAppId) {
-        User user = userRepository.findByNameAndUserAppId(name, userAppId)
+    public UserCompanyUseResponse getUserDetails(Long userId) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
-        return user.getUserAppPwd();
+        List<CareerDetailResponse> careerDetails = careerDetailRepository.findByUser(user).stream()
+                .map(CareerDetailResponse::response)
+                .collect(Collectors.toList());
+        List<AwardResponse> awardResponses = awardRepository.findByUser(user).stream()
+                .map(AwardResponse::response)
+                .collect(Collectors.toList());
+        List<LicenseResponse> licenseResponses = licenseRepository.findByUser(user).stream()
+                .map(LicenseResponse::response)
+                .collect(Collectors.toList());
+        return UserCompanyUseResponse.response(user, careerDetails, awardResponses, licenseResponses);
     }
-
 
     @Transactional
     public User validateUser(User user) {
