@@ -7,20 +7,17 @@
       <hr>
       <label for="region">지역 설정</label><br>
       <select v-model="payload.region" name="region" id="region">
-        <option value="">지역을 선택해주세요.</option>
-        <option v-for="(sido, index) in sidos" :key="index" :value="sido.id">{{ sido.name }}</option>
+        <option v-for="(sido, index) in sidos" :key="index" :value="sido.value">{{ sido.text }}</option>
       </select>
       <hr>
       <label for="parent">직종 설정</label><br>
-      <select v-model="payload.parent" name="parent" id="parent" @change="fetchChilds(parent)">
-        <option value="">직무를 선택해주세요.</option>
-        <option v-for="(parent, index) in parents" :key="index" :value="parent.id">{{ parent.name }}</option>
+      <select v-model="payload.parent" name="parent" id="parent" @change="fetchChilds(payload.parent)">
+        <option v-for="(parent, index) in parents" :key="index" :value="parent.value">{{ parent.text }}</option>
       </select>
       <hr>
       <label for="parent">직종 설정 (세부업무)</label><br>
       <select v-model="payload.child" name="child" id="child">
-        <option value="">세부업무를 선택해주세요.</option>
-        <option v-for="(child, index) in childs" :key="index" :value="child.id">{{ child.name }}</option>
+        <option v-for="(child, index) in childs" :key="index" :value="child.value">{{ child.text }}</option>
       </select>
       <hr>
       <label>고용 형태</label>
@@ -83,16 +80,15 @@ export default {
     const store = useStore()
     const instance = getCurrentInstance()
 
-    const fetchParents = () => store.dispatch('fetchParents')
+    const fetchParents = () => store.dispatch('category/getJobParent')
     fetchParents()
-    const fetchChilds = (parentId) => store.dispatch('fetchChilds', parentId)
-    const fetchSido = () => store.dispatch('fetchSido')
+    const fetchChilds = (parent) => store.dispatch('category/getJobChild', parent)
+    const fetchSido = () => store.dispatch('category/getSido')
     fetchSido()
 
-    const parents = computed(() => store.getters['parents'])
-    const childs = computed(() => store.getters['childs'])
-    const sidos = computed(() => store.getters['sido'])
-    console.log(sidos)
+    const parents = computed(() => store.state.category.jobparents)
+    const childs = computed(() => store.state.category.jobchilds)
+    const sidos = computed(() => store.state.category.sidos)
 
     const type = {
       type1: false,
