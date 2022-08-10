@@ -209,14 +209,11 @@ public class UserService {
         String nickname = kakaoUserInfo.getNickname();
         Gender gender = kakaoUserInfo.getGender();
         String profileImageUrl = kakaoUserInfo.getProfileImage();
-        User kakaoUser = userRepository.findByUserAppId(kakaoEmail)
+        User kakaoUser = userRepository.findByKakaoId(kakaoEmail)
                 .orElse(null);
         if (kakaoUser == null) {
             // 회원가입
-            // password: random UUID
-            String password = UUID.randomUUID().toString();
-            String encodedPassword = passwordEncoder.encode(password);
-            kakaoUser = User.createKakaoUser(kakaoEmail, nickname, encodedPassword, gender, baseUrl, profileImageUrl);
+            kakaoUser = User.createKakaoUser(kakaoEmail, nickname, gender, baseUrl, profileImageUrl);
             userRepository.save(kakaoUser);
         }
         return kakaoUser;
