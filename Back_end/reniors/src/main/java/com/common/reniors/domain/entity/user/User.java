@@ -168,11 +168,10 @@ public class User {
        this.userAppPwd = newPwd;
     }
 
-    public static User createKakaoUser(String userAppId, String name, String userAppPwd, Gender gender, String baseURL, String userProfile) {
+    public static User createKakaoUser(String kakaoId, String name, Gender gender, String baseURL, String userProfile) {
        User user = new User();
-       user.userAppId = userAppId;
+       user.kakaoId = kakaoId;
        user.name = name;
-       user.userAppPwd = userAppPwd;
        user.gender = gender;
        user.phone = "01012345678";
        user.role = Role.ROLE_USER;

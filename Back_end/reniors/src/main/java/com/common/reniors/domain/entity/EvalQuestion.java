@@ -25,7 +25,7 @@ public class EvalQuestion {
     private String contents;
 
 
-    @OneToMany(mappedBy = "evalQuestion")
+    @OneToMany(mappedBy = "evalQuestion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserEval> userEvals = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

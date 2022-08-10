@@ -10,6 +10,7 @@
       >수정</router-link
     >
     <button @click="deletejobopening()">삭제</button>
+    <button @click="finish()">채용 종료</button>
   </div>
 </template>
 
@@ -33,10 +34,17 @@ export default {
     ...mapState("company", ["jobopening"]),
   },
   methods: {
-    ...mapActions("company", ["getJobOpening", "deleteJobOpening"]),
+    ...mapActions("company", [
+      "getJobOpening",
+      "deleteJobOpening",
+      "finishJobOpening",
+    ]),
     deletejobopening() {
       this.deleteJobOpening(this.$route.params.no);
       this.$router.push({ name: "companyjobopeninglist" });
+    },
+    finish() {
+      this.finishJobOpening(this.jobopening.id);
     },
   },
 };

@@ -38,7 +38,7 @@
 			</div>
 			
             <div>
-                <modal-view v-if="isModal" @close="isModal=false">
+                <modal-view v-if="isModal==true" @close="isModal==false">
                     <p>modal parent</p>
                 </modal-view>
             </div>
@@ -58,7 +58,7 @@ import axios from 'axios'
 import { OpenVidu } from 'openvidu-browser';
 import { mapActions, mapGetters } from 'vuex';
 import UserVideo from '@/components/practice/UserVideo.vue';
-import ModalView from '@/components/practice/ModalView.vue'
+import ModalView from '@/components/practice/ModalView.vue';
 
 
 

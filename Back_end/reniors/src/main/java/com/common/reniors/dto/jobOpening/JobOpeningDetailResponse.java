@@ -1,5 +1,6 @@
 package com.common.reniors.dto.jobOpening;
 
+import com.common.reniors.domain.entity.Type.IsFinish;
 import com.common.reniors.domain.entity.Type.TypeEmployment;
 import com.common.reniors.domain.entity.Type.LastEdu;
 import com.common.reniors.domain.entity.JobOpening;
@@ -31,6 +32,7 @@ public class JobOpeningDetailResponse {
     private Long gugunId;
     private Long jobParentCategory;
     private Long jobChildCategoryId;
+    private IsFinish isFinish;
 
     public static JobOpeningDetailResponse response(JobOpening jobOpening){
         return new JobOpeningDetailResponse(
@@ -51,7 +53,8 @@ public class JobOpeningDetailResponse {
                 jobOpening.getGugun().getSido().getId(),
                 jobOpening.getGugun().getId(),
                 jobOpening.getJobChildCategory().getParent().getId(),
-                jobOpening.getJobChildCategory().getId()
+                jobOpening.getJobChildCategory().getId(),
+                jobOpening.getIsFinish()
         );
     }
 }
