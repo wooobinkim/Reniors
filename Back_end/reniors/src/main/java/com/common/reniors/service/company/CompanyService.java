@@ -9,6 +9,7 @@ import com.common.reniors.domain.entity.Apply;
 import com.common.reniors.domain.entity.Company;
 import com.common.reniors.domain.entity.JobOpening;
 import com.common.reniors.domain.entity.QApply;
+import com.common.reniors.domain.entity.Type.JobOpeningProcess;
 import com.common.reniors.domain.entity.category.Gugun;
 import com.common.reniors.domain.entity.category.JobChildCategory;
 import com.common.reniors.domain.repository.ApplyRepository;
@@ -190,6 +191,16 @@ public class CompanyService {
 
         JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found jobopening"));
         jobOpening.finish();
+    }
+
+    //회사 공고 과정 수정
+    @Transactional
+    public void updateProgress(Company company, Long jobOpeningId, JobOpeningProgressUpdateRequest jobOpeningProgressUpdateRequest){
+        if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
+            throw new NotAuthException(COMPANY_NO_AUTH);
+
+        JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found jobopening"));
+        jobOpening.updateProgress(jobOpeningProgressUpdateRequest.getJobOpeningProcess());
     }
 
     //회사 공고 지원자 목록
