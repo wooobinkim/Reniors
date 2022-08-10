@@ -1,0 +1,273 @@
+<template>
+  <div>
+    <!-- header -->
+    <div class="head2">
+        <router-link  class="mx-3 rl" :to="{name: 'QuestionList'}">답변 작성</router-link>
+        <router-link  class="mx-3 rl" :to="{name: 'VideoPracticeList'}">화상 연습</router-link>
+    </div>
+
+    <!-- video -->
+    <!-- session & user confirm -->
+    <div v-if="!session">
+        <div>
+            <h2>Q{{id}}. {{question}}</h2>
+            <div>
+                <p>
+                    <label>Name</label>
+                    <input v-model="myUserName" class="form-control" type="text" required>
+                </p>
+                <p>
+                    <label>Session</label>
+                    <input v-model="mySessionId" class="form-control" type="text" required>
+                </p>
+                <p class="text-center">
+                    <button class="btn btn-lg btn-success" @click="joinSession()">연습하기</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- go practice -->
+    <div id="session" v-if="session">
+			<div id="session-header">
+				<h1 id="session-title">{{ question }}</h1>
+				<input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession" value="Leave session">
+
+                <input v-if="!isRecording" class="btn btn-large btn-success" type="button" id="buttonRecording" @click="startRecording(session)" value="Recording">
+				<input v-if="isRecording" class="btn btn-large btn-danger" type="button" id="buttonRecording" @click="stopRecording(nowRecordingId)"  value="Stop">
+			</div>
+			
+            <div>
+                <modal-view v-if="isModal" @close="isModal=false">
+                    <p>modal parent</p>
+                </modal-view>
+            </div>
+
+			<div id="video-container" >
+				<user-video :stream-manager="publisher" @click="updateMainVideoStreamManager(publisher)"/>
+				<user-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub" @click="updateMainVideoStreamManager(sub)"/>
+			</div>
+		</div>
+
+
+
+  </div>
+</template>
+<script>
+import axios from 'axios'
+import { OpenVidu } from 'openvidu-browser';
+import { mapActions, mapGetters } from 'vuex';
+import UserVideo from '@/components/practice/UserVideo.vue';
+import ModalView from '@/components/practice/ModalView.vue'
+
+
+
+const OPENVIDU_SERVER_URL = "https://" + 'i7b307openvidu.ssafy.io' + ":4443";
+const OPENVIDU_SERVER_SECRET = "reniors";
+
+export default{ 
+    name:'PracticePage',
+    components:{ UserVideo, ModalView },
+    data(){
+        return{
+            OV: undefined,
+            session: undefined,
+            mainStremManager: undefined,
+            publisher: undefined,
+            subscribers: [],
+            mySessionId: 'Session' ,
+            myUserName: 'User',
+
+            nowRecordingId: '',
+			recodings: [],
+			isRecording: false,
+
+            isModal : false,
+        };
+    },
+    created(){
+        this.fetchCurrentUser()
+        this.mySessionId = 'Session' + this.currentUser.id
+        this.myUserName = this.currentUser.name
+    },
+    computed:{
+        ...mapGetters(['question', 'id', 'currentUser'])
+    },
+    methods:{
+        ...mapActions(['fetchCurrentUser']),
+        joinSession() {
+            this.OV = new OpenVidu()
+            this.session = this.OV.initSession()
+            this.session.on('streamCreated', ({stream}) => {
+                const subscriber = this.session.subscribe(stream);
+                this.subscribers.push(subscriber)
+            })
+            this.session.on('streamDestroyed', ({ stream }) => {
+				const index = this.subscribers.indexOf(stream.streamManager, 0);
+				if (index >= 0) {
+					this.subscribers.splice(index, 1);
+				}
+			});
+            this.session.on('exception', ({ exception }) => {
+				console.warn(exception);
+			});
+            this.getToken(this.mySessionId).then(token => {
+                this.session.connect(token, { clientData: this.myUserName })
+                .then(() => {
+                    let publisher = this.OV.initPublisher(undefined, {
+                        audioSource: undefined, // The source of audio. If undefined default microphone
+                        videoSource: undefined, // The source of video. If undefined default webcam
+                        publishAudio: true,  	// Whether you want to start publishing with your audio unmuted or not
+                        publishVideo: true,  	// Whether you want to start publishing with your video enabled or not
+                        resolution: '640x480',  // The resolution of your video
+                        frameRate: 30,			// The frame rate of your video
+                        insertMode: 'APPEND',	// How the video is inserted in the target element 'video-container'
+                        mirror: false       	// Whether to mirror your local video or not
+					});
+                    this.mainStreamManager = publisher;
+					this.publisher = publisher;
+                    this.session.publish(this.publisher);
+                })
+                .catch(error => {
+                    console.log('There was an error connecting to the session:', error.code, error.message);
+                });
+            })
+            window.addEventListener('beforeunload', this.leaveSession)  
+        },
+
+        leaveSession() {
+            if (this.session) this.session.disconnect();
+
+			this.session = undefined;
+			this.mainStreamManager = undefined;
+			this.publisher = undefined;
+			this.subscribers = [];
+			this.OV = undefined;
+
+			window.removeEventListener('beforeunload', this.leaveSession);
+        },
+
+        updateMainVideoStreamManager (stream) {
+			if (this.mainStreamManager === stream) return;
+			this.mainStreamManager = stream;
+		},
+
+        getToken (mySessionId) {
+			return this.createSession(mySessionId).then(sessionId => this.createToken(sessionId));
+		},
+
+        createSession (sessionId) {
+			return new Promise((resolve, reject) => {
+				axios
+					.post(`${OPENVIDU_SERVER_URL}/openvidu/api/sessions`, JSON.stringify({
+						customSessionId: sessionId,
+					}), {
+						auth: {
+							username: 'OPENVIDUAPP',
+							password: OPENVIDU_SERVER_SECRET,
+						},
+					})
+					.then(response => response.data)
+					.then(data => resolve(data.id))
+					.catch(error => {
+						if (error.response.status === 409) {
+							resolve(sessionId);
+						} else {
+							console.warn(`No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}`);
+							if (window.confirm(`No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}\n\nClick OK to navigate and accept it. If no certificate warning is shown, then check that your OpenVidu Server is up and running at "${OPENVIDU_SERVER_URL}"`)) {
+								location.assign(`${OPENVIDU_SERVER_URL}/accept-certificate`);
+							}
+							reject(error.response);
+						}
+					});
+			});
+		},
+
+        createToken (sessionId) {
+			return new Promise((resolve, reject) => {
+				axios
+					.post(`${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`, {}, {
+						auth: {
+							username: 'OPENVIDUAPP',
+							password: OPENVIDU_SERVER_SECRET,
+						},
+					})
+					.then(response => response.data)
+					.then(data => resolve(data.token))
+					.catch(error => reject(error.response));
+			});
+		},
+
+        startRecording(session){
+			this.isRecording = !this.isRecording
+			return new Promise (() => {
+				axios
+				.post(
+					`${OPENVIDU_SERVER_URL}/openvidu/api/recordings/start`,
+					JSON.stringify({
+						session : session.sessionId,
+						// outputMode: "INDIVIDUAL",
+						hasAudio: true,
+						hasVideo: true
+					}),{
+						auth: {
+							username: 'OPENVIDUAPP',
+							password: OPENVIDU_SERVER_SECRET,
+						},
+					})
+					.then(res => {
+					console.log(res)
+					this.nowRecordingId = res.data.id })
+					
+			})
+		},
+
+        stopRecording(recodingId){
+			this.isRecording = !this.isRecording
+            this.isModal=true
+			return new Promise(() => {
+				axios
+				.post(
+					`${OPENVIDU_SERVER_URL}/openvidu/api/recordings/stop/${recodingId}`, {},
+					{
+						auth: {
+							username: 'OPENVIDUAPP',
+							password: OPENVIDU_SERVER_SECRET,
+						},
+					})
+					.then(res => res.data)
+					.then(data => {
+						console.log(data);
+						this.recodings.push(data)
+					})
+			})
+		}
+
+    },
+
+}
+</script>
+
+<style scoped>
+
+.rl{
+    text-decoration:none;
+    color: white;
+}
+.rl:hover{
+    font-weight: bold;
+}
+
+.head2{
+    background-color: #FF843E;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.head2 a.router-link-exact-active{
+    font-weight: bold;
+}
+
+</style>
