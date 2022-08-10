@@ -60,9 +60,13 @@ export default {
     color: #888;
   }
 
+  p {
+    text-align: left;
+  }
+
   .award{
     margin: 20px;
-    height: 225px;
+    height: 240px;
     border-style: none none dashed none;
     border-width: 0.5px;
     border-color: #EAEAEA;
