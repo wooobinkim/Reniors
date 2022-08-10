@@ -88,8 +88,8 @@ public class UserController {
     // TODO : image 수정 추가
     public ResponseEntity<?> updateUser(
             @ApiIgnore @LoginUser User user,
-            @RequestPart(value = "img", required = false) MultipartFile file,
-            @Valid @RequestPart UserUpdateRequest request
+            @RequestPart(value = "img", required = false) final MultipartFile file,
+            @Valid @RequestPart(value = "data", required = true) final UserUpdateRequest request
     ) throws Exception {
         // TODO : URL 추가
         String userProfile = "userBaseProfile.png";

@@ -159,7 +159,7 @@ public class JobOpeningService {
 
     //채용공고 조건 조회
     @Transactional
-    public Page<JobOpeningResponse> getJobOpeningConditionList(Long searchConditionId, Pageable pageable){
+    public Page<JobOpeningResponse> getJobOpeningConditionList(User user,Long searchConditionId, Pageable pageable){
         //조건검색을 위한 쿼리DSL 실행
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
         QJobOpening j = new QJobOpening("j");
