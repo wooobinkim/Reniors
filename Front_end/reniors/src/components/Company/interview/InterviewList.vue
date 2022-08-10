@@ -1,7 +1,7 @@
 <template>
   <div>
     <interview-list-item
-      v-for="interviewapply in interviewapplylist"
+      v-for="interviewapply in interviewapplylistasc"
       :key="interviewapply.id"
       :interviewapply="interviewapply"
     ></interview-list-item>
@@ -14,15 +14,15 @@ import InterviewListItem from "./InterviewListItem.vue";
 export default {
   components: { InterviewListItem },
   created() {
-    this.CLEAR_INTERVIEW_APPLY_LIST;
-    this.getinterviewapplylist(this.$route.params.no);
+    this.CLEAR_INTERVIEW_APPLY_LIST_ASC;
+    this.getinterviewapplylistasc(this.$route.params.no);
   },
   methods: {
-    ...mapActions("company", ["getinterviewapplylist"]),
+    ...mapActions("company", ["getinterviewapplylistasc"]),
   },
   computed: {
-    ...mapState("company", ["interviewapplylist"]),
-    ...mapMutations("company", ["CLEAR_INTERVIEW_APPLY_LIST"]),
+    ...mapState("company", ["interviewapplylistasc"]),
+    ...mapMutations("company", ["CLEAR_INTERVIEW_APPLY_LIST_ASC"]),
   },
 };
 </script>
