@@ -48,7 +48,7 @@ public class CompanyController {
         if(file != null) {
             companyProfile = awsS3Service.uploadFile(file, "company/");
         }
-        Long companyId = companyService.postCompany(companyCreateRequest, baseURL+"company/", companyProfile);
+        Long companyId = companyService.postCompany(companyCreateRequest, baseURL,"company/"+companyProfile);
         return ResponseEntity.status(HttpStatus.CREATED).body(companyId);
     }
     @PostMapping("/login")
