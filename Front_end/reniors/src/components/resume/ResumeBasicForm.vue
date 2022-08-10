@@ -1,27 +1,41 @@
 <template>
   <div>
     <div class="basic">
-      <img style="float: right;" id="previewImage" src="@/assets/defaultimage.svg">
-
-      <form @submit.prevent="updateUser(userEdit)">
+      <form @submit.prevent="update()">
         <p class="forminfo">이름</p>
-        <b-form-input style="width:56%" class="mb-3" type="text" v-model="userEdit.name"></b-form-input>
+        <b-form-input class="mb-3" type="text" v-model="userEdit.name"></b-form-input>
         <p class="forminfo">생년월일</p>
-        <b-form-input style="width:56%" class="mb-3" type="date" v-model="userEdit.birth"></b-form-input>
+        <b-form-input class="mb-3" type="date" v-model="userEdit.birth"></b-form-input>
         <p class="forminfo">주소</p>
         <div class="address">
           <b-form-input class="mb-3" style="width:90%;" v-model="userEdit.address" type="text"></b-form-input>
           <button class="search" style="margin-bottom:16px;" @click="execDaumPostcode()" type="button" value="우편번호 찾기" ><img src="@/assets/searching.png" alt="search"></button>
         </div>
-        <b-form-input class="mb-3" v-model="extraAddress" type="text" placeholder="상세주소를 입력해주세요" ></b-form-input>
+        <b-form-input class="mb-3" v-model="userEdit.extraAddress" type="text" placeholder="상세주소를 입력해주세요" ></b-form-input>
           <!-- <b-form-input class="mb-3" v-model="credentials.address" type="text" placeholder="" ></b-form-input> -->
         <p class="forminfo">연락처</p>
         <b-form-input class="mb-3" type="text" v-model="userEdit.phone"  ></b-form-input>
         <p class="forminfo">최종학력</p>
-        <b-form-select class="mb-3" v-model="userEdit.lastEdu" :options="lastEdu" ></b-form-select>
+        <b-form-select class="mb-3" v-model="userEdit.lastEdu">            
+          <option
+            v-for="lastedu in lastedus"
+            :value="lastedu.value"
+            :key="lastedu"
+          >
+            {{ lastedu.text }}
+          </option></b-form-select>
+        <div class="mb-3 mt-3">
+          <p class="forminfo">프로필 사진</p>
+          <input
+            type="file"
+            class="form-control"
+            placeholder="이미지를 선택해주세요"
+            ref = "img"
+            @change="changeImg()"
+          />
+        </div>
         <footer style="width: 312px; "> 
           <button>다음</button>
-\
         </footer>
       </form>
     </div>
@@ -30,7 +44,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 export default {
   name: 'ResumeBasicForm',
   components: {},
@@ -41,34 +55,27 @@ export default {
   data() {
     return {
       userEdit: {
+        changeProfile: false,
         address: this.currentUser.address,
+        extraAddress: this.currentUser.extraAddress,
         birth: this.currentUser.birth,
         gender: this.currentUser.gender,
         isOpen: this.currentUser.isOpen,
         lastEdu: this.currentUser.lastEdu,
         name: this.currentUser.name,
         phone: this.currentUser.phone,
-        portfolioName: this.currentUser.portfolioName,
-        portfolioPath: this.currentUser.portfolioPath,
-        profileImgName: this.currentUser.profileImgName,
-        profileImgPath: this.currentUser.profileImgPath,
-        totalCareer: this.currentUser.totalCareer,
-        userAppPwd: this.currentUser.userAppPwd,        
+        totalCareer: this.currentUser.totalCareer,     
       },
-
-      lastEdu: [
-        // value 수정
-      { value: null, text: '최종학력을 선택해주세요.' },          
-      { value: '고교졸업이하', text: '고교졸업 이하' },
-      { value: 'b', text: 'Selected Option' },
-      ],
-      extraAddress: ''
+      userImg: '',
     }
   },
   setup() {},
   created() {},
   mounted() {},
   unmounted() {},
+  computed: {
+    ...mapState("category", ["lastedus"]),
+  },
   methods: {
     ...mapActions(['updateUser']),
     execDaumPostcode() {
@@ -109,11 +116,26 @@ export default {
         },
       }).open();
     },
+    changeImg(){
+      this.userImg = this.$refs.img.files
+      console.log(this.userImg)
+    },    
+    update(){
+      const formData = new FormData()
+      formData.append('img', this.userImg[0])
+      formData.append('data', new Blob([JSON.stringify(this.userEdit)],{type : "application/json"}))
+      console.log(this.userEdit)
+      this.updateUser(formData)
+    }
   }
 }
 </script>
 
 <style scoped>
+  p {
+    text-align: left;
+  }
+
   .forminfo {
     color: #8A8A8A;
     font-weight: 400;

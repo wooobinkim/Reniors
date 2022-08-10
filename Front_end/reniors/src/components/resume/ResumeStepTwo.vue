@@ -9,8 +9,7 @@
         <img class="order" src="@/assets/one.svg" alt="order">
         <img class="order" src="@/assets/two_active.svg" alt="order">
         <img class="order" src="@/assets/three.svg" alt="order">
-        <img class="order" src="@/assets/four.svg" alt="order">
-        <img class="order" src="@/assets/five.svg" alt="order">          
+        <img class="order" src="@/assets/four.svg" alt="order">      
       </div>
     </header>
     <div class="content">
