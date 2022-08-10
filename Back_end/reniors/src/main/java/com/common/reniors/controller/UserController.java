@@ -54,7 +54,7 @@ public class UserController {
         if(file != null) {
             userProfile = awsS3Service.uploadFile(file, "user/");
         }
-        Long userId = userService.createUser(request, baseURL+"user/", userProfile);
+        Long userId = userService.createUser(request, baseURL, "user/"+userProfile);
         Map<String, Long> response = new HashMap<>();
         response.put("userId", userId);
         return ResponseEntity.ok(response);
@@ -91,7 +91,6 @@ public class UserController {
             @RequestPart(value = "img", required = false) MultipartFile file,
             @Valid @RequestPart UserUpdateRequest request
     ) throws Exception {
-        // TODO : URL 추가
         String userProfile = "userBaseProfile.png";
         // 프로필사진을 바꿀 것인지 확인
         if(file != null && request.isChangeProfile()) {
