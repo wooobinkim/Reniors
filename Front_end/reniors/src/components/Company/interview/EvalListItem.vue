@@ -1,9 +1,15 @@
 <template>
-  <div></div>
+  <div>
+    {{ evalquestion.contents }}
+  </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    evalquestion: Object,
+  },
+};
 </script>
 
 <style></style>
