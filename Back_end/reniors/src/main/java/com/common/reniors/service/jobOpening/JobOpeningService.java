@@ -136,6 +136,7 @@ public class JobOpeningService {
         searchConditionRepository.deleteById(searchConditionId);
     }
 
+    @Transactional
     //공고 조건 상세조회
     public SearchConditionResponse getSearchCondition(Long searchConditionId){
         SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
@@ -161,6 +162,7 @@ public class JobOpeningService {
         return jobOpeningDtoPage;
     }
 
+    @Transactional
     //공고 전체조회(조회수 탑10)
     public List<JobOpeningResponse> getJobOpeningViewDesc(){
         List<JobOpening> jobOpeningList = jobOpeningRepository.findTop10ByOrderByViewsDesc();
