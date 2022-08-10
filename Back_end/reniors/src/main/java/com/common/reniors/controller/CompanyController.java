@@ -40,6 +40,16 @@ public class CompanyController {
     private final UserService userService;
     private final AwsS3Service awsS3Service;
 
+    @GetMapping(path="/idCheck/{companyAppId}")
+    @ApiOperation(value = "회사 아아디 중복 검사", notes = "아이디 중복 검사를 진행합니다.")
+    public ResponseEntity<?> idCheck(
+            @PathVariable String companyAppId
+    ) {
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("res", companyService.idCheck(companyAppId));
+        return ResponseEntity.ok(response);
+    }
+
     //회사 회원가입
     @PostMapping(consumes = {"multipart/form-data"})
     @ApiOperation(value = "회사 회원가입", notes = "회사아이디로 회원가입을 한다.")
@@ -54,16 +64,6 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.CREATED).body(companyId);
     }
 
-    @GetMapping(path="/idCheck/{companyAppId}")
-    @ApiOperation(value = "회사 아아디 중복 검사", notes = "아이디 중복 검사를 진행합니다.")
-    public ResponseEntity<?> idCheck(
-            @PathVariable String companyAppId
-    ) {
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("res", companyService.idCheck(companyAppId));
-        return ResponseEntity.ok(response);
-    }
-
     @PostMapping("/login")
     @ApiOperation(value = "회사 로그인", notes = "회사 아이디로 로그인을 한다.")
     public ResponseEntity<?> loginCompany(@RequestBody CompanyLoginRequest companyLoginRequest){
@@ -71,9 +71,9 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.AUTHORIZATION,accessToken).build();
     }
 
-    //회사 상세정보
+    //회사 정보 조회
     @GetMapping()
-    @ApiOperation(value = "회사 상세정보", notes = "회사 상세정보를 가져온다.")
+    @ApiOperation(value = "회사 정보 조회", notes = "회사 정보를 조회한다.")
 
     public ResponseEntity<?> getCompany(@ApiIgnore @LoginCompany Company company){
         CompanyResponse companyResponse = companyService.getCompany(company);
@@ -210,8 +210,8 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
-    @GetMapping("/userInfo/{userId}")
-    @ApiOperation(value = "회원 상세 정보 검색", notes = "회원의 상세 정보를 검색한다")
+    @GetMapping("/userdetail/{userId}")
+    @ApiOperation(value = "회원 상세 정보 조회", notes = "회원의 상세 정보를 조회한다")
     public ResponseEntity<?> getUserDetails(
             @ApiIgnore @LoginCompany Company company,
             @PathVariable Long userId
