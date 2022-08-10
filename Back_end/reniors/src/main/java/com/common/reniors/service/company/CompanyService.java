@@ -53,6 +53,15 @@ public class CompanyService {
     @PersistenceContext
     EntityManager em;
 
+    @Transactional
+    public Boolean idCheck(String companyAppId) {
+        if (companyRepository.findByCompanyAppId(companyAppId).isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     //회사 회원가입
     @Transactional
     public Long postCompany(CompanyCreateRequest request, String baseURL ,String companyProfile){

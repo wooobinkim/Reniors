@@ -45,6 +45,6 @@ public class UserResponse {
     private String userProfile;
 
     public static UserResponse response(User user){
-        return new UserResponse(user.getId(), user.getUserAppId(), user.getUserAppPwd(), user.getKakaoId(), user.getName(),user.getBirth(), user.getGender(),user.getPhone(), user.getTotalCareer(), user.getAddress(), user.getExtraAddress(), user.getIsOpen(), user.getLastEdu(), user.getBaseURL(), user.getUserProfile());
+        return new UserResponse(user.getId(), user.getUserAppId(), user.getUserAppPwd(), user.getKakaoId(), user.getName(), user.getBirth(), user.getGender(), user.getPhone(), user.getTotalCareer(), user.getAddress(), user.getExtraAddress(), user.getIsOpen(), user.getLastEdu(), user.getBaseURL(), user.getUserProfile());
     }
 }

@@ -12,8 +12,10 @@ import com.common.reniors.dto.company.CompanyUpdateRequest;
 import com.common.reniors.dto.company.CompanyLoginRequest;
 import com.common.reniors.dto.jobOpening.*;
 
+import com.common.reniors.dto.user.UserCompanyUseResponse;
 import com.common.reniors.dto.user.UserResponse;
 import com.common.reniors.service.company.CompanyService;
+import com.common.reniors.service.user.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -24,19 +26,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/company")
 @RequiredArgsConstructor
 @Api(tags={"회사 API"})
 public class CompanyController {
-
     private static final String baseURL = "https://reniors.s3.ap-northeast-2.amazonaws.com/";
-
     private final CompanyService companyService;
+    private final UserService userService;
     private final AwsS3Service awsS3Service;
-    private final JwtUtil jwtUtil;
 
     //회사 회원가입
     @PostMapping(consumes = {"multipart/form-data"})
@@ -51,6 +53,17 @@ public class CompanyController {
         Long companyId = companyService.postCompany(companyCreateRequest, baseURL,"company/"+companyProfile);
         return ResponseEntity.status(HttpStatus.CREATED).body(companyId);
     }
+
+    @GetMapping(path="/idCheck/{companyAppId}")
+    @ApiOperation(value = "회사 아아디 중복 검사", notes = "아이디 중복 검사를 진행합니다.")
+    public ResponseEntity<?> idCheck(
+            @PathVariable String companyAppId
+    ) {
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("res", companyService.idCheck(companyAppId));
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/login")
     @ApiOperation(value = "회사 로그인", notes = "회사 아이디로 로그인을 한다.")
     public ResponseEntity<?> loginCompany(@RequestBody CompanyLoginRequest companyLoginRequest){
@@ -185,4 +198,13 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
+    @GetMapping("/userInfo/{userId}")
+    @ApiOperation(value = "회원 상세 정보 검색", notes = "회원의 상세 정보를 검색한다")
+    public ResponseEntity<?> getUserDetails(
+            @ApiIgnore @LoginCompany Company company,
+            @PathVariable Long userId
+    ) {
+        UserCompanyUseResponse response = userService.getUserDetails(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

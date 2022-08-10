@@ -6,7 +6,9 @@ export default{
     state: {
         questions: [],
         answer: {},
-        checklist: []
+        checklist: [],
+        question: '',
+        id: null,
 
     },
 
@@ -18,15 +20,18 @@ export default{
           for (let index = 0; index < state.checklist.length; index++) {
               list.push(state.checklist[index].questionId)
           }
-          console.log(list);
           return list
-        }
+        },
+        question: state => state.question,
+        id: state => state.id,
     },
 
     mutations: {
         SET_QUESTIONS: (state, questions) => state.questions = questions,
         SET_ANSWER: (state, answer) => state.answer = answer,
         SET_CHECKLIST: (state, checklist) => state.checklist = checklist,
+        SET_QUESTION: (state, question) => state.question = question,
+        SET_ID: (state, id) => state.id = id,
 
     },
 
@@ -94,7 +99,16 @@ export default{
           .then((res) => {
             commit("SET_CHECKLIST", res.data)
           })
-        }
+        },
+
+        setQuestion({commit}, {question, id}) {
+          commit("SET_QUESTION", question)
+          commit("SET_ID", id)
+        },
+
+        // recordStart({getters, commit}){
+
+        // }
 
     }
 }

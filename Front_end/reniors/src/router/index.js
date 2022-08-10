@@ -54,7 +54,9 @@ import QuestionList from "@/views/practice/QuestionList.vue";
 import QuestionAnswer from "@/views/practice/QuestionAnswer.vue";
 import VideoPractice from "@/views/practice/VideoPractice.vue";
 import VideoPracticeList from "@/views/practice/VideoPracticeList.vue";
-import AnswerUpdate from "@/views/practice/AnswerUpdate.vue";
+import AnswerUpdate from "@/views/practice/AnswerUpdate.vue"
+import PracticePage from "@/views/practice/PracticePage.vue"
+
 
 //interview
 import OpenVidu from "@/views/openvidu/OpenVidu.vue";
@@ -334,6 +336,11 @@ const routes = [
     path: "/practice/videopractice",
     component: VideoPractice,
     name: "VideoPractice",
+  },
+  {
+    path: "/practice/video",
+    component: PracticePage,
+    name: "PracticePage"
   },
 
   //open vidu

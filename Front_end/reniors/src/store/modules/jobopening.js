@@ -20,6 +20,10 @@ export default {
     selectedJobopening: state => state.selectedJobopening,
     bookmarks: state => state.bookmarks,
     bookmarkId: state => state.bookmarks.find(bookmark => bookmark.jobOpeningResponse.id === state.selectedJobopening.id)?.id,
+    isApply: state => {
+      if (state.applies.find(apply => apply.jobOpeningId === state.selectedJobopening.id) === undefined) return false
+      else return true
+    }
   },
   mutations: {
     TAGS: (state, tags) => state.tags = tags,
