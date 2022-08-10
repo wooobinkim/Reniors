@@ -54,7 +54,7 @@ import QuestionList from "@/views/practice/QuestionList.vue";
 import QuestionAnswer from "@/views/practice/QuestionAnswer.vue";
 import VideoPractice from "@/views/practice/VideoPractice.vue";
 import VideoPracticeList from "@/views/practice/VideoPracticeList.vue";
-import AnswerUpdate from "@/views/practice/AnswerUpdate.vue"
+import AnswerUpdate from "@/views/practice/AnswerUpdate.vue";
 
 //interview
 import OpenVidu from "@/views/openvidu/OpenVidu.vue";
@@ -251,7 +251,7 @@ const routes = [
     path: "/company/interview",
     name: "companyinterview",
     component: CompanyInterviewView,
-    // redirect: "/company/interview/list",
+    redirect: "/company/interview/list",
     children: [
       {
         path: "list",
@@ -269,7 +269,7 @@ const routes = [
         component: CompanyOpenVidu,
       },
       {
-        path: "evallist",
+        path: "evallist/:no",
         name: "companyeval",
         component: EvalList,
       },
@@ -323,7 +323,7 @@ const routes = [
   {
     path: "/practice/question/:question_id/answer/update",
     component: AnswerUpdate,
-    name: "AnswerUpdate"
+    name: "AnswerUpdate",
   },
   {
     path: "/practice/videopractices",

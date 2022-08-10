@@ -42,7 +42,7 @@ export default {
     ...mapState("company", ["jobopening"]),
   },
   methods: {
-    ...mapActions("company", ["updateApply"]),
+    ...mapActions("company", ["updateApply", "registRoom"]),
     updateapply() {
       // this.applyinfo.interviewDate = new Date(moment(
       //   this.applyinfo.interviewDate
@@ -54,6 +54,15 @@ export default {
         apply: this.applyinfo,
       };
       this.updateApply(data);
+
+      let room = {
+        isActive: "CLOSE",
+        sessionId: "InterviewSession" + this.jobopening.id,
+        userId: this.apply.userId,
+        jobOpeningId: this.jobopening.id,
+      };
+
+      this.registRoom(room);
       // this.$router.go();
     },
     interviewflag() {
