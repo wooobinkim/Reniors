@@ -1,4 +1,4 @@
-package com.common.reniors.dto.recoding;
+package com.common.reniors.dto.recording;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecodingCreateRequest {
+public class RecordingCreateRequest {
     @NotBlank
     String fileName;
 

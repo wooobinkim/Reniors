@@ -1,4 +1,4 @@
-package com.common.reniors.domain.entity.recoding;
+package com.common.reniors.domain.entity.recording;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

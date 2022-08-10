@@ -1,60 +1,56 @@
 package com.common.reniors.controller;
 
-import com.common.reniors.common.config.data.service.AwsS3Service;
 import com.common.reniors.common.config.web.LoginUser;
 import com.common.reniors.domain.entity.user.User;
-import com.common.reniors.dto.board.BoardCreateRequest;
-import com.common.reniors.dto.recoding.RecodingCreateRequest;
-import com.common.reniors.service.recoding.RecodingService;
+import com.common.reniors.dto.recording.RecordingCreateRequest;
+import com.common.reniors.service.recording.RecordingService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.mail.Multipart;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/recoding")
+@RequestMapping("/recording")
 @RequiredArgsConstructor
 @Api(tags={"녹화본 API"})
-public class RecodingController {
+public class RecordingController {
     private static final String baseURL = "https://reniors.s3.ap-northeast-2.amazonaws.com/";
-    private final RecodingService recodingService;
+    private final RecordingService recordingService;
 
     @PostMapping
     @ApiOperation(value = "녹화본 저장", notes = "녹화본을 저장한다.")
-    public ResponseEntity<?> createRecoding(
+    public ResponseEntity<?> createRecording(
             @ApiIgnore @LoginUser User user,
-            @Valid @RequestBody RecodingCreateRequest request
+            @Valid @RequestBody RecordingCreateRequest request
     ){
-        Long recodingId = recodingService.create(request, user);
+        Long recordingId = recordingService.create(request, user);
         Map<String, Long> response = new HashMap<>();
-        response.put("recodingId", recodingId);
+        response.put("recordingId", recordingId);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/list")
     @ApiOperation(value = "녹화본 리스트 조회", notes = "저장한 녹화본들을 조회한다.")
-    public ResponseEntity<?> getRecodingList(
+    public ResponseEntity<?> getRecordingList(
             @ApiIgnore @LoginUser User user
     ){
-        return ResponseEntity.ok(recodingService.getRecodingList(user));
+        return ResponseEntity.ok(recordingService.getRecordingList(user));
     }
 
-    @DeleteMapping("/{recodingId}")
+    @DeleteMapping("/{recordingId}")
     @ApiOperation(value = "녹화본을 삭제한다.", notes = "저장된 녹화본을 삭제한다.")
-    public ResponseEntity<?> deleteRecoding(
+    public ResponseEntity<?> deleteRecording(
             @ApiIgnore @LoginUser User user,
-            @PathVariable Long recodingId
+            @PathVariable Long recordingId
     ){
-        recodingService.delete(recodingId, user);
+        recordingService.delete(recordingId, user);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
