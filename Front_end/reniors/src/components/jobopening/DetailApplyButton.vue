@@ -4,6 +4,7 @@
       :class="isLogin ? 'apply-active' : 'apply-deactive'" 
       :title="isLogin ? '지원하기' : '로그인이 필요합니다.'"
     >지원하기</button>
+    {{applies}}
   </div>
 </template>
 
@@ -23,9 +24,13 @@ export default {
       if (login === true) store.dispatch('jobopening/apply', props.jobopeningId)
     }
     const isLogin = computed(() => store.getters['isLogginedIn'])
+    const fetchApply = () => store.dispatch('jobopening/fetchApply')
+    fetchApply()
+
+    const applies = computed(() => store.state.jobopening.applies)
 
     return {
-      apply, isLogin
+      apply, isLogin, applies
     }
   }
 }

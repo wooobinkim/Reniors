@@ -11,6 +11,7 @@ export default {
     jobopenings: [],
     selectedJobopening: {},
     bookmarks: [],
+    applies: [],
   },
   getters: {
     tags: state => state.tags,
@@ -18,15 +19,14 @@ export default {
     jobopenings: state => state.jobopenings,
     selectedJobopening: state => state.selectedJobopening,
     bookmarks: state => state.bookmarks,
-    bookmarkId: state => {
-      return state.bookmarks.find(bookmark => bookmark.jobOpeningResponse.id === state.selectedJobopening.id)?.id
-    }
+    bookmarkId: state => state.bookmarks.find(bookmark => bookmark.jobOpeningResponse.id === state.selectedJobopening.id)?.id,
   },
   mutations: {
     TAGS: (state, tags) => state.tags = tags,
     JOBOPENINGS: (state, jobopenings) => state.jobopenings = jobopenings,
     SELECTJOB: (state, jobopening) => state.selectedJobopening = jobopening,
     BOOKMARKS: (state, bookmarks) => state.bookmarks = bookmarks,
+    APPLIES: (state, applies) => state.applies = applies,
   },
   actions: {
     async fetchJobopenings({ commit }) {
@@ -43,9 +43,15 @@ export default {
       console.log(data)
       commit('SELECTJOB', data)
     },
-    async apply(_, jobopeningId) {
-      const response = await axios.post(drf.jobopening.apply(jobopeningId))
+    async fetchApply({ commit }) {
+      const response = await http.get('/jobopening/apply')
       console.log(response)
+      commit('APPLIES', response.data)
+    },
+    async apply(_, jobopeningId) {
+      const response = await http.post(`/jobopening/${jobopeningId}/apply`)
+      console.log(response)
+      alert('지원 성공!')
     },
     async fetchBookmark({ commit }) {
       const response = await http.get('/jobopening/bookmark')
