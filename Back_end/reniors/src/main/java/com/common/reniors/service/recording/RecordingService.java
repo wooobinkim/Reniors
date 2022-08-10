@@ -27,7 +27,7 @@ public class RecordingService {
 
     @Transactional
     public Long create(RecordingCreateRequest request, User user) {
-        Recording recording = Recording.create(request.getFileName(), request.getRecodeURL(), user);
+        Recording recording = Recording.create(request.getFileName(), request.getRecordURL(), user);
         return recordingRepository.save(recording).getId();
     }
 

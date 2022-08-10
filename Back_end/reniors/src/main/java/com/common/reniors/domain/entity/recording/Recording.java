@@ -22,16 +22,16 @@ public class Recording extends BaseEntity{
     private String fileName;
 
     @NotNull
-    private String recordeURL;
+    private String recordURL;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    public static Recording create(String fileName, String recordeName, User user){
+    public static Recording create(String fileName, String recordName, User user){
         Recording recording = new Recording();
         recording.fileName = fileName;
-        recording.recordeURL = recordeName;
+        recording.recordURL = recordName;
         recording.user = user;
         return recording;
     }
