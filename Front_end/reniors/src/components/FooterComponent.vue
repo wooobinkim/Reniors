@@ -59,7 +59,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  height: 64px;
+  height: 50px;
   width: 100%;
   bottom: 0;
   border: 1px solid var(--color-black-4);

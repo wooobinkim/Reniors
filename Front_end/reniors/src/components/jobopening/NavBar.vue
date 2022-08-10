@@ -5,11 +5,10 @@
       <h2>채용공고</h2>
     </router-link>
     <div class="jobopening-navbar-right">
-      <font-awesome-icon class="bookmark-icon" icon="fa-regular fa-bookmark" />
-      <font-awesome-icon class="bookmark-icon" icon="fa-solid fa-bookmark" @click="addBookmark(jobopeningId)" />
-      {{bookmarks}}
+      <font-awesome-icon class="bookmark-icon" v-if="isBookmarked" icon="fa-solid fa-bookmark" @click="deleteBookmark(bookmarkId)" />
+      <font-awesome-icon class="bookmark-icon" v-else icon="fa-regular fa-bookmark" @click="addBookmark(jobopeningId)" />
       <router-link to="profile" class="navbar-profile">
-        <img src="" alt="">
+        <img :src="this.currentUser.baseURL + this.currentUser.userProfile" alt="">
       </router-link>
     </div>
   </div>
@@ -27,16 +26,25 @@ export default {
   setup() {
     const store = useStore()
 
+    const currentUser = computed(() => store.getters['currentUser'])
+
     const isLogin = computed(() => store.getters['isLogginedIn'])
     const fetchBookmark = () => store.dispatch('jobopening/fetchBookmark')
     if (isLogin.value) {
       fetchBookmark()
     }
     const bookmarks = computed(() => store.getters['jobopening/bookmarks'])
+    const bookmarkId = computed(() => store.getters['jobopening/bookmarkId'])
+    const isBookmarked = computed(() => {
+      if (bookmarkId.value === undefined) return false
+      else return true
+    })
     const addBookmark = (jobopeningId) => store.dispatch('jobopening/addBookmark', jobopeningId)
+    const deleteBookmark = (bookmarkId) => store.dispatch('jobopening/deleteBookmark', bookmarkId)
 
     return {
-      addBookmark, isLogin, bookmarks,
+      currentUser,
+      addBookmark, deleteBookmark, isLogin, bookmarks, bookmarkId, isBookmarked,
     }
   }
 }
@@ -82,14 +90,29 @@ export default {
 }
 
 .navbar-profile {
+  position: relative;
   margin-left: 10px;
   height: 24px;
   width: 24px;
 }
 
 .navbar-profile > img {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  transform: translate(-50%, -50%);
   border-radius: 5rem;
-  height: 100%;
-  width: 100%;
+  height: 32px;
+  width: 32px;
+}
+
+.toast-message {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  top: 5px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 }
 </style>
