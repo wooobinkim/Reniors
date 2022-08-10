@@ -1,5 +1,4 @@
 import axios from "axios"
-// import drf from '@/api/drf'
 import router from "@/router"
 
 export default{
@@ -7,8 +6,8 @@ export default{
         questions: [],
         answer: {},
         checklist: [],
-        question: '',
-        id: null,
+        records: [],
+        selected: [],
 
     },
 
@@ -22,16 +21,17 @@ export default{
           }
           return list
         },
-        question: state => state.question,
-        id: state => state.id,
+        records: state => state.records,
+        selected: state => state.selected,
     },
 
     mutations: {
         SET_QUESTIONS: (state, questions) => state.questions = questions,
         SET_ANSWER: (state, answer) => state.answer = answer,
         SET_CHECKLIST: (state, checklist) => state.checklist = checklist,
-        SET_QUESTION: (state, question) => state.question = question,
-        SET_ID: (state, id) => state.id = id,
+        SET_RECORDS: (state, records) => state.records = records,
+        SET_SELECTED: (state, selected) => state.selected = selected,
+        PUT_SELECTED: (state, selected) => state.selected.push(selected)
 
     },
 
@@ -101,14 +101,39 @@ export default{
           })
         },
 
-        setQuestion({commit}, {question, id}) {
-          commit("SET_QUESTION", question)
-          commit("SET_ID", id)
+
+        pushSelected({commit, getters}, questionId) {
+          if(getters.selected.includes(questionId)){
+            let filtered = getters.selected.filter((el) => el !== questionId)
+            commit("SET_SELECTED", filtered)
+          }else{
+            commit("PUT_SELECTED", questionId)
+          }
         },
 
-        // recordStart({getters, commit}){
+        saveRecording({getters}, {fileName, URL}) {
+          axios({
+            url: "https://i7b307.p.ssafy.io/api/recording",
+            method: "post",
+            data: JSON.stringify({
+              fileName: fileName,
+              recordURL: URL,
+            }),
+            headers: getters.authHeader,
+          }).then(router.push({ name: "PracticeBox" }));
 
-        // }
+        },
+        fetchRecording({getters, commit}){
+          axios({
+            url: "https://i7b307.p.ssafy.io/api/recording/list",
+            method: "get",
+            headers: getters.authHeader,
+          })
+          .then((res) => {
+            commit("SET_RECORDS", res.data)
+          
+          })
+        }
 
     }
 }

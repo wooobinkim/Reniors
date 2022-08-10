@@ -10,7 +10,7 @@
         <router-link :to="{ name:'QuestionList' }" >
             <button class="btn2">면접연습</button>
         </router-link>
-        <router-link to="/">
+        <router-link :to="{ name: 'PracticeBox'}">
             <button  class="btn3">연습함</button>
         </router-link>
 
