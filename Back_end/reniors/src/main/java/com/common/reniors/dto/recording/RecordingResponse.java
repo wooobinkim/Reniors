@@ -20,11 +20,11 @@ public class RecordingResponse {
     String fileName;
 
     @NotBlank
-    String recodeURL;
+    String recordeURL;
 
     @NotNull LocalDateTime updatedAt;
 
     public static RecordingResponse response(Recording recording){
-        return new RecordingResponse(recording.getId(), recording.getFileName(), recording.getRecodeURL(), recording.getCreatedAt());
+        return new RecordingResponse(recording.getId(), recording.getFileName(), recording.getRecordeURL(), recording.getCreatedAt());
     }
 }
