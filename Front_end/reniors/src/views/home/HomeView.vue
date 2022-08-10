@@ -4,7 +4,7 @@
     <HomeNotice :login="isLogin"/>
     <HomeInfo />
     <div v-if="isLogin">
-      <HomeJobopeningList type="추천 채용공고" :jobopenings="recommendJobopenings" />
+      <HomeJobopeningList type="추천 채용공고" :jobopenings="hotJobopenings" />
       <HomeYoutubeList v-if="isYoutube" type="맞춤 유튜브 크롤링" :youtubes="youtubes"/>
     </div>
     <div v-else>
@@ -32,15 +32,18 @@ export default {
     const store = useStore()
 
     const fetchYoutube = () => store.dispatch('home/fetchYoutubes', '취업정보')
+    const fetchHot = () => store.dispatch('home/fetchHot')
     fetchYoutube()
+    fetchHot()
 
     const isLogin = computed(() => store.getters['isLogginedIn'])
+    const hotJobopenings = computed(() => store.getters['home/hotJobopenings'])
     const recommendJobopenings = computed(() => store.state.home.recommendJobopenings)
     const youtubes = computed(() => store.getters['home/youtubes'])
     const isYoutube = computed(() => store.getters['home/isYoutube'])
 
     return {
-      isLogin, recommendJobopenings, youtubes, isYoutube,
+      isLogin, hotJobopenings, recommendJobopenings, youtubes, isYoutube,
     }
 
   },
