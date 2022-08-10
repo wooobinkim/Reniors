@@ -70,7 +70,7 @@ public class UserController {
             @RequestParam String code,
             HttpServletResponse response
     ) throws JsonProcessingException {
-        String accessToken = userService.kakaoLogin(code, response);
+        String accessToken = userService.kakaoLogin(code, response, baseURL);
         return ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .build();

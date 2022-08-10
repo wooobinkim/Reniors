@@ -160,7 +160,7 @@ public class User {
        this.userAppPwd = newPwd;
     }
 
-    public static User createKakaoUser(String userAppId, String name, String userAppPwd, Gender gender) {
+    public static User createKakaoUser(String userAppId, String name, String userAppPwd, Gender gender, String baseURL, String userProfile) {
        User user = new User();
        user.userAppId = userAppId;
        user.name = name;
@@ -172,8 +172,8 @@ public class User {
        user.extraAddress = "서구";
        user.isOpen = IsOpen.CLOSE;
        user.lastEdu = LastEdu.학력무관;
-       user.baseURL = "1234";
-       user.userProfile = "1234";
+       user.baseURL = baseURL;
+       user.userProfile = userProfile;
        return user;
     }
 }

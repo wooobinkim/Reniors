@@ -12,6 +12,6 @@ public class KakaoUserInfo {
     private Long id;
     private String nickname;
     private String email;
-    private String birthday;
     private Gender gender;
+    private String profileImage;
 }

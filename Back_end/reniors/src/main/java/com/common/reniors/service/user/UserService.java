@@ -103,7 +103,7 @@ public class UserService {
     }
 
     @Transactional
-    public String kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
+    public String kakaoLogin(String code, HttpServletResponse response, String baseURL) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
         String accessToken = getAccessToken(code);
 
@@ -111,7 +111,7 @@ public class UserService {
         KakaoUserInfo kakaoUserInfo = getKakaoUserInfo(accessToken);
 
         // 3. 카카오ID로 회원가입 처리
-        User kakaoUser = registerKakaoUserIfNeed(kakaoUserInfo);
+        User kakaoUser = registerKakaoUserIfNeed(kakaoUserInfo, baseURL);
 
         // 4. 강제 로그인 처리
         String authentication = forceLogin(kakaoUser);
@@ -179,7 +179,6 @@ public class UserService {
         String nickname = jsonNode.get("properties")
                 .get("nickname").asText();
         String email = jsonNode.get("kakao_account").get("email").asText();
-        String birthday = jsonNode.get("kakao_account").get("birthday").asText();
         String genderKakao = jsonNode.get("kakao_account").get("gender").asText();
         Gender gender = null;
         if (genderKakao.equals("male")) {
@@ -189,29 +188,26 @@ public class UserService {
         } else {
             gender = Gender.공개안함;
         }
-        return new KakaoUserInfo(id, nickname, email, birthday, gender);
+        String profileImage = jsonNode.get("properties").get("profile_image").asText();
+        return new KakaoUserInfo(id, nickname, email, gender, profileImage);
     }
 
     // 3. 카카오ID로 회원가입 처리
     @Transactional
-    public User registerKakaoUserIfNeed(KakaoUserInfo kakaoUserInfo) {
+    public User registerKakaoUserIfNeed(KakaoUserInfo kakaoUserInfo, String baseUrl) {
         // DB 에 중복된 email이 있는지 확인
         String kakaoEmail = kakaoUserInfo.getEmail();
         String nickname = kakaoUserInfo.getNickname();
         Gender gender = kakaoUserInfo.getGender();
+        String profileImageUrl = kakaoUserInfo.getProfileImage();
         User kakaoUser = userRepository.findByUserAppId(kakaoEmail)
                 .orElse(null);
-
         if (kakaoUser == null) {
             // 회원가입
             // password: random UUID
             String password = UUID.randomUUID().toString();
             String encodedPassword = passwordEncoder.encode(password);
-
-            String profile = "https://ossack.s3.ap-northeast-2.amazonaws.com/basicprofile.png";
-
-//            kakaoUser = new User(kakaoEmail, nickname, profile, encodedPassword);
-            kakaoUser = User.createKakaoUser(kakaoEmail, nickname, encodedPassword, gender);
+            kakaoUser = User.createKakaoUser(kakaoEmail, nickname, encodedPassword, gender, baseUrl, profileImageUrl);
             userRepository.save(kakaoUser);
         }
         return kakaoUser;
