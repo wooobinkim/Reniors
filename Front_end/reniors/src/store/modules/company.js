@@ -23,6 +23,7 @@ export default {
     evalquestionlist: [],
     userevallist: [],
     interviewer: null,
+    resume: null,
   },
 
   getters: {
@@ -48,7 +49,6 @@ export default {
     },
     SET_JOBOPENING_LIST(state, datas) {
       datas.forEach((data) => {
-        console.log(data);
         if (data.isFinish == "F") {
           state.jobopeninglisting.push(data);
         } else {
@@ -57,7 +57,6 @@ export default {
       });
     },
     SET_JOBOPENING(state, data) {
-      console.log(data);
       state.jobopening = data;
     },
     SET_COMPANY(state, data) {
@@ -103,8 +102,14 @@ export default {
     SET_USER_EVAL_LIST(state, datas) {
       state.userevallist = datas;
     },
+    CLEAR_INTERVIEWER(state) {
+      state.interviewer = null;
+    },
     SET_INTERVIEWER_LIST(state, data) {
       state.interviewer = data;
+    },
+    SET_RESUME(state, data) {
+      state.resume = data;
     },
   },
 
@@ -299,6 +304,16 @@ export default {
         )
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getResume: ({ commit }, no) => {
+      http
+        .get(`/company/userInfo/${no}`)
+        .then(({ data }) => {
+          commit("SET_RESUME", data);
         })
         .catch((error) => {
           console.log(error);

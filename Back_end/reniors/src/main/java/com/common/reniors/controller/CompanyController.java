@@ -161,6 +161,18 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
+    //회사 공고 과정 수정
+    @PutMapping("/progress/{jobOpeningId}")
+    @ApiOperation(value = "회사 공고 과정 수정", notes = "회사 공고 과정을 수정 한다.")
+    public ResponseEntity<?> updateProgress(@ApiIgnore @LoginCompany Company company,
+                                            @PathVariable("jobOpeningId")Long jobOpeningId,
+                                            @RequestBody JobOpeningProgressUpdateRequest jobOpeningProgressUpdateRequest){
+        companyService.updateProgress(company,jobOpeningId,jobOpeningProgressUpdateRequest);
+
+        return ResponseEntity.status(HttpStatus.OK).body("success");
+
+    }
+
     //회사 공고 지원자 목록
     @GetMapping("/jobopening/{jobOpeningId}/apply")
     @ApiOperation(value = "공고 지원자 목록", notes = "올린 공고의 지원자 목록을 가져온다.")
