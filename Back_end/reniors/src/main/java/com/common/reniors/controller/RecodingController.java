@@ -27,17 +27,14 @@ import java.util.Map;
 public class RecodingController {
     private static final String baseURL = "https://reniors.s3.ap-northeast-2.amazonaws.com/";
     private final RecodingService recodingService;
-    private final AwsS3Service awsS3Service;
 
     @PostMapping
     @ApiOperation(value = "녹화본 저장", notes = "녹화본을 저장한다.")
     public ResponseEntity<?> createRecoding(
             @ApiIgnore @LoginUser User user,
-            @RequestPart(value = "recoding") MultipartFile file,
-            @Valid @RequestPart(value = "data") RecodingCreateRequest request
+            @Valid @RequestBody RecodingCreateRequest request
     ){
-        String recodeName = awsS3Service.uploadFile(file, "recode/");
-        Long recodingId = recodingService.create(request, baseURL,"recode/"+recodeName, user);
+        Long recodingId = recodingService.create(request, user);
         Map<String, Long> response = new HashMap<>();
         response.put("recodingId", recodingId);
         return ResponseEntity.ok(response);
@@ -57,8 +54,7 @@ public class RecodingController {
             @ApiIgnore @LoginUser User user,
             @PathVariable Long recodingId
     ){
-        String recodeName = recodingService.delete(recodingId, user);
-        awsS3Service.deleteFile(recodeName);
+        recodingService.delete(recodingId, user);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

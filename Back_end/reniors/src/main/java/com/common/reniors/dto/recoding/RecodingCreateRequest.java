@@ -11,5 +11,8 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class RecodingCreateRequest {
     @NotBlank
-    String originalName;
+    String fileName;
+
+    @NotBlank
+    String recodeURL;
 }
