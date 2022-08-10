@@ -3,7 +3,7 @@
       <form @submit.prevent="onSubmit" class="formGroup" >
         <div class="box">
           <label for="answer"></label>
-          <textarea type="text" class="form-control content" id="answer" placeholder="내용을 입력해주세요." v-model="answer"></textarea>
+          <textarea type="text" class="form-control content" id="answer" placeholder="내용을 입력해주세요." v-model="this.answer"></textarea>
         </div>
         <div class="submit">
             <button type="submit" class="Btn">저장</button>
@@ -34,6 +34,9 @@ export default{
     methods:{
         ...mapActions(['createAnswer', 'updateAnswer']),
         onSubmit(){
+            if (!this.answer){
+                alert('내용을 작성해주세요!')
+            }
             if (this.action === 'create' && this.answer) {
                 this.createAnswer({ 
                     questionId: this.questionId,

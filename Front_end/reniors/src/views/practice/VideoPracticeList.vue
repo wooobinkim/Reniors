@@ -21,6 +21,12 @@
         :id="question.id"
     ></video-question>
 
+
+    <router-link :to="{name: 'PracticePage'}">
+        <div class="submit">
+            <button class="Btn">등록</button>
+        </div>
+    </router-link>
   </div>
 </template>
 <script>
@@ -88,5 +94,31 @@ export default{
 }
 p{
     margin: 0px
+}
+.submit{
+    position: fixed;
+    bottom: 50px;
+    width: 100%;
+    margin: 0;
+    background-color: white;
+    border-top: solid 0.5px #FFEDBF;
+
+}
+.Btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:var(--color-red-2);
+    height: 40px;
+    width: 340px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+
+    /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
+    cursor: pointer;
 }
 </style>

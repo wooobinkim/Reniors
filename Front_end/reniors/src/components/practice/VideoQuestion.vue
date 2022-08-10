@@ -1,17 +1,16 @@
 <template>
   <div class="total">
     <div >
-        <router-link :to="{name: 'PracticePage'}" @click="this.setQuestion({'question': this.question, 'id': this.id})">
-            <div class="question">
-                <p>Q{{idx + 1}}. {{question}}</p>
-            </div>
-        </router-link>
+        <div class="question" @click="onCheck(id)">
+            <p>Q{{idx + 1}}. {{question}}</p>
+            <i v-if="selected.includes(id)" class="bi bi-check-circle-fill" style="color:#37BF99; margin: 0 16px;"></i>
+        </div>
     </div>
 
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 
 export default{ 
@@ -27,8 +26,14 @@ export default{
         };
     },
     methods:{
-        ...mapActions(['setQuestion'])
+        ...mapActions(['pushSelected']),
+        onCheck(id){
+            this.pushSelected(id)
+        }
     },
+    computed:{
+        ...mapGetters(['selected'])
+    }
     
     
 
@@ -59,25 +64,11 @@ a:hover{
     display: flex;
     align-items: center;
     background-color: white;
+    display: flex;
+    justify-content: space-between;
 }
 .question p{
     margin: 0px 8px 0px;
 }
-.question2{
-    margin:4px;
-    padding-left: 8px;
-    height: 88px;
-    width: 336px;
-    border-radius: 10px;
-    border:1px solid #FF843E;
-    box-shadow: 1px 1px 1px gray;
-    display: flex;
-    align-items: center;
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-}
-.question2 p{
-    margin: 0px 8px 0px;
-}
+
 </style>
