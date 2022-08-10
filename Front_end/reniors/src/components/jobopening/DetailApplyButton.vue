@@ -1,10 +1,8 @@
 <template>
   <div class="detail-apply-button">
     <button @click="apply(isLogin)" 
-      :class="isLogin ? 'apply-active' : 'apply-deactive'" 
-      :title="isLogin ? '지원하기' : '로그인이 필요합니다.'"
-    >지원하기</button>
-    {{applies}}
+      :class="!isActive ? 'apply-active' : 'apply-deactive'" 
+    >{{ isApply ? '지원완료' : '지원하기' }}</button>
   </div>
 </template>
 
@@ -24,13 +22,13 @@ export default {
       if (login === true) store.dispatch('jobopening/apply', props.jobopeningId)
     }
     const isLogin = computed(() => store.getters['isLogginedIn'])
+    const isApply = computed(() => store.getters['jobopening/isApply'])
+    const isActive = computed(() => isApply.value || !isLogin.value)
     const fetchApply = () => store.dispatch('jobopening/fetchApply')
     fetchApply()
 
-    const applies = computed(() => store.state.jobopening.applies)
-
     return {
-      apply, isLogin, applies
+      apply, isLogin, isApply, isActive
     }
   }
 }
