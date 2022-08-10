@@ -32,7 +32,7 @@ public class JobOpeningController {
     //채용공고 조회(조건포함)
     @GetMapping("/search/{searchConditionId}")
     @ApiOperation(value = "공고 조회(조건포함)", notes = "조건검색을 통해 공고를 조회한다.")
-    public ResponseEntity<?> getJobOpeningList(@LoginUser User user, @PathVariable("searchConditionId")Long searchConditionId, Pageable pageable){
+    public ResponseEntity<?> getJobOpeningList(@ApiIgnore @LoginUser User user, @PathVariable("searchConditionId")Long searchConditionId, Pageable pageable){
         Page<JobOpeningResponse> jobOpeningConditionList = jobOpeningService.getJobOpeningConditionList(user,searchConditionId, pageable);
 //        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(x->new JobOpeningDto(x)).collect(Collectors.toList());
 
@@ -42,7 +42,7 @@ public class JobOpeningController {
     //채용공고 조회(추천공고)
     @GetMapping("/search/recommend/{recommendConditionId}")
     @ApiOperation(value = "공고 조회(추천공고)", notes = "추천검색을 통해 공고를 조회한다.")
-    public ResponseEntity<?> getJobOpeningListRecommend(@LoginUser User user,@PathVariable("recommendConditionId")Long recommendConditionId , Pageable pageable){
+    public ResponseEntity<?> getJobOpeningListRecommend(@ApiIgnore @LoginUser User user,@PathVariable("recommendConditionId")Long recommendConditionId , Pageable pageable){
         Page<JobOpeningResponse> jobOpeningConditionList = jobOpeningService.getJobOpeningRecommendList(user,recommendConditionId, pageable);
 //        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(x->new JobOpeningDto(x)).collect(Collectors.toList());
 
@@ -52,7 +52,7 @@ public class JobOpeningController {
     //채용공고 조회(추천공고, 조회수 탑10)
     @GetMapping("/search/recommend/{recommendConditionId}/viewsDesc")
     @ApiOperation(value = "공고 조회(추천공고, 조회수 탑10)", notes = "추천리스트 중 조회수 탑10 공고를 조회한다.")
-    public ResponseEntity<?> getJobOpeningListRecommendViewDesc(@LoginUser User user,@PathVariable("recommendConditionId")Long recommendConditionId){
+    public ResponseEntity<?> getJobOpeningListRecommendViewDesc(@ApiIgnore @LoginUser User user,@PathVariable("recommendConditionId")Long recommendConditionId){
         List<JobOpeningResponse> jobOpeningConditionList = jobOpeningService.getJobOpeningListRecommendViewDesc(user, recommendConditionId);
 //        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(x->new JobOpeningDto(x)).collect(Collectors.toList());
 
@@ -88,7 +88,7 @@ public class JobOpeningController {
     //지원하기
     @PostMapping("/{jobOpeningId}/apply")
     @ApiOperation(value = "지원하기", notes = "공고에 지원한다.")
-    public ResponseEntity<?> applyJobOpening( @PathVariable("jobOpeningId") Long jobOpeningId, @LoginUser User user){
+    public ResponseEntity<?> applyJobOpening( @PathVariable("jobOpeningId") Long jobOpeningId, @ApiIgnore @LoginUser User user){
 
 
         Long applyId = jobOpeningService.applyJobOpening(user, jobOpeningId);
