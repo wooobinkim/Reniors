@@ -19,17 +19,14 @@ public class RecodingResponse {
     Long recodingId;
 
     @NotBlank
-    String originalName;
+    String fileName;
 
     @NotBlank
-    String baseURL;
-
-    @NotBlank
-    String recodeName;
+    String recodeURL;
 
     @NotNull LocalDateTime updatedAt;
 
     public static RecodingResponse response(Recoding recoding){
-        return new RecodingResponse(recoding.getId(), recoding.getOriginalName(), recoding.getBaseURL(), recoding.getRecodeName(), recoding.getCreatedAt());
+        return new RecodingResponse(recoding.getId(),recoding.getFileName(),recoding.getRecodeURL(), recoding.getCreatedAt());
     }
 }
