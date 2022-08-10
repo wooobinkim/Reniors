@@ -6,6 +6,7 @@ COPY settings.gradle .
 COPY src src
 RUN chmod =x ./gradlew
 RUN ./gradlew bootJar
+#RUN ./gradlew clean build --exclude-task test
 
 FROM openjdk:8
 COPY --from=builder build/libs/reniors-0.0.1-SNAPSHOT.jar reniors.jar
