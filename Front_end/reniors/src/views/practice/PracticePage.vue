@@ -32,11 +32,18 @@
 			<div id="session-header">
 				<h1 id="session-title">{{ question }}</h1>
 				<input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession" value="Leave session">
+
+                <input v-if="!isRecording" class="btn btn-large btn-success" type="button" id="buttonRecording" @click="startRecording(session)" value="Recording">
+				<input v-if="isRecording" class="btn btn-large btn-danger" type="button" id="buttonRecording" @click="stopRecording(nowRecordingId)"  value="Stop">
 			</div>
-			<!-- <div id="main-video">
-				<user-video :stream-manager="mainStreamManager"/>
-			</div> -->
-			<div id="video-container">
+			
+            <div>
+                <modal-view v-if="isModal" @close="isModal=false">
+                    <p>modal parent</p>
+                </modal-view>
+            </div>
+
+			<div id="video-container" >
 				<user-video :stream-manager="publisher" @click="updateMainVideoStreamManager(publisher)"/>
 				<user-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub" @click="updateMainVideoStreamManager(sub)"/>
 			</div>
@@ -51,6 +58,7 @@ import axios from 'axios'
 import { OpenVidu } from 'openvidu-browser';
 import { mapActions, mapGetters } from 'vuex';
 import UserVideo from '@/components/practice/UserVideo.vue';
+import ModalView from '@/components/practice/ModalView.vue'
 
 
 
@@ -59,7 +67,7 @@ const OPENVIDU_SERVER_SECRET = "reniors";
 
 export default{ 
     name:'PracticePage',
-    components:{ UserVideo },
+    components:{ UserVideo, ModalView },
     data(){
         return{
             OV: undefined,
@@ -68,7 +76,13 @@ export default{
             publisher: undefined,
             subscribers: [],
             mySessionId: 'Session' ,
-            myUserName: 'User'
+            myUserName: 'User',
+
+            nowRecordingId: '',
+			recodings: [],
+			isRecording: false,
+
+            isModal : false,
         };
     },
     created(){
@@ -184,12 +198,58 @@ export default{
 			});
 		},
 
+        startRecording(session){
+			this.isRecording = !this.isRecording
+			return new Promise (() => {
+				axios
+				.post(
+					`${OPENVIDU_SERVER_URL}/openvidu/api/recordings/start`,
+					JSON.stringify({
+						session : session.sessionId,
+						// outputMode: "INDIVIDUAL",
+						hasAudio: true,
+						hasVideo: true
+					}),{
+						auth: {
+							username: 'OPENVIDUAPP',
+							password: OPENVIDU_SERVER_SECRET,
+						},
+					})
+					.then(res => {
+					console.log(res)
+					this.nowRecordingId = res.data.id })
+					
+			})
+		},
+
+        stopRecording(recodingId){
+			this.isRecording = !this.isRecording
+            this.isModal=true
+			return new Promise(() => {
+				axios
+				.post(
+					`${OPENVIDU_SERVER_URL}/openvidu/api/recordings/stop/${recodingId}`, {},
+					{
+						auth: {
+							username: 'OPENVIDUAPP',
+							password: OPENVIDU_SERVER_SECRET,
+						},
+					})
+					.then(res => res.data)
+					.then(data => {
+						console.log(data);
+						this.recodings.push(data)
+					})
+			})
+		}
+
     },
 
 }
 </script>
 
 <style scoped>
+
 .rl{
     text-decoration:none;
     color: white;
