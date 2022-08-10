@@ -33,7 +33,7 @@
       <h3>모집내용</h3>
       <hr>
       <ConditionItem left="직책" :right="parents?.find((parent) => parent.value===jobopening?.jobParentCategory)?.text" />
-      <ConditionItem left="직무" :right="jobopening.jobPosition" />
+      <ConditionItem left="직무" :right="childs?.find((child) => child.value===jobopening?.jobChildCategoryId)?.text" />
       <ConditionItem left="고용형태" :right="jobopening.typeEmployment" />
       <ConditionItem left="모집인원" :right="jobopening.numberPeople" />
     </div>
@@ -59,6 +59,9 @@ export default {
     const fetchParents = () => store.dispatch('category/getJobParent')
     fetchParents()
     const parents = computed(() => store.state.category.jobparents)
+    const fetchChild = () => store.dispatch('category/getJobChild', jobopening.value.jobParentCategory)
+    fetchChild()
+    const childs = computed(() => store.state.category.jobchilds)
 
     const fetchSido = () => store.dispatch('category/getSido')
     const fetchGugun = (sidoId) => store.dispatch('category/getGugun', sidoId)
@@ -67,7 +70,7 @@ export default {
     const sidos = computed(() => store.state.category.sidos)
     const guguns = computed(() => store.state.category.guguns)
     return {
-      jobopening, period, parents, sidos, guguns,
+      jobopening, period, parents, childs, sidos, guguns,
     }
   },
 }
