@@ -48,7 +48,7 @@ public class SearchCondition {
     @JoinColumn(name = "job_child_category_id")
     private JobChildCategory jobChildCategory;
 
-    @OneToMany(mappedBy = "searchCondition")
+    @OneToMany(mappedBy = "searchCondition", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HopeArea> hopeAreas = new ArrayList<>();
 
     public SearchCondition(SearchConditionCreateRequest searchConditionCreateRequest,JobChildCategory jobChildCategory, User user) {
