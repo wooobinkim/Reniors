@@ -4,24 +4,42 @@ import com.common.reniors.common.config.security.util.JwtUtil;
 import com.common.reniors.common.exception.DuplicateException;
 import com.common.reniors.common.exception.NotFoundException;
 import com.common.reniors.common.exception.NotMatchException;
+import com.common.reniors.domain.entity.Type.Gender;
 import com.common.reniors.domain.entity.user.User;
 import com.common.reniors.domain.repository.user.UserRepository;
+import com.common.reniors.dto.kakao.KakaoUserInfo;
 import com.common.reniors.dto.mail.MailDto;
 import com.common.reniors.dto.user.UserCreateRequest;
 import com.common.reniors.dto.user.UserLoginRequest;
 import com.common.reniors.dto.user.UserResponse;
 import com.common.reniors.dto.user.UserUpdateRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.common.reniors.common.exception.NotFoundException.USER_LIST_NOT_FOUND;
 import static com.common.reniors.common.exception.NotFoundException.USER_NOT_FOUND;
@@ -84,7 +102,130 @@ public class UserService {
         }
     }
 
+    @Transactional
+    public String kakaoLogin(String code, HttpServletResponse response, String baseURL) throws JsonProcessingException {
+        // 1. "인가 코드"로 "액세스 토큰" 요청
+        String accessToken = getAccessToken(code);
 
+        // 2. 토큰으로 카카오 API 호출
+        KakaoUserInfo kakaoUserInfo = getKakaoUserInfo(accessToken);
+
+        // 3. 카카오ID로 회원가입 처리
+        User kakaoUser = registerKakaoUserIfNeed(kakaoUserInfo, baseURL);
+
+        // 4. 강제 로그인 처리
+        String authentication = forceLogin(kakaoUser);
+
+        // 5. response Header에 JWT 토큰 추가
+//        kakaoUsersAuthorizationInput(authentication, response, kakaoUser);
+        return authentication;
+    }
+
+    // 1. "인가 코드"로 "액세스 토큰" 요청
+    public String getAccessToken(String code) throws JsonProcessingException {
+        // HTTP Header 생성
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        // HTTP Body 생성
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "authorization_code");
+        body.add("client_id", "4e4c47797fd9117b5651478290547b4f");
+        body.add("redirect_uri", "http://localhost:8080/api/users/login/kakao");
+        body.add("code", code);
+
+        // HTTP 요청 보내기
+        HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(body, headers);
+        RestTemplate rt = new RestTemplate();
+        ResponseEntity<String> response = rt.exchange(
+                "https://kauth.kakao.com/oauth/token",
+                HttpMethod.POST,
+                kakaoTokenRequest,
+                String.class
+        );
+
+        // HTTP 응답 (JSON) -> 액세스 토큰 파싱
+        String responseBody = response.getBody();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(responseBody);
+        return jsonNode.get("access_token").asText();
+    }
+
+    // 2. 토큰으로 카카오 API 호출
+    public KakaoUserInfo getKakaoUserInfo(String accessToken) throws JsonProcessingException {
+        // HTTP Header 생성
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + accessToken);
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        // HTTP 요청 보내기
+        HttpEntity<MultiValueMap<String, String>> kakaoUserInfoRequest = new HttpEntity<>(headers);
+        RestTemplate rt = new RestTemplate();
+        ResponseEntity<String> response = rt.exchange(
+                "https://kapi.kakao.com/v2/user/me",
+                HttpMethod.POST,
+                kakaoUserInfoRequest,
+                String.class
+        );
+
+        // responseBody에 있는 정보를 꺼냄
+        String responseBody = response.getBody();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(responseBody);
+
+        System.out.println("jsonNode = " + jsonNode);
+        
+        Long id = jsonNode.get("id").asLong();
+        String nickname = jsonNode.get("properties")
+                .get("nickname").asText();
+        String email = jsonNode.get("kakao_account").get("email").asText();
+        String genderKakao = jsonNode.get("kakao_account").get("gender").asText();
+        Gender gender = null;
+        if (genderKakao.equals("male")) {
+            gender = Gender.M;
+        } else if (genderKakao.equals("female")) {
+            gender = Gender.F;
+        } else {
+            gender = Gender.공개안함;
+        }
+        String profileImage = jsonNode.get("properties").get("profile_image").asText();
+        return new KakaoUserInfo(id, nickname, email, gender, profileImage);
+    }
+
+    // 3. 카카오ID로 회원가입 처리
+    @Transactional
+    public User registerKakaoUserIfNeed(KakaoUserInfo kakaoUserInfo, String baseUrl) {
+        // DB 에 중복된 email이 있는지 확인
+        String kakaoEmail = kakaoUserInfo.getEmail();
+        String nickname = kakaoUserInfo.getNickname();
+        Gender gender = kakaoUserInfo.getGender();
+        String profileImageUrl = kakaoUserInfo.getProfileImage();
+        User kakaoUser = userRepository.findByUserAppId(kakaoEmail)
+                .orElse(null);
+        if (kakaoUser == null) {
+            // 회원가입
+            // password: random UUID
+            String password = UUID.randomUUID().toString();
+            String encodedPassword = passwordEncoder.encode(password);
+            kakaoUser = User.createKakaoUser(kakaoEmail, nickname, encodedPassword, gender, baseUrl, profileImageUrl);
+            userRepository.save(kakaoUser);
+        }
+        return kakaoUser;
+    }
+
+    // 4. 강제 로그인 처리
+    public String forceLogin(User kakaoUser) {
+        return jwtUtil.createToken(kakaoUser.getId(), "user");
+    }
+    /*
+        // 5. response Header에 JWT 토큰 추가
+        public void kakaoUsersAuthorizationInput(Authentication authentication, HttpServletResponse response, User kakaoUser) {
+            // response header에 token 추가
+            UserDetailsImpl userDetailsImpl = ((UserDetailsImpl) authentication.getPrincipal());
+            String token = jwtUtil.createToken(kakaoUser.getId(), userDetailsImpl.getUsername());
+            response.addHeader("Authorization", "BEARER" + " " + token);
+        }
+    */
     @Transactional
     public UserResponse readUser(User user) {
         User findUser = userRepository.findById(user.getId())

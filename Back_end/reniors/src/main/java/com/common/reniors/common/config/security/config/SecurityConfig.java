@@ -41,8 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             /* 카카오 로그인 */
-            "/user/kakao/callback",
-            "/user/login",
+            "/users/login/kakao",
 
     };
 
