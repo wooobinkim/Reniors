@@ -57,6 +57,7 @@ export default {
       });
     },
     SET_JOBOPENING(state, data) {
+      console.log(data);
       state.jobopening = data;
     },
     SET_COMPANY(state, data) {
@@ -183,7 +184,6 @@ export default {
     },
 
     registJobOpening: ({ commit }, jobopening) => {
-      console.log(jobopening);
       http
         .post(`/company/jobopening`, JSON.stringify(jobopening))
         .then(({ data }) => {
@@ -228,6 +228,16 @@ export default {
         .delete(`/company/jobopening/${no}`)
         .then(({ data }) => {
           commit("SET_JOBOPENING", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    finishJobOpening: ({ commit }, no) => {
+      http
+        .put(`/company/jobopening/${no}/finish`)
+        .then(({ data }) => {
+          commit("SET_DATASTATE", data);
         })
         .catch((error) => {
           console.log(error);
