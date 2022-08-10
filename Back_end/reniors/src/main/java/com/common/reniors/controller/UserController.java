@@ -88,8 +88,6 @@ public class UserController {
                 .build();
     }
 
-    // 카카오 회원 탈퇴
-
     // 회원 로그아웃
 
     // 카카오 로그아웃
