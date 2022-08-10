@@ -30,18 +30,17 @@ public class RecodingService {
     private final RecodingRepository recodingRepository;
 
     @Transactional
-    public Long create(RecodingCreateRequest request, String baseURL, String recodeName, User user) {
-        Recoding recoding = Recoding.create(request.getOriginalName(), baseURL, recodeName, user);
+    public Long create(RecodingCreateRequest request, User user) {
+        Recoding recoding = Recoding.create(request.getFileName(), request.getRecodeURL(), user);
         return recodingRepository.save(recoding).getId();
     }
 
     @Transactional
-    public String delete(Long recodingId, User user) {
+    public void delete(Long recodingId, User user) {
         Recoding recoding = recodingRepository.findById(recodingId)
                 .orElseThrow(()->new NotFoundException(RECODING_NOT_FOUND));
         if(recoding.getUser().getId() == user.getId()) {
             recodingRepository.delete(recoding);
-            return recoding.getRecodeName();
         }else{
             throw new NotAuthException(USER_NO_AUTH);
         }

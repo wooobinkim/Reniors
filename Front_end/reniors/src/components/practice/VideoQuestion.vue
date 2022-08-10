@@ -1,7 +1,7 @@
 <template>
   <div class="total">
     <div >
-        <router-link to='/'>
+        <router-link :to="{name: 'PracticePage'}" @click="this.setQuestion({'question': this.question, 'id': this.id})">
             <div class="question">
                 <p>Q{{idx + 1}}. {{question}}</p>
             </div>
@@ -11,6 +11,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
 
 
 export default{ 
@@ -25,6 +26,10 @@ export default{
         return{
         };
     },
+    methods:{
+        ...mapActions(['setQuestion'])
+    },
+    
     
 
 }
