@@ -76,8 +76,19 @@
       </template>
 
       <div>지원자 : {{ interviewer }}</div>
+      <template v-if="tab == 'resume'">
+        <div>
+          <resume-view></resume-view>
+        </div>
+      </template>
+      <template v-if="tab == 'eval'">
+        <div>
+          <openvidu-eval-list></openvidu-eval-list>
+        </div>
+      </template>
       <div>
-        <openvidu-eval-list></openvidu-eval-list>
+        <span @click="changeresume()">이력서보기 | </span>
+        <span @click="changeeval()">평가하기</span>
       </div>
     </div>
   </div>
@@ -87,6 +98,7 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "@/components/openvidu/UserVideo.vue";
+import ResumeView from "@/components/Company/interview/ResumeView.vue";
 import { mapActions, mapState } from "vuex";
 import OpenviduEvalList from "@/components/Company/interview/OpenviduEvalList.vue";
 // import { mapActions } from "vuex";
@@ -107,6 +119,7 @@ export default {
   components: {
     UserVideo,
     OpenviduEvalList,
+    ResumeView,
   },
 
   data() {
@@ -121,6 +134,7 @@ export default {
       myUserName: "",
       videoflag: true,
       audioflag: false,
+      tab: "resume",
       //   myUserName: "Participant" + Math.floor(Math.random() * 100),
     };
   },
@@ -138,6 +152,12 @@ export default {
 
   methods: {
     ...mapActions("company", ["getCompany"]),
+    changeresume() {
+      this.tab = "resume";
+    },
+    changeeval() {
+      this.tab = "eval";
+    },
     videoonoff() {
       this.videoflag = !this.videoflag;
       this.publisher.publishVideo(this.videoflag);

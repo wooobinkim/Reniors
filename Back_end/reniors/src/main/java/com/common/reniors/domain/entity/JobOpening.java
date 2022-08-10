@@ -66,6 +66,9 @@ public class JobOpening{
 
     private int workingDay;
 
+    @NotNull
+    private int views;
+
     @Enumerated(EnumType.STRING)
     private IsFinish isFinish;
 
@@ -121,6 +124,7 @@ public class JobOpening{
         this.typeEmployment = jobOpeningCreateRequest.getTypeEmployment();
         this.lastEdu=jobOpeningCreateRequest.getLastEdu();
         this.isFinish = IsFinish.F;
+        this.views = 0;
         this.company = company;
         this.gugun = gugun;
         this.jobChildCategory = jobChildCategory;
@@ -145,5 +149,6 @@ public class JobOpening{
     public void finish(){
         this.isFinish = IsFinish.T;
     }
+    public void viewUp(){this.views+=1;}
 
 }

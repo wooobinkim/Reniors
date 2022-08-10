@@ -39,11 +39,39 @@ public class JobOpeningController {
         return ResponseEntity.status(HttpStatus.OK).body(jobOpeningConditionList);
     }
 
+    //채용공고 조회(추천공고)
+    @GetMapping("/search/recommend/{recommendConditionId}")
+    @ApiOperation(value = "공고 조회(추천공고)", notes = "추천검색을 통해 공고를 조회한다.")
+    public ResponseEntity<?> getJobOpeningListRecommend(@LoginUser User user,@PathVariable("recommendConditionId")Long recommendConditionId , Pageable pageable){
+        Page<JobOpeningResponse> jobOpeningConditionList = jobOpeningService.getJobOpeningRecommendList(user,recommendConditionId, pageable);
+//        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(x->new JobOpeningDto(x)).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(jobOpeningConditionList);
+    }
+
+    //채용공고 조회(추천공고, 조회수 탑10)
+    @GetMapping("/search/recommend/{recommendConditionId}/viewsDesc")
+    @ApiOperation(value = "공고 조회(추천공고, 조회수 탑10)", notes = "추천리스트 중 조회수 탑10 공고를 조회한다.")
+    public ResponseEntity<?> getJobOpeningListRecommendViewDesc(@LoginUser User user,@PathVariable("recommendConditionId")Long recommendConditionId){
+        List<JobOpeningResponse> jobOpeningConditionList = jobOpeningService.getJobOpeningListRecommendViewDesc(user, recommendConditionId);
+//        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(x->new JobOpeningDto(x)).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(jobOpeningConditionList);
+    }
+
     //공고 전체조회
     @GetMapping("/search")
     @ApiOperation(value = "공고 조회", notes = "전체 공고를 조회한다.")
     public ResponseEntity<?> getJobOpening(Pageable pageable){
         Page<JobOpeningResponse> jobOpeningList = jobOpeningService.getJobOpening(pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(jobOpeningList);
+    }
+
+    //공고 전체조회(조회수 탑10)
+    @GetMapping("/search/viewsDesc")
+    @ApiOperation(value = "공고 조회(조회수 탑10)", notes = "조회수 탑10 공고를 조회한다.")
+    public ResponseEntity<?> getJobOpeningViewDesc(){
+        List<JobOpeningResponse> jobOpeningList = jobOpeningService.getJobOpeningViewDesc();
         return ResponseEntity.status(HttpStatus.OK).body(jobOpeningList);
     }
 
@@ -86,7 +114,7 @@ public class JobOpeningController {
         return ResponseEntity.status(HttpStatus.OK).body(apply);
     }
 
-    //공고 조건 생성(지역, 직무 제외)
+    //공고 조건 생성(지역제외)
     @PostMapping("/condition")
     @ApiOperation(value = "공고 조건생성", notes = "조건검색에 이용한 조건을 만든다.")
     public ResponseEntity<?> postSearchCondition(@ApiIgnore @LoginUser User user, @RequestBody SearchConditionCreateRequest searchConditionCreateRequest){
