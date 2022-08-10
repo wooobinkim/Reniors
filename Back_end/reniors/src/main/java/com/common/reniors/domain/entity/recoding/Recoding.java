@@ -24,23 +24,19 @@ public class Recoding extends BaseEntity{
     @Column(name = "recoding_id")
     private Long id;
 
-    private String originalName;
-
-    @Column(columnDefinition = "TEXT")
-    private String baseURL;
+    private String fileName;
 
     @NotNull
-    private String recodeName;
+    private String recodeURL;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    public static Recoding create(String originalName, String baseURL, String recodeName, User user){
+    public static Recoding create(String fileName, String recodeName, User user){
         Recoding recoding = new Recoding();
-        recoding.originalName = originalName;
-        recoding.baseURL = baseURL;
-        recoding.recodeName = recodeName;
+        recoding.fileName = fileName;
+        recoding.recodeURL = recodeName;
         recoding.user = user;
         return recoding;
     }
