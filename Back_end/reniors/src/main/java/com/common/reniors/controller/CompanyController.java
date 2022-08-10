@@ -157,6 +157,15 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.OK).body(applyList);
     }
 
+    //회사 공고 지원자 목록(날짜 오름차순)
+    @GetMapping("/jobopening/{jobOpeningId}/apply/dateAsc")
+    @ApiOperation(value = "공고 지원자 목록", notes = "올린 공고의 지원자 목록을 가져온다.")
+
+    public ResponseEntity<?> getApplyListDateAsc(@ApiIgnore @LoginCompany Company company, @PathVariable("jobOpeningId") Long jobOpeningId){
+        List<ApplyResponse> applyList = companyService.getappliyListDateAsc(company, jobOpeningId);
+        return ResponseEntity.status(HttpStatus.OK).body(applyList);
+    }
+
     //회사 공고 지원자 상세목록
     @GetMapping("/jobopening/{jobOpeningId}/apply/{applyId}")
     @ApiOperation(value = "공고 지원자 상세목록", notes = "올린 공고의 지원자 중 한명의 정보를 가져온다.")

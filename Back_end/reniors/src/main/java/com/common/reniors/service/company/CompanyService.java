@@ -8,6 +8,7 @@ import com.common.reniors.common.exception.NotMatchException;
 import com.common.reniors.domain.entity.Apply;
 import com.common.reniors.domain.entity.Company;
 import com.common.reniors.domain.entity.JobOpening;
+import com.common.reniors.domain.entity.QApply;
 import com.common.reniors.domain.entity.category.Gugun;
 import com.common.reniors.domain.entity.category.JobChildCategory;
 import com.common.reniors.domain.repository.ApplyRepository;
@@ -23,10 +24,13 @@ import com.common.reniors.dto.company.CompanyUpdateRequest;
 import com.common.reniors.dto.company.CompanyLoginRequest;
 import com.common.reniors.dto.jobOpening.*;
 import com.common.reniors.dto.user.UserResponse;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -46,6 +50,8 @@ public class CompanyService {
     private final ApplyRepository applyRepository;
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
+    @PersistenceContext
+    EntityManager em;
 
     //회사 회원가입
     @Transactional
@@ -185,6 +191,28 @@ public class CompanyService {
         List<Apply> applyList = applyRepository.findByJobOpening(jobOpening);
         List<ApplyResponse> applyResponseList = applyList.stream().map(a->ApplyResponse.response(
                 a
+        )).collect(Collectors.toList());
+        return  applyResponseList;
+    }
+
+    //회사 공고 지원자 목록(날짜 오름차순)
+    @Transactional
+    public List<ApplyResponse> getappliyListDateAsc(Company company, Long jobOpeningId){
+        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
+        QApply a = new QApply("a");
+
+        if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
+            throw new NotAuthException(COMPANY_NO_AUTH);
+        JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found Apply"));
+        List<Apply> applyList = jpaQueryFactory.selectFrom(a)
+                .where(a.jobOpening.eq(jobOpening),
+                        a.interviewDate.isNotNull())
+                .orderBy(a.interviewDate.asc()).fetch();
+
+//        JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found Apply"));
+//        List<Apply> applyList = applyRepository.findByJobOpening(jobOpening);
+        List<ApplyResponse> applyResponseList = applyList.stream().map(aa->ApplyResponse.response(
+                aa
         )).collect(Collectors.toList());
         return  applyResponseList;
     }

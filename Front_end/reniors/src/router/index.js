@@ -31,7 +31,7 @@ import CompanyJobOpeningList from "@/components/Company/JobOpening/JobOpeningLis
 import CompanyJobOpeningRegist from "@/components/Company/JobOpening/JobOpeningRegist.vue";
 import CompanyJobOpeningUpdate from "@/components/Company/JobOpening/JobOpeningUpdate.vue";
 import ApplyList from "@/components/Company/JobOpening/ApplyList.vue";
-import ResumeView from "@/components/Company/JobOpening/ResumeView.vue";
+import ResumeView from "@/components/Company/interview/ResumeView.vue";
 import JobOpeningInterviewList from "@/components/Company/interview/JobOpeningInterviewList.vue";
 import CompanyInterviewList from "@/components/Company/interview/InterviewList.vue";
 import CompanyOpenVidu from "@/components/Company/interview/CompanyOpenVidu.vue";
