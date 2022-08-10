@@ -32,7 +32,7 @@ spring:
     hibernate:
       format_sql: true
       #ddl-auto: none
-      ddl-auto: update
+      ddl-auto: none
 
   # swagger 설정
   mvc:
