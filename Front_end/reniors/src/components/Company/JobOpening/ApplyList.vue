@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div>{{ jobopeningdetail.title }}</div>
+    <div>
+      제목 : {{ jobopeningdetail.title }} /
+      {{ jobopeningdetail.jobChildCategory }}
+    </div>
+    <div>상세보기</div>
+    <div>지원자 수 : {{ applylist.length }}</div>
 
     <template v-for="apply in applylist" :key="apply.id">
       <div>
