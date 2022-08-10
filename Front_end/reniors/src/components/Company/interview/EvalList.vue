@@ -13,9 +13,11 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import EvalRegist from "./EvalRegist.vue";
+import EvalListItem from "./EvalListItem.vue";
 export default {
   components: {
     EvalRegist,
+    EvalListItem,
   },
   data() {
     return {
@@ -23,7 +25,7 @@ export default {
     };
   },
   created() {
-    this.getEvalQuestionList(this.jobopening.id);
+    this.getEvalQuestionList(this.$route.params.no);
   },
   computed: {
     ...mapState("company", ["jobopening", "evalquestionlist"]),

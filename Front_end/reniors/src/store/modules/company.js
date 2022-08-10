@@ -20,6 +20,7 @@ export default {
     applyuser: null,
     evalquestionlist: [],
     userevallist: [],
+    interviewer: null,
   },
 
   getters: {
@@ -73,6 +74,9 @@ export default {
     },
     SET_USER_EVAL_LIST(state, datas) {
       state.userevallist = datas;
+    },
+    SET_INTERVIEWER_LIST(state, data) {
+      state.interviewer = data;
     },
   },
 
@@ -253,6 +257,16 @@ export default {
           console.log(error);
         });
     },
+    registRoom: ({ commit }, data) => {
+      http
+        .post(`/room/company`, JSON.stringify(data))
+        .then(({ data }) => {
+          commit("SET_DATASTATE", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     registEvalQuestion: ({ commit }, evalquestion) => {
       http
         .post(`/eval`, JSON.stringify(evalquestion))
@@ -267,6 +281,7 @@ export default {
       http
         .get(`/eval/search/${no}`)
         .then(({ data }) => {
+          console.log(data);
           commit("SET_EVAL_QUESTION_LIST", data);
         })
         .catch((error) => {
