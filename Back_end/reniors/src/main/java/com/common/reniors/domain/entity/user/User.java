@@ -1,9 +1,6 @@
 package com.common.reniors.domain.entity.user;
 
-<<<<<<< HEAD
 import com.common.reniors.domain.entity.Room;
-=======
->>>>>>> feature/BE_User
 import com.common.reniors.domain.entity.Apply;
 import com.common.reniors.domain.entity.SearchCondition;
 import com.common.reniors.domain.entity.Type.Gender;
@@ -13,11 +10,8 @@ import com.common.reniors.domain.entity.Type.Role;
 import com.common.reniors.domain.entity.UserEval;
 import com.common.reniors.domain.entity.board.Board;
 import com.common.reniors.domain.entity.board.Comment;
-<<<<<<< HEAD
 import com.common.reniors.domain.entity.recoding.Recoding;
-=======
 import com.common.reniors.domain.entity.interviewQuestion.Answer;
->>>>>>> feature/BE_User
 import com.common.reniors.domain.entity.recommend.RecommendCondition;
 import com.common.reniors.domain.entity.resume.Award;
 import com.common.reniors.domain.entity.resume.CareerDetail;
