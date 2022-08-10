@@ -12,11 +12,13 @@ export default {
     profile: {},
     authError: null,
     datastate: "",
-    jobopeninglist: [],
+    jobopeninglisting: [],
+    jobopeninglisted: [],
     jobopening: null,
     companyinfo: {},
     applylist: [],
     interviewapplylist: [],
+    interviewapplylistasc: [],
     applyuser: null,
     evalquestionlist: [],
     userevallist: [],
@@ -40,8 +42,17 @@ export default {
     SET_DATASTATE(state, data) {
       state.datastate = data;
     },
-    SET_JOBOPENING_LIST(state, data) {
-      state.jobopeninglist = data;
+    CLEAR_JOBOPENING_LIST(state) {
+      state.interviewapplylist = [];
+    },
+    SET_JOBOPENING_LIST(state, datas) {
+      datas.forEach((data) => {
+        if (data.is_finish == "F") {
+          state.jobopeninglisting.push(data);
+        } else {
+          state.jobopeninglisted.push(data);
+        }
+      });
     },
     SET_JOBOPENING(state, data) {
       state.jobopening = data;
@@ -65,6 +76,20 @@ export default {
           data.jobOpeningProcess == "면접심사중"
         ) {
           state.interviewapplylist.push(data);
+        }
+      });
+      // state.interviewapplylist = datas;
+    },
+    CLEAR_INTERVIEW_APPLY_LIST_ASC(state) {
+      state.interviewapplylistasc = [];
+    },
+    SET_INTERVIEW_APPLY_LIST_ASC(state, datas) {
+      datas.forEach((data) => {
+        if (
+          data.jobOpeningProcess == "면접" ||
+          data.jobOpeningProcess == "면접심사중"
+        ) {
+          state.interviewapplylistasc.push(data);
         }
       });
       // state.interviewapplylist = datas;
@@ -221,6 +246,16 @@ export default {
         .get(`/company/jobopening/${no}/apply`)
         .then(({ data }) => {
           commit("SET_INTERVIEW_APPLY_LIST", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getinterviewapplylistasc: ({ commit }, no) => {
+      http
+        .get(`/company/jobopening/${no}/apply/dateAsc`)
+        .then(({ data }) => {
+          commit("SET_INTERVIEW_APPLY_LIST_ASC", data);
         })
         .catch((error) => {
           console.log(error);
