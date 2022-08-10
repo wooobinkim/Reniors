@@ -16,22 +16,22 @@ import javax.validation.constraints.NotNull;
 public class Recording extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "recoding_id")
+    @Column(name = "recording_id")
     private Long id;
 
     private String fileName;
 
     @NotNull
-    private String recodeURL;
+    private String recordeURL;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    public static Recording create(String fileName, String recodeName, User user){
+    public static Recording create(String fileName, String recordeName, User user){
         Recording recording = new Recording();
         recording.fileName = fileName;
-        recording.recodeURL = recodeName;
+        recording.recordeURL = recordeName;
         recording.user = user;
         return recording;
     }
