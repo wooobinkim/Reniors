@@ -13,7 +13,7 @@
       <img :src="this.currentUser.baseURL + this.currentUser.userProfile" alt="">
       <div class="footer-profile-dropdown" id="footerDropdown">
         <router-link to="/mypage">MyPage</router-link> <br>
-        <router-link to="/logout">Logout</router-link> 
+        <p @click="removeToken">Logout</p> 
       </div>
     </div> 
     <router-link v-else class="footroute" to="/login">
@@ -47,11 +47,10 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['fetchInterest']),
+    ...mapActions(['fetchInterest', 'removeToken']),
     dropdown () {
       document.querySelector('#footerDropdown').classList.toggle('active')
-
-    }
+    },
   },
   created(){
     this.fetchInterest()
@@ -112,8 +111,9 @@ export default {
   border-radius: 0.5rem;
 }
 
-.footer-profile-dropdown > a {
+.footer-profile-dropdown > a, .footer-profile-dropdown > p {
   font-size: 14px;
+  margin: 0;
 }
 
 .footer-profile-dropdown:before {
