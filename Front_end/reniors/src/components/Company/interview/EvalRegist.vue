@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       evalquestion: {
-        jobOpeningId: this.jobopening,
+        jobOpeningId: this.$route.params.no,
         contents: "",
       },
     };
@@ -22,7 +22,9 @@ export default {
   methods: {
     ...mapActions("company", ["registEvalQuestion"]),
     regist() {
+      console.log(this.evalquestion);
       this.registEvalQuestion(this.evalquestion);
+      this.$router.go();
     },
   },
 };
