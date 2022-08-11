@@ -1,5 +1,3 @@
-import drf from '@/api/drf'
-import axios from 'axios'
 import http from '@/api/http'
 
 export default {
@@ -17,9 +15,7 @@ export default {
     async fetchConditions({ commit }) {
       const response = await http.get(`/jobopening/condition`)
       console.log(response.data)
-      const data = response.data.content
-      console.log(data)
-      commit('CONDITIONS', data)
+      commit('CONDITIONS', response.data)
     },
     async createCondition({ dispatch }, payload) {
       const data = {
@@ -40,9 +36,9 @@ export default {
       dispatch('fetchConditions')
     },
     async deleteCondition({ dispatch }, conditionId) {
-      const response = await axios.delete(drf.condition.detail(conditionId))
+      const response = await http.delete(`/jobopening/condition/${conditionId}`)
       console.log(response)
-      dispatch('condition/fetchConditions')
+      dispatch('fetchConditions')
     },
   },
 }

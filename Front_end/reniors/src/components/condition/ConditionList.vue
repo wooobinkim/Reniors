@@ -7,7 +7,7 @@
           <p class="condition-item-number">맞춤공고{{ index+1 }}</p>
           <div>
             <font-awesome-icon icon="fa-solid fa-gear" />
-            <font-awesome-icon icon="fa-regular fa-trash-can" />
+            <font-awesome-icon icon="fa-regular fa-trash-can" @click="deleteCondition(condition.id)"/>
           </div>
         </div>
         <div class="condition-item-preview">
@@ -42,7 +42,6 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { Splide, SplideSlide } from '@splidejs/vue-splide'
-import _ from 'lodash'
 
 export default {
   name: 'ConditionList',
@@ -62,13 +61,7 @@ export default {
 
     const fetchConditions = () => store.dispatch('condition/fetchConditions')
     fetchConditions()
-    const conditions = computed(() => {
-      const datas = store.getters['condition/conditions']
-      if (_.isEmpty(datas?.value)) {
-        return [{ region: '서울', typeEmployment: '정규직' }, { region: '아산', typeEmployment: '비정규직' }, { region: '대전', typeEmployment: '노예' },]
-      }
-      else return datas
-    })
+    const conditions = computed(() => store.getters['condition/conditions'])
 
     const popover = (event) => {
       if (event.target.innerText === '더 보기') event.target.innerText = '닫기'
@@ -87,8 +80,10 @@ export default {
       gap : '1rem',
     }
 
+    const deleteCondition = (id) => store.dispatch('condition/deleteCondition', id)
+
     return {
-      popover, routeCreate, routeResult,
+      popover, routeCreate, routeResult, deleteCondition,
       conditions, options,
     }
   },
