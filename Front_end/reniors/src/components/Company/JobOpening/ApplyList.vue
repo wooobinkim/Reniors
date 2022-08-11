@@ -7,25 +7,35 @@
     <div>상세보기</div>
     <div>채용과정 : {{jobopeningdetail.jobOpeningProcess}}</div>
     <div>지원자 수 : {{ jobopeningdetail.applies }}</div>
-
-    <template v-for="apply in applylist" :key="apply.id">
+  <hr>
+  <template v-if="jobopeningdetail.jobOpeningProcess == '서류심사중'">
+  <template v-for="apply in applylist" :key="apply.id">
       <div>
         <input :value="apply.id" type="checkbox" v-model="passUser" />
-        <apply-list-item
+        <applier-resume-list
           :apply="apply"
           :jobOpeningId="this.$route.params.no"
-        ></apply-list-item>
+        ></applier-resume-list>
       </div>
+      <hr>
+      <button @click="resumepass()">서류합격</button>
     </template>
-    <button @click="pass()">합격자 등록</button>
+  </template>
+  <template v-if="jobopeningdetail.jobOpeningProcess == '면접심사중'">
+  </template>
+  <template v-if="jobopeningdetail.jobOpeningProcess == '최종합격'">
+  </template>
+    
+    
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
-import ApplyListItem from "./ApplyListItem.vue";
+// import ApplyListItem from "./ApplyListItem.vue";
+import ApplierResumeList from "./ApplierResumeList.vue";
 export default {
-  components: { ApplyListItem },
+  components: { ApplierResumeList },
   data() {
     return {
       jobopeningdetail: {},
