@@ -29,7 +29,9 @@ export default{
         ...mapGetters(['answer'])
     },
     created(){
-        this.fetchAnswer(this.idx+1)
+        if(this.checklist.includes(this.selectedQ[this.idx])){
+            this.fetchAnswer(this.selectedQ[this.idx] + 1)
+        }
     },
 
     methods:{
@@ -37,7 +39,9 @@ export default{
     },
     watch:{
         idx: function(data){
-            this.fetchAnswer(data+1)
+            if(this.checklist.includes(this.selectedQ[this.idx])){
+            this.fetchAnswer(this.selectedQ[data] + 1)}
+            
         }
     }
 }

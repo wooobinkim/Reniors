@@ -11,7 +11,7 @@
         <router-link :to="{name: 'AnswerUpdate', params:{question_id: id}}">
             <div class="question2">
                 <p>Q{{idx + 1}}. {{question}}</p>
-                <i  class="bi bi-check-circle-fill" style="color:#37BF99; margin: 0 16px;"></i>
+                <i  class="bi bi-check-circle-fill" style="color:#37BF99; font-size:20px; margin: 0 16px;"></i>
             </div>
         </router-link>
     </div>

@@ -57,6 +57,7 @@ export default{
 <style scoped>
 .total{
     background-color: #FFF5F0;
+    
 }
 .headsub{
     margin: 16px 16px 8px 16px;
@@ -97,9 +98,12 @@ p{
 }
 .submit{
     position: fixed;
+    left: 0;
+    display: flex;
+    justify-content: center;
     bottom: 50px;
     width: 100%;
-    margin: 0;
+    margin: auto;
     background-color: white;
     border-top: solid 0.5px #FFEDBF;
 
@@ -117,8 +121,6 @@ p{
     color: white;
     font-weight: bold;
     font-size: 16px;
-
-    /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
     cursor: pointer;
 }
 </style>

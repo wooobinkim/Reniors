@@ -13,7 +13,7 @@
     </div>
 
     <div class="question">
-            <p>Q{{question_id}}. {{questions[questionId-1].question}}</p>
+            <p>Q{{questionId}}. {{questions[questionId-1].question}}</p>
     </div>
     <answer-form
         :answerObject="answer"
@@ -39,6 +39,11 @@ export default{
     setup(){},
     created(){
         this.fetchAnswer(this.questionId)
+    },
+    watch:{
+        $route: function(from){
+            this.fetchAnswer(from.params.question_id)
+        }
     },
     mounted(){},
     unmounted(){},

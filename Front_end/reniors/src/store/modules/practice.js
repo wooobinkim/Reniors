@@ -20,7 +20,8 @@ export default{
           for (let index = 0; index < state.checklist.length; index++) {
               list.push(state.checklist[index].questionId)
           }
-          return list
+          console.log(list.sort());
+          return list.sort()
         },
         records: state => state.records,
         selected: state => state.selected,

@@ -51,12 +51,11 @@ export default{
     background-color: #37BF99; 
     border-radius: 30px;
     margin: 0 16px;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: gray 1px 1px 1px;
 }
 .total{
     display: flex;
