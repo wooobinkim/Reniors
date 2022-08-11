@@ -5,20 +5,32 @@
       <label for="name">맞춤공고 설정</label><br>
       <input type="text" v-model="payload.name" name="name" id="name">
       <hr>
-      <label for="region">지역 설정</label><br>
-      <select name="region" id="region" @change="selectHopearea(this)">
-        <option v-for="(sido, index) in sidos" :key="index" :value="sido.value">{{ sido.text }}</option>
+      <label for="region">지역 설정 (다중 선택)</label><br>
+      <select name="region" id="region" @change="selectHopearea">
+        <option v-for="(sido, index) in sidos" :key="index" :value="sido.id">{{ sido.name }}</option>
       </select>
+      <div class="select-region-list">
+        <div class="region-item" v-for="(hopearea, index) in hopeareas" :key="index">
+          <p v-if="hopearea!==null">{{ sidos.find((sido) => sido.id == hopearea)?.name }}</p>
+          <font-awesome-icon v-if="hopearea!==null" icon="fa-solid fa-circle-xmark" @click="deleteHope(hopearea)" />
+        </div>
+      </div>
       <hr>
       <label for="parent">직종 설정</label><br>
       <select v-model="payload.parent" name="parent" id="parent" @change="fetchChilds(payload.parent)">
         <option v-for="(parent, index) in parents" :key="index" :value="parent.value">{{ parent.text }}</option>
       </select>
       <hr>
-      <label for="parent">직종 설정 (세부업무)</label><br>
-      <select v-model="payload.child" name="child" id="child">
-        <option v-for="(child, index) in childs" :key="index" :value="child.value">{{ child.text }}</option>
+      <label for="child">직종 설정 (세부업무)</label><br>
+      <select name="child" id="child" @change="selectHopechild">
+        <option v-for="(child, index) in childs" :key="index" :value="child.id">{{ child.name }}</option>
       </select>
+      <div class="select-region-list">
+        <div class="region-item" v-for="(hopechild, index) in hopechilds" :key="index">
+          <p v-if="hopechild!==null">{{ childs.find((child) => child.id == hopechild)?.name }}</p>
+          <font-awesome-icon v-if="hopechild!==null" icon="fa-solid fa-circle-xmark" @click="deleteChild(hopechild)" />
+        </div>
+      </div>
       <hr>
       <label>고용 형태</label>
       <div class="condition-create-type-employment">
@@ -32,8 +44,7 @@
       <hr>
       <label for="lastEdu">최종 학력</label><br>
       <select v-model="payload.lastEdu" name="lastEdu" id="lastEdu">
-        <option value="">최종 학력을 선택해주세요.</option>
-        <option v-for="(lastEdu, index) in lastEdus" :key="index" :value="lastEdu.id">{{ lastEdu.name }}</option>
+        <option v-for="(lastEdu, index) in lastEdus" :key="index" :value="lastEdu.value">{{ lastEdu.text }}</option>
       </select>
       <hr>
       <label for="minCareer">최소 경력</label><br>
@@ -70,6 +81,7 @@
 <script>
 import { computed, getCurrentInstance } from 'vue'
 import { useStore } from 'vuex'
+import { isEmpty } from 'lodash'
 
 export default {
   name: 'ConditionCreateView',
@@ -80,11 +92,16 @@ export default {
     const store = useStore()
     const instance = getCurrentInstance()
 
-    const hopearea = []
+    const hopeareas = [null]
+    const hopechilds = [null]
 
     const fetchParents = () => store.dispatch('category/getJobParent')
     fetchParents()
-    const fetchChilds = (parent) => store.dispatch('category/getJobChild', parent)
+    const fetchChilds = (parent) => {
+      hopechilds.splice(0, hopechilds.length)
+      hopechilds.push(null)
+      return store.dispatch('category/getJobChild', parent)
+    }
     const fetchSido = () => store.dispatch('category/getSido')
     fetchSido()
 
@@ -93,8 +110,35 @@ export default {
     const sidos = computed(() => store.state.category.sidos)
 
     const selectHopearea = (event) => {
-      hopearea.push(event.value)
-      console.log(hopearea)
+      if (hopeareas[0] === null) hopeareas.pop(0)
+      if (!hopeareas.includes(event.target.value)) {
+        hopeareas.push(event.target.value)
+        instance?.proxy?.$forceUpdate()
+        console.log(hopeareas)
+      }
+    }
+
+    const deleteHope = (hopearea) => {
+      hopeareas.splice(hopeareas.indexOf(hopearea), 1)
+      if (isEmpty(hopeareas)) hopeareas.push(null)
+      console.log(hopeareas)
+      instance?.proxy?.$forceUpdate()
+    }
+    
+    const selectHopechild = (event) => {
+      if (hopechilds[0] === null) hopechilds.pop(0)
+      if (!hopechilds.includes(event.target.value)) {
+        hopechilds.push(event.target.value)
+        instance?.proxy?.$forceUpdate()
+        console.log(hopechilds)
+      }
+    }
+
+    const deleteChild = (hopechild) => {
+      hopechilds.splice(hopechilds.indexOf(hopechild), 1)
+      if (isEmpty(hopechilds)) hopechilds.push(null)
+      console.log(hopechilds)
+      instance?.proxy?.$forceUpdate()
     }
 
     const type = {
@@ -111,12 +155,7 @@ export default {
       console.log(type)
     }
 
-    const lastEdus = [
-      { id: '1', name: '고졸' },
-      { id: '2', name: '대졸' },
-      { id: '3', name: '석사' },
-      { id: '4', name: '박사' },
-    ]
+    const lastEdus = computed(() => store.state.category.lastedus)
     const minCareers = [
       { id: '1', name: '경력무관' },
       { id: '2', name: '아르바이트' },
@@ -142,10 +181,13 @@ export default {
     // type을 typeEmployment를 action에서 처리해야됨 (true인것마다 axios요청 또 보내기?)
     const payload = {
       name: '',
+      hopeareas,
       parent: '',
-      child: '',
-      type: '',
+      hopechilds,
+      type,
       lastEdu: '',
+      minCareer: '',
+      day,
       minSalary: '',
     }
     const initPayload = (payload) => {
@@ -161,8 +203,9 @@ export default {
     const submit = (payload) => console.log(payload)
 
     return {
-      fetchChilds, submit, initPayload, selectType, selectDay, selectHopearea,
-      parents, childs, sidos, type, lastEdus, minCareers, day,
+      fetchChilds, submit, initPayload, selectType, selectDay, 
+      selectHopearea, deleteHope, selectHopechild, deleteChild,
+      parents, childs, sidos, type, lastEdus, minCareers, day, hopeareas, hopechilds,
       payload,
     }
   }
@@ -259,5 +302,37 @@ export default {
   padding-top: 2px;
   font-size: 12px;
   font-weight: bold;
+}
+
+.condition-create-view .select-region-list {
+  display: grid;
+  grid-template-columns: 120px 120px 120px;
+}
+
+.condition-create-view .select-region-list > .region-item {
+  position: relative;
+}
+
+.condition-create-view .select-region-list > .region-item p {
+  box-sizing: border-box;
+  background-color: var(--color-orange-4);
+  border: 1px solid var(--color-orange-2);
+  border-radius: 0.5rem;
+  width: 100px;
+  height: 32px;
+  padding: 5px;
+  margin: 5px;
+  text-align: center;
+  font-size: 12px;
+  overflow-x: hidden
+}
+
+.condition-create-view .select-region-list > .region-item svg {
+  position: absolute;
+  right: 13px;
+  top: 3px;
+  height: 12px;
+  width: 12px;
+  color: red;
 }
 </style>
