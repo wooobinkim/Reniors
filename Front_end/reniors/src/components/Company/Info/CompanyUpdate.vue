@@ -219,12 +219,17 @@ export default {
     },
     updatecompany() {
       const formData = new FormData();
-        formData.append("img", this.companyImg[0]);
+        if(this.companyImg){
+          formData.append("img", this.companyImg[0]);
+        }
+        else{
+          formData.append("img", null);
+        }
         formData.append(
           "data",
           new Blob([JSON.stringify(this.company)], { type: "application/json" })
         );
-
+      console.log(this.company);
       this.updateCompany(formData);
       this.$router.push({ name: "companymypage" });
     },
