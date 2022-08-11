@@ -1,8 +1,7 @@
 <template>
   <div class="condition-create-view">
-    {{conditionData}}
     <form action="" @submit.prevent="submit(payload)" :key="payload.name">
-      <button class="condition-create-init" @click.prevent="initPayload(payload)"><span>⟳</span> 초기화</button>
+      <button class="condition-create-init" @click.prevent="initPayload"><span>⟳</span> 초기화</button>
       <label for="name">맞춤공고 설정</label><br>
       <input type="text" v-model="payload.name" name="name" id="name">
       <hr>
@@ -38,15 +37,10 @@
         </div>
       </div>
       <hr>
-      <label>고용 형태</label>
-      <div class="condition-create-type-employment">
-        <div @click="selectType(type, $event)" id="type1">정규직</div>
-        <div @click="selectType(type, $event)" id="type2">계약직</div>
-        <div @click="selectType(type, $event)" id="type3">인턴</div>
-        <div @click="selectType(type, $event)" id="type4">프리랜서</div>
-        <div @click="selectType(type, $event)" id="type5">파견직</div>
-        <div @click="selectType(type, $event)" id="type6">아르바이트</div>
-      </div>
+      <label for="type">고용 형태</label><br>
+      <select v-model="payload.type" name="type" id="type">
+        <option v-for="(type, index) in types" :key="index" :value="type.value">{{ type.text }}</option>
+      </select>
       <hr>
       <label for="lastEdu">최종 학력</label><br>
       <select v-model="payload.lastEdu" name="lastEdu" id="lastEdu">
@@ -90,7 +84,7 @@ export default {
   props: {
     conditionData: Object,
   },
-  setup() {
+  setup(props) {
     const store = useStore()
     const instance = getCurrentInstance()
 
@@ -150,20 +144,7 @@ export default {
       instance?.proxy?.$forceUpdate()
     }
 
-    const type = {
-      type1: false,
-      type2: false,
-      type3: false,
-      type4: false,
-      type5: false,
-      type6: false,
-    }
-    const selectType = (type, event) => {
-      type[event.target.id] = !type[event.target.id]
-      event.target.classList.toggle('active')
-      console.log(type)
-    }
-
+    const types = computed(() => store.state.category.typeemployments)
     const lastEdus = computed(() => store.state.category.lastedus)
     const minCareers = [
       { id: '0', name: '경력무관' },
@@ -190,18 +171,21 @@ export default {
       minCareer: '',
       day: '',
       minSalary: '',
+      type: '',
       selectSido,
       hopeareas,
       hopechilds,
-      type,
     }
-    const initPayload = (payload) => {
-      payload.name = '',
-      payload.parent = '',
-      payload.lastEdu = '',
-      payload.minCareer = '',
-      payload.day = '',
-      payload.minSalary = '',
+    const initPayload = () => {
+      const propData = props.conditionData
+      console.log(propData)
+      payload.name = propData?.name,
+      payload.parent = propData?.jobParentCategoryId,
+      payload.lastEdu = propData?.lastEdu,
+      payload.minCareer = propData?.minCareer,
+      payload.day = propData?.workingDay,
+      payload.minSalary = propData?.minSalary,
+      payload.type = propData?.typeEmployment,
       selectSido.data = '',
       emptyArray(hopechilds)
       emptyArray(hopeareas)
@@ -211,11 +195,14 @@ export default {
     const submit = (payload) => store.dispatch('condition/createCondition', payload)
 
     return {
-      fetchChilds, fetchGugun, submit, initPayload, selectType,
+      fetchChilds, fetchGugun, submit, initPayload,
       selectHopearea, deleteHope, selectHopechild, deleteChild,
-      selectSido, parents, childs, sidos, guguns, type, lastEdus, minCareers, days, hopeareas, hopechilds,
+      selectSido, parents, childs, sidos, guguns, types, lastEdus, minCareers, days, hopeareas, hopechilds,
       payload,
     }
+  },
+  mounted() {
+    this.initPayload()
   }
 }
 </script>
