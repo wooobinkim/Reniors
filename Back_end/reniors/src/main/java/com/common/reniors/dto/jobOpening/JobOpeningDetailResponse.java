@@ -21,13 +21,13 @@ public class JobOpeningDetailResponse {
     private int minCareer;
     private String title;
     private String contents;
-    private String contentsImgName;
-    private String contentsImgPath;
     private int minSalary;
     private String jobPosition;
     private int workingDay;
     private TypeEmployment typeEmployment;
     private LastEdu lastEdu;
+    private String baseURL;
+    private String jobOpeningImg;
     private Long sidoId;
     private Long gugunId;
     private Long jobParentCategory;
@@ -43,13 +43,13 @@ public class JobOpeningDetailResponse {
                 jobOpening.getMinCareer(),
                 jobOpening.getTitle(),
                 jobOpening.getContents(),
-                jobOpening.getContentsImgName(),
-                jobOpening.getContentsImgPath(),
                 jobOpening.getMinSalary(),
                 jobOpening.getJobPosition(),
                 jobOpening.getWorkingDay(),
                 jobOpening.getTypeEmployment(),
                 jobOpening.getLastEdu(),
+                jobOpening.getBaseURL(),
+                jobOpening.getJobOpeningImg(),
                 jobOpening.getGugun().getSido().getId(),
                 jobOpening.getGugun().getId(),
                 jobOpening.getJobChildCategory().getParent().getId(),

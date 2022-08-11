@@ -9,7 +9,6 @@ import com.common.reniors.domain.entity.Apply;
 import com.common.reniors.domain.entity.Company;
 import com.common.reniors.domain.entity.JobOpening;
 import com.common.reniors.domain.entity.QApply;
-import com.common.reniors.domain.entity.Type.JobOpeningProcess;
 import com.common.reniors.domain.entity.category.Gugun;
 import com.common.reniors.domain.entity.category.JobChildCategory;
 import com.common.reniors.domain.repository.ApplyRepository;
@@ -20,10 +19,13 @@ import com.common.reniors.domain.repository.category.JobChildCategoryRepository;
 import com.common.reniors.dto.apply.ApplyResponse;
 import com.common.reniors.dto.apply.ApplyUpdateRequest;
 import com.common.reniors.dto.company.CompanyCreateRequest;
+import com.common.reniors.dto.company.CompanyLoginRequest;
 import com.common.reniors.dto.company.CompanyResponse;
 import com.common.reniors.dto.company.CompanyUpdateRequest;
-import com.common.reniors.dto.company.CompanyLoginRequest;
-import com.common.reniors.dto.jobOpening.*;
+import com.common.reniors.dto.jobOpening.JobOpeningCompanyResponse;
+import com.common.reniors.dto.jobOpening.JobOpeningCreateRequest;
+import com.common.reniors.dto.jobOpening.JobOpeningProgressUpdateRequest;
+import com.common.reniors.dto.jobOpening.JobOpeningUpdateRequest;
 import com.common.reniors.dto.user.UserResponse;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +40,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.common.reniors.common.exception.NotAuthException.COMPANY_NO_AUTH;
-import static com.common.reniors.common.exception.NotFoundException.USER_NOT_FOUND;
+import static com.common.reniors.common.exception.NotFoundException.*;
 import static com.common.reniors.common.exception.NotMatchException.PASSWORD_NOT_MATCH;
 
 @Service
@@ -124,10 +126,10 @@ public class CompanyService {
 
     //회사 공고 등록
     @Transactional
-    public Long postJobOpening(Company company, JobOpeningCreateRequest jobOpeningCreateRequest){
-        Gugun gugun = gugunRepository.findById(jobOpeningCreateRequest.getGugunId()).orElseThrow(() -> new NotFoundException("not found gugun"));
-        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(jobOpeningCreateRequest.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jcc"));
-        JobOpening jobOpening = new JobOpening(jobOpeningCreateRequest,company,gugun,jobChildCategory);
+    public Long postJobOpening(Company company, JobOpeningCreateRequest request, String baseURL, String jobOpeningImg){
+        Gugun gugun = gugunRepository.findById(request.getGugunId()).orElseThrow(() -> new NotFoundException("not found gugun"));
+        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(request.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jcc"));
+        JobOpening jobOpening = new JobOpening(request,baseURL, jobOpeningImg, company, gugun, jobChildCategory);
         Long id = jobOpeningRepository.save(jobOpening).getId();
         return id;
     }
@@ -135,10 +137,7 @@ public class CompanyService {
     //회사 공고 목록
     @Transactional
     public List<JobOpeningCompanyResponse> getJobOpeningList(Company company){
-
             List<JobOpening> jobOpeningList = jobOpeningRepository.findByCompany(company);
-
-
             List<JobOpeningCompanyResponse> jobOpeningResponses = jobOpeningList.stream().map(j->JobOpeningCompanyResponse.response(
                     j
             )).collect(Collectors.toList());
@@ -152,27 +151,19 @@ public class CompanyService {
             throw new NotAuthException(COMPANY_NO_AUTH);
         JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found jobOpening"));
 
-            //연결된 엔티티 매핑
-//            GugunResponse gugunResponse = GugunResponse.response(jobOpening1.getGugun());
-//            JobChildCategoryResponse jobChildCategoryResponse = JobChildCategoryResponse.response(jobOpening1.getJobChildCategory());
-//            CompanyDto companyDto = new CompanyDto(jobOpening1.getCompany());
         JobOpeningCompanyResponse jobOpeningCompanyResponse = JobOpeningCompanyResponse.response(jobOpening);
-//        JobOpeningDetailResponse response = JobOpeningDetailResponse.response(jobOpening);
-        //리턴할 Dto 세팅
-//            JobOpeningDto jobOpeningDto = new JobOpeningDto(jobOpening1,companyDto,gugunResponse,jobChildCategoryResponse);
-//            jobOpeningDto.setLinkEntity(companyDto,gugunResponse,jobChildCategoryResponse);
-            return jobOpeningCompanyResponse;
+        return jobOpeningCompanyResponse;
     }
 
     //회사 공고 수정
     @Transactional
-    public void updateJobOpening(Company company, Long jobOpeningId, JobOpeningUpdateRequest jobOpeningUpdateRequest){
+    public void updateJobOpening(Company company, Long jobOpeningId, JobOpeningUpdateRequest jobOpeningUpdateRequest, String baseURL, String jobOpeningImg){
         if (company.getId() != jobOpeningRepository.findById(jobOpeningId).get().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
-        Gugun gugun = gugunRepository.findById(jobOpeningUpdateRequest.getGugunId()).orElseThrow(() -> new NotFoundException("not found gugun"));
+        Gugun gugun = gugunRepository.findById(jobOpeningUpdateRequest.getGugunId()).orElseThrow(() -> new NotFoundException(CATEGORY_NOT_FOUND));
         JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(jobOpeningUpdateRequest.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jcc"));
-        JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found jobOpening"));
-        jobOpening.update(jobOpeningUpdateRequest,gugun,jobChildCategory);
+        JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException(JOB_OPENING_NOT_FOUND));
+        jobOpening.update(jobOpeningUpdateRequest,baseURL, jobOpeningImg, gugun, jobChildCategory);
     }
 
     //회사 공고 삭제
@@ -232,8 +223,8 @@ public class CompanyService {
 
 //        JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found Apply"));
 //        List<Apply> applyList = applyRepository.findByJobOpening(jobOpening);
-        List<ApplyResponse> applyResponseList = applyList.stream().map(aa->ApplyResponse.response(
-                aa
+        List<ApplyResponse> applyResponseList = applyList.stream().map(res->ApplyResponse.response(
+                res
         )).collect(Collectors.toList());
         return  applyResponseList;
     }

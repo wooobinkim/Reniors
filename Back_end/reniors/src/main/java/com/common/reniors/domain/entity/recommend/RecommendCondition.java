@@ -1,7 +1,7 @@
 package com.common.reniors.domain.entity.recommend;
 
 import com.common.reniors.domain.entity.category.Gugun;
-import com.common.reniors.domain.entity.category.JobChildCategory;
+import com.common.reniors.domain.entity.category.JobParentCategory;
 import com.common.reniors.domain.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,8 +24,8 @@ public class RecommendCondition {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "job_child_category_id")
-    private JobChildCategory jobChildCategory;
+    @JoinColumn(name = "job_parent_category_id")
+    private JobParentCategory jobParentCategory;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gugun_id")
@@ -35,18 +35,18 @@ public class RecommendCondition {
 
     private int minSalary;
 
-    public static RecommendCondition create(User user, JobChildCategory jobChildCategory, Gugun gugun, int workingDay, int minSalary) {
+    public static RecommendCondition create(User user, JobParentCategory jobParentCategory, Gugun gugun, int workingDay, int minSalary) {
         RecommendCondition recommendCondition = new RecommendCondition();
         recommendCondition.user = user;
-        recommendCondition.jobChildCategory = jobChildCategory;
+        recommendCondition.jobParentCategory = jobParentCategory;
         recommendCondition.gugun = gugun;
         recommendCondition.workingDay = workingDay;
         recommendCondition.minSalary = minSalary;
         return recommendCondition;
     }
 
-    public void update(JobChildCategory jobChildCategory, Gugun gugun, int workingDay, int minSalary) {
-        this.jobChildCategory = jobChildCategory;
+    public void update(JobParentCategory jobParentCategory, Gugun gugun, int workingDay, int minSalary) {
+        this.jobParentCategory = jobParentCategory;
         this.gugun = gugun;
         this.workingDay = workingDay;
         this.minSalary = minSalary;

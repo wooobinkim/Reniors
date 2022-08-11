@@ -32,30 +32,30 @@ public class JobOpeningController {
     //채용공고 조회(조건포함)
     @GetMapping("/search/{searchConditionId}")
     @ApiOperation(value = "공고 조회(조건포함)", notes = "조건검색을 통해 공고를 조회한다.")
-    public ResponseEntity<?> getJobOpeningList(@ApiIgnore @LoginUser User user, @PathVariable("searchConditionId")Long searchConditionId, Pageable pageable){
+    public ResponseEntity<?> getJobOpeningList(
+            @ApiIgnore @LoginUser User user,
+            @PathVariable("searchConditionId")Long searchConditionId, Pageable pageable){
         Page<JobOpeningResponse> jobOpeningConditionList = jobOpeningService.getJobOpeningConditionList(user,searchConditionId, pageable);
-//        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(x->new JobOpeningDto(x)).collect(Collectors.toList());
-
         return ResponseEntity.status(HttpStatus.OK).body(jobOpeningConditionList);
     }
 
     //채용공고 조회(추천공고)
     @GetMapping("/search/recommend/{recommendConditionId}")
     @ApiOperation(value = "공고 조회(추천공고)", notes = "추천검색을 통해 공고를 조회한다.")
-    public ResponseEntity<?> getJobOpeningListRecommend(@ApiIgnore @LoginUser User user,@PathVariable("recommendConditionId")Long recommendConditionId , Pageable pageable){
+    public ResponseEntity<?> getJobOpeningListRecommend(
+            @ApiIgnore @LoginUser User user,
+            @PathVariable("recommendConditionId")Long recommendConditionId , Pageable pageable){
         Page<JobOpeningResponse> jobOpeningConditionList = jobOpeningService.getJobOpeningRecommendList(user,recommendConditionId, pageable);
-//        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(x->new JobOpeningDto(x)).collect(Collectors.toList());
-
         return ResponseEntity.status(HttpStatus.OK).body(jobOpeningConditionList);
     }
 
     //채용공고 조회(추천공고, 조회수 탑10)
     @GetMapping("/search/recommend/{recommendConditionId}/viewsDesc")
     @ApiOperation(value = "공고 조회(추천공고, 조회수 탑10)", notes = "추천리스트 중 조회수 탑10 공고를 조회한다.")
-    public ResponseEntity<?> getJobOpeningListRecommendViewDesc(@ApiIgnore @LoginUser User user,@PathVariable("recommendConditionId")Long recommendConditionId){
+    public ResponseEntity<?> getJobOpeningListRecommendViewDesc(
+            @ApiIgnore @LoginUser User user,
+            @PathVariable("recommendConditionId")Long recommendConditionId){
         List<JobOpeningResponse> jobOpeningConditionList = jobOpeningService.getJobOpeningListRecommendViewDesc(user, recommendConditionId);
-//        List<JobOpeningDto> jobOpeningDtoList = jobOpeningList.stream().map(x->new JobOpeningDto(x)).collect(Collectors.toList());
-
         return ResponseEntity.status(HttpStatus.OK).body(jobOpeningConditionList);
     }
 
@@ -78,7 +78,8 @@ public class JobOpeningController {
     //채용공고 상세조회
     @GetMapping("/{jobOpeningId}")
     @ApiOperation(value = "공고 상세조회", notes = "공고 하나를 조회한다.")
-    public ResponseEntity<?> getJobOpening(@PathVariable("jobOpeningId") Long jobOpeningId){
+    public ResponseEntity<?> getJobOpening(
+            @PathVariable("jobOpeningId") Long jobOpeningId){
         JobOpeningDetailResponse jobOpening = jobOpeningService.getJobOpening(jobOpeningId);
 
         return ResponseEntity.status(HttpStatus.OK).body(jobOpening);
@@ -88,18 +89,20 @@ public class JobOpeningController {
     //지원하기
     @PostMapping("/{jobOpeningId}/apply")
     @ApiOperation(value = "지원하기", notes = "공고에 지원한다.")
-    public ResponseEntity<?> applyJobOpening( @PathVariable("jobOpeningId") Long jobOpeningId, @ApiIgnore @LoginUser User user){
+    public ResponseEntity<?> applyJobOpening(
+            @PathVariable("jobOpeningId") Long jobOpeningId,
+            @ApiIgnore @LoginUser User user){
 
 
         Long applyId = jobOpeningService.applyJobOpening(user, jobOpeningId);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(applyId);
     }
 
     //지원이력 조회
     @GetMapping("/apply")
     @ApiOperation(value = "지원이력 조회", notes = "지원이력을 조회한다.")
-    public ResponseEntity<?> getApplyList(@ApiIgnore @LoginUser User user){
+    public ResponseEntity<?> getApplyList(
+            @ApiIgnore @LoginUser User user){
         List<ApplyResponse> ApplyList = jobOpeningService.getApplyList(user);
 
         return ResponseEntity.status(HttpStatus.OK).body(ApplyList);
@@ -108,7 +111,9 @@ public class JobOpeningController {
     //지원이력 상세조회
     @GetMapping("/apply/{applyId}")
     @ApiOperation(value = "지원이력 상세조회", notes = "지원이력을 상세조회한다.")
-    public ResponseEntity<?> getApplyList(@ApiIgnore @LoginUser User user, @PathVariable("applyId")Long applyId){
+    public ResponseEntity<?> getApplyList(
+            @ApiIgnore @LoginUser User user,
+            @PathVariable("applyId")Long applyId){
         ApplyResponse apply = jobOpeningService.getApply(user, applyId);
 
         return ResponseEntity.status(HttpStatus.OK).body(apply);
@@ -117,7 +122,9 @@ public class JobOpeningController {
     //공고 조건 생성(지역제외)
     @PostMapping("/condition")
     @ApiOperation(value = "공고 조건생성", notes = "조건검색에 이용한 조건을 만든다.")
-    public ResponseEntity<?> postSearchCondition(@ApiIgnore @LoginUser User user, @RequestBody SearchConditionCreateRequest searchConditionCreateRequest){
+    public ResponseEntity<?> postSearchCondition(
+            @ApiIgnore @LoginUser User user,
+            @RequestBody SearchConditionCreateRequest searchConditionCreateRequest){
         Long jobOpeningId = jobOpeningService.postSearchCondition(user, searchConditionCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(jobOpeningId);
     }
@@ -125,7 +132,9 @@ public class JobOpeningController {
     //공고 조건 희망지역 설정
     @PostMapping("/condition/{searchConditionId}/hopearea")
     @ApiOperation(value = "희망지역 조건 생성(다중선택)", notes = "희망하는 지역을 등록한다(다중)")
-    public ResponseEntity<?> postHopeArea(@PathVariable("searchConditionId")Long searchConditionId, @RequestBody HopeAreaCreateRequest hopeAreaCreateRequest){
+    public ResponseEntity<?> postHopeArea(
+            @PathVariable("searchConditionId")Long searchConditionId,
+            @RequestBody HopeAreaCreateRequest hopeAreaCreateRequest){
         Long hopeAreaId = jobOpeningService.postHopeArea(searchConditionId, hopeAreaCreateRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(hopeAreaId);
@@ -134,20 +143,20 @@ public class JobOpeningController {
     @PutMapping("/condition/{searchConditionId}/hopearea/{hopeAreaId}")
     @ApiOperation(value = "희망지역 조건 수정", notes = "희망하는 지역을 수정한다.")
     //공고 조건 희망지역 수정
-    public ResponseEntity<?> updateHopeArea(@PathVariable("searchConditionId")Long searchConditionId,
-                                            @RequestBody HopeAreaUpdateRequest hopeAreaUpdateRequest,
-                                            @PathVariable("hopeAreaId")Long hopeAreaId){
+    public ResponseEntity<?> updateHopeArea(
+            @PathVariable("searchConditionId")Long searchConditionId,
+            @RequestBody HopeAreaUpdateRequest hopeAreaUpdateRequest,
+            @PathVariable("hopeAreaId")Long hopeAreaId){
         jobOpeningService.updateHopeArea(searchConditionId, hopeAreaUpdateRequest,hopeAreaId);
-
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
-
     //공고 조건 희망지역 삭제
     @DeleteMapping("/condition/{searchConditionId}/hopearea/{hopeAreaId}")
     @ApiOperation(value = "희망지역 조건 삭제", notes = "희망하는 지역을 삭제한다.")
-    public ResponseEntity<?> deleteHopeArea(@PathVariable("hopeAreaId")Long hopeAreaId){
+    public ResponseEntity<?> deleteHopeArea(
+            @PathVariable("hopeAreaId")Long hopeAreaId
+    ){
         jobOpeningService.deleteHopeArea(hopeAreaId);
-
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
@@ -181,38 +190,42 @@ public class JobOpeningController {
     //공고 조건 조회
     @GetMapping("/condition")
     @ApiOperation(value = "공고조건 조회", notes = "공고 조건들을 조회한다.")
-    public ResponseEntity<?> getSearchConditionList(@ApiIgnore @LoginUser User user){
+    public ResponseEntity<?> getSearchConditionList(
+            @ApiIgnore @LoginUser User user
+    ){
         List<SearchConditionResponse> searchConditionList = jobOpeningService.getSearchConditionList(user);
-
         return ResponseEntity.status(HttpStatus.OK).body(searchConditionList);
     }
 
     //공고 조건 상세조회
     @GetMapping("/condition/{searchConditionId}")
     @ApiOperation(value = "공고조건 상세조회", notes = "공고조건 하나를 상세조회한다.")
-    public ResponseEntity<?> getSearchCondition(@PathVariable("searchConditionId")Long searchConditionId){
+    public ResponseEntity<?> getSearchCondition(
+            @PathVariable("searchConditionId")Long searchConditionId
+    ){
         SearchConditionResponse searchCondition = jobOpeningService.getSearchCondition(searchConditionId);
-
         return ResponseEntity.status(HttpStatus.OK).body(searchCondition);
     }
 
     //공고 조건 수정
     @PutMapping("/condition/{searchConditionId}")
     @ApiOperation(value = "공고조건 수정", notes = "공고 조건을 수정한다.")
-    public ResponseEntity<?> updateSearchCondition(@ApiIgnore @LoginUser User user,
-                                                   @PathVariable("searchConditionId")Long searchConditionId,
-                                                   @RequestBody SearchConditionUpdateRequest searchConditionUpdateRequest){
+    public ResponseEntity<?> updateSearchCondition(
+            @ApiIgnore @LoginUser User user,
+            @PathVariable("searchConditionId")Long searchConditionId,
+            @RequestBody SearchConditionUpdateRequest searchConditionUpdateRequest
+    ){
         jobOpeningService.updateSearchCondition(user,searchConditionId, searchConditionUpdateRequest);
-
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
     //공고 조건 삭제
     @DeleteMapping("/condition/{searchConditionId}")
     @ApiOperation(value = "공고조건 삭제", notes = "공고 조건을 삭제한다.")
-    public ResponseEntity<?> deleteSearchCondition( @PathVariable("searchConditionId")Long searchConditionId){
+    public ResponseEntity<?> deleteSearchCondition(
+            @PathVariable("searchConditionId")Long searchConditionId
+    ){
         jobOpeningService.deleteSearchCondition(searchConditionId);
-
         return ResponseEntity.status(HttpStatus.OK).body("success");
 
     }
@@ -223,7 +236,7 @@ public class JobOpeningController {
     public ResponseEntity<?> createBookmark(
             @ApiIgnore @LoginUser User user,
             @PathVariable Long jobOpenigId
-    ) {
+    ){
         Long bookmarkId = bookmarkService.create(user.getId(), jobOpenigId);
         Map<String, Long> response = new HashMap<>();
         response.put("bookmarkId", bookmarkId);
@@ -235,7 +248,7 @@ public class JobOpeningController {
     @ApiOperation(value = "관심 공고 조회", notes = "관심 공고를 조회한다.")
     public ResponseEntity<?> readBookmarkList(
             @ApiIgnore @LoginUser User user
-    ) {
+    ){
         return ResponseEntity.ok(bookmarkService.readList(user.getId()));
     }
 
@@ -244,7 +257,7 @@ public class JobOpeningController {
     @ApiOperation(value = "관심 공고 상세 조회", notes = "관심 공고를 상세 조회한다.")
     public ResponseEntity<?> readBookmark(
             @PathVariable Long bookmarkId
-    ) {
+    ){
         return ResponseEntity.ok(bookmarkService.read(bookmarkId));
     }
 
@@ -253,7 +266,7 @@ public class JobOpeningController {
     @ApiOperation(value = "관심 공고 해제", notes = "관심 공고를 해제한다.")
     public ResponseEntity<Map<String, Long>> deleteBookmark (
             @PathVariable Long bookmarkId
-    ) {
+    ){
         bookmarkService.delete(bookmarkId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

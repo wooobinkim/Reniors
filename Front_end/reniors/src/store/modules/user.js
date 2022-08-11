@@ -1,4 +1,5 @@
 
+import drf from '@/api/drf'
 import multipart from '@/api/multipart'
 import router from '@/router'
 import axios from 'axios'
@@ -12,6 +13,8 @@ export const user = {
       authError: null,
 
       profile: {},
+      prefer: {},
+
       // 코드추가
       // isLogin: false,
       // isLoginError: false,
@@ -28,7 +31,8 @@ export const user = {
         'Content-type' : 'Application/JSON',
      }),
 
-      profile: state => state.profile,      
+      profile: state => state.profile,     
+      prefer: state => state.prefer 
     },
 
     mutations: {
@@ -37,6 +41,8 @@ export const user = {
       SET_AUTH_ERROR: (state, error) => state.authError = error,
 
       SET_PROFILE: (state, profile) => state.profile = profile,
+      SET_PREFER: (state, prefer) => state.prefer = prefer
+
       // 추가
       // SET_IS_LOGIN: (state, isLogin) => state.isLogin = isLogin,
       // SET_IS_LOGIN_ERROR: (state, isLoginError) => {
@@ -190,8 +196,23 @@ export const user = {
           .catch((err) => {
             console.log(err)
           })
+      },
+
+      fetchPrefer({ commit, getters }){
+        axios({
+          url: drf.recommendcondition.recommend(),
+          method: 'get',
+          headers: getters.authHeader,
+        })
+        .then((res) => {
+          commit('SET_PREFER', res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }
     },
+
 
     modules: {
     }

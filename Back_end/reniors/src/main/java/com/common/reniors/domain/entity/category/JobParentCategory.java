@@ -1,6 +1,7 @@
 package com.common.reniors.domain.entity.category;
 
 import com.common.reniors.domain.entity.board.Board;
+import com.common.reniors.domain.entity.recommend.RecommendCondition;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,9 @@ public class JobParentCategory {
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Board> boards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "jobParentCategory")
+    private List<RecommendCondition> recommendConditions = new ArrayList<>();
 
     public static JobParentCategory create(String name, Long code){
         JobParentCategory jpc = new JobParentCategory();

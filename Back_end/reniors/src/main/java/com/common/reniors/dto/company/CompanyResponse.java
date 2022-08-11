@@ -11,7 +11,6 @@ public class CompanyResponse {
     private Long id;
     private String name;
     private String companyAppId;
-    private String companyAppPwd;
     private String establishedAt;
     private String companyUrl;
     private String address;
@@ -29,7 +28,6 @@ public class CompanyResponse {
                 company.getId(),
                 company.getName(),
                 company.getCompanyAppId(),
-                company.getCompanyAppPwd(),
                 company.getEstablishedAt(),
                 company.getCompanyUrl(),
                 company.getAddress(),

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.common.jmark.JmarkApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-08-05T07:53:58" hostname="DESKTOP-6MJDI4V" time="0.028">
-  <properties/>
-  <testcase name="contextLoads()" classname="com.common.jmark.JmarkApplicationTests" time="0.028"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

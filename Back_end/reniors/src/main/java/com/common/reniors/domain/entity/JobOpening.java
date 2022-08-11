@@ -54,12 +54,6 @@ public class JobOpening{
     @Column(length = 2000)
     private String contents;
 
-    @Column(length = 100)
-    private String contentsImgName;
-
-    @Column(length = 100)
-    private String contentsImgPath;
-
     private int minSalary;
 
     @Column(length = 100)
@@ -83,6 +77,9 @@ public class JobOpening{
     @Enumerated(EnumType.STRING)
     private JobOpeningProcess jobOpeningProcess;
 
+    private String baseURL;
+
+    private String jobOpeningImg;
     //공고 - 회사 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
@@ -113,15 +110,13 @@ public class JobOpening{
     //최종학력, 직무소분류, 구군 받아오기
 
 
-    public JobOpening(JobOpeningCreateRequest jobOpeningCreateRequest, Company company,Gugun gugun, JobChildCategory jobChildCategory) {
+    public JobOpening(JobOpeningCreateRequest jobOpeningCreateRequest, String baseURL, String jobOpeningImg, Company company,Gugun gugun, JobChildCategory jobChildCategory) {
         this.createdDate = jobOpeningCreateRequest.getCreatedDate();
         this.finishedDate = jobOpeningCreateRequest.getFinishedDate();
         this.numberPeople = jobOpeningCreateRequest.getNumberPeople();
         this.minCareer = jobOpeningCreateRequest.getMinCareer();
         this.title = jobOpeningCreateRequest.getTitle();
         this.contents = jobOpeningCreateRequest.getContents();
-        this.contentsImgName = jobOpeningCreateRequest.getContentsImgName();
-        this.contentsImgPath = jobOpeningCreateRequest.getContentsImgPath();
         this.minSalary = jobOpeningCreateRequest.getMinSalary();
         this.jobPosition = jobOpeningCreateRequest.getJobPosition();
         this.workingDay = jobOpeningCreateRequest.getWorkingDay();
@@ -130,23 +125,24 @@ public class JobOpening{
         this.isFinish = IsFinish.F;
         this.views = 0;
         this.jobOpeningProcess = JobOpeningProcess.서류심사중;
+        this.baseURL = baseURL;
+        this.jobOpeningImg = jobOpeningImg;
         this.company = company;
         this.gugun = gugun;
         this.jobChildCategory = jobChildCategory;
-
     }
-    public void update(JobOpeningUpdateRequest jobOpeningUpdateRequest, Gugun gugun, JobChildCategory jobChildCategory){
+    public void update(JobOpeningUpdateRequest jobOpeningUpdateRequest,String baseURL, String jobOpeningImg, Gugun gugun, JobChildCategory jobChildCategory){
         this.numberPeople = jobOpeningUpdateRequest.getNumberPeople();
         this.minCareer = jobOpeningUpdateRequest.getMinCareer();
         this.title = jobOpeningUpdateRequest.getTitle();
         this.contents = jobOpeningUpdateRequest.getContents();
-        this.contentsImgName = jobOpeningUpdateRequest.getContentsImgName();
-        this.contentsImgPath = jobOpeningUpdateRequest.getContentsImgPath();
         this.minSalary = jobOpeningUpdateRequest.getMinSalary();
         this.jobPosition = jobOpeningUpdateRequest.getJobPosition();
         this.workingDay = jobOpeningUpdateRequest.getWorkingDay();
         this.typeEmployment = jobOpeningUpdateRequest.getTypeEmployment();
         this.lastEdu=jobOpeningUpdateRequest.getLastEdu();
+        this.baseURL =baseURL;
+        this.jobOpeningImg = jobOpeningImg;
         this.gugun = gugun;
         this.jobChildCategory = jobChildCategory;
     }
