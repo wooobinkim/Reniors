@@ -207,7 +207,6 @@ export default {
           "data",
           new Blob([JSON.stringify(this.company)], { type: "application/json" })
         );
-        console.log(this.company);
         this.registCompany(formData);
         this.$router.push({ name: "Login" });
       }

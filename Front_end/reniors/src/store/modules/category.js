@@ -11,10 +11,10 @@ export default {
     token: localStorage.getItem("jwt") || "",
     jobparents: [{ value: null, text: "선택하세요" }],
     // jobchilds: [{ value: null, text: "선택하세요" }],
-    jobchilds: [],
+    jobchilds: [{ value: null, text: "선택하세요" }],
     // sidos: [{ value: null, text: "선택하세요" }],
-    sidos: [],
-    guguns: [],
+    sidos: [{ value: null, text: "선택하세요" }],
+    guguns: [{ value: null, text: "선택하세요" }],
     lastedus: [
       { value: null, text: "최종학력을 선택해주세요" },
       { value: "고교졸업이하", text: "고교졸업이하" },
@@ -52,9 +52,10 @@ export default {
 
   mutations: {
     SET_JOBPARENT_LIST: (state, jobparents) => {
-      jobparents.forEach((jobparent) => {
-        state.jobparents.push({ value: jobparent.id, text: jobparent.name });
-      });
+      // jobparents.forEach((jobparent) => {
+      //   state.jobparents.push({ value: jobparent.id, text: jobparent.name });
+      // });
+      state.jobparents = jobparents;
     },
     // SET_JOBCHILD_LIST: (state, jobchilds) => {
     //   jobchilds.forEach((jobchild) => {
@@ -92,7 +93,6 @@ export default {
         .get(`/categories/parent/${no}/child`)
         .then(({ data }) => {
           commit("SET_JOBCHILD_LIST", data)
-          console.log(data)
         })
         .catch((error) => {
           console.log(error);
