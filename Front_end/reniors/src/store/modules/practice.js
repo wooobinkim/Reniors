@@ -8,6 +8,7 @@ export default{
         checklist: [],
         records: [],
         selected: [],
+        
 
     },
 
@@ -26,11 +27,17 @@ export default{
     },
 
     mutations: {
-        SET_QUESTIONS: (state, questions) => state.questions = questions,
+      CLEAR_QUESTIONS : (state) => {
+        state.questions = null},
+        SET_QUESTIONS: (state, questions) => {
+          state.questions = questions
+       },
         SET_ANSWER: (state, answer) => state.answer = answer,
         SET_CHECKLIST: (state, checklist) => state.checklist = checklist,
         SET_RECORDS: (state, records) => state.records = records,
-        SET_SELECTED: (state, selected) => state.selected = selected,
+        SET_SELECTED: (state, selected) => {
+          state.selected = selected
+        },
         PUT_SELECTED: (state, selected) => state.selected.push(selected)
 
     },
@@ -109,6 +116,7 @@ export default{
           }else{
             commit("PUT_SELECTED", questionId)
           }
+          
         },
 
         saveRecording({getters}, {fileName, URL}) {

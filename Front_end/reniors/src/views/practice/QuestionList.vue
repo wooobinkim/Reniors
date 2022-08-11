@@ -49,6 +49,7 @@ export default{
         this.fetchQuestions()
         this.fetchChecklist()
     },
+
 }
 </script>
 

@@ -3,50 +3,86 @@
     <!-- header -->
     <div class="head2">
         <router-link  class="mx-3 rl" :to="{name: 'QuestionList'}">답변 작성</router-link>
-        <router-link  class="mx-3 rl" :to="{name: 'VideoPracticeList'}">화상 연습</router-link>
+        <router-link style="font-weight:bold" class="mx-3 rl" :to="{name: 'VideoPracticeList'}">화상 연습</router-link>
     </div>
 
     <!-- video -->
     <!-- session & user confirm -->
     <div v-if="!session">
+        <div style="margin: auto auto; background-color: #FFF5F0; height: 1000px ;display: flex; justify-content: center;">
         <div>
-            <p>화상면접 연습 시작</p>
+
+            <div class="subscript">
+                <i class="bi bi-camera-reels" style="color:#FF843E; font-size: 40px; margin: 16px auto; font-weight: bold;"></i>
+                <p style="margin: 4px 4px 0 4px"> 이름을 확인하고</p>
+                <p style="margin: 4px 4px 0 4px">연습하기 버튼을 눌러주세요 !</p>
+            </div>
             <div>
-                <p>
+                <p >
                     <label>Name</label>
-                    <input v-model="myUserName" class="form-control" type="text" required>
+                    <input v-model="myUserName" class="form-control form1" type="text" required>
                 </p>
                 <p>
                     <label>Session</label>
-                    <input v-model="mySessionId" class="form-control" type="text" required>
+                    <input v-model="mySessionId" class="form-control form1" type="text" required>
                 </p>
                 <p class="text-center">
-                    <button class="btn btn-lg btn-success" @click="joinSession()">연습하기</button>
+                    <button class="Btn1" @click="joinSession()">연습하기</button>
                 </p>
             </div>
+        </div>
         </div>
     </div>
 
     <!-- go practice -->
-    <div id="session" v-if="session">
-			<div id="session-header">
-				<h1 id="session-title">{{ question }}</h1>
-				<input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession" value="Leave session">
+    <div id="session" v-if="session" >
+        <div style="background-color: #FFF5F0; height: 600px;" >
 
-                <input v-if="!isRecording" class="btn btn-large btn-success" type="button" id="buttonRecording" @click="startRecording(session)" value="Recording">
-				<input v-if="isRecording" class="btn btn-large btn-danger" type="button" id="buttonRecording" @click="[stopRecording(nowRecordingId), reactModal()]"  value="Stop">
-			
+            <div id="video-container" >
+                <div class="videoclass">
+                    <user-video :stream-manager="publisher" :isAnswer="isAnswer" @click="updateMainVideoStreamManager(publisher)"/>
+                </div>
+                <i class="bi bi-x-circle-fill leaveBtn" type="button" id="buttonLeaveSession" @click="leaveSession" value="Leave session"></i>
+                <div v-if="isAnswer" class="questionTag">
+                    <p >{{idx + 1}}. {{ question }}</p>
+                </div>
+                <div v-if="!isAnswer" class="questionTag2">
+                    <p >{{idx + 1}}. {{ question }}</p>
+                </div>
+                <i v-if="!this.isEnd" class="bi bi-arrow-right-circle-fill nextBtn"  @click="nextQ"></i>
+            </div>
+			<div id="session-header" v-if="isAnswer">
+                <answer-script
+                    :idx="this.idx"
+                    :checklist="this.checklist"
+                    :selectedQ="this.selectedQ"
+                ></answer-script>
+
             </div>
 			
-			<div id="video-container" >
-                <user-video :stream-manager="publisher" @click="updateMainVideoStreamManager(publisher)"/>
-				<user-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub" @click="updateMainVideoStreamManager(sub)"/>
-			</div>
             <modal-pop 
                 v-if="isModal == true"
                 :url="url"
             ></modal-pop>
-		</div>
+
+            <!-- footer -->
+            <div class="submit">
+                <!-- 답변 열기 숨기기 -->
+                <div>
+                    <button v-if="isAnswer" class="Btn3" style="background-color:#FFD39B" @click="isAnswerFun">답변 숨기기</button>
+                    <button v-if="!isAnswer" class="Btn3" style="background-color:#FFD39B" @click="isAnswerFun">답변 보기</button>
+                </div>
+                <!-- 녹화버튼 -->
+                <div>
+                    <input v-if="!isRecording" class="Btn3" type="button" id="buttonRecording" @click="startRecording(session)" value="Recording" style="background-color:var(--color-red-2);">
+                    <input v-if="isRecording" class="Btn3 " type="button" id="buttonRecording" @click="[stopRecording(nowRecordingId), reactModal()]"  value="Stop" style="background-color:var(--color-red-2);">
+                </div>
+                
+            </div>
+        </div>
+	</div>
+
+        
 
 
 
@@ -55,9 +91,10 @@
 <script>
 import axios from 'axios'
 import { OpenVidu } from 'openvidu-browser';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import UserVideo from '@/components/practice/UserVideo.vue';
 import ModalPop from '@/components/practice/ModalPop.vue';
+import AnswerScript from '@/components/practice/AnswerScript.vue';
 
 
 const OPENVIDU_SERVER_URL = "https://" + 'i7b307openvidu.ssafy.io' + ":4443";
@@ -65,7 +102,7 @@ const OPENVIDU_SERVER_SECRET = "reniors";
 
 export default{ 
     name:'PracticePage',
-    components:{ UserVideo, ModalPop },
+    components:{ UserVideo, ModalPop, AnswerScript },
     data(){
         return{
             OV: undefined,
@@ -82,18 +119,53 @@ export default{
 
             isModal : false,
             url: '',
+            idx: 0,
+            realquestions: null,
+            question: '',
+            isAnswer: false,
+            selectedQ: [],
+            isEnd: false,
         };
     },
+    watch:{
+        questions:function (data) {
+            const target = { ...data }
+            this.realquestions = target;
+            this.selectedQ= {...this.selected}         
+            this.question = {...target[this.selectedQ[0]]}.question
+            
+        },
+        idx:function(data){
+            this.question = this.realquestions[this.selectedQ[data]].question
+        }
+    },
     created(){
+        this.CLEAR_QUESTIONS
         this.fetchCurrentUser()
+        this.fetchQuestions()
+        this.fetchChecklist()
         this.mySessionId = 'Session' + this.currentUser.id
         this.myUserName = this.currentUser.name
+        
     },
     computed:{
-        ...mapGetters(['question', 'id', 'currentUser'])
+        ...mapGetters(['selected','currentUser', 'questions', 'checklist']),
+        ...mapMutations(['CLEAR_QUESTIONS'])
     },
     methods:{
-        ...mapActions(['fetchCurrentUser']),
+        isAnswerFun(){
+            this.isAnswer = !this.isAnswer
+        },
+        nextQ(){
+            // 질문이 두 개 이상이라 다음 버튼이 있음
+            if(this.idx+2 in this.selectedQ){
+                this.idx += 1
+            } else if(this.idx+1 in this.selectedQ){
+                this.idx += 1
+                this.isEnd = !this.isEnd
+            }
+        },
+        ...mapActions(['fetchCurrentUser', 'fetchQuestions', 'fetchChecklist']),
         joinSession() {
             this.OV = new OpenVidu()
             this.session = this.OV.initSession()
@@ -250,6 +322,91 @@ export default{
 </script>
 
 <style scoped>
+.video-container{
+    position: absolute;
+}
+.Btn1{
+    background-color: #FF843E;
+    border: none;
+    border-radius: 10px;
+    width: 336px;
+    height: 50px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 16px auto;
+}
+.leaveBtn{
+    color:#9B9B9B; font-size: 32px;
+    position: fixed;
+    left: 20px;
+    top: 60px;
+}
+.nextBtn{
+    color:#FF843E; font-size: 32px;
+    position: fixed;
+    right: 20px;
+    top: 60px;
+}
+.questionTag{
+    display: flex;
+    align-content: center;
+    position: fixed;
+    top:400px;
+    left: 16px;
+    width: 328px;
+    height: 35px;
+    margin: auto auto;
+    background-color: white;
+    opacity: 0.8;
+    border: solid 1px #FF843E;
+    box-shadow: 1px 1px 1px gray;
+    border-radius: 10px;
+}
+.questionTag p{
+    margin: auto 8px;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+}
+.questionTag2{
+    display: flex;
+    align-content: center;
+    position: fixed;
+    bottom: 200px;
+    left: 16px;
+    width: 328px;
+    height: 35px;
+    margin: auto auto;
+    background-color: white;
+    opacity: 0.8;
+    border: solid 1px #FF843E;
+    box-shadow: 1px 1px 1px gray;
+    border-radius: 10px;
+}
+.questionTag2 p{
+    margin: auto 8px;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+}
+.videoclass{
+    /* position:absolute; */
+    /* z-index: 1; */
+    left: 8px;
+    display: flex;
+    justify-content: center;
+}
+.subscript{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 100px auto 0 auto;
+}
+
+.form1{
+    width: 336px;
+    margin: auto ;
+}
 
 .rl{
     text-decoration:none;
@@ -269,6 +426,33 @@ export default{
 
 .head2 a.router-link-exact-active{
     font-weight: bold;
+}
+.submit{
+    position: fixed;
+    bottom: 50px;
+    width: 100%;
+    margin: 0;
+    background-color: white;
+    border-top: solid 0.5px #FFEDBF;
+    display: flex;
+    justify-content: space-around;
+
+}
+.Btn3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 160px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+
+    /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
+    cursor: pointer;
 }
 
 </style>
