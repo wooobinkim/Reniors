@@ -2,10 +2,10 @@
   <div>
     <hr>
     <Splide class="condition-list" :options="options">
-      <SplideSlide class="condition-item" v-for="(condition, index) in conditions" :key="index" @click="routeResult">
+      <SplideSlide class="condition-item" v-for="(condition, index) in conditions" :key="index" @click="routeResult(condition.id, $event)">
         <div class="condition-item-header">
           <p class="condition-item-number">맞춤공고{{ index+1 }}</p>
-          <div>
+          <div class="condition-item-function">
             <font-awesome-icon icon="fa-solid fa-gear" />
             <font-awesome-icon icon="fa-regular fa-trash-can" @click="deleteCondition(condition.id)"/>
           </div>
@@ -13,9 +13,9 @@
         <div class="condition-item-preview">
           <div class="condition-item-region">
             <font-awesome-icon icon="fa-solid fa-location-dot" />
-            <p style="font-size: 8px;">{{ condition }}</p>
+            <p>{{ condition.hopeAreaResponseList[0]?.gugun }} 등 {{ condition.hopeAreaResponseList?.length }}지역</p>
           </div>
-          <p></p>
+          <p>{{ condition.jobParentCategoryName }}</p>
         </div>
         <button class="condition-item-button" @click.stop="popover">더 보기</button>
         <div class="condition-item-popover">
@@ -55,8 +55,12 @@ export default {
     const routeCreate = (event) => {
       if (event.currentTarget.classList.contains('is-active')) router.push({ name: 'ConditionCreate' })
     }
-    const routeResult = (event) => {
-      if (event.currentTarget.classList.contains('is-active')) router.push({ name: 'ConditionResult' })
+    const routeResult = (id, event) => {
+      if (event.currentTarget.classList.contains('is-active')) {
+        router.push({ name: 'ConditionResult', params: { conditionId: id } })
+        const search = () => store.dispatch('condition/search', id)
+        search()
+      }
     }
 
     const fetchConditions = () => store.dispatch('condition/fetchConditions')
@@ -128,6 +132,15 @@ export default {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
+}
+
+.condition-item-number {
+  font-weight: bold;
+}
+
+.condition-item-function {
+  display: flex;
+  gap: 6px;
 }
 
 .condition-item-region {

@@ -166,7 +166,7 @@ const routes = [
         component: () => import("@/views/condition/ConditionCreateView.vue"),
       },
       {
-        path: "result",
+        path: "result/:conditionId",
         name: "ConditionResult",
         component: () => import("@/views/condition/ConditionResultView.vue"),
       },

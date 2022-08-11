@@ -102,18 +102,16 @@ export default {
       array.push(null)
     }
 
-    const fetchParents = () => store.dispatch('category/getJobParent')
-    fetchParents()
     const fetchChilds = (parent) => {
       emptyArray(hopechilds)
       return store.dispatch('category/getJobChild', parent)
     }
-    const fetchSido = () => store.dispatch('category/getSido')
+
     const fetchGugun = (id) => {
       emptyArray(hopeareas)
       store.dispatch('category/getGugun', id)
     }
-    fetchSido()
+
 
     const parents = computed(() => store.state.category.jobparents)
     const childs = computed(() => store.state.category.jobchilds)

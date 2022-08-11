@@ -4,12 +4,15 @@ export default {
   namespaced: true,
   state: {
     conditions: [],
+    jobopenings: [],
   },
   getters: {
-    conditions: state => state.conditions
+    conditions: state => state.conditions,
+    jobopenings: state => state.jobopenings,
   },
   mutations: {
     CONDITIONS: (state, conditions) => state.conditions = conditions,
+    JOBOPENINGS: (state, jobopenings) => state.jobopenings = jobopenings,
   },
   actions: {
     async fetchConditions({ commit }) {
@@ -45,5 +48,13 @@ export default {
       console.log(response)
       dispatch('fetchConditions')
     },
+
+    // jobopenings
+    async search({ commit }, conditionId) {
+      const response = await http.get(`/jobopening/search/${conditionId}`)
+      console.log(response)
+      console.log(`fetch by ${conditionId}th condition`)
+      commit('JOBOPENINGS', response.data)
+    }
   },
 }
