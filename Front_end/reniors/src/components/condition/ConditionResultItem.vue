@@ -1,6 +1,8 @@
 <template>
   <div class="condition-result-item">
     <h3>어쩌구 회사이름</h3>
+    <div>{{jobopening}}</div>
+    <router-link :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }">공고링크</router-link>
     <p class="condition-result-item-title">채용공고제목</p>
     <div class="condition-result-item-job">
       <p>정규직</p>
@@ -17,6 +19,9 @@
 <script>
 export default {
   name: 'ConditionResultItem',
+  props: {
+    jobopening: Object,
+  },
   setup() {
     const bookmark = () => console.log('bookmark')
 
