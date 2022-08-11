@@ -18,8 +18,6 @@ public class JobOpeningCreateRequest {
     private int minCareer;
     private String title;
     private String contents;
-    private String contentsImgName;
-    private String contentsImgPath;
     private int minSalary;
     private String jobPosition;
     private int workingDay;
@@ -27,6 +25,4 @@ public class JobOpeningCreateRequest {
     private LastEdu lastEdu;
     private Long gugunId;
     private Long jobChildCategoryId;
-
-
 }

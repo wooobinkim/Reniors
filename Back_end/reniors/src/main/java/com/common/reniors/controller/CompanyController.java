@@ -110,8 +110,15 @@ public class CompanyController {
     //회사 공고 등록
     @PostMapping("/jobopening")
     @ApiOperation(value = "회사 공고 등록", notes = "회사가 공고를 등록한다.")
-    public ResponseEntity<?> postJobOpening(@ApiIgnore @LoginCompany Company company, @RequestBody JobOpeningCreateRequest jobOpeningCreateRequest){
-        Long jobOpeningId = companyService.postJobOpening(company, jobOpeningCreateRequest);
+    public ResponseEntity<?> postJobOpening(
+            @ApiIgnore @LoginCompany Company company,
+            @RequestPart(value = "img") MultipartFile file,
+            @RequestPart(value = "data") JobOpeningCreateRequest request){
+        String jobOpeningImg = null;
+        if(file != null) {
+            jobOpeningImg = awsS3Service.uploadFile(file, "jobOpening/");
+        }
+        Long jobOpeningId = companyService.postJobOpening(company, request, baseURL, "jobOpening/"+jobOpeningImg);
         return ResponseEntity.status(HttpStatus.CREATED).body(jobOpeningId);
     }
 
@@ -136,12 +143,17 @@ public class CompanyController {
     //회사 공고 수정
     @PutMapping("/jobopening/{jobOpeningId}")
     @ApiOperation(value = "회사 공고수정", notes = "회사가 올린 공고를 수정한다.")
-    public ResponseEntity<?> updateJobOpening(@ApiIgnore @LoginCompany Company company,
-                                              @PathVariable("jobOpeningId") Long jobOpeningId,
-                                              @RequestBody JobOpeningUpdateRequest jobOpeningUpdateRequest){
+    public ResponseEntity<?> updateJobOpening(
+            @ApiIgnore @LoginCompany Company company,
+            @PathVariable("jobOpeningId") Long jobOpeningId,
+            @RequestPart(value = "img", required = false) MultipartFile file,
+            @RequestPart(value = "data") JobOpeningUpdateRequest jobOpeningUpdateRequest){
 
-       companyService.updateJobOpening(company, jobOpeningId, jobOpeningUpdateRequest);
-//        JobOpeningDto JobOpening= new JobOpeningDto(jobOpening);
+        String jobOpeningImg = null;
+        if(file != null) {
+            jobOpeningImg = awsS3Service.uploadFile(file, "jobOpening/");
+        }
+        companyService.updateJobOpening(company, jobOpeningId, jobOpeningUpdateRequest, baseURL, "jobOpening/"+jobOpeningImg);
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
