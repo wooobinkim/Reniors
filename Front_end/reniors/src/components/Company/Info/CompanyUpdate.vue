@@ -25,35 +25,7 @@
           readonly
         />
       </div>
-      <!-- <div class="mb-3 mt-3">
-        <label for="companyAppPwd" class="form-label">비밀번호</label>
-        <input
-          type="password"
-          class="form-control"
-          id="companyAppPwd"
-          placeholder="비밀번호를 입력해주세요."
-          name="companyAppPwd"
-          v-model="company.companyAppPwd"
-        />
-      </div>
-      <div class="mb-3 mt-3">
-        <label for="ComfirmcompanyAppPwd" class="form-label"
-          >비밀번호 확인</label
-        >
-        <input
-          type="password"
-          class="form-control"
-          id="comfirmcompanyAppPwd"
-          placeholder="비밀번호를 한번 더 입력해주세요."
-          name="comfirmcompanyAppPwd"
-          v-model="comfirmcompanyAppPwd"
-        />
-      </div> -->
-      <!-- <button>이전</button> -->
-      <button @click="firstnext()">다음</button>
-    </div>
-    <div v-if="pagenum == 2">
-      1 <b>2 </b>3
+
       <div class="mb-3 mt-3">
         <label for="companyNum" class="form-label">사업자번호</label>
         <input
@@ -66,6 +38,12 @@
           readonly
         />
       </div>
+
+      <button @click="firstnext()">다음</button>
+
+    </div>
+    <div v-if="pagenum == 2">
+      1 <b>2 </b>3
       <div class="mb-3 mt-3">
         <label for="representativePhone" class="form-label">담당자번호</label>
         <input
@@ -141,10 +119,11 @@
       <div class="mb-3 mt-3">
         <label class="form-label">회사이미지</label>
         <input
-          type="text"
+          type="file"
           class="form-control"
           placeholder="이미지를 선택해주세요"
-          v-model="company.companyImgName"
+          ref="img"
+          @change="changeImg()"
         />
       </div>
       <button @click="thirdprev()">이전</button>
@@ -167,13 +146,12 @@ export default {
         establishedAt: "",
         companyUrl: "",
         address: "",
-        companyImgName: "",
-        companyImgPath: "",
         companyNum: "",
         companyPhone: "",
         representativePhone: "",
         typeCompany: "",
       },
+      companyImg:null,
     };
   },
   watch: {
@@ -203,8 +181,18 @@ export default {
       this.pagenum = 2;
     },
     updatecompany() {
-      this.updateCompany(this.company);
+      const formData = new FormData();
+        formData.append("img", this.companyImg[0]);
+        formData.append(
+          "data",
+          new Blob([JSON.stringify(this.company)], { type: "application/json" })
+        );
+
+      this.updateCompany(formData);
       this.$router.push({ name: "companymypage" });
+    },
+    changeImg() {
+      this.jobOpeningImg = this.$refs.img.files;
     },
   },
 };

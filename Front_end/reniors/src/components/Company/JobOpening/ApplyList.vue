@@ -5,6 +5,7 @@
       {{ jobopeningdetail.jobChildCategoryName }}
     </div>
     <div>상세보기</div>
+    <div>채용과정 : {{jobopeningdetail.jobOpeningProcess}}</div>
     <div>지원자 수 : {{ jobopeningdetail.applies }}</div>
 
     <template v-for="apply in applylist" :key="apply.id">
