@@ -17,9 +17,10 @@ public class SearchConditionResponse {
     private int workingDay;
     private TypeEmployment typeEmployment;
     private LastEdu lastEdu;
-    private String jobChildCategory;
+    private Long jobParentCategoryId;
+    private String jobParentCategoryName;
 
-    public static SearchConditionResponse response(SearchCondition searchCondition){
+    public static SearchConditionResponse response(SearchCondition searchCondition, String jobParentCategoryName){
         return new SearchConditionResponse(
                 searchCondition.getId(),
                 searchCondition.getName(),
@@ -28,7 +29,8 @@ public class SearchConditionResponse {
                 searchCondition.getWorkingDay(),
                 searchCondition.getTypeEmployment(),
                 searchCondition.getLastEdu(),
-                searchCondition.getJobChildCategory().getName()
+                searchCondition.getJobParentCategoryId(),
+                jobParentCategoryName
         );
     }
 }

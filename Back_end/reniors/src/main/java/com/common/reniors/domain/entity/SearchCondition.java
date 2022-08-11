@@ -3,6 +3,7 @@ package com.common.reniors.domain.entity;
 import com.common.reniors.domain.entity.Type.TypeEmployment;
 import com.common.reniors.domain.entity.Type.LastEdu;
 import com.common.reniors.domain.entity.category.JobChildCategory;
+import com.common.reniors.domain.entity.category.JobParentCategory;
 import com.common.reniors.domain.entity.user.User;
 import com.common.reniors.dto.jobOpening.SearchConditionCreateRequest;
 import com.common.reniors.dto.jobOpening.SearchConditionUpdateRequest;
@@ -40,36 +41,37 @@ public class SearchCondition {
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
 
+    private Long jobParentCategoryId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "job_child_category_id")
-    private JobChildCategory jobChildCategory;
-
     @OneToMany(mappedBy = "searchCondition", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HopeArea> hopeAreas = new ArrayList<>();
 
-    public SearchCondition(SearchConditionCreateRequest searchConditionCreateRequest,JobChildCategory jobChildCategory, User user) {
+    @OneToMany(mappedBy = "searchCondition", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HopeJobChild> hopeJobChilds = new ArrayList<>();
+
+    public SearchCondition(SearchConditionCreateRequest searchConditionCreateRequest, User user) {
         this.name = searchConditionCreateRequest.getName();
         this.minCareer = searchConditionCreateRequest.getMinCareer();
         this.minSalary = searchConditionCreateRequest.getMinSalary();
         this.workingDay = searchConditionCreateRequest.getWorkingDay();
         this.typeEmployment = searchConditionCreateRequest.getTypeEmployment();
         this.lastEdu = searchConditionCreateRequest.getLastEdu();
-        this.jobChildCategory = jobChildCategory;
+        this.jobParentCategoryId = searchConditionCreateRequest.getJobParentCategoryId();
         this.user = user;
     }
 
-    public void update(SearchConditionUpdateRequest searchConditionUpdateRequest, JobChildCategory jobChildCategory, User user) {
+    public void update(SearchConditionUpdateRequest searchConditionUpdateRequest, User user) {
         this.name = searchConditionUpdateRequest.getName();
         this.minCareer = searchConditionUpdateRequest.getMinCareer();
         this.minSalary = searchConditionUpdateRequest.getMinSalary();
         this.workingDay = searchConditionUpdateRequest.getWorkingDay();
         this.typeEmployment = searchConditionUpdateRequest.getTypeEmployment();
         this.lastEdu = searchConditionUpdateRequest.getLastEdu();
-        this.jobChildCategory = jobChildCategory;
+        this.jobParentCategoryId = searchConditionUpdateRequest.getJobParentCategoryId();
         this.user = user;
     }
 }

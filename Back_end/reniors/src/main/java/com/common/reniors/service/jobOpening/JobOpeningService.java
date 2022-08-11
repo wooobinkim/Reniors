@@ -4,11 +4,13 @@ import com.common.reniors.common.exception.NotFoundException;
 import com.common.reniors.domain.entity.*;
 import com.common.reniors.domain.entity.category.Gugun;
 import com.common.reniors.domain.entity.category.JobChildCategory;
+import com.common.reniors.domain.entity.category.JobParentCategory;
 import com.common.reniors.domain.entity.recommend.RecommendCondition;
 import com.common.reniors.domain.entity.user.User;
 import com.common.reniors.domain.repository.*;
 import com.common.reniors.domain.repository.category.GugunRepository;
 import com.common.reniors.domain.repository.category.JobChildCategoryRepository;
+import com.common.reniors.domain.repository.category.JobParentCategoryRepository;
 import com.common.reniors.domain.repository.recommend.RecommendConditionRepository;
 import com.common.reniors.dto.apply.ApplyResponse;
 import com.common.reniors.dto.jobOpening.*;
@@ -38,8 +40,10 @@ public class JobOpeningService {
     private final CompanyRepository companyRepository;
     private final GugunRepository gugunRepository;
     private final JobChildCategoryRepository jobChildCategoryRepository;
+    private final JobParentCategoryRepository jobParentCategoryRepository;
     private final ApplyRepository applyRepository;
     private final HopeAreaRepository hopeAreaRepository;
+    private final HopeJobChildRepository hopeJobChildRepository;
     private final SearchConditionRepository searchConditionRepository;
     private final RecommendConditionRepository recommendConditionRepository;
 
@@ -49,8 +53,8 @@ public class JobOpeningService {
     //공고 조건 생성(지역, 직무 제외)
     @Transactional
     public Long postSearchCondition(User user, SearchConditionCreateRequest searchConditionCreateRequest){
-        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(searchConditionCreateRequest.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jcc"));
-        SearchCondition searchCondition = new SearchCondition(searchConditionCreateRequest,jobChildCategory, user);
+        JobParentCategory jobParentCategory = jobParentCategoryRepository.findById(searchConditionCreateRequest.getJobParentCategoryId()).orElseThrow(() -> new NotFoundException("not found jpc"));
+        SearchCondition searchCondition = new SearchCondition(searchConditionCreateRequest, user);
 
         Long id = searchConditionRepository.save(searchCondition).getId();
 
@@ -85,38 +89,40 @@ public class JobOpeningService {
         hopeAreaRepository.deleteById(hopeAreaId);
     }
 
-//    //공고 조건 희망직무 설정
-//    @Transactional
-//    public void postHopeJob(Long searchConditionId,HopeJobDto hopeJobDto){
-//        SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
-//        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(hopeJobDto.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jobChildCategory"));
-//
-//        HopeJob hopeJob = new HopeJob(hopeJobDto,searchCondition,jobChildCategory);
-//        hopeJobRepository.save(hopeJob);
-//    }
-//    //공고 조건 희망직무 수정
-//    @Transactional
-//    public void updateHopeJob(Long searchConditionId, HopeJobDto hopeJobDto, Long hopeJobId){
-//        SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
-//        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(hopeJobDto.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jobChildCategory"));
-//        HopeJob hopejob = hopeJobRepository.findById(hopeJobId).orElseThrow(() -> new NotFoundException("not found hopejob"));
-//
-//        hopejob.update(searchCondition,jobChildCategory);
-//    }
-//
-//    //공고 조건 희망직무 삭제
-//    @Transactional
-//    public void deleteHopeJob(Long hopeJobId){
-//
-//        hopeJobRepository.deleteById(hopeJobId);
-//    }
+    //공고 조건 희망직무 설정
+    @Transactional
+    public Long postHopeJobChild(Long searchConditionId,HopeJobChildCreateRequest hopeJobChildCreateRequest){
+        SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
+        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(hopeJobChildCreateRequest.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jobChildCategory"));
+
+        HopeJobChild hopeJobChild = new HopeJobChild(searchCondition,jobChildCategory);
+        Long id = hopeJobChildRepository.save(hopeJobChild).getId();
+
+        return id;
+    }
+    //공고 조건 희망직무 수정
+    @Transactional
+    public void updateHopeJobChild(Long searchConditionId, HopeJobChildUpdateRequest hopeJobChildUpdateRequest, Long hopeJobChildId){
+        SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
+        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(hopeJobChildUpdateRequest.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jobChildCategory"));
+        HopeJobChild hopeJobChild = hopeJobChildRepository.findById(hopeJobChildId).orElseThrow(() -> new NotFoundException("not found hopejob"));
+
+        hopeJobChild.update(searchCondition,jobChildCategory);
+    }
+
+    //공고 조건 희망직무 삭제
+    @Transactional
+    public void deleteHopeJobChild(Long hopeJobChildId){
+        hopeJobChildRepository.deleteById(hopeJobChildId);
+    }
 
     //공고 조건 조회
     @Transactional
     public List<SearchConditionResponse> getSearchConditionList(User user){
         List<SearchCondition> searchConditionList = searchConditionRepository.findByUser(user);
         List<SearchConditionResponse> searchConditionResponseList = searchConditionList.stream().map(s->
-                SearchConditionResponse.response(s)
+                SearchConditionResponse.response(s,
+                        jobParentCategoryRepository.findById(s.getJobParentCategoryId()).get().getName())
         ).collect(Collectors.toList());
 
         return searchConditionResponseList;
@@ -126,8 +132,8 @@ public class JobOpeningService {
     @Transactional
     public void updateSearchCondition(User user, Long searchConditionId, SearchConditionUpdateRequest searchConditionUpdateRequest){
         SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
-        JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(searchConditionUpdateRequest.getJobChildCategoryId()).orElseThrow(() -> new NotFoundException("not found jcc"));
-        searchCondition.update(searchConditionUpdateRequest, jobChildCategory,user);
+
+        searchCondition.update(searchConditionUpdateRequest,user);
     }
 
     //공고 조건 삭제
@@ -141,7 +147,8 @@ public class JobOpeningService {
     public SearchConditionResponse getSearchCondition(Long searchConditionId){
         SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
 
-        SearchConditionResponse searchConditionResponse = SearchConditionResponse.response(searchCondition);
+        SearchConditionResponse searchConditionResponse = SearchConditionResponse.response(searchCondition,
+                jobParentCategoryRepository.findById(searchCondition.getJobParentCategoryId()).get().getName());
 
         return searchConditionResponse;
     }
@@ -189,24 +196,23 @@ public class JobOpeningService {
 
         SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
         List<HopeArea> hopeAreaList = hopeAreaRepository.findBySearchCondition(searchCondition);
+        List<HopeJobChild> hopeJobChildList = hopeJobChildRepository.findBySearchCondition(searchCondition);
 
         List<Gugun> gugunList = new ArrayList<>();
          for (HopeArea hopeArea : hopeAreaList) {
              Gugun gugun = gugunRepository.findById(hopeArea.getGugun().getId()).orElseThrow(() -> new NotFoundException("not found gugun"));
              gugunList.add(gugun);
+        };
+
+
+         List<JobChildCategory> jobChildCategoryList = new ArrayList<>();
+        for (HopeJobChild hopeJobChild: hopeJobChildList) {
+            JobChildCategory jobChildCategory = jobChildCategoryRepository.findById(hopeJobChild.getId()).orElseThrow(() -> new NotFoundException("not found jcc"));
+            jobChildCategoryList.add(jobChildCategory);
         }
 
-//        for (HopeArea hopeArea : hopeAreaList) {
-//            booleanBuilder.and(j.gugun.id.in(hopeArea.getId()));
-//        }
-//
-//        for (HopeJob hopeJob : hopeJobList) {
-//            booleanBuilder.and(j.jobChildCategory.id.in(hopeJob.getId()));
-//        }
-//        if (jobOpeningSearchDto.getGuGunId() != null) booleanBuilder.and(j.gugun.id.eq(jobOpeningSearchDto.getGuGunId()));
-//        if (jobOpeningSearchDto.getJobChildCategoryId()!= null) booleanBuilder.and(j.jobChildCategory.id.eq(jobOpeningSearchDto.getJobChildCategoryId()));
-            if (searchCondition.getLastEdu() != null) booleanBuilder.and(j.lastEdu.eq(searchCondition.getLastEdu()));
-            if (searchCondition.getTypeEmployment() != null) booleanBuilder.and(j.typeEmployment.eq(searchCondition.getTypeEmployment()));
+        if (searchCondition.getLastEdu() != null) booleanBuilder.and(j.lastEdu.eq(searchCondition.getLastEdu()));
+        if (searchCondition.getTypeEmployment() != null) booleanBuilder.and(j.typeEmployment.eq(searchCondition.getTypeEmployment()));
 
         List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
                 .where(
@@ -216,11 +222,12 @@ public class JobOpeningService {
                         (j.minCareer.goe(searchCondition.getMinCareer())),
                         (j.minSalary.goe(searchCondition.getMinSalary())),
                         (j.workingDay.loe(searchCondition.getWorkingDay())),
-                        (j.jobChildCategory.eq(searchCondition.getJobChildCategory())),
+                        (j.jobChildCategory.parent.id.eq(searchCondition.getJobParentCategoryId())),
                         booleanBuilder,
 //                        (j.typeEmployment.eq(searchCondition.getTypeEmployment())),
 //                        (j.lastEdu.eq(searchCondition.getLastEdu())),
-                        (j.gugun.in(gugunList))
+                        (j.gugun.in(gugunList)),
+                        (j.jobChildCategory.in(jobChildCategoryList))
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
