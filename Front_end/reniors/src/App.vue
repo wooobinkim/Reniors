@@ -55,7 +55,7 @@ export default {
 
 @media screen and (min-width: 720px) {
   .app-view {
-    width: auto;
+    width: 70vh;
   }
 }
 
