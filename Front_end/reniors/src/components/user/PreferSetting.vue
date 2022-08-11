@@ -85,7 +85,7 @@
     <button style="background-color: #FFC0A3;" type="button" v-show="page === 1"><router-link style="text-decoration:none; color: white;" :to="{ name: 'MyPage' }">이전</router-link></button>
     <button style="background-color: #FFC0A3;" type="button" v-show="page !== 1" @click="decreasePage">이전</button>
     <button type="button" v-show="page !== 3" @click="increasePage">다음</button>
-    <button @click="createPrefer(recommend)" v-show="page === 3">완료!</button>
+    <button @click="prefer" v-show="page === 3">완료!</button>
   </footer>
 
   </div>
@@ -96,6 +96,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
 export default {
   name: "PreferSetting",
   components: {},
+  props: { action: String },
   data() {
     return {
       jobparents: null,
@@ -133,12 +134,13 @@ export default {
   created() {
     this.getSido()
     this.fetchParents()
+    this.fetchPrefer()
   },
 
   mounted() {},
   unmounted() {},
   methods: {
-    ...mapActions(['fetchParents', 'createPrefer']),
+    ...mapActions(['fetchParents', 'createPrefer', 'fetchPrefer', 'updatePrefer']),
     ...mapActions('category', ['getJobChild', 'getSido', 'getGugun']),
     increasePage(){
       this.page += 1
@@ -146,6 +148,13 @@ export default {
     decreasePage(){
       this.page -= 1
     },
+    prefer(){
+      if (this.action === 'create'){
+        this.createPrefer(this.recommend)
+      } else if (this.action === 'update'){
+        this.updatePrefer(this.recommend)
+      }
+    }
     
     
   }
