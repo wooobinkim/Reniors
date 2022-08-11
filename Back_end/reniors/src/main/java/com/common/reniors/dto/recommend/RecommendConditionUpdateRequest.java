@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecommendConditionUpdateRequest {
-    private Long jobChildCategoryId;
+    private Long jobParentCategoryId;
 
     private Long gugunId;
 
