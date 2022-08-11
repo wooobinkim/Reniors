@@ -89,7 +89,7 @@ public class CompanyController {
             @ApiIgnore @LoginCompany Company company,
             @RequestPart(value = "img", required = false) MultipartFile file,
             @RequestPart(value = "data") CompanyUpdateRequest companyUpdateRequest) throws Exception {
-        String companyProfile = "companyBaseProfile.png";
+        String companyProfile = company.getCompanyProfile();
         if(file != null && companyUpdateRequest.isChangeProfile()) {
             companyProfile = awsS3Service.uploadFile(file, "company/");
         }

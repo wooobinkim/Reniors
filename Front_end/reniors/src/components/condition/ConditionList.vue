@@ -2,31 +2,31 @@
   <div>
     <hr>
     <Splide class="condition-list" :options="options">
-      <SplideSlide class="condition-item" v-for="(condition, index) in conditions" :key="index" @click="routeResult">
+      <SplideSlide class="condition-item" v-for="(condition, index) in conditions" :key="index" @click="routeResult(condition.id, $event)">
         <div class="condition-item-header">
           <p class="condition-item-number">맞춤공고{{ index+1 }}</p>
-          <div>
-            <font-awesome-icon icon="fa-solid fa-gear" />
-            <font-awesome-icon icon="fa-regular fa-trash-can" />
+          <div class="condition-item-function">
+            <font-awesome-icon icon="fa-solid fa-gear" @click.stop="editCondition(condition.id)" />
+            <font-awesome-icon icon="fa-regular fa-trash-can" @click="deleteCondition(condition.id)"/>
           </div>
         </div>
         <div class="condition-item-preview">
           <div class="condition-item-region">
             <font-awesome-icon icon="fa-solid fa-location-dot" />
-            <p>{{ condition.region }}</p>
+            <p>{{ condition.hopeAreaResponseList[0]?.gugun }} 등 {{ condition.hopeAreaResponseList?.length }}지역</p>
           </div>
-          <p>직종: 몰라</p>
+          <p>{{ condition.jobParentCategoryName }}</p>
         </div>
         <button class="condition-item-button" @click.stop="popover">더 보기</button>
         <div class="condition-item-popover">
           <p>고용형태</p>
           <p>{{ condition.typeEmployment }}</p>
           <p>최종학력</p>
-          <p>{{ condition.typeEmployment }}</p>
+          <p>{{ condition.lastEdu }}</p>
           <p>경력</p>
-          <p>{{ condition.typeEmployment }}</p>
+          <p>{{ condition.minCareer }}년 미만</p>
           <p>근무일수</p>
-          <p>{{ condition.typeEmployment }}</p>
+          <p>주 {{ condition.workingDay }}일</p>
         </div>
       </SplideSlide>
       <SplideSlide class="condition-item-create" @click="routeCreate">
@@ -42,7 +42,6 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { Splide, SplideSlide } from '@splidejs/vue-splide'
-import _ from 'lodash'
 
 export default {
   name: 'ConditionList',
@@ -56,19 +55,17 @@ export default {
     const routeCreate = (event) => {
       if (event.currentTarget.classList.contains('is-active')) router.push({ name: 'ConditionCreate' })
     }
-    const routeResult = (event) => {
-      if (event.currentTarget.classList.contains('is-active')) router.push({ name: 'ConditionResult' })
+    const routeResult = (id, event) => {
+      if (event.currentTarget.classList.contains('is-active')) {
+        router.push({ name: 'ConditionResult', params: { conditionId: id } })
+        const search = () => store.dispatch('condition/search', id)
+        search()
+      }
     }
 
     const fetchConditions = () => store.dispatch('condition/fetchConditions')
     fetchConditions()
-    const conditions = computed(() => {
-      const datas = store.getters['condition/conditions']
-      if (_.isEmpty(datas?.value)) {
-        return [{ region: '서울', typeEmployment: '정규직' }, { region: '아산', typeEmployment: '비정규직' }, { region: '대전', typeEmployment: '노예' },]
-      }
-      else return datas
-    })
+    const conditions = computed(() => store.getters['condition/conditions'])
 
     const popover = (event) => {
       if (event.target.innerText === '더 보기') event.target.innerText = '닫기'
@@ -87,8 +84,11 @@ export default {
       gap : '1rem',
     }
 
+    const deleteCondition = (id) => store.dispatch('condition/deleteCondition', id)
+    const editCondition = (id) => router.push({ name: 'ConditionEdit', params: { conditionId: id } })
+
     return {
-      popover, routeCreate, routeResult,
+      popover, routeCreate, routeResult, deleteCondition, editCondition,
       conditions, options,
     }
   },
@@ -133,6 +133,15 @@ export default {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
+}
+
+.condition-item-number {
+  font-weight: bold;
+}
+
+.condition-item-function {
+  display: flex;
+  gap: 6px;
 }
 
 .condition-item-region {

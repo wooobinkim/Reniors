@@ -5,7 +5,9 @@ import ResumeStepThree from "../components/resume/ResumeStepThree.vue";
 import ResumeStepFour from "../components/resume/ResumeStepFour.vue";
 import ResumeStepFive from "../components/resume/ResumeStepFive.vue";
 import ResumeDetail from "../components/resume/ResumeDetail.vue";
-import LoginView from "../views/user/LoginView.vue";
+import LoginMainView from "../views/user/LoginMainView.vue";
+import LoginUserView from "../views/user/LoginUserView.vue";
+import LoginCompanyView from "../views/user/LoginCompanyView.vue";
 import SignupView from "../views/user/SignupView.vue";
 import SignupCompleteView from "../views/user/SignupCompleteView.vue";
 import FindPasswordView from "../views/user/FindPasswordView.vue";
@@ -14,6 +16,7 @@ import MyPageView from "../views/user/MyPageView.vue";
 import MyinfoEdit from "../components/user/MyinfoEdit.vue";
 
 import PreferSetting from "../components/user/PreferSetting";
+import PreferSettingComplete from "../views/user/PreferSettingCompleteView.vue";
 // import PreferSettingMain from "../components/user/PreferSettingMain"
 import CompanyHomeView from "@/views/home/CompanyHomeView.vue";
 import HomeView from "../views/home/HomeView.vue";
@@ -82,7 +85,17 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: LoginView,
+    component: LoginMainView,
+  },
+  {
+    path: "/login/user",
+    name: "LoginUser",
+    component: LoginUserView,
+  },
+  {
+    path: "/login/company",
+    name: "LoginCompany",
+    component: LoginCompanyView,
   },
   {
     path: "/signup",
@@ -114,13 +127,16 @@ const routes = [
     name: "MyinfoEdit",
     component: MyinfoEdit,
   },
-
   {
     path: "/setting",
     name: "PreferSetting",
     component: PreferSetting,
   },
-
+  {
+    path: "/setting/complete",
+    name: "PreferSettingComplete",
+    component: PreferSettingComplete,
+  },
 
   // resume
   {
@@ -166,9 +182,14 @@ const routes = [
         component: () => import("@/views/condition/ConditionCreateView.vue"),
       },
       {
-        path: "result",
+        path: "result/:conditionId",
         name: "ConditionResult",
         component: () => import("@/views/condition/ConditionResultView.vue"),
+      },
+      {
+        path: "edit/:conditionId",
+        name: "ConditionEdit",
+        component: () => import("@/views/condition/ConditionEditView.vue"),
       },
     ],
   },

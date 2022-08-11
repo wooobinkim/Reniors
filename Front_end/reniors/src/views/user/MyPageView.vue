@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="rechoice">
-        <router-link :to="{ name: 'FindPassword' }" style="text-decoration:none; color: #6D6D6D; font-weight:800; font-size: 13px">관심 다시 설정하기  <i class="bi bi-reply-all-fill" style="color: #FF843E;"></i></router-link>
+        <router-link :to="{ name: 'PreferSetting' }" style="text-decoration:none; color: #6D6D6D; font-weight:800; font-size: 13px">관심 설정하기  <i class="bi bi-reply-all-fill" style="color: #FF843E;"></i></router-link>
       </div>
     </div>
 
