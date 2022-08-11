@@ -1,9 +1,27 @@
 <template>
   <div>
-    <div v-if="pagenum == 1">
-      <b>1 </b>2 3
-      <div class="mb-3 mt-3">
-        <label for="name" class="form-label">기업명</label>
+        <header>
+      <div>
+        <img style="width: 40%; max-height: 170px; margin: 10px" src="@/assets/logo.png" alt="logo" >
+        <br>
+        <div style="float: right">
+          <img class="order" v-if="page===1" src="@/assets/one_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/one.svg" alt="order">
+          <img class="order" v-if="page===2" src="@/assets/two_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/two.svg" alt="order">
+          <img class="order" v-if="page===3" src="@/assets/three_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/three.svg" alt="order">
+        </div>
+
+      </div>
+    </header> 
+    <div v-if="pagenum == 1" class="company-update-page-box">
+      <div class="update-process-box">
+          <p class="now">1</p><p>2</p><p>3</p>
+      </div>
+      <div class="company-update-form">
+        <div class="mb-3 mt-3">
+        <label for="name" class="form-label company-form-label">기업명</label>
         <input
           type="text"
           class="form-control"
@@ -14,7 +32,7 @@
         />
       </div>
       <div class="mb-3 mt-3">
-        <label for="companyAppId" class="form-label">이메일</label>
+        <label for="companyAppId" class="form-label company-form-label">이메일</label>
         <input
           type="text"
           class="form-control"
@@ -27,7 +45,7 @@
       </div>
 
       <div class="mb-3 mt-3">
-        <label for="companyNum" class="form-label">사업자번호</label>
+        <label for="companyNum" class="form-label company-form-label">사업자번호</label>
         <input
           type="text"
           class="form-control"
@@ -38,14 +56,19 @@
           readonly
         />
       </div>
+      </div>
 
+      <button class="hidden-btn">이전</button>
       <button @click="firstnext()">다음</button>
 
     </div>
-    <div v-if="pagenum == 2">
-      1 <b>2 </b>3
+    <div v-if="pagenum == 2" class="company-update-page-box">
+      <div class="update-process-box">
+          <p>1</p><p class="now">2</p><p>3</p>
+      </div>
+      <div class="company-update-form">
       <div class="mb-3 mt-3">
-        <label for="representativePhone" class="form-label">담당자번호</label>
+        <label for="representativePhone" class="form-label company-form-label">담당자번호</label>
         <input
           type="text"
           class="form-control"
@@ -56,7 +79,7 @@
         />
       </div>
       <div class="mb-3 mt-3">
-        <label for="companyPhone" class="form-label">대표번호</label>
+        <label for="companyPhone" class="form-label company-form-label">대표번호</label>
         <input
           type="text"
           class="form-control"
@@ -67,7 +90,7 @@
         />
       </div>
       <div class="mb-3 mt-3">
-        <label for="companyUrl" class="form-label">회사 홈페이지</label>
+        <label for="companyUrl" class="form-label company-form-label">회사 홈페이지</label>
         <input
           type="text"
           class="form-control"
@@ -78,8 +101,8 @@
         />
       </div>
       <div class="mb-3 mt-3">
-        기업형태
-        <select v-model="company.typeCompany">
+        <label class="form-label company-form-label">기업형태</label>
+        <select v-model="company.typeCompany" class="form-control">
           <option
             v-for="typeCompany in typecompanies"
             :value="typeCompany.value"
@@ -89,13 +112,17 @@
           </option>
         </select>
       </div>
+      </div>
       <button @click="secondprev()">이전</button>
       <button @click="secondnext()">다음</button>
     </div>
-    <div v-if="pagenum == 3">
-      1 2 <b>3</b>
+    <div v-if="pagenum == 3"  class="company-update-page-box">
+      <div class="update-process-box">
+          <p>1</p><p>2</p><p class="now">3</p>
+      </div>
+      <div class="company-update-form">
       <div class="mb-3 mt-3">
-        <label for="establishedAt" class="form-label">설립연도</label>
+        <label for="establishedAt" class="form-label company-form-label">설립연도</label>
         <input
           type="text"
           class="form-control"
@@ -106,7 +133,7 @@
         />
       </div>
       <div class="mb-3 mt-3">
-        <label for="address" class="form-label">회사주소</label>
+        <label for="address" class="form-label company-form-label">회사주소</label>
         <input
           type="text"
           class="form-control"
@@ -116,8 +143,14 @@
           v-model="company.address"
         />
       </div>
+      <div>
+          <label class="form-label">현재 회사 이미지</label>
+          <div/>
+          <img :src="companyinfo.baseURL+companyinfo.companyProfile" alt="test" class = "logo-img">
+      </div>
+
       <div class="mb-3 mt-3">
-        <label class="form-label">회사이미지</label>
+        <label class="form-label company-form-label">회사이미지</label>
         <input
           type="file"
           class="form-control"
@@ -125,6 +158,7 @@
           ref="img"
           @change="changeImg()"
         />
+      </div>
       </div>
       <button @click="thirdprev()">이전</button>
       <button @click="updatecompany()">완료</button>
@@ -198,4 +232,43 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.update-process-box{
+  width: 100%;
+  display: flex;
+  justify-content: right;
+}
+.update-process-box  > p{
+  margin-right: 5px;
+}
+.update-process-box  > .now{
+  font-weight: bold;
+  color: var(--color-green-1);
+}
+.company-form-label{
+  width: 100%;
+  text-align: left;
+}
+.company-update-form{
+  height: 500px;
+}
+.hidden-btn{
+  visibility: hidden;
+}
+.company-update-page-box > button {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--color-green-2);
+  color: white;
+  padding: 10px 50px;
+  margin: 0 5px;
+}
+.company-update-page-box > button:hover{
+  color: black;
+  background-color: var(--color-green-1);
+}
+.form-control:focus{
+  border-color: var(--color-green-2) !important; 
+  box-shadow: inset 0 1px 1px var(--color-green-1), 0 0 8px var(--color-green-2) !important;
+}
+</style>
