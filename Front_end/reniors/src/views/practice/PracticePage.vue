@@ -49,6 +49,7 @@
                 <div v-if="!isAnswer" class="questionTag2">
                     <p >{{idx + 1}}. {{ question }}</p>
                 </div>
+                <i v-if="!this.isStart" class="bi bi-arrow-left-circle-fill preBtn" @click="preQ"></i>
                 <i v-if="!this.isEnd" class="bi bi-arrow-right-circle-fill nextBtn"  @click="nextQ"></i>
             </div>
 			<div id="session-header" v-if="isAnswer">
@@ -125,6 +126,7 @@ export default{
             isAnswer: false,
             selectedQ: [],
             isEnd: false,
+            isStart: true,
         };
     },
     watch:{
@@ -160,9 +162,23 @@ export default{
             // 질문이 두 개 이상이라 다음 버튼이 있음
             if(this.idx+2 in this.selectedQ){
                 this.idx += 1
+                this.isEnd = false
+                this.isStart = false
             } else if(this.idx+1 in this.selectedQ){
                 this.idx += 1
-                this.isEnd = !this.isEnd
+                this.isEnd = true
+                this.isStart = false
+            }
+        },
+        preQ(){
+            if (this.idx-2 in this.selectedQ){
+                this.idx -= 1
+                this.isStart = false
+                this.isEnd = false
+            } else if(this.idx-1 in this.selectedQ){
+                this.idx -=1
+                this.isStart = true
+                this.isEnd = false
             }
         },
         ...mapActions(['fetchCurrentUser', 'fetchQuestions', 'fetchChecklist']),
@@ -340,6 +356,12 @@ export default{
     color:#9B9B9B; font-size: 32px;
     position: fixed;
     left: 20px;
+    top: 60px;
+}
+.preBtn{
+    color:#FF843E; font-size: 32px;
+    position: fixed;
+    right: 60px;
     top: 60px;
 }
 .nextBtn{
