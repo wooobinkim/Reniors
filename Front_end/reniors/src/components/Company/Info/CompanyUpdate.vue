@@ -2,29 +2,26 @@
   <div>
         <header>
       <div>
-        <img style="width: 40%; max-height: 170px; margin: 10px" src="@/assets/logo.png" alt="logo" >
-        <br>
-        <div style="float: right">
-          <img class="order" v-if="page===1" src="@/assets/one_active.svg" alt="order">
-          <img class="order" v-else src="@/assets/one.svg" alt="order">
-          <img class="order" v-if="page===2" src="@/assets/two_active.svg" alt="order">
-          <img class="order" v-else src="@/assets/two.svg" alt="order">
-          <img class="order" v-if="page===3" src="@/assets/three_active.svg" alt="order">
-          <img class="order" v-else src="@/assets/three.svg" alt="order">
-        </div>
-
+        <img style="width: 128px; max-height: 170px; margin: 10px" src="@/assets/logo.png" alt="logo" >
       </div>
     </header> 
     <div v-if="pagenum == 1" class="company-update-page-box">
       <div class="update-process-box">
-          <p class="now">1</p><p>2</p><p>3</p>
+          <!-- <p class="now">1</p><p>2</p><p>3</p> -->
+          <img class="order" v-if="pagenum===1" src="@/assets/one_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/one.svg" alt="order">
+          <img class="order" v-if="pagenum===2" src="@/assets/two_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/two.svg" alt="order">
+          <img class="order" v-if="pagenum===3" src="@/assets/three_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/three.svg" alt="order">
       </div>
+      
       <div class="company-update-form">
         <div class="mb-3 mt-3">
         <label for="name" class="form-label company-form-label">기업명</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control company-form-control"
           id="name"
           placeholder="기업명을 입력해주세요."
           name="name"
@@ -35,7 +32,7 @@
         <label for="companyAppId" class="form-label company-form-label">이메일</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control company-form-control"
           id="companyAppId"
           placeholder="이메일을 입력해주세요."
           name="companyAppId"
@@ -48,7 +45,7 @@
         <label for="companyNum" class="form-label company-form-label">사업자번호</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control company-form-control"
           id="companyNum"
           placeholder="사업자번호를 입력해주세요."
           name="companyNum"
@@ -57,21 +54,24 @@
         />
       </div>
       </div>
-
-      <button class="hidden-btn">이전</button>
-      <button @click="firstnext()">다음</button>
-
     </div>
     <div v-if="pagenum == 2" class="company-update-page-box">
       <div class="update-process-box">
-          <p>1</p><p class="now">2</p><p>3</p>
+          <!-- <p>1</p><p class="now">2</p><p>3</p> -->
+          <img class="order" v-if="pagenum===1" src="@/assets/one_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/one.svg" alt="order">
+          <img class="order" v-if="pagenum===2" src="@/assets/two_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/two.svg" alt="order">
+          <img class="order" v-if="pagenum===3" src="@/assets/three_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/three.svg" alt="order">          
       </div>
+      <br>
       <div class="company-update-form">
       <div class="mb-3 mt-3">
         <label for="representativePhone" class="form-label company-form-label">담당자번호</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control company-form-control"
           id="representativePhone"
           placeholder="담당자번호를 입력해주세요."
           name="representativePhone"
@@ -82,7 +82,7 @@
         <label for="companyPhone" class="form-label company-form-label">대표번호</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control company-form-control"
           id="companyPhone"
           placeholder="대표번호를 입력해주세요."
           name="companyPhone"
@@ -93,7 +93,7 @@
         <label for="companyUrl" class="form-label company-form-label">회사 홈페이지</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control company-form-control"
           id="companyUrl"
           placeholder="회사 홈페이지를 입력해주세요."
           name="companyUrl"
@@ -102,7 +102,7 @@
       </div>
       <div class="mb-3 mt-3">
         <label class="form-label company-form-label">기업형태</label>
-        <select v-model="company.typeCompany" class="form-control">
+        <select v-model="company.typeCompany" class="form-control company-form-control:focus">
           <option
             v-for="typeCompany in typecompanies"
             :value="typeCompany.value"
@@ -113,19 +113,23 @@
         </select>
       </div>
       </div>
-      <button @click="secondprev()">이전</button>
-      <button @click="secondnext()">다음</button>
     </div>
     <div v-if="pagenum == 3"  class="company-update-page-box">
       <div class="update-process-box">
-          <p>1</p><p>2</p><p class="now">3</p>
+          <!-- <p>1</p><p>2</p><p class="now">3</p> -->
+          <img class="order" v-if="pagenum===1" src="@/assets/one_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/one.svg" alt="order">
+          <img class="order" v-if="pagenum===2" src="@/assets/two_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/two.svg" alt="order">
+          <img class="order" v-if="pagenum===3" src="@/assets/three_active.svg" alt="order">
+          <img class="order" v-else src="@/assets/three.svg" alt="order">
       </div>
       <div class="company-update-form">
       <div class="mb-3 mt-3">
         <label for="establishedAt" class="form-label company-form-label">설립연도</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control company-form-control"
           id="establishedAt"
           placeholder="설립연도를 입력해주세요."
           name="establishedAt"
@@ -136,7 +140,7 @@
         <label for="address" class="form-label company-form-label">회사주소</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control company-form-control"
           id="address"
           placeholder="회사주소를 입력해주세요."
           name="address"
@@ -153,16 +157,21 @@
         <label class="form-label company-form-label">회사이미지</label>
         <input
           type="file"
-          class="form-control"
+          class="form-control company-form-control"
           placeholder="이미지를 선택해주세요"
           ref="img"
           @change="changeImg()"
         />
       </div>
       </div>
-      <button @click="thirdprev()">이전</button>
-      <button @click="updatecompany()">완료</button>
+      
     </div>
+            <footer style="width: 312px;">
+          <button style="background-color: var(--color-green-3);" type="button" v-show="pagenum === 1"><router-link style="text-decoration:none; color: white;" :to="{ name: 'Login' }">이전</router-link></button>
+          <button style="background-color: var(--color-green-3);" type="button" v-show="pagenum !== 1" @click="decreasePage">이전</button>
+          <button type="button" v-show="pagenum !== 3" @click="increasePage">다음</button>
+          <button @click="updatecompany()" v-show="pagenum === 3">완료!</button>
+        </footer>
   </div>
 </template>
 
@@ -202,17 +211,11 @@ export default {
   },
   methods: {
     ...mapActions("company", ["updateCompany", "getCompany"]),
-    firstnext() {
-      this.pagenum = 2;
+    increasePage(){
+      this.pagenum += 1
     },
-    secondprev() {
-      this.pagenum = 1;
-    },
-    secondnext() {
-      this.pagenum = 3;
-    },
-    thirdprev() {
-      this.pagenum = 2;
+    decreasePage(){
+      this.pagenum -= 1
     },
     updatecompany() {
       const formData = new FormData();
@@ -237,20 +240,17 @@ export default {
   width: 100%;
   display: flex;
   justify-content: right;
-}
-.update-process-box  > p{
-  margin-right: 5px;
-}
-.update-process-box  > .now{
-  font-weight: bold;
-  color: var(--color-green-1);
+    border-style: none none solid none;
+    border-width: 0.5px;
+    border-color: #EAEAEA;
+    padding: 5px 0;
 }
 .company-form-label{
   width: 100%;
   text-align: left;
 }
 .company-update-form{
-  height: 500px;
+  height: 440px;
 }
 .hidden-btn{
   visibility: hidden;
@@ -267,8 +267,33 @@ export default {
   color: black;
   background-color: var(--color-green-1);
 }
-.form-control:focus{
+.company-form-control:focus{
   border-color: var(--color-green-2) !important; 
   box-shadow: inset 0 1px 1px var(--color-green-1), 0 0 8px var(--color-green-2) !important;
+}
+  .order{
+    margin: 2px;
+  }
+
+footer{
+    position: fixed;
+    transform: translate(-50%, 0);
+    bottom: 60px;
+    left: 50%;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+footer > button{
+    background-color: var(--color-green-1);
+    width: 45%;
+    height: 80%;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
 }
 </style>
