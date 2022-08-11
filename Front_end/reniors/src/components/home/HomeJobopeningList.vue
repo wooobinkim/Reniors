@@ -2,10 +2,11 @@
   <div>
     <h2 class="home-jobopening-type">{{ type }}</h2>
     <ul class="home-jobopening-list">
-      <li class="home-jobopening-item" v-for="jobopening in jobopenings" :key="jobopening.id">
-        <p>{{ jobopening.name }}</p>
-        <p>{{ jobopening.context }}</p>
-      </li>
+      <router-link class="home-jobopening-item" :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }" v-for="jobopening in jobopenings" :key="jobopening.id">
+        <p>{{ jobopening.companyName }}</p>
+        <h4>{{ jobopening.title }}</h4>
+        <p>~ {{ jobopening.finishedDate.split('T')[0] }}</p>
+      </router-link>
     </ul>
   </div>
 </template>
@@ -44,5 +45,17 @@ export default {
   padding: 10px;
   list-style: none;
   flex: 0 0 auto;
+  text-decoration: none;
+}
+
+.home-jobopening-item p, .home-jobopening-item h4 {
+  margin: 0;
+  text-align: start;
+  color: black;
+}
+
+.home-jobopening-item h4 {
+  font-weight: bold;
+  font-size: 16px;
 }
 </style>
