@@ -53,15 +53,11 @@
         <option v-for="(minCareer, index) in minCareers" :key="index" :value="minCareer.id">{{ minCareer.name }}</option>
       </select>
       <hr>
-      <label>근무일수</label>
-      <div class="condition-create-type-employment">
-        <div @click="selectDay(day, $event)" id="day1">주 1일</div>
-        <div @click="selectDay(day, $event)" id="day2">주 2일</div>
-        <div @click="selectDay(day, $event)" id="day3">주 3일</div>
-        <div @click="selectDay(day, $event)" id="day4">주 4일</div>
-        <div @click="selectDay(day, $event)" id="day5">주 5일</div>
-        <div @click="selectDay(day, $event)" id="day6">주 6일</div>
-      </div>
+      <label for="day">근무 일수</label><br>
+      <select v-model="payload.day" name="day" id="day">
+        <option value="">근무 일수를 선택해주세요.</option>
+        <option v-for="(day, index) in days" :key="index" :value="day.id">{{ day.name }}</option>
+      </select>
       <hr>
       <label for="minSalary">급여</label><br>
       <input type="number" v-model="payload.minSalary" name="minSalary" id="minSalary" placeholder="숫자만 입력 가능합니다.">
@@ -163,32 +159,27 @@ export default {
       { id: '4', name: '1년 이상' },
     ]
 
-    const day = {
-      day1: false,
-      day2: false,
-      day3: false,
-      day4: false,
-      day5: false,
-      day6: false,
-    }
-    const selectDay = (day, event) => {
-      day[event.target.id] = !day[event.target.id]
-      event.target.classList.toggle('active')
-      console.log(day)
-    }
+    const days = [
+      { id: '1', name: '주 1일' },
+      { id: '2', name: '주 2일' },
+      { id: '3', name: '주 3일' },
+      { id: '4', name: '주 4일' },
+      { id: '5', name: '주 5일' },
+      { id: '6', name: '주 6일' },
+    ]
 
     // props로 대체 (수정을 위해서)
     // type을 typeEmployment를 action에서 처리해야됨 (true인것마다 axios요청 또 보내기?)
     const payload = {
       name: '',
-      hopeareas,
       parent: '',
-      hopechilds,
-      type,
       lastEdu: '',
       minCareer: '',
-      day,
+      day: '',
       minSalary: '',
+      hopeareas,
+      hopechilds,
+      type,
     }
     const initPayload = (payload) => {
       payload.name = '',
@@ -200,12 +191,12 @@ export default {
       instance?.proxy?.$forceUpdate()
     }
 
-    const submit = (payload) => console.log(payload)
+    const submit = (payload) => store.dispatch('condition/createCondition', payload)
 
     return {
-      fetchChilds, submit, initPayload, selectType, selectDay, 
+      fetchChilds, submit, initPayload, selectType,
       selectHopearea, deleteHope, selectHopechild, deleteChild,
-      parents, childs, sidos, type, lastEdus, minCareers, day, hopeareas, hopechilds,
+      parents, childs, sidos, type, lastEdus, minCareers, days, hopeareas, hopechilds,
       payload,
     }
   }
