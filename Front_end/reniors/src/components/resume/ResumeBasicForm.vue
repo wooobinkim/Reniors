@@ -25,8 +25,17 @@
             {{ lastedu.text }}
           </option></b-form-select>
         <div class="mb-3 mt-3">
-          <p class="forminfo">프로필 사진</p>
+          <br>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" v-model="userEdit.changeProfile" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault" style="font-size: 15px">
+            혹시 <span style="color: #FFB400">프로필 사진</span>을 변경하고 싶으신가요?
+            </label>
+            <br>
+          </div>
+          <br>
           <input
+          v-show="userEdit.changeProfile"
             type="file"
             class="form-control"
             placeholder="이미지를 선택해주세요"
@@ -145,7 +154,7 @@ export default {
 
   .basic{
     margin: 0px;
-    height: 600px;
+    height: 700px;
   }
 
   input[type="date"]::-webkit-datetime-edit-text,
