@@ -36,15 +36,15 @@
     <div class="mb-3 mt-3">
       시도
       <select v-model="sido">
-        <option v-for="sido in sidos" :value="sido.value" :key="sido">
-          {{ sido.text }}
+        <option v-for="sido in sidos" :value="sido.id" :key="sido">
+          {{ sido.name }}
         </option>
       </select>
 
       구군
       <select v-model="jobopening.gugunId">
-        <option v-for="gugun in guguns" :value="gugun.value" :key="gugun">
-          {{ gugun.text }}
+        <option v-for="gugun in guguns" :value="gugun.id" :key="gugun">
+          {{ gugun.name }}
         </option>
       </select>
     </div>
@@ -54,10 +54,10 @@
       <select v-model="jobparent">
         <option
           v-for="jobparent in jobparents"
-          :value="jobparent.value"
+          :value="jobparent.id"
           :key="jobparent"
         >
-          {{ jobparent.text }}
+          {{ jobparent.name }}
         </option>
       </select>
 
@@ -65,10 +65,10 @@
       <select v-model="jobopening.jobChildCategoryId">
         <option
           v-for="jobchild in jobchilds"
-          :value="jobchild.value"
+          :value="jobchild.id"
           :key="jobchild"
         >
-          {{ jobchild.text }}
+          {{ jobchild.name }}
         </option>
       </select>
     </div>
@@ -109,6 +109,17 @@
         v-model="jobopening.contents"
       ></textarea>
     </div>
+
+    <div class="mb-3 mt-3">
+        <label class="form-label">채용공고 이미지 </label>
+        <input
+          type="file"
+          class="form-control"
+          placeholder="이미지를 선택해주세요"
+          ref="img"
+          @change="changeImg()"
+        />
+      </div>
 
     <div class="mb-3 mt-3">
       <label for="jobPosition" class="form-label">직책</label>
@@ -197,6 +208,7 @@ export default {
         typeEmployment: null,
         workingDay: 0,
       },
+      jobOpeningImg: "",
     };
   },
   watch: {
@@ -237,8 +249,18 @@ export default {
         moment(this.jobopening.finishedDate).format("YYYY-MM-DD")
       );
 
-      this.registJobOpening(this.jobopening);
+      const formData = new FormData();
+        formData.append("img", this.jobOpeningImg[0]);
+        formData.append(
+          "data",
+          new Blob([JSON.stringify(this.jobopening)], { type: "application/json" })
+        );
+
+      this.registJobOpening(formData);
       this.$router.push({ name: "companyjobopeninglist" });
+    },
+    changeImg() {
+      this.jobOpeningImg = this.$refs.img.files;
     },
   },
 };

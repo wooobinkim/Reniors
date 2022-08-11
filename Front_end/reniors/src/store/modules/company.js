@@ -188,9 +188,9 @@ export default {
         });
     },
 
-    registJobOpening: ({ commit }, jobopening) => {
-      http
-        .post(`/company/jobopening`, JSON.stringify(jobopening))
+    registJobOpening: ({ commit }, formData) => {
+      multipart
+        .post(`/company/jobopening`, formData)
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
         })
