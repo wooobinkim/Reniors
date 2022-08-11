@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a277c27-f7e8-4cad-9248-3c1f4cc7e564" name="Changes" comment="" />
+    <list default="true" id="8a277c27-f7e8-4cad-9248-3c1f4cc7e564" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Front_end/reniors/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../Front_end/reniors/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Front_end/reniors/src/components/Company/Info/CompanyMyPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../Front_end/reniors/src/components/Company/Info/CompanyMyPage.vue" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,7 +47,8 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="jmark" type="f1a62948:ProjectNode" />
-                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -79,9 +85,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Kim/Desktop/s07p1/S07P12B307/Back_end/reniors",
+    "last_opened_file_path": "C:/Users/multicampus/Desktop/S07P12B307_04/Back_end/reniors",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
     "spring.configuration.checksum": "af2b45a6273cd75171456cc1ed2aa041"
   }
 }]]></component>
@@ -90,7 +96,7 @@
       <recent name="com.common.jmark.dto.JobOpening" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.jmark [build]">
+  <component name="RunManager" selected="Gradle.jmark [clean]">
     <configuration name="jmark [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -142,8 +148,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.jmark [build]" />
         <item itemvalue="Gradle.jmark [clean]" />
+        <item itemvalue="Gradle.jmark [build]" />
       </list>
     </recent_temporary>
   </component>
@@ -158,6 +164,7 @@
       <workItem from="1659666970677" duration="6166000" />
       <workItem from="1659683907922" duration="4508000" />
       <workItem from="1659768415187" duration="14451000" />
+      <workItem from="1660176039773" duration="73000" />
     </task>
     <servers />
   </component>
@@ -174,5 +181,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
