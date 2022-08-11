@@ -1,24 +1,42 @@
 <template>
   <div class="condition-create-view">
+    {{conditionData}}
     <form action="" @submit.prevent="submit(payload)" :key="payload.name">
       <button class="condition-create-init" @click.prevent="initPayload(payload)"><span>⟳</span> 초기화</button>
       <label for="name">맞춤공고 설정</label><br>
       <input type="text" v-model="payload.name" name="name" id="name">
       <hr>
-      <label for="region">지역 설정</label><br>
-      <select name="region" id="region" @change="selectHopearea(this)">
-        <option v-for="(sido, index) in sidos" :key="index" :value="sido.value">{{ sido.text }}</option>
+      <label for="sido">시/도 설정</label><br>
+      <select v-model="selectSido.data" name="sido" id="sido" @change="fetchGugun(selectSido.data)">
+        <option v-for="(sido, index) in sidos" :key="index" :value="sido.id">{{ sido.name }}</option>
       </select>
+      <hr>
+      <label for="region">지역 설정 (다중 선택)</label><br>
+      <select name="region" id="region" @change="selectHopearea">
+        <option v-for="(gugun, index) in guguns" :key="index" :value="gugun.id">{{ gugun.name }}</option>
+      </select>
+      <div class="select-region-list">
+        <div class="region-item" v-for="(hopearea, index) in hopeareas" :key="index">
+          <p v-if="hopearea!==null">{{ guguns.find((gugun) => gugun.id == hopearea)?.name }}</p>
+          <font-awesome-icon v-if="hopearea!==null" icon="fa-solid fa-circle-xmark" @click="deleteHope(hopearea)" />
+        </div>
+      </div>
       <hr>
       <label for="parent">직종 설정</label><br>
       <select v-model="payload.parent" name="parent" id="parent" @change="fetchChilds(payload.parent)">
         <option v-for="(parent, index) in parents" :key="index" :value="parent.value">{{ parent.text }}</option>
       </select>
       <hr>
-      <label for="parent">직종 설정 (세부업무)</label><br>
-      <select v-model="payload.child" name="child" id="child">
-        <option v-for="(child, index) in childs" :key="index" :value="child.value">{{ child.text }}</option>
+      <label for="child">세부 업무 (다중 선택)</label><br>
+      <select name="child" id="child" @change="selectHopechild">
+        <option v-for="(child, index) in childs" :key="index" :value="child.id">{{ child.name }}</option>
       </select>
+      <div class="select-region-list">
+        <div class="region-item" v-for="(hopechild, index) in hopechilds" :key="index">
+          <p v-if="hopechild!==null">{{ childs.find((child) => child.id == hopechild)?.name }}</p>
+          <font-awesome-icon v-if="hopechild!==null" icon="fa-solid fa-circle-xmark" @click="deleteChild(hopechild)" />
+        </div>
+      </div>
       <hr>
       <label>고용 형태</label>
       <div class="condition-create-type-employment">
@@ -32,8 +50,7 @@
       <hr>
       <label for="lastEdu">최종 학력</label><br>
       <select v-model="payload.lastEdu" name="lastEdu" id="lastEdu">
-        <option value="">최종 학력을 선택해주세요.</option>
-        <option v-for="(lastEdu, index) in lastEdus" :key="index" :value="lastEdu.id">{{ lastEdu.name }}</option>
+        <option v-for="(lastEdu, index) in lastEdus" :key="index" :value="lastEdu.value">{{ lastEdu.text }}</option>
       </select>
       <hr>
       <label for="minCareer">최소 경력</label><br>
@@ -42,15 +59,11 @@
         <option v-for="(minCareer, index) in minCareers" :key="index" :value="minCareer.id">{{ minCareer.name }}</option>
       </select>
       <hr>
-      <label>근무일수</label>
-      <div class="condition-create-type-employment">
-        <div @click="selectDay(day, $event)" id="day1">주 1일</div>
-        <div @click="selectDay(day, $event)" id="day2">주 2일</div>
-        <div @click="selectDay(day, $event)" id="day3">주 3일</div>
-        <div @click="selectDay(day, $event)" id="day4">주 4일</div>
-        <div @click="selectDay(day, $event)" id="day5">주 5일</div>
-        <div @click="selectDay(day, $event)" id="day6">주 6일</div>
-      </div>
+      <label for="day">근무 일수</label><br>
+      <select v-model="payload.day" name="day" id="day">
+        <option value="">근무 일수를 선택해주세요.</option>
+        <option v-for="(day, index) in days" :key="index" :value="day.id">{{ day.name }}</option>
+      </select>
       <hr>
       <label for="minSalary">급여</label><br>
       <input type="number" v-model="payload.minSalary" name="minSalary" id="minSalary" placeholder="숫자만 입력 가능합니다.">
@@ -70,31 +83,71 @@
 <script>
 import { computed, getCurrentInstance } from 'vue'
 import { useStore } from 'vuex'
+import { isEmpty } from 'lodash'
 
 export default {
   name: 'ConditionCreateView',
-  // props: {
-  //   condition: Object,
-  // },
+  props: {
+    conditionData: Object,
+  },
   setup() {
     const store = useStore()
     const instance = getCurrentInstance()
 
-    const hopearea = []
+    const hopeareas = [null]
+    const hopechilds = [null]
+    const selectSido = {data: ''}
 
-    const fetchParents = () => store.dispatch('category/getJobParent')
-    fetchParents()
-    const fetchChilds = (parent) => store.dispatch('category/getJobChild', parent)
-    const fetchSido = () => store.dispatch('category/getSido')
-    fetchSido()
+    const emptyArray = (array) => {
+      array.splice(0, array.length)
+      array.push(null)
+    }
+
+    const fetchChilds = (parent) => {
+      emptyArray(hopechilds)
+      return store.dispatch('category/getJobChild', parent)
+    }
+
+    const fetchGugun = (id) => {
+      emptyArray(hopeareas)
+      store.dispatch('category/getGugun', id)
+    }
 
     const parents = computed(() => store.state.category.jobparents)
     const childs = computed(() => store.state.category.jobchilds)
     const sidos = computed(() => store.state.category.sidos)
+    const guguns = computed(() => store.state.category.guguns)
 
     const selectHopearea = (event) => {
-      hopearea.push(event.value)
-      console.log(hopearea)
+      if (hopeareas[0] === null) hopeareas.pop(0)
+      if (!hopeareas.includes(event.target.value)) {
+        hopeareas.push(event.target.value)
+        instance?.proxy?.$forceUpdate()
+        console.log(hopeareas)
+      }
+    }
+
+    const deleteHope = (hopearea) => {
+      hopeareas.splice(hopeareas.indexOf(hopearea), 1)
+      if (isEmpty(hopeareas)) hopeareas.push(null)
+      console.log(hopeareas)
+      instance?.proxy?.$forceUpdate()
+    }
+    
+    const selectHopechild = (event) => {
+      if (hopechilds[0] === null) hopechilds.pop(0)
+      if (!hopechilds.includes(event.target.value)) {
+        hopechilds.push(event.target.value)
+        instance?.proxy?.$forceUpdate()
+        console.log(hopechilds)
+      }
+    }
+
+    const deleteChild = (hopechild) => {
+      hopechilds.splice(hopechilds.indexOf(hopechild), 1)
+      if (isEmpty(hopechilds)) hopechilds.push(null)
+      console.log(hopechilds)
+      instance?.proxy?.$forceUpdate()
     }
 
     const type = {
@@ -111,58 +164,56 @@ export default {
       console.log(type)
     }
 
-    const lastEdus = [
-      { id: '1', name: '고졸' },
-      { id: '2', name: '대졸' },
-      { id: '3', name: '석사' },
-      { id: '4', name: '박사' },
-    ]
+    const lastEdus = computed(() => store.state.category.lastedus)
     const minCareers = [
-      { id: '1', name: '경력무관' },
-      { id: '2', name: '아르바이트' },
-      { id: '3', name: '1년 미만' },
-      { id: '4', name: '1년 이상' },
+      { id: '0', name: '경력무관' },
+      { id: '1', name: '1년 미만' },
+      { id: '2', name: '2년 미만' },
+      { id: '3', name: '3년 이상' },
     ]
 
-    const day = {
-      day1: false,
-      day2: false,
-      day3: false,
-      day4: false,
-      day5: false,
-      day6: false,
-    }
-    const selectDay = (day, event) => {
-      day[event.target.id] = !day[event.target.id]
-      event.target.classList.toggle('active')
-      console.log(day)
-    }
+    const days = [
+      { id: '1', name: '주 1일' },
+      { id: '2', name: '주 2일' },
+      { id: '3', name: '주 3일' },
+      { id: '4', name: '주 4일' },
+      { id: '5', name: '주 5일' },
+      { id: '6', name: '주 6일' },
+    ]
 
     // props로 대체 (수정을 위해서)
     // type을 typeEmployment를 action에서 처리해야됨 (true인것마다 axios요청 또 보내기?)
     const payload = {
       name: '',
       parent: '',
-      child: '',
-      type: '',
       lastEdu: '',
+      minCareer: '',
+      day: '',
       minSalary: '',
+      selectSido,
+      hopeareas,
+      hopechilds,
+      type,
     }
     const initPayload = (payload) => {
       payload.name = '',
       payload.parent = '',
-      payload.child = '',
-      payload.type = '',
       payload.lastEdu = '',
+      payload.minCareer = '',
+      payload.day = '',
       payload.minSalary = '',
+      selectSido.data = '',
+      emptyArray(hopechilds)
+      emptyArray(hopeareas)
       instance?.proxy?.$forceUpdate()
     }
 
-    const submit = (payload) => console.log(payload)
+    const submit = (payload) => store.dispatch('condition/createCondition', payload)
 
     return {
-      fetchChilds, submit, initPayload, selectType, selectDay, selectHopearea,
-      parents, childs, sidos, type, lastEdus, minCareers, day,
+      fetchChilds, fetchGugun, submit, initPayload, selectType,
+      selectHopearea, deleteHope, selectHopechild, deleteChild,
+      selectSido, parents, childs, sidos, guguns, type, lastEdus, minCareers, days, hopeareas, hopechilds,
       payload,
     }
   }
@@ -259,5 +310,37 @@ export default {
   padding-top: 2px;
   font-size: 12px;
   font-weight: bold;
+}
+
+.condition-create-view .select-region-list {
+  display: grid;
+  grid-template-columns: 120px 120px 120px;
+}
+
+.condition-create-view .select-region-list > .region-item {
+  position: relative;
+}
+
+.condition-create-view .select-region-list > .region-item p {
+  box-sizing: border-box;
+  background-color: var(--color-orange-4);
+  border: 1px solid var(--color-orange-2);
+  border-radius: 0.5rem;
+  width: 100px;
+  height: 32px;
+  padding: 5px;
+  margin: 5px;
+  text-align: center;
+  font-size: 12px;
+  overflow-x: hidden
+}
+
+.condition-create-view .select-region-list > .region-item svg {
+  position: absolute;
+  right: 13px;
+  top: 3px;
+  height: 12px;
+  width: 12px;
+  color: red;
 }
 </style>
