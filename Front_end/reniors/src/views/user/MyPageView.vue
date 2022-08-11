@@ -17,20 +17,25 @@
         <div class="name">{{this.currentUser.name}}</div>
         <button><router-link :to="{ name: 'MyinfoEdit' }" style="text-decoration:none; color: #37BF99;">내 정보 수정</router-link></button>
       </div>
-        
 
       <button class="resume"><router-link :to="{ name: 'ResumeDetail' }" style="text-decoration:none; color: white; font-weight: 700; font-size: 18px;"><img style="align: absmiddle; filter: drop-shadow(0px 0.5px 0.5px rgba(0, 0, 0, 0.25)); margin-right: 10px;" src="@/assets/note.svg" alt="note">내 이력서</router-link></button>
-      <div class="interest">
-        <div class="interest1">
-          <p style="margin: 8px; font-size:14px; color: #2A2A2A;">관심 직무1</p>
+      <div v-if="this.prefer.jobParentCategoryResponse.name">
+        <div class="interest">
+          <div  class="interest1">
+            <p style="margin: 8px; font-size:14px; color: #2A2A2A; font-weight: 700">{{ this.prefer.jobParentCategoryResponse.name }}</p>
+          </div>
+          <div class="interest1">
+            <p style="margin: 8px; font-size:14px; color: #2A2A2A; font-weight: 700">{{ this.prefer.gugunResponse.name }}</p>
+          </div>
         </div>
-        <div class="interest1">
-          <p style="margin: 8px; font-size:14px; color: #2A2A2A;">관심 직무2</p>
+        <div class="rechoice">
+          <router-link :to="{ name: 'UpdateSetting' }" style="text-decoration:none; color: #6D6D6D; font-weight:800; font-size: 13px">관심 다시 설정하기  <i class="bi bi-reply-all-fill" style="color: #FF843E;"></i></router-link>
         </div>
       </div>
-      <div class="rechoice">
-        <router-link :to="{ name: 'PreferSetting' }" style="text-decoration:none; color: #6D6D6D; font-weight:800; font-size: 13px">관심 설정하기  <i class="bi bi-reply-all-fill" style="color: #FF843E;"></i></router-link>
+      <div v-else>
+        <router-link :to="{ name: 'CreateSetting' }" style="text-decoration:none; color: #6D6D6D; font-weight:600; font-size: 14px; color: #FF843E;">관심 설정하기</router-link>
       </div>
+
     </div>
 
     <hr>
@@ -53,7 +58,7 @@
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: "MyPageView",
-  components: {},
+  components: { },
   data() {
     return {
       apply: 1,
@@ -61,16 +66,17 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentUser'])
+    ...mapGetters(['currentUser', 'prefer'])
   },
   setup() {},
   mounted() {},
   unmounted() {},
   methods: {
-    ...mapActions(['fetchCurrentUser'])
+    ...mapActions(['fetchCurrentUser', 'fetchPrefer'])
   },
   created() {
     this.fetchCurrentUser()
+    this.fetchPrefer()
   },  
 }
 </script>

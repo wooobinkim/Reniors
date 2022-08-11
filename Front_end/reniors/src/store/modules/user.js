@@ -206,9 +206,11 @@ export const user = {
         })
         .then((res) => {
           commit('SET_PREFER', res.data)
+          console.log('성공!')
           console.log(res)
         })
         .catch(err => {
+          commit('SET_PREFER', { "id": null, "jobParentCategoryResponse": { "id": null, "name": null }, "gugunResponse": { "id": null, "name": null, "code": null }, "workingDay": null, "minSalary": null })
           console.log(err)
         })
       },
@@ -217,6 +219,23 @@ export const user = {
         axios({
           url: drf.recommendcondition.recommend(),
           method: 'post',
+          data: JSON.stringify(data),
+          headers: getters.authHeader,
+        })
+        .then((res) => {
+          dispatch('fetchPrefer')
+          router.push({ name: 'MyPage'})
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      },
+
+      updatePrefer({ getters, dispatch }, data){
+        axios({
+          url: drf.recommendcondition.recommend(),
+          method: 'put',
           data: JSON.stringify(data),
           headers: getters.authHeader,
         })
