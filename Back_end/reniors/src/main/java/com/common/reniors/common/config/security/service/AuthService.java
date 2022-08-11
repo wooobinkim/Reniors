@@ -27,7 +27,6 @@ public class AuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        System.out.println("AuthService - loadUserByUsername");
 
         StringTokenizer st = new StringTokenizer(userId,",");
         String id = st.nextToken();
@@ -38,17 +37,11 @@ public class AuthService implements UserDetailsService {
         if (name.equals("user")) {
             User findUser = userRepository.findById(Long.valueOf(id)).orElseThrow(() -> new NotFoundException("USER_NOT_FOUND"));
 
-            System.out.println("findUser = " + findUser);
-
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority(String.valueOf(findUser.getRole())));
 
-            System.out.println("authorities = " + authorities);
-
             LoginUserDetails loginUserDetails = new LoginUserDetails(findUser.getName(), "", authorities);
             loginUserDetails.setUser(findUser);
-
-            System.out.println("loginUserDetails = " + loginUserDetails);
 
             return loginUserDetails;
         }else{

@@ -56,7 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        System.out.println("SecurityConfig - configure");
         http
                 .httpBasic().disable()
                 .cors().configurationSource(corsConfigurationSource())
@@ -81,14 +80,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .accessDeniedHandler(accessDeniedHandler)
                 .and()
-                .cors()
-                .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        System.out.println("SecurityConfig - corsConfigurationSource");
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.addAllowedOriginPattern("*");
@@ -104,7 +100,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
-        System.out.println("SecurityConfig - passwordEncoder");
         return new BCryptPasswordEncoder();
     }
 }

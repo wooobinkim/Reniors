@@ -23,8 +23,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionResponse> handleValidationExceptions(MethodArgumentNotValidException e) {
-        System.out.println("GlobalExceptionHandler - handleValidationExceptions");
-
         Map<String, String> errors = new HashMap<>();
         e.getBindingResult().getAllErrors()
                 .forEach(error -> errors.put(((FieldError) error).getField(), error.getDefaultMessage()));
@@ -33,7 +31,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ExceptionResponse> handleValidationExceptions(BindException e) {
-        System.out.println("GlobalExceptionHandler - handleValidationExceptions");
         Map<String, String> errors = new HashMap<>();
         e.getBindingResult().getAllErrors()
                 .forEach(error -> errors.put(((FieldError) error).getField(), error.getDefaultMessage()));
@@ -42,13 +39,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ExceptionResponse> handleAccessDeniedExceptions(AccessDeniedException e) {
-        System.out.println("GlobalExceptionHandler - handleAccessDeniedExceptions");
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ExceptionResponse.from("권한이 없습니다."));
     }
 
     @ExceptionHandler({NotFoundException.class, DuplicateException.class})
     public ResponseEntity<ExceptionResponse> handleBadRequestExceptions(Exception e) {
-        System.out.println("GlobalExceptionHandler - handleBadRequestExceptions");
         return ResponseEntity.badRequest().body(ExceptionResponse.from(e.getMessage()));
     }
 

@@ -18,7 +18,6 @@ public class LoginCompanyArgumentResolver implements HandlerMethodArgumentResolv
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        System.out.println("LoginUserArgumentResolver - supportsParameter");
         boolean isLoginUserAnnotation = parameter.getParameterAnnotation(LoginCompany.class) != null;
         boolean isLongClass = Company.class.equals(parameter.getParameterType());
         return isLoginUserAnnotation && isLongClass;
@@ -32,7 +31,6 @@ public class LoginCompanyArgumentResolver implements HandlerMethodArgumentResolv
         System.out.println("LoginUserArgumentResolver - resolveArgument");
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            System.out.println("authentication.getPrincipal() = " + authentication.getPrincipal());
             return (Company) authentication.getPrincipal();
         } catch (ClassCastException e) {
             throw new NotMatchException("토큰 정보가 잘못되었습니다.");

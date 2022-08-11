@@ -20,8 +20,6 @@ public class StompHandler implements ChannelInterceptor {
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        System.out.println("StompHandler - preSend");
-
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 
         if (StompCommand.CONNECT == accessor.getCommand()) {
@@ -33,7 +31,6 @@ public class StompHandler implements ChannelInterceptor {
     }
 
     private String extractToken(StompHeaderAccessor accessor) {
-        System.out.println("StompHandler - extractToken");
         String bearerToken = accessor.getFirstNativeHeader(HttpHeaders.AUTHORIZATION);
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {

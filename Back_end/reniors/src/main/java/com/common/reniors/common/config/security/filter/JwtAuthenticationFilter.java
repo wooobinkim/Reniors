@@ -28,8 +28,6 @@ public class JwtAuthenticationFilter extends GenericFilter {
     private final String LoginUserDetailsClassName = "com.common.reniors.common.config.security.service.LoginUserDetails";
     private final String LoginCompanyDetailsClassName = "com.common.reniors.common.config.security.service.LoginCompanyDetails";
 
-
-
     @Override
     public void doFilter(ServletRequest request,
                          ServletResponse response,
@@ -62,7 +60,6 @@ public class JwtAuthenticationFilter extends GenericFilter {
     }
 
     private String extractToken(HttpServletRequest request) {
-        System.out.println("JwtAuthenticationFilter - extractToken");
         String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {

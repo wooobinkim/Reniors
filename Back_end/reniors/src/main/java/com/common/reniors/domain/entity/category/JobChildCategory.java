@@ -35,9 +35,6 @@ public class JobChildCategory {
     private JobParentCategory parent;
 
     @OneToMany(mappedBy = "jobChildCategory")
-    private List<RecommendCondition> recommendConditions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "jobChildCategory")
     private List<HopeJobChild> hopeJobChilds = new ArrayList<>();
 
     public static JobChildCategory create(String name, Long code,JobParentCategory parent){
