@@ -258,7 +258,7 @@ public class JobOpeningService {
                 .where(
                         (j.minSalary.goe(rc.getMinSalary())),
                         (j.workingDay.loe(rc.getWorkingDay())),
-                        (j.jobChildCategory.eq(rc.getJobChildCategory())),
+                        (j.jobChildCategory.parent.eq(rc.getJobParentCategory())),
                         (j.gugun.eq(rc.getGugun()))
                 )
                 .offset(pageable.getOffset())
@@ -296,7 +296,7 @@ public class JobOpeningService {
                 .where(
                         (j.minSalary.goe(rc.getMinSalary())),
                         (j.workingDay.loe(rc.getWorkingDay())),
-                        (j.jobChildCategory.eq(rc.getJobChildCategory())),
+                        (j.jobChildCategory.parent.eq(rc.getJobParentCategory())),
                         (j.gugun.eq(rc.getGugun()))
                 )
                 .offset(0)
