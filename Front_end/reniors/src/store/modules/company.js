@@ -177,9 +177,9 @@ export default {
           console.log(error);
         });
     },
-    updateCompany: ({ commit }, company) => {
-      http
-        .put(`/company`, JSON.stringify(company))
+    updateCompany: ({ commit }, formData) => {
+      multipart
+        .put(`/company`, JSON.stringify(formData))
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
         })
