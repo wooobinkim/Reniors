@@ -1,5 +1,6 @@
 import axios from 'axios'
 import _ from 'lodash'
+import http from '@/api/http'
 
 const YOUTUBE_API_KEY = 'AIzaSyAF4F4t4ryCtxtxMrF0LgKNNXCITQVyi7E'
 
@@ -16,18 +17,6 @@ export default {
       {
         id: 2,
         name: 'second hot jobopening',
-        context: 'asdigaoghrughguiehguigj'
-      }
-    ],
-    newJobopenings: [
-      {
-        id: 1,
-        name: 'new 채용공고 첫 번째',
-        context: 'dsgsdsjdgoihwghgerg'
-      },
-      {
-        id: 2,
-        name: 'second new jobopening',
         context: 'asdigaoghrughguiehguigj'
       }
     ],
@@ -59,7 +48,6 @@ export default {
   getters: {
     isLogin: state => state.isLogin,
     hotJobopenings: state => state.hotJobopenings,
-    newJobopenings: state => state.newJobopenings,
     recommendJobopenings: state => state.recommendJobopenings,
     youtubes: state => state.youtubes,
     isYoutube: state => !_.isEmpty(state.youtubes),
@@ -67,17 +55,10 @@ export default {
   mutations: {
     IS_LOGIN: (state, value) => state.isLogin = value,
     YOUTUBES: (state, youtubes) => state.youtubes = youtubes,
+    HOTJOBOPENINGS: (state, hots) => state.hotJobopenings = hots,
     DUMMY: () => 0,
   },
   actions: {
-    login({ commit }) {
-      console.log('login')
-      commit('IS_LOGIN', true)
-    },
-    logout({ commit }) {
-      console.log('logout')
-      commit('IS_LOGIN', false)
-    },
     async fetchYoutubes({ commit }, keyword) {
       console.log('fetch execute')
       commit('YOUTUBES', [])
@@ -90,8 +71,12 @@ export default {
         }
       })
       const youtubes = response.data.items
-      console.log(youtubes)
       commit('YOUTUBES', youtubes)
+    },
+    async fetchHot({ commit }) {
+      const response = await http.get('/jobopening/search/viewsDesc')
+      console.log(response.data)
+      commit('HOTJOBOPENINGS', response.data)
     },
     async search({ commit }, keyword) {
       console.log(keyword)
