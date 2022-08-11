@@ -16,6 +16,7 @@ import MyPageView from "../views/user/MyPageView.vue";
 import MyinfoEdit from "../components/user/MyinfoEdit.vue";
 
 import PreferSetting from "../components/user/PreferSetting";
+import PreferSettingComplete from "../views/user/PreferSettingCompleteView.vue";
 // import PreferSettingMain from "../components/user/PreferSettingMain"
 import CompanyHomeView from "@/views/home/CompanyHomeView.vue";
 import HomeView from "../views/home/HomeView.vue";
@@ -126,13 +127,16 @@ const routes = [
     name: "MyinfoEdit",
     component: MyinfoEdit,
   },
-
   {
     path: "/setting",
     name: "PreferSetting",
     component: PreferSetting,
   },
-
+  {
+    path: "/setting/complete",
+    name: "PreferSettingComplete",
+    component: PreferSettingComplete,
+  },
 
   // resume
   {
