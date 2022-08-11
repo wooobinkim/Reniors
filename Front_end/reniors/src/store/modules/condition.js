@@ -29,9 +29,14 @@ export default {
       }
       console.log(data)
       const response = await http.post('/jobopening/condition', data)
-      // payload.hopeareas.map((hopearea) => {
-
-      // })
+      const conditionId = response.data
+      payload.hopeareas.map(async (hopearea) => {
+        let res = await http.post(`/jobopening/condition/${conditionId}/hopearea`, {
+          gugunId: hopearea,
+          id: payload.selectSido.data
+        })
+        console.log(res)
+      })
       console.log(response)
       dispatch('fetchConditions')
     },

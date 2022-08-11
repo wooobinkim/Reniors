@@ -5,13 +5,18 @@
       <label for="name">맞춤공고 설정</label><br>
       <input type="text" v-model="payload.name" name="name" id="name">
       <hr>
+      <label for="sido">시/도 설정</label><br>
+      <select v-model="selectSido.data" name="sido" id="sido" @change="fetchGugun(selectSido.data)">
+        <option v-for="(sido, index) in sidos" :key="index" :value="sido.id">{{ sido.name }}</option>
+      </select>
+      <hr>
       <label for="region">지역 설정 (다중 선택)</label><br>
       <select name="region" id="region" @change="selectHopearea">
-        <option v-for="(sido, index) in sidos" :key="index" :value="sido.id">{{ sido.name }}</option>
+        <option v-for="(gugun, index) in guguns" :key="index" :value="gugun.id">{{ gugun.name }}</option>
       </select>
       <div class="select-region-list">
         <div class="region-item" v-for="(hopearea, index) in hopeareas" :key="index">
-          <p v-if="hopearea!==null">{{ sidos.find((sido) => sido.id == hopearea)?.name }}</p>
+          <p v-if="hopearea!==null">{{ guguns.find((gugun) => gugun.id == hopearea)?.name }}</p>
           <font-awesome-icon v-if="hopearea!==null" icon="fa-solid fa-circle-xmark" @click="deleteHope(hopearea)" />
         </div>
       </div>
@@ -21,7 +26,7 @@
         <option v-for="(parent, index) in parents" :key="index" :value="parent.value">{{ parent.text }}</option>
       </select>
       <hr>
-      <label for="child">직종 설정 (세부업무)</label><br>
+      <label for="child">세부 업무 (다중 선택)</label><br>
       <select name="child" id="child" @change="selectHopechild">
         <option v-for="(child, index) in childs" :key="index" :value="child.id">{{ child.name }}</option>
       </select>
@@ -90,20 +95,30 @@ export default {
 
     const hopeareas = [null]
     const hopechilds = [null]
+    const selectSido = {data: ''}
+
+    const emptyArray = (array) => {
+      array.splice(0, array.length)
+      array.push(null)
+    }
 
     const fetchParents = () => store.dispatch('category/getJobParent')
     fetchParents()
     const fetchChilds = (parent) => {
-      hopechilds.splice(0, hopechilds.length)
-      hopechilds.push(null)
+      emptyArray(hopechilds)
       return store.dispatch('category/getJobChild', parent)
     }
     const fetchSido = () => store.dispatch('category/getSido')
+    const fetchGugun = (id) => {
+      emptyArray(hopeareas)
+      store.dispatch('category/getGugun', id)
+    }
     fetchSido()
 
     const parents = computed(() => store.state.category.jobparents)
     const childs = computed(() => store.state.category.jobchilds)
     const sidos = computed(() => store.state.category.sidos)
+    const guguns = computed(() => store.state.category.guguns)
 
     const selectHopearea = (event) => {
       if (hopeareas[0] === null) hopeareas.pop(0)
@@ -153,10 +168,10 @@ export default {
 
     const lastEdus = computed(() => store.state.category.lastedus)
     const minCareers = [
-      { id: '1', name: '경력무관' },
-      { id: '2', name: '아르바이트' },
-      { id: '3', name: '1년 미만' },
-      { id: '4', name: '1년 이상' },
+      { id: '0', name: '경력무관' },
+      { id: '1', name: '1년 미만' },
+      { id: '2', name: '2년 미만' },
+      { id: '3', name: '3년 이상' },
     ]
 
     const days = [
@@ -177,6 +192,7 @@ export default {
       minCareer: '',
       day: '',
       minSalary: '',
+      selectSido,
       hopeareas,
       hopechilds,
       type,
@@ -184,19 +200,22 @@ export default {
     const initPayload = (payload) => {
       payload.name = '',
       payload.parent = '',
-      payload.child = '',
-      payload.type = '',
       payload.lastEdu = '',
+      payload.minCareer = '',
+      payload.day = '',
       payload.minSalary = '',
+      selectSido.data = '',
+      emptyArray(hopechilds)
+      emptyArray(hopeareas)
       instance?.proxy?.$forceUpdate()
     }
 
     const submit = (payload) => store.dispatch('condition/createCondition', payload)
 
     return {
-      fetchChilds, submit, initPayload, selectType,
+      fetchChilds, fetchGugun, submit, initPayload, selectType,
       selectHopearea, deleteHope, selectHopechild, deleteChild,
-      parents, childs, sidos, type, lastEdus, minCareers, days, hopeareas, hopechilds,
+      selectSido, parents, childs, sidos, guguns, type, lastEdus, minCareers, days, hopeareas, hopechilds,
       payload,
     }
   }

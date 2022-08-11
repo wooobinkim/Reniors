@@ -13,20 +13,20 @@
         <div class="condition-item-preview">
           <div class="condition-item-region">
             <font-awesome-icon icon="fa-solid fa-location-dot" />
-            <p>{{ condition.region }}</p>
+            <p style="font-size: 8px;">{{ condition }}</p>
           </div>
-          <p>직종: 몰라</p>
+          <p></p>
         </div>
         <button class="condition-item-button" @click.stop="popover">더 보기</button>
         <div class="condition-item-popover">
           <p>고용형태</p>
           <p>{{ condition.typeEmployment }}</p>
           <p>최종학력</p>
-          <p>{{ condition.typeEmployment }}</p>
+          <p>{{ condition.lastEdu }}</p>
           <p>경력</p>
-          <p>{{ condition.typeEmployment }}</p>
+          <p>{{ condition.minCareer }}년 미만</p>
           <p>근무일수</p>
-          <p>{{ condition.typeEmployment }}</p>
+          <p>주 {{ condition.workingDay }}일</p>
         </div>
       </SplideSlide>
       <SplideSlide class="condition-item-create" @click="routeCreate">
