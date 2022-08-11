@@ -1,5 +1,6 @@
 package com.common.reniors.domain.entity.category;
 
+import com.common.reniors.domain.entity.HopeJobChild;
 import com.common.reniors.domain.entity.SearchCondition;
 import com.common.reniors.domain.entity.recommend.RecommendCondition;
 import lombok.AccessLevel;
@@ -37,7 +38,7 @@ public class JobChildCategory {
     private List<RecommendCondition> recommendConditions = new ArrayList<>();
 
     @OneToMany(mappedBy = "jobChildCategory")
-    private List<SearchCondition> searchConditions = new ArrayList<>();
+    private List<HopeJobChild> hopeJobChilds = new ArrayList<>();
 
     public static JobChildCategory create(String name, Long code,JobParentCategory parent){
         JobChildCategory jcc = new JobChildCategory();

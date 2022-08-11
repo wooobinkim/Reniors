@@ -151,32 +151,32 @@ public class JobOpeningController {
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
-//    //공고 조건 희망직무 설정
-//    @PostMapping("/condition/{searchConditionId}/hopejob")
-//    @ApiOperation(value = "희망직무 조건 생성(다중선택)", notes = "희망하는 직무를 등록한다.(다중선택)")
-//    public ResponseEntity<?> postHopeJob(@PathVariable("searchConditionId")Long searchConditionId, @RequestBody HopeJobDto hopeJobDto){
-//        jobOpeningService.postHopeJob(searchConditionId,hopeJobDto);
-//        return ResponseEntity.status(HttpStatus.CREATED).body("성공~");
-//    }
-//
-//    //공고 조건 희망직무 수정
-//    @PutMapping("/condition/{searchConditionId}/hopejob/{hopeJobId}")
-//
-//    @ApiOperation(value = "희망직무 조건 수정", notes = "희망하는 직무를 수정한다.")
-//    public ResponseEntity<?> updateHopeJob(@PathVariable("searchConditionId")Long searchConditionId,
-//                                           @RequestBody HopeJobDto hopeJobDto,
-//                                           @PathVariable("hopeJobId")Long hopeJobId){
-//        jobOpeningService.updateHopeJob(searchConditionId,hopeJobDto,hopeJobId);
-//        return ResponseEntity.status(HttpStatus.OK).body("성공~");
-//    }
-//
-//    //공고 조건 희망직무 삭제
-//    @DeleteMapping("/condition/{searchConditionId}/hopejob/{hopeJobId}")
-//    @ApiOperation(value = "희망직무 조건 삭제", notes = "희망하는 직무를 삭제한다.")
-//    public ResponseEntity<?> deleteHopeJob(@PathVariable("hopeJobId")Long hopeJobId){
-//        jobOpeningService.deleteHopeJob(hopeJobId);
-//        return ResponseEntity.status(HttpStatus.OK).body("성공~");
-//    }
+    //공고 조건 희망직무 설정
+    @PostMapping("/condition/{searchConditionId}/hopejobchild")
+    @ApiOperation(value = "희망직무소분류 조건 생성(다중선택)", notes = "희망하는 직무소분류를 등록한다.(다중선택)")
+    public ResponseEntity<?> postHopeJob(@PathVariable("searchConditionId")Long searchConditionId, @RequestBody HopeJobChildCreateRequest hopeJobChildCreateRequest){
+        Long hopeJobChildId = jobOpeningService.postHopeJobChild(searchConditionId, hopeJobChildCreateRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(hopeJobChildId);
+    }
+
+    //공고 조건 희망직무 수정
+    @PutMapping("/condition/{searchConditionId}/hopejobchild/{hopeJobChildId}")
+
+    @ApiOperation(value = "희망직무소분류 조건 수정", notes = "희망하는 직무소분류를 수정한다.")
+    public ResponseEntity<?> updateHopeJob(@PathVariable("searchConditionId")Long searchConditionId,
+                                           @RequestBody HopeJobChildUpdateRequest hopeJobChildUpdateRequest,
+                                           @PathVariable("hopeJobChildId")Long hopeJobChildId){
+        jobOpeningService.updateHopeJobChild(searchConditionId,hopeJobChildUpdateRequest,hopeJobChildId);
+        return ResponseEntity.status(HttpStatus.OK).body("success");
+    }
+
+    //공고 조건 희망직무 삭제
+    @DeleteMapping("/condition/{searchConditionId}/hopejobchild/{hopeJobChildId}")
+    @ApiOperation(value = "희망직무 조건 삭제", notes = "희망하는 직무를 삭제한다.")
+    public ResponseEntity<?> deleteHopeJob(@PathVariable("hopeJobChildId")Long hopeJobChildId){
+        jobOpeningService.deleteHopeJobChild(hopeJobChildId);
+        return ResponseEntity.status(HttpStatus.OK).body("success");
+    }
 
     //공고 조건 조회
     @GetMapping("/condition")

@@ -17,5 +17,5 @@ public class SearchConditionCreateRequest {
     private int workingDay;
     private TypeEmployment typeEmployment;
     private LastEdu lastEdu;
-    private Long jobChildCategoryId;
+    private Long jobParentCategoryId;
 }
