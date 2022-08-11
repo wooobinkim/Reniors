@@ -248,6 +248,17 @@ export default {
           console.log(error);
         });
     },
+    progressJobOpening: ({ commit }, data) => {
+      console.log(data);
+      http
+        .put(`/company/progress/${data.no}`,data.progress)
+        .then(({ data }) => {
+          commit("SET_DATASTATE", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     getapplylist: ({ commit }, no) => {
       http
         .get(`/company/jobopening/${no}/apply`)
@@ -279,24 +290,7 @@ export default {
         });
     },
     updateApply: ({ commit }, data) => {
-      // console.log(data.apply);
-      // axios({
-      //   // url 수정
-      //   url: "http://localhost:8080/api/company/jobopening/1/apply/1",
-      //   method: "put",
-      //   data: data.apply,
-      //   headers:{
-      //     Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyLGNvbXBhbnkiLCJpYXQiOjE2NTk5NDU2NDUsImV4cCI6MTY2MTI0MTY0NX0.UWh7GHYqUG3L6P8puD-yUuG-WYhnMmXk3Z-6NuooyRE"
-      //   }
-      // }).then((res) => {
-      //   console.log(res);
-      //   console.log(commit);
-      //   // const token = res.headers["authorization"];
-      //   // dispatch("saveToken", token);
-      //   // dispatch("fetchCurrentUser");
-      //   // router 수정
-      //   // router.push({ name: "company" });
-      // });
+      console.log(data);
       http
         .put(
           `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
