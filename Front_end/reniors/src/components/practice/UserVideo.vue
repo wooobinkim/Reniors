@@ -1,6 +1,6 @@
 <template>
   <div v-if="streamManager">
-    <ov-video :stream-manager="streamManager" />
+    <ov-video :stream-manager="streamManager" :isAnswer="isAnswer" />
 
   </div>
 </template>
@@ -10,13 +10,13 @@ import OvVideo from "./OvVideo";
 
 export default {
   name: "UserVideo",
-
   components: {
     OvVideo,
   },
 
   props: {
     streamManager: Object,
+    isAnswer: Boolean
   },
 
   computed: {

@@ -1,5 +1,10 @@
 <template>
   <div>
+    <!-- header -->
+    <div class="head2">
+        <router-link style="font-weight:bold"  class="mx-3 rl" :to="{name: 'QuestionList'}">답변 작성</router-link>
+        <router-link class="mx-3 rl" :to="{name: 'VideoPracticeList'}">화상 연습</router-link>
+    </div>
     <div class="head">
         <router-link :to="{name: 'QuestionList'}">
             <i class="bi bi-arrow-left-circle-fill" style="color:#FFD39B; font-size: 24px; margin:0 16px"></i>
@@ -46,6 +51,21 @@ export default{
 </script>
 
 <style scoped>
+.rl{
+    text-decoration:none;
+    color: white;
+}
+.rl:hover{
+    font-weight: bold;
+}
+
+.head2{
+    background-color: #FF843E;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
 .head{
   height: 48px;
   display: flex;

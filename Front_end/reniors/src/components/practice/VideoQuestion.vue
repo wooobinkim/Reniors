@@ -1,9 +1,15 @@
 <template>
   <div class="total">
     <div >
-        <div class="question" @click="onCheck(id)">
+        <div v-if="!selected.includes(id)" class="question" @click="onCheck(id)">
             <p>Q{{idx + 1}}. {{question}}</p>
-            <i v-if="selected.includes(id)" class="bi bi-check-circle-fill" style="color:#37BF99; margin: 0 16px;"></i>
+        </div>
+        <div v-if="selected.includes(id)" class="question" @click="onCheck(id)">
+            <p>Q{{idx + 1}}. {{question}}</p>
+            <div class="number">
+                <p style="color:white; font-size:16px; font-weight: bold;">{{selected.indexOf(id)+1}}</p>
+            </div>
+            <!-- <i  class="bi bi-check-circle-fill" ></i> -->
         </div>
     </div>
 
@@ -41,6 +47,17 @@ export default{
 </script>
 
 <style scoped>
+.number{
+    background-color: #37BF99; 
+    border-radius: 30px;
+    margin: 0 16px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: gray 1px 1px 1px;
+}
 .total{
     display: flex;
     justify-content: center;
@@ -69,6 +86,9 @@ a:hover{
 }
 .question p{
     margin: 0px 8px 0px;
+}
+.question:hover{
+    color: #FF843E;;
 }
 
 </style>
