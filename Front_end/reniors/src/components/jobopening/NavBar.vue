@@ -7,7 +7,7 @@
     <div class="jobopening-navbar-right">
       <font-awesome-icon class="bookmark-icon" v-if="isBookmarked" icon="fa-solid fa-bookmark" @click="deleteBookmark(bookmarkId)" />
       <font-awesome-icon class="bookmark-icon" v-else icon="fa-regular fa-bookmark" @click="addBookmark(jobopeningId)" />
-      <router-link to="profile" class="navbar-profile">
+      <router-link :to="{ name: 'MyPage' }" class="navbar-profile">
         <img :src="this.currentUser.baseURL + this.currentUser.userProfile" alt="">
       </router-link>
     </div>
