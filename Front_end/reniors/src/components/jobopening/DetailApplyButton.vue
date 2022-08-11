@@ -1,7 +1,7 @@
 <template>
   <div class="detail-apply-button">
     <button @click="apply(isLogin)" 
-      :class="!isActive ? 'apply-active' : 'apply-deactive'" 
+      :class="isActive ? 'apply-active' : 'apply-deactive'" 
     >{{ isApply ? '지원완료' : '지원하기' }}</button>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
     }
     const isLogin = computed(() => store.getters['isLogginedIn'])
     const isApply = computed(() => store.getters['jobopening/isApply'])
-    const isActive = computed(() => isApply.value || !isLogin.value)
+    const isActive = computed(() => !isApply.value && isLogin.value)
     const fetchApply = () => store.dispatch('jobopening/fetchApply')
     fetchApply()
 

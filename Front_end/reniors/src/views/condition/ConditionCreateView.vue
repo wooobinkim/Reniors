@@ -6,7 +6,7 @@
       <input type="text" v-model="payload.name" name="name" id="name">
       <hr>
       <label for="region">지역 설정</label><br>
-      <select v-model="payload.region" name="region" id="region">
+      <select name="region" id="region" @change="selectHopearea(this)">
         <option v-for="(sido, index) in sidos" :key="index" :value="sido.value">{{ sido.text }}</option>
       </select>
       <hr>
@@ -80,6 +80,8 @@ export default {
     const store = useStore()
     const instance = getCurrentInstance()
 
+    const hopearea = []
+
     const fetchParents = () => store.dispatch('category/getJobParent')
     fetchParents()
     const fetchChilds = (parent) => store.dispatch('category/getJobChild', parent)
@@ -89,6 +91,11 @@ export default {
     const parents = computed(() => store.state.category.jobparents)
     const childs = computed(() => store.state.category.jobchilds)
     const sidos = computed(() => store.state.category.sidos)
+
+    const selectHopearea = (event) => {
+      hopearea.push(event.value)
+      console.log(hopearea)
+    }
 
     const type = {
       type1: false,
@@ -135,7 +142,6 @@ export default {
     // type을 typeEmployment를 action에서 처리해야됨 (true인것마다 axios요청 또 보내기?)
     const payload = {
       name: '',
-      region: '',
       parent: '',
       child: '',
       type: '',
@@ -144,7 +150,6 @@ export default {
     }
     const initPayload = (payload) => {
       payload.name = '',
-      payload.region = '',
       payload.parent = '',
       payload.child = '',
       payload.type = '',
@@ -156,7 +161,7 @@ export default {
     const submit = (payload) => console.log(payload)
 
     return {
-      fetchChilds, submit, initPayload, selectType, selectDay,
+      fetchChilds, submit, initPayload, selectType, selectDay, selectHopearea,
       parents, childs, sidos, type, lastEdus, minCareers, day,
       payload,
     }
