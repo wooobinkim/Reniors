@@ -5,7 +5,9 @@ import ResumeStepThree from "../components/resume/ResumeStepThree.vue";
 import ResumeStepFour from "../components/resume/ResumeStepFour.vue";
 import ResumeStepFive from "../components/resume/ResumeStepFive.vue";
 import ResumeDetail from "../components/resume/ResumeDetail.vue";
-import LoginView from "../views/user/LoginView.vue";
+import LoginMainView from "../views/user/LoginMainView.vue";
+import LoginUserView from "../views/user/LoginUserView.vue";
+import LoginCompanyView from "../views/user/LoginCompanyView.vue";
 import SignupView from "../views/user/SignupView.vue";
 import SignupCompleteView from "../views/user/SignupCompleteView.vue";
 import FindPasswordView from "../views/user/FindPasswordView.vue";
@@ -82,7 +84,17 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: LoginView,
+    component: LoginMainView,
+  },
+  {
+    path: "/login/user",
+    name: "LoginUser",
+    component: LoginUserView,
+  },
+  {
+    path: "/login/company",
+    name: "LoginCompany",
+    component: LoginCompanyView,
   },
   {
     path: "/signup",
