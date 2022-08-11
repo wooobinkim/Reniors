@@ -5,14 +5,17 @@ export default {
   state: {
     conditions: [],
     jobopenings: [],
+    editData: {}
   },
   getters: {
     conditions: state => state.conditions,
     jobopenings: state => state.jobopenings,
+    editData: state => state.editData
   },
   mutations: {
     CONDITIONS: (state, conditions) => state.conditions = conditions,
     JOBOPENINGS: (state, jobopenings) => state.jobopenings = jobopenings,
+    EDITDATA: (state, data) => state.editData = data,
   },
   actions: {
     async fetchConditions({ commit }) {
@@ -47,6 +50,11 @@ export default {
       const response = await http.delete(`/jobopening/condition/${conditionId}`)
       console.log(response)
       dispatch('fetchConditions')
+    },
+    async fetchEdit({ commit }, id) {
+      const response = await http.get(`/jobopening/condition/${id}`)
+      console.log(response.data)
+      commit('EDITDATA', response.data)
     },
 
     // jobopenings

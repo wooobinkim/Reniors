@@ -170,6 +170,11 @@ const routes = [
         name: "ConditionResult",
         component: () => import("@/views/condition/ConditionResultView.vue"),
       },
+      {
+        path: "edit/:conditionId",
+        name: "ConditionEdit",
+        component: () => import("@/views/condition/ConditionEditView.vue"),
+      },
     ],
   },
 

@@ -1,5 +1,6 @@
 <template>
   <div class="condition-create-view">
+    {{conditionData}}
     <form action="" @submit.prevent="submit(payload)" :key="payload.name">
       <button class="condition-create-init" @click.prevent="initPayload(payload)"><span>⟳</span> 초기화</button>
       <label for="name">맞춤공고 설정</label><br>
@@ -86,9 +87,9 @@ import { isEmpty } from 'lodash'
 
 export default {
   name: 'ConditionCreateView',
-  // props: {
-  //   condition: Object,
-  // },
+  props: {
+    conditionData: Object,
+  },
   setup() {
     const store = useStore()
     const instance = getCurrentInstance()
@@ -111,7 +112,6 @@ export default {
       emptyArray(hopeareas)
       store.dispatch('category/getGugun', id)
     }
-
 
     const parents = computed(() => store.state.category.jobparents)
     const childs = computed(() => store.state.category.jobchilds)

@@ -6,7 +6,7 @@
         <div class="condition-item-header">
           <p class="condition-item-number">맞춤공고{{ index+1 }}</p>
           <div class="condition-item-function">
-            <font-awesome-icon icon="fa-solid fa-gear" />
+            <font-awesome-icon icon="fa-solid fa-gear" @click.stop="editCondition(condition.id)" />
             <font-awesome-icon icon="fa-regular fa-trash-can" @click="deleteCondition(condition.id)"/>
           </div>
         </div>
@@ -85,9 +85,10 @@ export default {
     }
 
     const deleteCondition = (id) => store.dispatch('condition/deleteCondition', id)
+    const editCondition = (id) => router.push({ name: 'ConditionEdit', params: { conditionId: id } })
 
     return {
-      popover, routeCreate, routeResult, deleteCondition,
+      popover, routeCreate, routeResult, deleteCondition, editCondition,
       conditions, options,
     }
   },
