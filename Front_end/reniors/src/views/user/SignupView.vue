@@ -2,7 +2,7 @@
   <div class="container">
     <header>
       <div>
-        <img style="width: 40%; margin: 10px" src="@/assets/logo.png" alt="logo" >
+        <img style="width: 40%; max-height: 170px; margin: 10px" src="@/assets/logo.png" alt="logo" >
         <br>
         <div style="float: right">
           <img class="order" v-if="page===1" src="@/assets/one_active.svg" alt="order">
