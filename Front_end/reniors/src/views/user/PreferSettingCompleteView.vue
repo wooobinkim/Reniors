@@ -5,16 +5,16 @@
     </header>
     <div class="completeMsg">
       <font-awesome-icon id="checkicon" icon="fa-regular fa-circle-check" />
-      <p class="complete">회원가입 완료!</p>
+      <p class="complete">모든 설정 완료!</p>
     </div>
     <div>
-      <button type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'Login' }">로그인하러 가기</router-link></button>
+      <button type="button"><router-link style="text-decoration:none; color: white;" :to="{ name: 'home' }">메인으로 가기</router-link></button>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: 'SignupCompleteView',
+  name: 'PreferSettingCompleteView',
   components: {},
   data() {
     return {
@@ -42,7 +42,7 @@ header {
 }
 
 .complete {
-  color: #37bf99;
+  color: #ffb400;
   font-weight: bold;
   font-size: 24px;
   margin-top: 5vh;
@@ -50,7 +50,7 @@ header {
 
 #checkicon {
   font-size: 180px;
-  color: #37bf9870;
+  color: #ffb40070;
 }
 
 button {    
