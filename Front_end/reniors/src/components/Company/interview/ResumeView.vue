@@ -78,6 +78,7 @@ export default {
   created() {
     if (this.interviewer) this.getResume(this.interviewer.id);
     else this.getResume(this.$route.params.no);
+    console.log(this.resume);
     this.birth = new Date(this.resume.birth);
     this.CLEAR_INTERVIEWER;
   },
