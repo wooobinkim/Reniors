@@ -56,7 +56,7 @@
         <p class="subtitle mb-3">수상 내역</p>
         <p v-for="award in awards" :key="award"
         ><span style="color: #8A8A8A">수상명</span><span>&emsp;{{ award.name }}<br></span>
-        <span style="color: #8A8A8A">수상일</span><span>&emsp;{{ award.awardedAt }}<br></span>
+        <span style="color: #8A8A8A">수상일</span><span>&emsp;{{ award.awardedAt.slice(0,10) }}<br></span>
         </p>
 
 
@@ -78,7 +78,7 @@ export default {
   name: "ResumeDetail",
   components: {  },
   computed: {
-    ...mapGetters(["currentUser", "careers", "licenses"])
+    ...mapGetters(["currentUser", "careers", "licenses", "awards"])
     
   },
   data() {

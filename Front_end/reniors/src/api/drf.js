@@ -10,6 +10,7 @@ const ROOM = "/rooms";
 const CATEGORY = "/categories";
 const PRACTICE = "/practice";
 const CONDITION = "/jobopening/condition";
+const RECOMMEND = "/recommendcondition";
 
 export default {
   user: {
@@ -32,6 +33,11 @@ export default {
       HOST + USER + `/${userId}` + "jobinterest" + `/${jobSmallCategoryId}`,
     recruithistory: (userId) => HOST + USER + `/${userId}` + "/recruithistory",
   },
+
+  recommendcondition: {
+    recommend: () => HOST + RECOMMEND
+  },
+
   resume: {
     get: userId => HOST + RESUME + `/${userId}`,
     edit: userId => HOST + RESUME + `/${userId}`,
