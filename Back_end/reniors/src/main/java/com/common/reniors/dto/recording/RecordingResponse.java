@@ -14,17 +14,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class RecordingResponse {
     @NotNull
-    Long recodingId;
+    Long recordingId;
 
     @NotBlank
     String fileName;
 
     @NotBlank
-    String recodeURL;
+    String recordURL;
 
     @NotNull LocalDateTime updatedAt;
 
     public static RecordingResponse response(Recording recording){
-        return new RecordingResponse(recording.getId(), recording.getFileName(), recording.getRecodeURL(), recording.getCreatedAt());
+        return new RecordingResponse(recording.getId(), recording.getFileName(), recording.getRecordURL(), recording.getCreatedAt());
     }
 }

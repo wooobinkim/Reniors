@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="min-width:360px">
     <!-- header -->
     <div class="head2">
         <router-link  class="mx-3 rl" :to="{name: 'QuestionList'}">답변 작성</router-link>
@@ -10,7 +10,7 @@
     <!-- session & user confirm -->
     <div v-if="!session">
         <div>
-            <h2>Q{{id}}. {{question}}</h2>
+            <p>화상면접 연습 시작</p>
             <div>
                 <p>
                     <label>Name</label>
@@ -34,19 +34,18 @@
 				<input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession" value="Leave session">
 
                 <input v-if="!isRecording" class="btn btn-large btn-success" type="button" id="buttonRecording" @click="startRecording(session)" value="Recording">
-				<input v-if="isRecording" class="btn btn-large btn-danger" type="button" id="buttonRecording" @click="stopRecording(nowRecordingId)"  value="Stop">
-			</div>
+				<input v-if="isRecording" class="btn btn-large btn-danger" type="button" id="buttonRecording" @click="[stopRecording(nowRecordingId), reactModal()]"  value="Stop">
 			
-            <div>
-                <modal-view v-if="isModal==true" @close="isModal==false">
-                    <p>modal parent</p>
-                </modal-view>
             </div>
-
+			
 			<div id="video-container" >
-				<user-video :stream-manager="publisher" @click="updateMainVideoStreamManager(publisher)"/>
+                <user-video :stream-manager="publisher" @click="updateMainVideoStreamManager(publisher)"/>
 				<user-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub" @click="updateMainVideoStreamManager(sub)"/>
 			</div>
+            <modal-pop 
+                v-if="isModal == true"
+                :url="url"
+            ></modal-pop>
 		</div>
 
 
@@ -58,8 +57,7 @@ import axios from 'axios'
 import { OpenVidu } from 'openvidu-browser';
 import { mapActions, mapGetters } from 'vuex';
 import UserVideo from '@/components/practice/UserVideo.vue';
-import ModalView from '@/components/practice/ModalView.vue';
-
+import ModalPop from '@/components/practice/ModalPop.vue';
 
 
 const OPENVIDU_SERVER_URL = "https://" + 'i7b307openvidu.ssafy.io' + ":4443";
@@ -67,7 +65,7 @@ const OPENVIDU_SERVER_SECRET = "reniors";
 
 export default{ 
     name:'PracticePage',
-    components:{ UserVideo, ModalView },
+    components:{ UserVideo, ModalPop },
     data(){
         return{
             OV: undefined,
@@ -83,6 +81,7 @@ export default{
 			isRecording: false,
 
             isModal : false,
+            url: '',
         };
     },
     created(){
@@ -224,7 +223,6 @@ export default{
 
         stopRecording(recodingId){
 			this.isRecording = !this.isRecording
-            this.isModal=true
 			return new Promise(() => {
 				axios
 				.post(
@@ -237,11 +235,14 @@ export default{
 					})
 					.then(res => res.data)
 					.then(data => {
-						console.log(data);
-						this.recodings.push(data)
+						this.url = data.url
 					})
 			})
-		}
+		},
+
+        reactModal(){
+            this.isModal = !this.isModal
+        }
 
     },
 

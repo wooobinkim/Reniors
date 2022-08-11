@@ -14,5 +14,5 @@ public class RecordingCreateRequest {
     String fileName;
 
     @NotBlank
-    String recodeURL;
+    String recordURL;
 }
