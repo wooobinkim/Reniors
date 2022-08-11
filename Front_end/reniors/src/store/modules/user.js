@@ -206,12 +206,32 @@ export const user = {
         })
         .then((res) => {
           commit('SET_PREFER', res.data)
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      },
+
+      createPrefer({ getters, dispatch }, data){
+        axios({
+          url: drf.recommendcondition.recommend(),
+          method: 'post',
+          data: JSON.stringify(data),
+          headers: getters.authHeader,
+        })
+        .then((res) => {
+          dispatch('fetchPrefer')
+          router.push({ name: 'MyPage'})
+          console.log(res)
         })
         .catch(err => {
           console.log(err)
         })
       }
     },
+
+    
 
 
     modules: {
