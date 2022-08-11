@@ -5,10 +5,10 @@
         <router-link  class="mx-3 rl" :to="{name: 'VideoPracticeList'}">화상 연습</router-link>
     </div>
     <div class="headsub">
-        <p class="my-0" style="text-align:start; font-size: 14px;">
-            해당 질문을 눌러
+        <p class="my-0" style="text-align:start; font-size: 14px; font-weight: bold;">
+            연습하고 싶은 질문을 선택하고
         </p>
-        <p style="text-align:start; font-size: 14px;">
+        <p style="text-align:start; font-size: 14px; font-weight: bold;">
             화상면접을 경험해보세요!
         </p>
     </div>
@@ -24,7 +24,7 @@
 
     <router-link :to="{name: 'PracticePage'}">
         <div class="submit">
-            <button class="Btn">등록</button>
+            <button class="Btn">연습하기</button>
         </div>
     </router-link>
   </div>
@@ -111,7 +111,7 @@ p{
     background-color:var(--color-red-2);
     height: 40px;
     width: 340px;
-    margin: 8px 0;
+    margin: 8px auto;
     border-radius: 10px;
     border: none;
     color: white;

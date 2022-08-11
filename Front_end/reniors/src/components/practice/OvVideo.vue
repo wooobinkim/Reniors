@@ -1,5 +1,7 @@
 <template>
-	<video autoplay/>
+	<video :class="{smallVideo:isAnswer}" autoplay/>
+
+	
 </template>
 
 <script>
@@ -8,8 +10,13 @@ export default {
 
 	props: {
 		streamManager: Object,
+		isAnswer:Boolean
 	},
-
+	watch:{
+		isAnswer: function(data){
+			console.log(data);
+		}
+	},
 	mounted () {
 		this.streamManager.addVideoElement(this.$el);
 	},
@@ -17,7 +24,20 @@ export default {
 </script>
 
 <style scoped>
+.smallVideo{
+	background-color: white;
+	width: 344px;
+	height: 400px;
+	margin: 8px auto 4px auto;
+	border: solid #FFD39B 1px;
+	border-radius: 5px;
+}
 video{
-	width: 320px;
+	background-color: white;
+	width: 344px;
+	height: 560px;
+	margin: 8px auto 4px auto;
+	border: solid #FFD39B 1px;
+	border-radius: 5px;
 }
 </style>
