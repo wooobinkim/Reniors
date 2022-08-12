@@ -13,24 +13,22 @@
 
     </div>
     <div class="two">
+      <button class="btn2">
         <router-link :to="{ name:'QuestionList' }" >
-            <button class="btn2">
-                <div class="prac">
-                    <i class="bi bi-camera-video" style="color:#37BF99; font-size:24px; font-weight:bold"></i>
-                    <p style="margin: 4px 4px; font-size: 18px; color: #37BF99; font-weight:bold">면접 연습</p>
-                </div>
-            </button>
+            <div class="prac">
+                <i class="bi bi-camera-video" style="color:#37BF99; font-size:24px; font-weight:bold"></i>
+                <span style="margin: 4px 4px; font-size: 18px; color: #37BF99; font-weight:bold">면접 연습</span>
+            </div>
         </router-link>
+      </button>
+      <button class="btn3">
         <router-link :to="{ name: 'PracticeBox'}">
-            <button  class="btn3">
-                <div>
-                    <i style="font-size:20px; color:white; font-weight:bold; margin: auto;" class="bi bi-folder-check"></i>
-                    <p style="font-size:14px; color:white; font-weight:bold; margin: auto;">내 연습함</p>
-
-                </div>
-            </button>
+            <div>
+                <i style="font-size:20px; color:white; font-weight:bold; margin: auto;" class="bi bi-folder-check"></i>
+                <p style="font-size:14px; color:white; font-weight:bold; margin: auto;">내 연습함</p>
+            </div>
         </router-link>
-
+      </button>
     </div>
   </div>
 </template>
@@ -72,11 +70,10 @@ export default{
     text-decoration: none;
 }
 .two{
-    width: 100%;
-   
+   width: 100%;
+   display: flex;
    justify-content: center;
    align-items: center;
-   margin: 8px 0px;
 }
 .two a{
     text-decoration: none;
@@ -93,15 +90,14 @@ export default{
     
 }
 .btn2 {
-    width: 56%;
+    width: 60%;
     height: 80px;
     border: solid 1px;
     border-color: #37BF99;
     background-color: white;
     border-radius: 10px;
-    margin: 0 2% 0 0;
+    margin: 0 4px 0 0;
     box-shadow: 0.5px 0.5px 0.5px gray;
-
 }
 .prac{
     display: flex;
@@ -109,14 +105,12 @@ export default{
     justify-content: center;
 }
 .btn3 {
-    width: 22%;
+    width: 20%;
     height: 80px;
     border: none;
     background-color: #37BF99;
     border-radius: 10px;
-    margin: 0 0 0 2%;
-    padding: 0;
+    margin: 0 0 0 4px;
     box-shadow: 0.5px 0.5px 0.5px gray;
-
 }
 </style>
