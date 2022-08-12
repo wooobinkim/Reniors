@@ -1,5 +1,6 @@
 <template>
   <div class="jobopening-list">
+    {{jobopenings}}
     <div v-if="isJobopenings">
       <JobopeningItem
         v-for="(jobopening, index) in jobopenings"

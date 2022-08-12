@@ -44,8 +44,8 @@ export default {
       const dayName = days[source.getDay()]
       return [year, month, day].join('-') + ` (${dayName})`;
     }
-    const createDate = tSBF(stringToDate(props.jobopening.createdDate))
-    const finishedDate = tSBF(stringToDate(props.jobopening.finishedDate))
+    const createDate = tSBF(stringToDate(props.jobopening?.createdDate))
+    const finishedDate = tSBF(stringToDate(props.jobopening?.finishedDate))
 
     return {
       createDate, finishedDate,
