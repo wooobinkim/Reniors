@@ -31,7 +31,7 @@
       <hr>
       <ConditionItem left="직책" :right="jobopening.jobPosition" />
       <ConditionItem left="직무" :right="parents?.find((parent) => parent.id===jobopening?.jobParentCategory)?.name" />
-      <ConditionItem left="직무(상셰)" :right="childs?.find((child) => child.id===jobopening?.jobChildCategoryId)?.name" />
+      <ConditionItem left="직무(상세)" :right="childs?.find((child) => child.id===jobopening?.jobChildCategoryId)?.name" />
       <ConditionItem left="고용형태" :right="jobopening.typeEmployment" />
       <ConditionItem left="모집인원" :right="jobopening.numberPeople + '명'" />
     </div>
