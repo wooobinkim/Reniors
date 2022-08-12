@@ -1,7 +1,9 @@
 <template>
-  <div class="one">
-    <div class="two">
-        <p>녹화가 완료되었습니다.</p>
+<div>
+
+    <div class="one">
+        <div class="two">
+            <p>녹화가 완료되었습니다.</p>
         <p>저장할 제목을 입력해주세요.</p>
         <form @submit.prevent="onSubmit" class="formGroup">
             <div class="box">
@@ -16,6 +18,7 @@
     </div>
 
   </div>
+</div>
 </template>
 <script>
 import { mapActions } from 'vuex';
@@ -53,19 +56,22 @@ export default{
 <style scoped>
 .one{
     position: fixed;
-}
-
-.two{
-    position: relative;
+    top: 200px;
+    left: 20px;
     width: 320px;
-    margin: 30px;
-    padding: 20px;
-    background-color: white;
-    z-index: 10;
-    opacity: 1;
+    height: 300px;
+    display: flex;
+    align-items: center;
     border-radius: 5px;
     border: solid 2px #BF4F37;
     box-shadow: 1px 1px 1px gray;
+    background-color: white;
+}
+
+.two{ 
+    z-index: 10;
+    opacity: 1;
+    margin: auto auto;
 }
 
 label{
@@ -86,7 +92,7 @@ label{
 .Btn {
 background-color:var(--color-red-2);
 height: 40px;
-width: 320px;
+width: 300px;
 margin: 8px 0;
 border-radius: 10px;
 border: none;
