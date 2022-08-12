@@ -134,11 +134,9 @@ export default{
             this.question = {...target[this.selectedQ[0]-1]}.question
         },
         idx:function(data){
+            console.log(data);
             this.question = this.realquestions[this.selectedQ[data]-1].question
         },
-        'this.isModal':function(){
-
-        }
     },
     created(){
         this.CLEAR_QUESTIONS
@@ -147,7 +145,6 @@ export default{
         this.fetchChecklist()
         this.mySessionId = 'Session' + this.currentUser.id
         this.myUserName = this.currentUser.name
-        
     },
     computed:{
         ...mapGetters(['selected','currentUser', 'questions', 'checklist']),
