@@ -1,25 +1,38 @@
 <template>
   <div>
-    <p>나와라;;{{id}}</p>
+    <video autoplay :src='this.record.recordURL' controls></video>
   </div>
 </template>
 <script>
+
+import { mapActions, mapGetters } from 'vuex';
 
 export default{ 
     name:'VideoConfirm',
     components:{},
     data(){
         return{
-            id : this.$route.params.videoID
+            myrecords: [],
+            idx : this.$route.params.videoId,
+            record: {}
         };
     },
-    props:{
-
+    computed:{
+        ...mapGetters(['records'])
     },
-    setup(){},
-    created(){},
-    mounted(){},
-    unmounted(){},
-    methods:{}
+    created(){
+        this.fetchRecording()
+    },
+    watch:{
+        records: function(data){
+            this.myrecords = { ...data }
+            this.record = {...data}[this.idx]
+        },
+    },
+    methods:{
+        ...mapActions(['fetchRecording']),
+
+    }
+        
 }
 </script>
