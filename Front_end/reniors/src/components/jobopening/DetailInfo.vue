@@ -3,25 +3,18 @@
     <div class="jobopening-box">
       <h3>기업정보</h3>
       <hr>
-      <img :src="jobopening.baseURL + jobopening.companyId" alt="">
+      <img :src="company.baseURL + company.companyProfile" alt="">
       <h5>{{ jobopening.companyName }}</h5>
-      <ConditionItem left="설립연도" :right="jobopening.companyEstablishedAt" />
-      <ConditionItem left="기업주소" :right="jobopening.companyAddress" />
-      <ConditionItem left="홈페이지" :right="jobopening.companyUrl" />
+      <ConditionItem left="설립연도" :right="company.establishedAt" />
+      <ConditionItem left="기업주소" :right="company.address" />
+      <ConditionItem left="홈페이지" :right="company.companyUrl" />
       <h4>이 기업의 다른 채용 공고</h4>
       <hr class="small">
-      <div class="jobopening-detail-content" v-for="(jobopening, index) in relatedJobopenings" :key="index">
-        <p class="jobopening-detail-content-title">{{ jobopening.title }}</p>
-        <p class="jobopening-detail-content-condition">{{ jobopening.jobPosition }} | {{ jobopening.minCareer }} | {{ jobopening.lastEdu }}</p>
-        <p class="jobopening-detail-content-period">~ {{ jobopening.finishedDate }}</p>
-      </div>
-      <h4>뉴스</h4>
-      <hr class="small">
-      <div class="jobopening-detail-news">
-        <div class="jobopening-detail-content"></div>
-        <div class="jobopening-detail-content"></div>
-        <div class="jobopening-detail-content"></div>
-        <div class="jobopening-detail-content"></div>
+      <div class="jobopening-detail-list">
+        <div class="jobopening-detail-content" v-for="(jobopening, index) in jobopening.companyJobOpening" :key="index">
+          <p class="jobopening-detail-content-title">{{ jobopening.title }}</p>
+          <p class="jobopening-detail-content-period">~ {{ jobopening.finishedDate?.split('T')[0] }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -41,7 +34,7 @@ export default {
     const store = useStore()
 
     const jobopening = computed(() => store.getters['jobopening/selectedJobopening'])
-    const company = computed(() => jobopening.value?.companyDto)
+    const company = computed(() => jobopening.value?.companyResponse)
 
     return {
       jobopening, company
@@ -94,5 +87,16 @@ export default {
 .jobopening-detail-news {
   display: grid;
   grid-template-columns: 160px 160px;
+}
+
+.jobopening-detail-list {
+  display: grid;
+  grid-template-columns: 160px 160px;
+}
+
+@media screen and (min-width: 720px) {
+  .jobopening-detail-list {
+    grid-template-columns: 22vh 22vh 22vh;
+  }
 }
 </style>

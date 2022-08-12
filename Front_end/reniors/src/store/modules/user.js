@@ -66,6 +66,7 @@ export const user = {
       removeToken({ commit }) {
         commit('SET_TOKEN', '')
         localStorage.setItem('token', '')
+        router.push({ name: 'home' })
       },
 
       // error 커밋 추가
