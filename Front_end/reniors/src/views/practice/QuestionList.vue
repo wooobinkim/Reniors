@@ -43,11 +43,12 @@ export default{
     mounted(){},
     unmounted(){},
     methods:{
-        ...mapActions(['fetchQuestions', 'fetchChecklist'])
+        ...mapActions(['fetchQuestions', 'fetchChecklist','clearAnswer'])
     },
     created(){
         this.fetchQuestions()
         this.fetchChecklist()
+        this.clearAnswer()
     },
 
 }

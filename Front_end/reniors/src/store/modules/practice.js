@@ -34,6 +34,7 @@ export default{
           state.questions = questions
        },
         SET_ANSWER: (state, answer) => state.answer = answer,
+        CLEAR_ANSWER: (state) => state.answer = '',
         SET_CHECKLIST: (state, checklist) => state.checklist = checklist,
         SET_RECORDS: (state, records) => state.records = records,
         SET_SELECTED: (state, selected) => {
@@ -97,6 +98,9 @@ export default{
               commit("SET_ANSWER", res.data);
               router.push({ name: "QuestionList" });
             });
+        },
+        clearAnswer({commit}){
+          commit("CLEAR_ANSWER");
         },
         fetchChecklist({getters, commit}) {
           axios({
