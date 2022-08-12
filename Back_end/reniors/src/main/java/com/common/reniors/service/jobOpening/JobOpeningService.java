@@ -230,6 +230,7 @@ public class JobOpeningService {
 
         if (searchCondition.getLastEdu() != null) booleanBuilder.and(j.lastEdu.eq(searchCondition.getLastEdu()));
         if (searchCondition.getTypeEmployment() != null) booleanBuilder.and(j.typeEmployment.eq(searchCondition.getTypeEmployment()));
+        if(searchCondition.getJobParentCategoryId() != null) booleanBuilder.and (j.jobChildCategory.parent.id.eq(searchCondition.getJobParentCategoryId()));
 
         List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
                 .where(
@@ -239,7 +240,6 @@ public class JobOpeningService {
                         (j.minCareer.goe(searchCondition.getMinCareer())),
                         (j.minSalary.goe(searchCondition.getMinSalary())),
                         (j.workingDay.loe(searchCondition.getWorkingDay())),
-                        (j.jobChildCategory.parent.id.eq(searchCondition.getJobParentCategoryId())),
                         booleanBuilder,
 //                        (j.typeEmployment.eq(searchCondition.getTypeEmployment())),
 //                        (j.lastEdu.eq(searchCondition.getLastEdu())),

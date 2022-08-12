@@ -4,6 +4,7 @@ import com.common.reniors.domain.entity.Type.IsFinish;
 import com.common.reniors.domain.entity.Type.TypeEmployment;
 import com.common.reniors.domain.entity.Type.LastEdu;
 import com.common.reniors.domain.entity.JobOpening;
+import com.common.reniors.dto.company.CompanyResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,11 +36,7 @@ public class JobOpeningDetailResponse {
     private Long jobParentCategory;
     private Long jobChildCategoryId;
     private IsFinish isFinish;
-    private String companyName;
-    private String companyEstablishedAt;
-    private String companyAddress;
-    private String companyExtraAddress;
-    private String companyUrl;
+    private CompanyResponse companyResponse;
     private List<JobOpeningResponse> companyJobOpening;
 
     public static JobOpeningDetailResponse response(JobOpening jobOpening){
@@ -63,11 +60,7 @@ public class JobOpeningDetailResponse {
                 jobOpening.getJobChildCategory().getParent().getId(),
                 jobOpening.getJobChildCategory().getId(),
                 jobOpening.getIsFinish(),
-                jobOpening.getCompany().getName(),
-                jobOpening.getCompany().getEstablishedAt(),
-                jobOpening.getCompany().getAddress(),
-                jobOpening.getCompany().getExtraAddress(),
-                jobOpening.getCompany().getCompanyUrl(),
+                CompanyResponse.response(jobOpening.getCompany()),
                 jobOpening.getCompany().getJobOpenings().stream().map(j->JobOpeningResponse.response(j)).collect(Collectors.toList())
         );
     }
