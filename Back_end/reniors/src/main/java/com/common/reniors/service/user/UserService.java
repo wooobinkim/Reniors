@@ -10,7 +10,9 @@ import com.common.reniors.domain.repository.resume.AwardRepository;
 import com.common.reniors.domain.repository.resume.CareerDetailRepository;
 import com.common.reniors.domain.repository.resume.LicenseRepository;
 import com.common.reniors.domain.repository.user.UserRepository;
+import com.common.reniors.dto.kakao.KakaoUserCreateRequest;
 import com.common.reniors.dto.kakao.KakaoUserInfo;
+import com.common.reniors.dto.kakao.KakaoUserResponse;
 import com.common.reniors.dto.mail.MailDto;
 import com.common.reniors.dto.resume.AwardResponse;
 import com.common.reniors.dto.resume.CareerDetailResponse;
@@ -34,11 +36,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.common.reniors.common.exception.NotFoundException.USER_LIST_NOT_FOUND;
@@ -64,14 +64,13 @@ public class UserService {
     public String loginUser(UserLoginRequest request) {
         Optional<User> findUser = userRepository.findByUserAppId(request.getUserAppId());
         // 해당 아이디를 가진 유저가 존재하지 않을 때
-        if(!findUser.isPresent()){
+        if (!findUser.isPresent()) {
             throw new NotFoundException(USER_NOT_FOUND);
-        }else{
+        } else {
             //비밀번호 확인
-            if (passwordEncoder.matches(request.getUserAppPwd(), findUser.get().getUserAppPwd())){
-                return jwtUtil.createToken(findUser.get().getId(), "user");
-            }
-            else {
+            if (passwordEncoder.matches(request.getUserAppPwd(), findUser.get().getUserAppPwd())) {
+                return jwtUtil.createToken(findUser.get().getId(), findUser.get().getName());
+            } else {
                 throw new NotMatchException(PASSWORD_NOT_MATCH);
             }
         }
@@ -88,9 +87,9 @@ public class UserService {
 
     @Transactional
     public Long createUser(UserCreateRequest request, String baseURL, String userProfile) {
-        if(userRepository.findByUserAppId(request.getUserAppId()).isPresent()){
-            throw new DuplicateException(String.format("%s는 이미 가입된 회원입니다.",request.getUserAppId()));
-        }else {
+        if (userRepository.findByUserAppId(request.getUserAppId()).isPresent()) {
+            throw new DuplicateException(String.format("%s는 이미 가입된 회원입니다.", request.getUserAppId()));
+        } else {
             User saveUser = User.create(
                     request.getUserAppId(),
                     passwordEncoder.encode(request.getUserAppPwd()),
@@ -111,27 +110,7 @@ public class UserService {
         }
     }
 
-    @Transactional
-    public String kakaoLogin(String code, HttpServletResponse response, String baseURL) throws JsonProcessingException {
-        System.out.println("code = " + code);//////////////////////////////////
-        // 1. "인가 코드"로 "액세스 토큰" 요청
-        String accessToken = getAccessToken(code);
-
-        // 2. 토큰으로 카카오 API 호출
-        KakaoUserInfo kakaoUserInfo = getKakaoUserInfo(accessToken);
-
-        // 3. 카카오ID로 회원가입 처리
-        User kakaoUser = registerKakaoUserIfNeed(kakaoUserInfo, baseURL);
-
-        // 4. 강제 로그인 처리
-        String authentication = forceLogin(kakaoUser);
-
-        // 5. response Header에 JWT 토큰 추가
-//        kakaoUsersAuthorizationInput(authentication, response, kakaoUser);
-        return authentication;
-    }
-
-    // 1. "인가 코드"로 "액세스 토큰" 요청
+    // "인가 코드"로 "액세스 토큰" 요청
     public String getAccessToken(String code) throws JsonProcessingException {
         // HTTP Header 생성
         HttpHeaders headers = new HttpHeaders();
@@ -161,7 +140,7 @@ public class UserService {
         return jsonNode.get("access_token").asText();
     }
 
-    // 2. 토큰으로 카카오 API 호출
+    // 토큰으로 카카오 API 호출
     public KakaoUserInfo getKakaoUserInfo(String accessToken) throws JsonProcessingException {
         // HTTP Header 생성
         HttpHeaders headers = new HttpHeaders();
@@ -184,8 +163,7 @@ public class UserService {
         JsonNode jsonNode = objectMapper.readTree(responseBody);
 
         System.out.println("jsonNode = " + jsonNode);
-        
-        Long id = jsonNode.get("id").asLong();
+
         String nickname = jsonNode.get("properties")
                 .get("nickname").asText();
         String email = jsonNode.get("kakao_account").get("email").asText();
@@ -199,46 +177,40 @@ public class UserService {
             gender = Gender.공개안함;
         }
         String profileImage = jsonNode.get("properties").get("profile_image").asText();
-        return new KakaoUserInfo(id, nickname, email, gender, profileImage);
+        return new KakaoUserInfo(nickname, email, gender, profileImage);
     }
 
-    // 3. 카카오ID로 회원가입 처리
+    // 카카오ID로 회원가입 처리
     @Transactional
-    public User registerKakaoUserIfNeed(KakaoUserInfo kakaoUserInfo, String baseUrl) {
-        // DB 에 중복된 email이 있는지 확인
-        String kakaoEmail = kakaoUserInfo.getEmail();
-        String nickname = kakaoUserInfo.getNickname();
-        Gender gender = kakaoUserInfo.getGender();
-        String profileImageUrl = kakaoUserInfo.getProfileImage();
-        User kakaoUser = userRepository.findByKakaoId(kakaoEmail)
+    public User registerKakaoUserIfNeed(KakaoUserCreateRequest request, String baseUrl) {
+        // DB에 중복된 kakaoId가 있는지 확인
+        User kakaoUser = userRepository.findByKakaoId(request.getKakaoId())
                 .orElse(null);
         if (kakaoUser == null) {
             // 회원가입
-            kakaoUser = User.createKakaoUser(kakaoEmail, nickname, gender, baseUrl, profileImageUrl);
+            kakaoUser = User.createKakaoUser(request, baseUrl);
             userRepository.save(kakaoUser);
         }
         return kakaoUser;
     }
 
-    // 4. 강제 로그인 처리
-    public String forceLogin(User kakaoUser) {
-        System.out.println("kakaoUser.getId() = " + kakaoUser.getId());//////////////////////////////
-        return jwtUtil.createToken(kakaoUser.getId(), "user");
+    // 로그인 처리 및 토큰 발급
+    public String LoginKakaoUser(User kakaoUser) {
+        return jwtUtil.createToken(kakaoUser.getId(), kakaoUser.getName());
     }
-    /*
-        // 5. response Header에 JWT 토큰 추가
-        public void kakaoUsersAuthorizationInput(Authentication authentication, HttpServletResponse response, User kakaoUser) {
-            // response header에 token 추가
-            UserDetailsImpl userDetailsImpl = ((UserDetailsImpl) authentication.getPrincipal());
-            String token = jwtUtil.createToken(kakaoUser.getId(), userDetailsImpl.getUsername());
-            response.addHeader("Authorization", "BEARER" + " " + token);
-        }
-    */
+
     @Transactional
     public UserResponse readUser(User user) {
         User findUser = userRepository.findById(user.getId())
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
         return UserResponse.response(findUser);
+    }
+
+    @Transactional
+    public KakaoUserResponse readKakaoUser(User user) {
+        User findKakaoUser = userRepository.findByKakaoId(user.getKakaoId())
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+        return KakaoUserResponse.response(findKakaoUser);
     }
 
     @Transactional
@@ -269,7 +241,7 @@ public class UserService {
                 request.getIsOpen(),
                 request.getLastEdu(),
                 baseURL,
-                request.isChangeProfile()?userProfile:user.getUserProfile()
+                request.isChangeProfile() ? userProfile : user.getUserProfile()
         );
         userRepository.save(user);
     }
@@ -305,8 +277,8 @@ public class UserService {
 
     @Transactional
     public String getNewPwd() {
-        char[] charArr = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
-                'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+        char[] charArr = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+                'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
         String pwd = "";
         // 문자 배열 길이의 값을 랜덤으로 10개를 뽑아 구문을 작성함
         int idx = 0;
