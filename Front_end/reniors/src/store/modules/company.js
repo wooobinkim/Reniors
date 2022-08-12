@@ -35,6 +35,16 @@ export default {
     authHeader: (state) => ({ Authorization: `Bearer ${state.token}` }),
     jobopeninglisting: (state) => state.jobopeninglisting,
     jobopeninglisted: (state) => state.jobopeninglisted,
+    jobopening: (state) => state.jobopening,
+    companyinfo: (state) => state.companyinfo,
+    applylist: (state) => state.applylist,
+    applyuser: (state) => state.applyuser,
+    evalquestionlist: (state) => state.evalquestionlist,
+    userevallist: (state) => state.userevallist,
+    interviewer: (state) => state.interviewer,
+    resume: (state) => state.resume,
+    interviewapplylist: (state) => state.interviewapplylist,
+    interviewapplylistasc: (state) => state.interviewapplylistasc,
   },
 
   mutations: {
@@ -383,6 +393,7 @@ export default {
       http
         .get(`/eval/${data.jobOpeningId}/usereval/${data.userId}`)
         .then(({ data }) => {
+          console.log(data);
           commit("SET_USER_EVAL_LIST", data);
         })
         .catch((error) => {

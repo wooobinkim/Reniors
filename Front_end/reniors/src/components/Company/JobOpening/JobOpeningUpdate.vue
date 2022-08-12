@@ -166,7 +166,7 @@
 <script setup>
 import Datepicker from "vue3-datepicker";
 // import { ref } from "vue";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 // import moment from "moment";
 // const picked = ref(new Date())
 </script>
@@ -200,7 +200,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("category", [
+    ...mapGetters("category", [
       "sidos",
       "guguns",
       "jobparents",
@@ -208,7 +208,7 @@ export default {
       "lastedus",
       "typeemployments",
     ]),
-    ...mapState("company", ["jobopening"]),
+    ...mapGetters("company", ["jobopening"]),
   },
   watch: {
     jobopening: function (data) {

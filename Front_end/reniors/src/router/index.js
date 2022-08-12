@@ -15,8 +15,8 @@ import FindPasswordView from "../views/user/FindPasswordView.vue";
 import FindUsernameView from "../views/user/FindUsernameView.vue";
 import MyPageView from "../views/user/MyPageView.vue";
 import MyinfoEdit from "../components/user/MyinfoEdit.vue";
-import FindUsernameResult from "../components/user/FindUsernameResult.vue"
-import FindPasswordResult from "../components/user/FindPasswordResult.vue"
+import FindUsernameResult from "../components/user/FindUsernameResult.vue";
+import FindPasswordResult from "../components/user/FindPasswordResult.vue";
 import PreferSetting from "../components/user/PreferSetting";
 import PreferSettingComplete from "../views/user/PreferSettingCompleteView.vue";
 
@@ -40,6 +40,7 @@ import CompanyJobOpeningList from "@/components/Company/JobOpening/JobOpeningLis
 import CompanyJobOpeningRegist from "@/components/Company/JobOpening/JobOpeningRegist.vue";
 import CompanyJobOpeningUpdate from "@/components/Company/JobOpening/JobOpeningUpdate.vue";
 import ApplyList from "@/components/Company/JobOpening/ApplyList.vue";
+import UserEvalList from "@/components/Company/JobOpening/UserEvalList.vue";
 import ResumeView from "@/components/Company/interview/ResumeView.vue";
 import JobOpeningInterviewList from "@/components/Company/interview/JobOpeningInterviewList.vue";
 import CompanyInterviewList from "@/components/Company/interview/InterviewList.vue";
@@ -297,6 +298,11 @@ const routes = [
         path: "resume/:no",
         name: "resumeview",
         component: ResumeView,
+      },
+      {
+        path: "eval/:no",
+        name: "usereval",
+        component: UserEvalList,
       },
     ],
   },

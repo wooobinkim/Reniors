@@ -1,7 +1,13 @@
 <template>
   <div>
     <template v-for="apply in applies" :key="apply.id">
-      <template v-if="apply.jobOpeningProcess == '면접심사중' || apply.jobOpeningProcess == '면접불합격'">
+      <template
+        v-if="
+          apply.jobOpeningProcess == '면접' ||
+          apply.jobOpeningProcess == '면접심사중' ||
+          apply.jobOpeningProcess == '면접불합격'
+        "
+      >
         <div>
           <input :value="apply.id" type="checkbox" v-model="passUser" />
           <applier-interview-list-item
@@ -10,10 +16,10 @@
           >
           </applier-interview-list-item>
         </div>
-        <hr>
+        <hr />
       </template>
     </template>
-      <button @click="interviewpass()">최종합격</button>
+    <button @click="interviewpass()">최종합격</button>
     <!-- <div for="check">이름 :{{ apply.userId }}</div>
 
     <button @click="resumeview()">이력서보기</button> -->
@@ -22,7 +28,7 @@
 
 <script setup>
 import "@vuepic/vue-datepicker/dist/main.css";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 </script>
 <script>
 import ApplierInterviewListItem from "./ApplierInterviewListItem.vue";
@@ -32,7 +38,7 @@ export default {
   },
   props: {
     // apply: Object,
-    jobopeningdetail:Object,
+    jobopeningdetail: Object,
   },
   data() {
     return {
@@ -40,30 +46,34 @@ export default {
       //   // jobOpeningProcess: null,
       //   // interviewDate: new Date(),
       // },
-        passUser: [],
-        applies:null,
+      passUser: [],
+      applies: null,
       //   passuserId: [],
       // flag: false,
     };
   },
-  watch:{
-    applylist:function (datas) {
+  watch: {
+    applylist: function (datas) {
       this.applies = [];
-      datas.forEach(data => {
+      datas.forEach((data) => {
         data.interviewDate = new Date(data.interviewDate);
         this.applies.push(data);
       });
-    }
+    },
   },
-  created(){
+  created() {
     this.getapplylist(this.$route.params.no);
   },
   computed: {
-    ...mapState("company", ["jobopening","applylist"]),
+    ...mapGetters("company", ["jobopening", "applylist"]),
   },
   methods: {
-    ...mapActions("company", ["getapplylist", "progressJobOpening","updateApply"]),
-    interviewpass(){
+    ...mapActions("company", [
+      "getapplylist",
+      "progressJobOpening",
+      "updateApply",
+    ]),
+    interviewpass() {
       this.passUser.forEach((data) => {
         this.updateApply({
           jobOpeningId: this.jobopeningdetail.id,
@@ -75,11 +85,15 @@ export default {
       });
 
       let tmparr = [];
-      this.applylist.forEach(apply => {
-        tmparr.push(apply.id);
+      this.applylist.forEach((apply) => {
+        if (
+          apply.jobOpeningProcess == "면접" ||
+          apply.jobOpeningProcess == "면접심사중"
+        )
+          tmparr.push(apply.id);
       });
-      let unpassUser = tmparr.filter(x=>!this.passUser.includes(x));
-      unpassUser.forEach(data => {
+      let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
+      unpassUser.forEach((data) => {
         this.updateApply({
           jobOpeningId: this.jobopeningdetail.id,
           applyId: data,
@@ -90,20 +104,13 @@ export default {
       });
 
       let data = {
-        no : this.jobopeningdetail.id,
-        progress:{
-            jobOpeningProcess : "최종합격"
-        }
-      }
-    this.progressJobOpening(data)
+        no: this.jobopeningdetail.id,
+        progress: {
+          jobOpeningProcess: "최종합격",
+        },
+      };
+      this.progressJobOpening(data);
       this.$router.go();
-    },
-
-    resumeview() {
-      this.$router.push({
-        name: "resumeview",
-        params: { no: this.apply.userId },
-      });
     },
   },
 };
