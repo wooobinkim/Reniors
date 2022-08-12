@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import store from '@/store'
+// import store from '@/store'
 import ResumeStepOne from "../components/resume/ResumeStepOne.vue";
 import ResumeStepTwo from "../components/resume/ResumeStepTwo.vue";
 import ResumeStepThree from "../components/resume/ResumeStepThree.vue";
@@ -88,6 +88,11 @@ const routes = [
   },
 
   //user
+  {
+    path: "/api/users/login/kakao",
+    name: "kakaoLogin",
+    component: () => import("../views/user/kakaoLogin.vue")
+  },
   {
     path: "/login",
     name: "Login",
@@ -416,19 +421,19 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach((to, from, next) => {
+// router.beforeEach((to, from, next) => {
 
-  const { isLogginedIn } = store.getters
-  console.log(isLogginedIn)
-  const noAuthPages = ['Login', 'LoginUser', 'LoginCompany', 'Signup', 'SignupComplete', 'FindPassword', 'FindUsername', 'home']
-  const isAuthRequired = !noAuthPages.includes(to.name)
+//   const { isLogginedIn } = store.getters
+//   console.log(isLogginedIn)
+//   const noAuthPages = ['Login', 'LoginUser', 'LoginCompany', 'Signup', 'SignupComplete', 'FindPassword', 'FindUsername', 'home', 'kakaoLogin']
+//   const isAuthRequired = !noAuthPages.includes(to.name)
 
-  if (isAuthRequired && !isLogginedIn) {
-    alert('Require Login. Redirecting..')
-    next({ name: 'Login' })
-  } else {
-    next()
-  }
-})
+//   if (isAuthRequired && !isLogginedIn) {
+//     alert('Require Login. Redirecting..')
+//     next({ name: 'Login' })
+//   } else {
+//     next()
+//   }
+// })
 
 export default router;
