@@ -2,7 +2,7 @@
   <div>
     <div class="jobopening-box">
       <h4>{{ jobopening.title }}</h4>
-      <p>회사이름: null</p>
+      <h5>{{ jobopening.companyResponse.name }}</h5>
       <div class="jobopening-box-date">
         <div class="start-badge">시작</div>
         <p>{{ jobopening.createdDate?.split('T')[0] }}</p>
@@ -85,6 +85,11 @@ export default {
 
 .jobopening-box p, .jobopening-box h3 {
   margin: 0;
+}
+
+.jobopening-box h5 {
+  padding: 5px 0;
+  font-size: 18px;
 }
 
 .jobopening-box > h3 {

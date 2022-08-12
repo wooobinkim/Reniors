@@ -22,7 +22,7 @@ export const user = {
     },
 
     getters: {
-      isLogginedIn: state => !!state.token,
+      isLogginedIn: (state, _, rootState) => !!state.token || !!rootState.company.token,
       currentUser: state => state.currentUser,
       authError: state => state.authError,
       // Authorization: `Token ${state.token}`

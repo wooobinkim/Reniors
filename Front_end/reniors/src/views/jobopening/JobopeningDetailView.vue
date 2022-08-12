@@ -6,8 +6,7 @@
     >
       <b-tab title="모집조건"><DetailCondition /></b-tab>
       <b-tab title="상세모집내용"><DetailContent /></b-tab>
-      <!-- 회사정보가 상세조회에서 넘어오지않음 -->
-      <b-tab title="기업정보"><DetailInfo v-if="false"/></b-tab>
+      <b-tab title="기업정보"><DetailInfo /></b-tab>
     </b-tabs>
     <DetailApplyButton :jobopeningId="jobopeningId"/>
   </div>
