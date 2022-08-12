@@ -1,6 +1,5 @@
 <template>
   <div>
-    <hr>
     <Splide class="condition-list" :options="options">
       <SplideSlide class="condition-item" v-for="(condition, index) in conditions" :key="index" @click="routeResult(condition.id, $event)">
         <div class="condition-item-header">
@@ -80,7 +79,6 @@ export default {
       arrows: false,
       pagination: false,
       isNavigation: true,
-      width : 360,
       gap : '1rem',
     }
 
@@ -103,6 +101,7 @@ export default {
   border: none;
   border-radius: 0.5rem;
   height: 140px;
+  width: 70vh;
   margin: 5px;
   margin-bottom: 15px;
   padding: 10px;

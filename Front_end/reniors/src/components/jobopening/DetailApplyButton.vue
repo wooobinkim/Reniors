@@ -45,6 +45,12 @@ export default {
   align-content: center;
 }
 
+@media screen and (min-width: 720px) {
+  .detail-apply-button {
+    width: 70vh;
+  }  
+}
+
 .detail-apply-button > button {
   height: 30px;
   width: 100%;

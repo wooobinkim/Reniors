@@ -3,6 +3,7 @@
     <div class="jobopening-box">
       <h3>상세모집내용</h3>
       <hr>
+      <img :src="jobopening.baseURL + jobopening.jobOpeningImg" alt="">
       <p>{{ jobopening.contents }}</p>
     </div>
   </div>
@@ -28,4 +29,7 @@ export default {
 
 <style>
 /* same as DetailCondition.vue */
+.jobopening-box img{
+  width: 100%;
+}
 </style>

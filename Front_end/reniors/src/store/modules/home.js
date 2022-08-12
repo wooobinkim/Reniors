@@ -60,7 +60,6 @@ export default {
   },
   actions: {
     async fetchYoutubes({ commit }, keyword) {
-      console.log('fetch execute')
       commit('YOUTUBES', [])
       const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
         params: {
@@ -75,7 +74,6 @@ export default {
     },
     async fetchHot({ commit }) {
       const response = await http.get('/jobopening/search/viewsDesc')
-      console.log(response.data)
       commit('HOTJOBOPENINGS', response.data)
     },
     async search({ commit }, keyword) {
