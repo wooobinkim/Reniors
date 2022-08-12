@@ -30,7 +30,7 @@ export default {
         lastEdu: payload.lastEdu,
         minCareer: payload.minCareer,
         minSalary: payload.minSalary,
-        typeEmployment: '정규직',
+        typeEmployment: payload.type,
         workingDay: payload.day
       }
       console.log(data)
