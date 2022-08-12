@@ -120,12 +120,26 @@ public class JobOpeningService {
     @Transactional
     public List<SearchConditionResponse> getSearchConditionList(User user){
         List<SearchCondition> searchConditionList = searchConditionRepository.findByUser(user);
-        List<SearchConditionResponse> searchConditionResponseList = searchConditionList.stream().map(s->
-                SearchConditionResponse.response(s,
-                        jobParentCategoryRepository.findById(s.getJobParentCategoryId()).isPresent()==true?
-                                jobParentCategoryRepository.findById(s.getJobParentCategoryId()).get().getName():null
-                               )
-        ).collect(Collectors.toList());
+        List<SearchConditionResponse> searchConditionResponseList = new ArrayList<>();
+
+        for (SearchCondition searchCondition : searchConditionList) {
+            if(searchCondition.getJobParentCategoryId() == null){
+                SearchConditionResponse response = SearchConditionResponse.response(searchCondition, null);
+                searchConditionResponseList.add(response);
+            }else{
+                SearchConditionResponse response = SearchConditionResponse.response(searchCondition,
+                        jobParentCategoryRepository.findById(searchCondition.getJobParentCategoryId()).orElseThrow(() -> new NotFoundException("not found jpc")).getName());
+                searchConditionResponseList.add(response);
+
+            }
+        }
+
+//        List<SearchConditionResponse> searchConditionResponseList = searchConditionList.stream().map(s->
+//                SearchConditionResponse.response(s,
+//                        jobParentCategoryRepository.findById(s.getJobParentCategoryId()).isPresent()==true?
+//                                jobParentCategoryRepository.findById(s.getJobParentCategoryId()).get().getName():null
+//                               )
+//        ).collect(Collectors.toList());
 
         return searchConditionResponseList;
     }
