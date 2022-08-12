@@ -2,9 +2,9 @@
   <div>
     <div>이름 : {{ resume.name }}</div>
     <div>
-      생일 : {{ this.birth.getFullYear() }}-{{ this.birth.getMonth() }}-{{
-        this.birth.getDate()
-      }}
+      생일 : {{ new Date(resume.birth).getFullYear() }}-{{
+        new Date(resume.birth).getMonth()
+      }}-{{ new Date(resume.birth).getDate() }}
     </div>
     <div>성별 : {{ resume.gender == "F" ? "여자" : "남자" }}</div>
     <div>전화번호 : {{ resume.phone }}</div>
@@ -69,17 +69,24 @@ export default {
   data() {
     return {
       birth: null,
+      resumeinfo: null,
     };
+  },
+  watch: {
+    resume: function (data) {
+      this.birth = new Date(data.birth);
+      this.resumeinfo = data;
+      console.log(this.resumeinfo);
+    },
   },
   computed: {
     ...mapState("company", ["resume", "interviewer"]),
     ...mapMutations("company", ["CLEAR_INTERVIEWER"]),
   },
   created() {
-    if (this.interviewer) this.getResume(this.interviewer.id);
-    else this.getResume(this.$route.params.no);
-    console.log(this.resume);
-    this.birth = new Date(this.resume.birth);
+    // if (this.interviewer) this.getResume(this.interviewer.id);
+    this.getResume(this.$route.params.no);
+    // this.birth = new Date(this.resume.birth);
     this.CLEAR_INTERVIEWER;
   },
   methods: {
