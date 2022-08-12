@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 // import ApplyListItem from "./ApplyListItem.vue";
 import ApplierResumeList from "./ApplierResumeList.vue";
 import ApplierInterviewList from "./ApplierInterviewList.vue";
@@ -59,7 +59,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("company", ["jobopening"]),
+    ...mapGetters("company", ["jobopening"]),
   },
   methods: {
     ...mapActions("company", ["getJobOpening"]),

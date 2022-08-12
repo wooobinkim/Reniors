@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import EvalRegist from "./EvalRegist.vue";
 import EvalListItem from "./EvalListItem.vue";
 export default {
@@ -28,7 +28,7 @@ export default {
     this.getEvalQuestionList(this.$route.params.no);
   },
   computed: {
-    ...mapState("company", ["jobopening", "evalquestionlist"]),
+    ...mapGetters("company", ["jobopening", "evalquestionlist"]),
   },
   methods: {
     ...mapActions("company", ["getEvalQuestionList"]),

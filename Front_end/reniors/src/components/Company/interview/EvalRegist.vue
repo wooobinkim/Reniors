@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -17,7 +17,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("company", ["jobopening"]),
+    ...mapGetters("company", ["jobopening"]),
   },
   methods: {
     ...mapActions("company", ["registEvalQuestion"]),

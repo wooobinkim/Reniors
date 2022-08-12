@@ -111,15 +111,15 @@
     </div>
 
     <div class="mb-3 mt-3">
-        <label class="form-label">채용공고 이미지 </label>
-        <input
-          type="file"
-          class="form-control"
-          placeholder="이미지를 선택해주세요"
-          ref="img"
-          @change="changeImg()"
-        />
-      </div>
+      <label class="form-label">채용공고 이미지 </label>
+      <input
+        type="file"
+        class="form-control"
+        placeholder="이미지를 선택해주세요"
+        ref="img"
+        @change="changeImg()"
+      />
+    </div>
 
     <div class="mb-3 mt-3">
       <label for="jobPosition" class="form-label">직책</label>
@@ -177,7 +177,7 @@
 <script setup>
 import Datepicker from "vue3-datepicker";
 // import { ref } from "vue";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import moment from "moment";
 // const picked = ref(new Date())
 </script>
@@ -220,7 +220,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("category", [
+    ...mapGetters("category", [
       "sidos",
       "guguns",
       "jobparents",
@@ -250,11 +250,13 @@ export default {
       );
 
       const formData = new FormData();
-        formData.append("img", this.jobOpeningImg[0]);
-        formData.append(
-          "data",
-          new Blob([JSON.stringify(this.jobopening)], { type: "application/json" })
-        );
+      formData.append("img", this.jobOpeningImg[0]);
+      formData.append(
+        "data",
+        new Blob([JSON.stringify(this.jobopening)], {
+          type: "application/json",
+        })
+      );
 
       this.registJobOpening(formData);
       this.$router.push({ name: "companyjobopeninglist" });

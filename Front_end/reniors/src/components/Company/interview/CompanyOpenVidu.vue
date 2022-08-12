@@ -112,7 +112,7 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "@/components/openvidu/UserVideo.vue";
 import ResumeView from "@/components/Company/interview/ResumeView.vue";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import OpenviduEvalList from "@/components/Company/interview/OpenviduEvalList.vue";
 // import { mapActions } from "vuex";
 
@@ -156,7 +156,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("company", ["companyinfo", "interviewer"]),
+    ...mapGetters("company", ["companyinfo", "interviewer"]),
   },
   watch: {
     companyinfo: function (data) {

@@ -27,7 +27,7 @@
 
 <script setup>
 import "@vuepic/vue-datepicker/dist/main.css";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 </script>
 <script>
 import ApplierResumeListItem from "./ApplierResumeListItem.vue";
@@ -54,7 +54,7 @@ export default {
     this.getapplylist(this.$route.params.no);
   },
   computed: {
-    ...mapState("company", ["jobopening", "applylist"]),
+    ...mapGetters("company", ["jobopening", "applylist"]),
   },
   methods: {
     ...mapActions("company", [

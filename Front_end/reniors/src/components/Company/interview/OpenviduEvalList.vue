@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import OpenviduEvalListItem from "./OpenviduEvalListItem.vue";
 export default {
   components: {
@@ -21,7 +21,7 @@ export default {
     this.getEvalQuestionList(this.$route.params.no);
   },
   computed: {
-    ...mapState("company", ["evalquestionlist"]),
+    ...mapGetters("company", ["evalquestionlist"]),
   },
   methods: {
     ...mapActions("company", ["getEvalQuestionList", "updateApply"]),

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 import InterviewListItem from "./InterviewListItem.vue";
 export default {
   components: { InterviewListItem },
@@ -21,7 +21,7 @@ export default {
     ...mapActions("company", ["getinterviewapplylistasc"]),
   },
   computed: {
-    ...mapState("company", ["interviewapplylistasc"]),
+    ...mapGetters("company", ["interviewapplylistasc"]),
     ...mapMutations("company", ["CLEAR_INTERVIEW_APPLY_LIST_ASC"]),
   },
 };

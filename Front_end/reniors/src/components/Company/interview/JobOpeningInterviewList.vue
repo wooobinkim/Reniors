@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 import JobOpeningInterviewListItem from "./JobOpeningInterviewListItem.vue";
 export default {
   components: { JobOpeningInterviewListItem },
@@ -18,7 +18,7 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapState("company", ["jobopeninglisting"]),
+    ...mapGetters("company", ["jobopeninglisting"]),
     ...mapMutations("company", ["CLEAR_JOBOPENING_LIST"]),
   },
   methods: {

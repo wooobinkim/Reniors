@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import UserEvalListItem from "./UserEvalListItem.vue";
 export default {
   components: {
     UserEvalListItem,
   },
   computed: {
-    ...mapState("company", ["userevallist", "jobopening"]),
+    ...mapGetters("company", ["userevallist", "jobopening"]),
   },
   created() {
     let data = {
