@@ -2,6 +2,7 @@ import axios from 'axios'
 import drf from '@/api/drf'
 import _ from 'lodash'
 import http from '@/api/http'
+import router from '@/router'
 
 
 export default {
@@ -20,6 +21,7 @@ export default {
     selectedJobopening: state => state.selectedJobopening,
     bookmarks: state => state.bookmarks,
     bookmarkId: state => state.bookmarks.find(bookmark => bookmark.jobOpeningResponse.id === state.selectedJobopening.id)?.id,
+    applies: state => state.applies,
     isApply: state => {
       if (state.applies.find(apply => apply.jobOpeningId === state.selectedJobopening.id) === undefined) return false
       else return true
@@ -33,12 +35,27 @@ export default {
     APPLIES: (state, applies) => state.applies = applies,
   },
   actions: {
+    // all jobopenings
     async fetchJobopenings({ commit }) {
-      console.log('jobopening fetch execute')
       const response = await axios.get(drf.jobopening.get())
       const data = response.data.content
       console.log(data)
       commit('JOBOPENINGS', data)
+    },
+
+    // applied jobopenings
+    async fetchApplied({ commit }) {
+      commit('JOBOPENINGS', [])
+      const response = await http.get('/jobopening/apply')
+      console.log(response)
+      commit('JOBOPENINGS', response.data)
+    },
+    
+    // bookmarked jobopenings
+    async fetchBookmarked({ commit }) {
+      commit('JOBOPENINGS', [])
+      const response = await http.get('/jobopening/bookmark')
+      commit('JOBOPENINGS', response.data)
     },
     async selectJobopening({ commit }, id) {
       console.log('select jobopening')
@@ -56,6 +73,7 @@ export default {
       const response = await http.post(`/jobopening/${jobopeningId}/apply`)
       console.log(response)
       alert('지원 성공!')
+      router.go(0)
     },
     async fetchBookmark({ commit }) {
       const response = await http.get('/jobopening/bookmark')

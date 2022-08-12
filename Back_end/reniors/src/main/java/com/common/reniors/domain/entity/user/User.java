@@ -1,7 +1,7 @@
 package com.common.reniors.domain.entity.user;
 
-import com.common.reniors.domain.entity.Room;
 import com.common.reniors.domain.entity.Apply;
+import com.common.reniors.domain.entity.Room;
 import com.common.reniors.domain.entity.SearchCondition;
 import com.common.reniors.domain.entity.Type.Gender;
 import com.common.reniors.domain.entity.Type.IsOpen;
@@ -10,9 +10,10 @@ import com.common.reniors.domain.entity.Type.Role;
 import com.common.reniors.domain.entity.UserEval;
 import com.common.reniors.domain.entity.board.Board;
 import com.common.reniors.domain.entity.board.Comment;
-import com.common.reniors.domain.entity.recording.Recording;
 import com.common.reniors.domain.entity.interviewQuestion.Answer;
+import com.common.reniors.domain.entity.notification.Notification;
 import com.common.reniors.domain.entity.recommend.RecommendCondition;
+import com.common.reniors.domain.entity.recording.Recording;
 import com.common.reniors.domain.entity.resume.Award;
 import com.common.reniors.domain.entity.resume.CareerDetail;
 import com.common.reniors.domain.entity.resume.License;
@@ -129,6 +130,10 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recording> recordings = new ArrayList<>();
+
+    // 회원 - 알림 연관관계
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Notification> notifications = new ArrayList<>();
 
    public static User create(String userAppId, String userAppPwd, String kakaoId, String name, Date birth, Gender gender, String phone, int totalCareer, String address, String extraAddress, IsOpen isOpen, LastEdu lastEdu, String baseURL, String userProfile) {
         User user = new User();

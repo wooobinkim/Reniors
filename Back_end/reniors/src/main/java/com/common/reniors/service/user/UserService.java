@@ -113,6 +113,7 @@ public class UserService {
 
     @Transactional
     public String kakaoLogin(String code, HttpServletResponse response, String baseURL) throws JsonProcessingException {
+        System.out.println("code = " + code);//////////////////////////////////
         // 1. "인가 코드"로 "액세스 토큰" 요청
         String accessToken = getAccessToken(code);
 
@@ -221,6 +222,7 @@ public class UserService {
 
     // 4. 강제 로그인 처리
     public String forceLogin(User kakaoUser) {
+        System.out.println("kakaoUser.getId() = " + kakaoUser.getId());//////////////////////////////
         return jwtUtil.createToken(kakaoUser.getId(), "user");
     }
     /*
