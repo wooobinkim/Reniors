@@ -3,6 +3,7 @@ package com.common.reniors.controller;
 import com.common.reniors.common.config.data.service.AwsS3Service;
 import com.common.reniors.common.config.web.LoginUser;
 import com.common.reniors.domain.entity.user.User;
+import com.common.reniors.dto.kakao.KakaoUserCreateRequest;
 import com.common.reniors.dto.kakao.KakaoUserInfo;
 import com.common.reniors.dto.mail.MailDto;
 import com.common.reniors.dto.user.UserCreateRequest;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +35,7 @@ public class UserController {
     private final AwsS3Service awsS3Service;
 
     // 아이디 중복 검사
-    @GetMapping(path="/idCheck/{userAppId}")
+    @GetMapping(path = "/idCheck/{userAppId}")
     @ApiOperation(value = "아아디 중복 검사", notes = "아이디 중복 검사를 진행합니다.")
     public ResponseEntity<?> idCheck(
             @PathVariable String userAppId
@@ -45,21 +45,34 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    // 카카오 계정 정보 가져오기
+    @GetMapping("/kakao/callback")
+    @ApiOperation(value = "카카오 계정 정보 가져오기", notes = "카카오 계정 정보를 가져옵니다.")
+    public ResponseEntity<?> getKakaoUserInfo(
+            @RequestParam String code
+    ) throws JsonProcessingException {
+        String accessToken = userService.getAccessToken(code);
+        KakaoUserInfo kakaoUserInfo = userService.getKakaoUserInfo(accessToken);
+        Map<String, KakaoUserInfo> response = new HashMap<>();
+        response.put("kakaoUserInfo", kakaoUserInfo);
+        return ResponseEntity.ok(response);
+    }
+
     // 카카오 회원가입/로그인
-    @GetMapping("/login/kakao")
+    @GetMapping("/kakao/login")
     @ApiOperation(value = "카카오 로그인/회원가입", notes = "카카오 계정으로 로그인/회원가입을 합니다.")
     public ResponseEntity<?> kakaoLogin(
-            @RequestParam String code,
-            HttpServletResponse response
-    ) throws JsonProcessingException {
-        String accessToken = userService.kakaoLogin(code, response, baseURL);
+            @Valid @RequestBody KakaoUserCreateRequest request
+    ) {
+        User kakaoUser = userService.registerKakaoUserIfNeed(request, baseURL);
+        String authentication = userService.LoginKakaoUser(kakaoUser);
         return ResponseEntity.status(HttpStatus.OK)
-                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .header(HttpHeaders.AUTHORIZATION, authentication)
                 .build();
     }
 
     // 자체 서비스 회원가입
-    @PostMapping(path="/regist",consumes = {"multipart/form-data"})
+    @PostMapping(path = "/regist", consumes = {"multipart/form-data"})
     @ApiOperation(value = "자체 서비스 회원가입", notes = "회원가입에 필요한 정보를 입력하고 회원으로 가입합니다.")
     public ResponseEntity<?> registUser(
             @RequestPart(value = "img", required = false) final MultipartFile file,
@@ -67,10 +80,10 @@ public class UserController {
     ) throws Exception {
         // TODO : URL 추가
         String userProfile = "userBaseProfile.png";
-        if(file != null) {
+        if (file != null) {
             userProfile = awsS3Service.uploadFile(file, "user/");
         }
-        Long userId = userService.createUser(request, baseURL, "user/"+userProfile);
+        Long userId = userService.createUser(request, baseURL, "user/" + userProfile);
         Map<String, Long> response = new HashMap<>();
         response.put("userId", userId);
         return ResponseEntity.ok(response);
@@ -97,6 +110,15 @@ public class UserController {
         return ResponseEntity.ok(userService.readUser(user));
     }
 
+    // 카카오 회원 정보 조회
+    @GetMapping("/kakaouser")
+    @ApiOperation(value = "카카오 회원 정보 조회", notes = "카카오 회원의 정보를 조회합니다.")
+    public ResponseEntity<?> readKakaoUser(
+            @ApiIgnore @LoginUser User user
+    ) {
+        return ResponseEntity.ok(userService.readKakaoUser(user));
+    }
+
     // 회원 목록 조회
     @GetMapping("/list")
     @ApiOperation(value = "회원 목록 조회", notes = "회원 목록을 조회합니다.")
@@ -115,10 +137,10 @@ public class UserController {
     ) throws Exception {
         String userProfile = "userBaseProfile.png";
         // 프로필사진을 바꿀 것인지 확인
-        if(file != null && request.isChangeProfile()) {
+        if (file != null && request.isChangeProfile()) {
             userProfile = awsS3Service.uploadFile(file, "user/");
         }
-        userService.updateUser(user.getId(), request, baseURL+"user/", userProfile);
+        userService.updateUser(user.getId(), request, baseURL + "user/", userProfile);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

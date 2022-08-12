@@ -17,6 +17,7 @@ import com.common.reniors.domain.entity.recording.Recording;
 import com.common.reniors.domain.entity.resume.Award;
 import com.common.reniors.domain.entity.resume.CareerDetail;
 import com.common.reniors.domain.entity.resume.License;
+import com.common.reniors.dto.kakao.KakaoUserCreateRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -173,19 +174,21 @@ public class User {
        this.userAppPwd = newPwd;
     }
 
-    public static User createKakaoUser(String kakaoId, String name, Gender gender, String baseURL, String userProfile) {
+    public static User createKakaoUser(KakaoUserCreateRequest request, String baseURL) {
        User user = new User();
-       user.kakaoId = kakaoId;
-       user.name = name;
-       user.gender = gender;
-       user.phone = "01012345678";
+       user.kakaoId = request.getKakaoId();
+       user.name = request.getName();
+       user.birth = request.getBirth();
+       user.gender = request.getGender();
+       user.phone = request.getPhone();
        user.role = Role.ROLE_USER;
-       user.address = "대전";
-       user.extraAddress = "서구";
-       user.isOpen = IsOpen.CLOSE;
-       user.lastEdu = LastEdu.학력무관;
+       user.totalCareer = request.getTotalCareer();
+       user.address = request.getAddress();
+       user.extraAddress = request.getExtraAddress();
+       user.isOpen = request.getIsOpen();
+       user.lastEdu = request.getLastEdu();
        user.baseURL = baseURL;
-       user.userProfile = userProfile;
+       user.userProfile = request.getUserProfile();
        return user;
     }
 }
