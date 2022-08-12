@@ -69,7 +69,7 @@ export default {
     margin-top: 40px;
   }
   .home-search-text {
-    width: 440px;
+    width: 40vh;
   }
 }
 

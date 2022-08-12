@@ -7,7 +7,7 @@
     <div class="jobopening-navbar-right">
       <font-awesome-icon class="bookmark-icon" v-if="isBookmarked" icon="fa-solid fa-bookmark" @click="deleteBookmark(bookmarkId)" />
       <font-awesome-icon class="bookmark-icon" v-else icon="fa-regular fa-bookmark" @click="addBookmark(jobopeningId)" />
-      <router-link to="profile" class="navbar-profile">
+      <router-link :to="{ name: 'MyPage' }" class="navbar-profile">
         <img :src="this.currentUser.baseURL + this.currentUser.userProfile" alt="">
       </router-link>
     </div>
@@ -17,6 +17,7 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { useToast } from 'bootstrap-vue-3'
 
 export default {
   name: 'NavBar',
@@ -25,6 +26,7 @@ export default {
   },
   setup() {
     const store = useStore()
+    const toast = useToast()
 
     const currentUser = computed(() => store.getters['currentUser'])
 
@@ -39,8 +41,14 @@ export default {
       if (bookmarkId.value === undefined) return false
       else return true
     })
-    const addBookmark = (jobopeningId) => store.dispatch('jobopening/addBookmark', jobopeningId)
-    const deleteBookmark = (bookmarkId) => store.dispatch('jobopening/deleteBookmark', bookmarkId)
+    const addBookmark = (jobopeningId) => {
+      toast.show({body: '북마크가 설정되었습니다.'}, {variant: 'warning', pos: 'top-center', delay: 1000})
+      return store.dispatch('jobopening/addBookmark', jobopeningId)
+    }
+    const deleteBookmark = (bookmarkId) => {
+      toast.show({body: '북마크가 해제되었습니다.'}, {variant: 'warning', pos: 'top-center', delay: 1000})
+      store.dispatch('jobopening/deleteBookmark', bookmarkId)
+    }
 
     return {
       currentUser,
