@@ -150,7 +150,8 @@ public class JobOpeningService {
         SearchCondition searchCondition = searchConditionRepository.findById(searchConditionId).orElseThrow(() -> new NotFoundException("not found searchCondition"));
 
         SearchConditionResponse searchConditionResponse = SearchConditionResponse.response(searchCondition,
-                jobParentCategoryRepository.findById(searchCondition.getJobParentCategoryId()).get().getName());
+                jobParentCategoryRepository.findById(searchCondition.getJobParentCategoryId()).isPresent()==true?
+                        jobParentCategoryRepository.findById(searchCondition.getJobParentCategoryId()).get().getName():null);
 
         return searchConditionResponse;
     }
