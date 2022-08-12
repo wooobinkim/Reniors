@@ -40,6 +40,8 @@ export default {
   padding: 20px;
   box-shadow: 0px 0px 3px var(--color-black-2);
   text-align: start;
+  text-decoration: none;
+  color: black;
 }
 
 .condition-result-item p {
