@@ -53,7 +53,7 @@ public class JobOpeningService {
     //공고 조건 생성(지역, 직무 제외)
     @Transactional
     public Long postSearchCondition(User user, SearchConditionCreateRequest searchConditionCreateRequest){
-        JobParentCategory jobParentCategory = jobParentCategoryRepository.findById(searchConditionCreateRequest.getJobParentCategoryId()).orElseThrow(() -> new NotFoundException("not found jpc"));
+//        JobParentCategory jobParentCategory = jobParentCategoryRepository.findById(searchConditionCreateRequest.getJobParentCategoryId()).orElseThrow(() -> new NotFoundException("not found jpc"));
         SearchCondition searchCondition = new SearchCondition(searchConditionCreateRequest, user);
 
         Long id = searchConditionRepository.save(searchCondition).getId();
