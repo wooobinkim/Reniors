@@ -7,17 +7,15 @@ import com.common.reniors.domain.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class Notification {
+public class Notification extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id")
@@ -28,11 +26,8 @@ public class Notification {
     private JobOpeningProcess jobOpeningProcess;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private IsRead isRead;
-
-    @NotNull
-    @CreatedDate
-    private Date createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
