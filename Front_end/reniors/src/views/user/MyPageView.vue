@@ -45,8 +45,8 @@
         <router-link :to="{ name: 'FindPassword' }" class ="calendar"><img style="width: 23px; height: 23px; align: absmiddle; filter: drop-shadow(0px 0.5px 0.5px rgba(0, 0, 0, 0.25));" src="@/assets/calendar.svg" alt="calendar">      나의 <span>일정</span> 확인!</router-link>
       </div>
       <br>
-      <button><span style="color: #37BF99; font-size: 20px;">{{ apply }}</span> <br><br> 지원 현황</button>
-      <button><span style="color: #ffb252; font-size: 20px;">{{ scrap }}</span> <br><br> 관심 공고</button>
+      <button @click="toApplied"><span style="color: #37BF99; font-size: 20px;">{{ applyNumber }}</span> <br><br> 지원 현황</button>
+      <button @click="toBookmark"><span style="color: #ffb252; font-size: 20px;">{{ bookmarkNumber }}</span> <br><br> 관심 공고</button>
     </div>
 
     <br>
@@ -55,24 +55,47 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { computed } from 'vue'
+import { mapActions, mapGetters, useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 export default {
   name: "MyPageView",
   components: { },
   data() {
-    return {
-      apply: 1,
-      scrap: 2, 
-    }
   },
   computed: {
     ...mapGetters(['currentUser', 'prefer'])
   },
-  setup() {},
+  setup() {
+    const store = useStore()
+    const router = useRouter()
+
+    const fetchApply = () => store.dispatch('jobopening/fetchApply')
+    const fetchBookmark = () => store.dispatch('jobopening/fetchBookmark')
+    fetchApply()
+    fetchBookmark()
+
+    const applyNumber = computed(() => store.getters['jobopening/applies'].length)
+    const bookmarkNumber = computed(() => store.getters['jobopening/bookmarks'].length)
+
+    const toApplied = () => {
+      router.push({ name: 'Jobopening' })
+      return store.dispatch('jobopening/fetchApplied')
+    }
+
+    const toBookmark = () => {
+      router.push({ name: 'Jobopening' })
+      return store.dispatch('jobopening/fetchBookmarked')
+    }
+
+    return {
+      toApplied, toBookmark, applyNumber, bookmarkNumber,
+    }
+  },
   mounted() {},
   unmounted() {},
   methods: {
-    ...mapActions(['fetchCurrentUser', 'fetchPrefer'])
+    ...mapActions(['fetchCurrentUser', 'fetchPrefer']),
   },
   created() {
     this.fetchCurrentUser()

@@ -4,7 +4,7 @@
       <p class="jobopening-item-company">{{ jobopening.companyName }}</p>
       <p class="jobopening-item-title">{{ jobopening.title }}</p>
     </div>
-    <p class="jobopening-item-period">{{ createDate }} ~ {{ finishedDate }}</p>
+    <p class="jobopening-item-period">{{ createDate }} ~ <br>{{ finishedDate }}</p>
   </router-link>
 </template>
 

@@ -4,7 +4,7 @@
       <JobopeningItem
         v-for="(jobopening, index) in jobopenings"
         :key="index"
-        :jobopening="jobopening"
+        :jobopening="jobopening.jobOpeningResponse"
       />
     </div>
     <div v-else>아직 채용공고가 없어요!</div>
@@ -23,10 +23,6 @@ export default {
   },
   setup() {
     const store = useStore()
-
-    console.log(store)
-    const fetchJobopenings = () => store.dispatch('jobopening/fetchJobopenings')
-    fetchJobopenings()
 
     const jobopenings = computed(() => store.getters['jobopening/jobopenings'])
     const isJobopenings = computed(() => store.getters['jobopening/isJobopenings'])
