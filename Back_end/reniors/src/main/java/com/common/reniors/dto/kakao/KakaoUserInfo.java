@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class KakaoUserInfo {
-    private Long id;
     private String nickname;
     private String email;
     private Gender gender;
