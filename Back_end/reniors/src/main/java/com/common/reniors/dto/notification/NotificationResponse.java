@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -20,7 +20,7 @@ public class NotificationResponse {
 
     private IsRead isRead;
 
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     private ApplyResponse applyResponse;
 
@@ -28,7 +28,7 @@ public class NotificationResponse {
         return new NotificationResponse(notification.getId(),
                 notification.getJobOpeningProcess(),
                 notification.getIsRead(),
-                notification.getCreatedAt(),
+                notification.getCreatedDate(),
                 ApplyResponse.response(notification.getApply()));
     }
 }
