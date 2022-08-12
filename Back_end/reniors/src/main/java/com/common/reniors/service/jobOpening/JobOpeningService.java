@@ -122,7 +122,9 @@ public class JobOpeningService {
         List<SearchCondition> searchConditionList = searchConditionRepository.findByUser(user);
         List<SearchConditionResponse> searchConditionResponseList = searchConditionList.stream().map(s->
                 SearchConditionResponse.response(s,
-                        jobParentCategoryRepository.findById(s.getJobParentCategoryId()).get().getName())
+                        jobParentCategoryRepository.findById(s.getJobParentCategoryId()).isPresent()==true?
+                                jobParentCategoryRepository.findById(s.getJobParentCategoryId()).get().getName():null
+                               )
         ).collect(Collectors.toList());
 
         return searchConditionResponseList;
