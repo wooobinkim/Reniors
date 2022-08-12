@@ -27,7 +27,7 @@
                     <input v-model="mySessionId" class="form-control form1" type="text" required>
                 </p>
                 <p class="text-center">
-                    <button class="Btn1" @click="joinSession()">연습하기</button>
+                    <button class="Btn1" @click="[joinSession(), speech1()]">연습하기</button>
                 </p>
             </div>
         </div>
@@ -43,13 +43,13 @@
                     <user-video :stream-manager="publisher" :isAnswer="isAnswer" @click="updateMainVideoStreamManager(publisher)"/>
                 </div>
                 <i class="bi bi-x-circle-fill leaveBtn" type="button" id="buttonLeaveSession" @click="leaveSession" value="Leave session"></i>
-                <div v-if="isAnswer" class="questionTag">
+                <div v-if="isAnswer" class="questionTag" >
                     <p >{{idx + 1}}. {{ question }}</p>
                 </div>
                 <div v-if="!isAnswer" class="questionTag2">
                     <p >{{idx + 1}}. {{ question }}</p>
                 </div>
-                <i v-if="!this.isStart" class="bi bi-arrow-left-circle-fill preBtn" @click="preQ"></i>
+                <i v-if="!this.isStart" class="bi bi-arrow-left-circle-fill preBtn" @click="preQ" ></i>
                 <i v-if="!this.isEnd" class="bi bi-arrow-right-circle-fill nextBtn"  @click="nextQ"></i>
             </div>
 			<div id="session-header" v-if="isAnswer">
@@ -142,6 +142,9 @@ export default{
         idx:function(data){
             this.question = this.realquestions[this.selectedQ[data]-1].question
         },
+        question: function(data) {
+            this.speech(data)
+        }
     },
     created(){
         this.CLEAR_QUESTIONS
@@ -157,6 +160,19 @@ export default{
 
     },
     methods:{
+        speech1(){
+            setTimeout(() => {
+                const questionq = this.realquestions[this.selectedQ[0]-1].question
+                let utterThis = new SpeechSynthesisUtterance(questionq);
+                window.speechSynthesis.speak(utterThis);
+            }, 1000)
+        },
+        speech(sentence){
+            setTimeout(() => {
+                let utterThis = new SpeechSynthesisUtterance(sentence);
+                window.speechSynthesis.speak(utterThis);
+            }, 1000)
+        },
         isAnswerFun(){
             this.isAnswer = !this.isAnswer
         },
