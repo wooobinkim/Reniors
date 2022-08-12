@@ -14,6 +14,7 @@ export const user = {
 
       profile: {},
       prefer: {},
+      id: '',
 
       // 코드추가
       // isLogin: false,
@@ -32,7 +33,8 @@ export const user = {
      }),
 
       profile: state => state.profile,     
-      prefer: state => state.prefer 
+      prefer: state => state.prefer,
+      id: state => state.id
     },
 
     mutations: {
@@ -41,7 +43,8 @@ export const user = {
       SET_AUTH_ERROR: (state, error) => state.authError = error,
 
       SET_PROFILE: (state, profile) => state.profile = profile,
-      SET_PREFER: (state, prefer) => state.prefer = prefer
+      SET_PREFER: (state, prefer) => state.prefer = prefer,
+      SET_ID: (state, id) => state.id = id
 
       // 추가
       // SET_IS_LOGIN: (state, isLogin) => state.isLogin = isLogin,
@@ -79,7 +82,7 @@ export const user = {
           dispatch('saveToken', token)
           dispatch('fetchCurrentUser')
           // router 수정
-          router.push({ name: 'about'})
+          router.push({ name: 'home'})
         })
           // error 부분 추가
       },
@@ -247,8 +250,25 @@ export const user = {
         .catch(err => {
           console.log(err)
         })
+      },
+
+      findId({ commit }, credentials){
+        axios({
+          url: drf.user.userid(credentials.name, credentials.phone),
+          method: 'get',
+        })
+        .then((res)=> {
+          console.log(res.data)
+          commit('SET_ID', res.data)
+          router.push({ name: 'FindUsernameResult'})
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }
     },
+
+
 
     
 
