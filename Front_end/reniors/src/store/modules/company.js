@@ -381,6 +381,7 @@ export default {
       http
         .get(`/eval/${data.jobOpeningId}/usereval/${data.userId}`)
         .then(({ data }) => {
+          console.log(data);
           commit("SET_USER_EVAL_LIST", data);
         })
         .catch((error) => {

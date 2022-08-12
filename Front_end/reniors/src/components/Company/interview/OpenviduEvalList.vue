@@ -5,6 +5,8 @@
       :key="evalquestion.id"
       :evalquestion="evalquestion"
     ></openvidu-eval-list-item>
+
+    <button @click="finish()">평가 마치기</button>
   </div>
 </template>
 
@@ -22,7 +24,16 @@ export default {
     ...mapState("company", ["evalquestionlist"]),
   },
   methods: {
-    ...mapActions("company", ["getEvalQuestionList"]),
+    ...mapActions("company", ["getEvalQuestionList", "updateApply"]),
+    finish() {
+      this.updateApply({
+        jobOpeningId: this.$route.params.no,
+        applyId: this.interviewer,
+        apply: {
+          jobOpeningProcess: "면접심사중",
+        },
+      });
+    },
   },
 };
 </script>

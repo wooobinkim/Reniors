@@ -1,9 +1,11 @@
 <template>
   <div>
     <div>이름 :{{ apply.userId }}</div>
-
+    <div>{{ apply.jobOpeningProcess }}</div>
     <button @click="resumeview()">이력서보기</button>
-    <button>면접평가보기</button>
+    <router-link :to="{ name: 'usereval', params: { no: this.apply.userId } }">
+      <button>면접평가보기</button></router-link
+    >
   </div>
 </template>
 
@@ -15,22 +17,24 @@ import "@vuepic/vue-datepicker/dist/main.css";
 </script>
 <script>
 export default {
-  components: {
-  },
+  components: {},
   props: {
     apply: Object,
   },
   data() {
-    return {
-
-    };
+    return {};
   },
   computed: {
     // ...mapState("company", ["jobopening"]),
   },
   methods: {
+    resumeview() {
+      this.$router.push({
+        name: "resumeview",
+        params: { no: this.apply.userId },
+      });
+    },
     // ...mapActions("company", ["updateApply", "registRoom"]),
-   
   },
 };
 </script>
