@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import store from '@/store'
 import ResumeStepOne from "../components/resume/ResumeStepOne.vue";
 import ResumeStepTwo from "../components/resume/ResumeStepTwo.vue";
 import ResumeStepThree from "../components/resume/ResumeStepThree.vue";
@@ -397,9 +398,26 @@ const routes = [
   },
 ];
 
+
+
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-});
+})
+
+router.beforeEach((to, from, next) => {
+
+  const { isLogginedIn } = store.getters
+  console.log(isLogginedIn)
+  const noAuthPages = ['Login', 'LoginUser', 'LoginCompany', 'Signup', 'SignupComplete', 'FindPassword', 'FindUsername', 'home']
+  const isAuthRequired = !noAuthPages.includes(to.name)
+
+  if (isAuthRequired && !isLogginedIn) {
+    alert('Require Login. Redirecting..')
+    next({ name: 'Login' })
+  } else {
+    next()
+  }
+})
 
 export default router;
