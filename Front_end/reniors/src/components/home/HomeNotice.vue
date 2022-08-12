@@ -39,12 +39,12 @@ export default {
   margin-left: 10px;
 }
 
-.home-notice a {
-  color: var(--color-green-1);
-}
-
 .home-notice > div > p {
   font-weight: bold;
+}
+
+.home-notice > div > p > a {
+  color: var(--color-green-1);
 }
 
 .home-notice-count {
