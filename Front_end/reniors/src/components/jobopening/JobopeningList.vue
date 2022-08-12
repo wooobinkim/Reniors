@@ -47,7 +47,7 @@ export default {
 
 @media screen and (min-width: 720px) {
   .jobopening-list > div {
-    grid-template-columns: 170px 170px 170px 170px;
+    grid-template-columns: 20vh 20vh 20vh;
   }
 }
 </style>

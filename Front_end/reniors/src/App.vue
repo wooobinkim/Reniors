@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <b-container :toast="{root: true}" fluid="sm" position="position-fixed" style="z-index: 999;"></b-container>
     <router-view class="app-view" />
     <FooterComponent />
   </div>

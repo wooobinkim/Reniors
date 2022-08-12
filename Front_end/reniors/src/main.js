@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import BootstrapVue3 from 'bootstrap-vue-3'
+import BootstrapVue3, { BToastPlugin } from 'bootstrap-vue-3'
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.js"
@@ -18,4 +18,4 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 
 library.add(fas, far, fab)
 
-createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(store).use(router).use(BootstrapVue3).mount('#app')
+createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(store).use(router).use(BootstrapVue3).use(BToastPlugin).mount('#app')
