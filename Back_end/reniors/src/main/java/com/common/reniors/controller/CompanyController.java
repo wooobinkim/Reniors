@@ -112,7 +112,7 @@ public class CompanyController {
     @ApiOperation(value = "회사 공고 등록", notes = "회사가 공고를 등록한다.")
     public ResponseEntity<?> postJobOpening(
             @ApiIgnore @LoginCompany Company company,
-            @RequestPart(value = "img") MultipartFile file,
+            @RequestPart(value = "img", required = false) MultipartFile file,
             @RequestPart(value = "data") JobOpeningCreateRequest request){
         String jobOpeningImg = null;
         if(file != null) {
