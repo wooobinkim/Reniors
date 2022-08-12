@@ -3,7 +3,7 @@
       <form @submit.prevent="onSubmit" class="formGroup" >
         <div class="box">
           <label for="answer"></label>
-          <textarea type="text" class="form-control content" id="answer" placeholder="내용을 입력해주세요." v-model="this.answer"></textarea>
+          <textarea type="text" class="form-control content" id="answer" placeholder="내용을 입력해주세요." v-model="this.answer.answer"></textarea>
         </div>
         <div class="submit">
             <button type="submit" class="Btn">저장</button>
@@ -12,27 +12,31 @@
     </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default{ 
     name:'AnswerForm',
     components:{},
     props:{
-        answerObject: Object,
         action: String
     },
     data(){
         return{
-            answer: this.answerObject.answer,
             questionId: this.$route.params.question_id,
         };
     },
     setup(){},
-    created(){},
+    async created(){
+        await this.fetchAnswer(this.$route.params.question_id)
+    },
     mounted(){},
     unmounted(){},
+    watch:{},
+    computed:{
+        ...mapGetters(['answer'])
+    },
     methods:{
-        ...mapActions(['createAnswer', 'updateAnswer']),
+        ...mapActions(['createAnswer', 'updateAnswer', 'fetchAnswer']),
         onSubmit(){
             if (!this.answer){
                 alert('내용을 작성해주세요!')
@@ -40,15 +44,15 @@ export default{
             if (this.action === 'create' && this.answer) {
                 this.createAnswer({ 
                     questionId: this.questionId,
-                    content: this.answer
+                    content: this.answer.answer
                 })
             } else if (this.action === 'update') {
                 this.updateAnswer({
                     questionId: this.questionId,
-                    content: this.answer,
-
+                    content: this.answer.answer,
                 })
             }
+            this.fetchAnswer(this.questionId)
         }
     }
 }

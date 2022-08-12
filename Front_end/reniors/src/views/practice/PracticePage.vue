@@ -62,7 +62,7 @@
             </div>
 			
             <modal-pop 
-                v-if="this.isModal == true"
+                v-if="isModal==true"
                 :url="this.url"
             ></modal-pop>
 
@@ -132,10 +132,12 @@ export default{
             this.realquestions = target;
             this.selectedQ= {...this.selected}   
             this.question = {...target[this.selectedQ[0]-1]}.question
-            
         },
         idx:function(data){
             this.question = this.realquestions[this.selectedQ[data]-1].question
+        },
+        'this.isModal':function(){
+
         }
     },
     created(){
@@ -149,7 +151,8 @@ export default{
     },
     computed:{
         ...mapGetters(['selected','currentUser', 'questions', 'checklist']),
-        ...mapMutations(['CLEAR_QUESTIONS'])
+        ...mapMutations(['CLEAR_QUESTIONS']),
+
     },
     methods:{
         isAnswerFun(){
@@ -282,17 +285,19 @@ export default{
 			});
 		},
 
-        startRecording(session){
+        async startRecording(session){
 			this.isRecording = !this.isRecording
-			return new Promise (() => {
+			return await new Promise (() => {
 				axios
 				.post(
 					`${OPENVIDU_SERVER_URL}/openvidu/api/recordings/start`,
 					JSON.stringify({
 						session : session.sessionId,
+                        resolution : "344x560",
 						// outputMode: "INDIVIDUAL",
 						hasAudio: true,
-						hasVideo: true
+						hasVideo: true,
+                        outputMode: "COMPOSED",
 					}),{
 						auth: {
 							username: 'OPENVIDUAPP',
@@ -301,7 +306,12 @@ export default{
 					})
 					.then(res => {
 					console.log(res)
-					this.nowRecordingId = res.data.id })
+					this.nowRecordingId = res.data.id 
+                    console.log(this.nowRecordingId);
+                    })
+                    .catch((err)=>{
+                        console.log(err);    
+                    })
 					
 			})
 		},
@@ -320,7 +330,11 @@ export default{
 					})
 					.then(res => res.data)
 					.then(data => {
+                        console.log(data);
 						this.url = data.url
+                        console.log(this.url);
+                        this.reactModal
+                        console.log(this.isModal);
 					})
 			})
 		},
