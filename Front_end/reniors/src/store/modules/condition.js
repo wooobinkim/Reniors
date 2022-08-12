@@ -35,11 +35,11 @@ export default {
         lastEdu: payload.lastEdu,
         minCareer: payload.minCareer,
         minSalary: payload.minSalary,
-        typeEmployment: "정규직",
-        workingDay: payload.day,
-      };
-      console.log(data);
-      const response = await http.post(`/jobopening/condition`, data);
+        typeEmployment: payload.type,
+        workingDay: payload.day
+      }
+      console.log(data)
+      const response = await http.post('/jobopening/condition', data)
       // const response = await localtest.post(`http://localhost:8080/jobopening/condition`)
       const conditionId = response.data;
       payload.hopeareas.map(async (hopearea) => {

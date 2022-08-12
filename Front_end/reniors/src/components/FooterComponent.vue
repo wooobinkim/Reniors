@@ -12,8 +12,8 @@
     <div v-if="isLogginedIn" class="footer-profile" @click="dropdown">
       <img :src="this.currentUser.baseURL + this.currentUser.userProfile" alt="">
       <div class="footer-profile-dropdown" id="footerDropdown">
-        <router-link to="/mypage">MyPage</router-link> <br>
-        <p @click="removeToken">Logout</p> 
+        <router-link to="/mypage" class="footer-profile-dropdown-item">MyPage</router-link> <br>
+        <p class="footer-profile-dropdown-item" @click="removeToken">Logout</p> 
       </div>
     </div> 
     <router-link v-else class="footroute" to="/login">
@@ -54,7 +54,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 
 .footer {
   position: fixed;
@@ -139,5 +139,22 @@ export default {
 
 .footer-profile-dropdown.active {
   display: block;
+  animation: fade-in 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+
+.footer-profile-dropdown-item:hover {
+  cursor: pointer;
 }
 </style>
