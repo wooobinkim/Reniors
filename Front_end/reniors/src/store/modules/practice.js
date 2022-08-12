@@ -148,6 +148,7 @@ export default{
             commit("SET_RECORDS", res.data)
           
           })
+          .catch((err) => console.error(err.response))
         }
 
     }

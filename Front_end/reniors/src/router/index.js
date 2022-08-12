@@ -68,6 +68,7 @@ import VideoPracticeList from "@/views/practice/VideoPracticeList.vue";
 import AnswerUpdate from "@/views/practice/AnswerUpdate.vue";
 import PracticePage from "@/views/practice/PracticePage.vue";
 import PracticeBox from "@/views/practice/PracticeBox.vue";
+import VideoConfirm from "@/views/practice/VideoConfirm.vue"
 
 //interview
 import OpenVidu from "@/views/openvidu/OpenVidu.vue";
@@ -371,7 +372,7 @@ const routes = [
   {
     path: "/video/user",
     component: UserInterview,
-    name: "userInterview"
+    name: "userInterview",
   },
 
   //video practice
@@ -409,6 +410,12 @@ const routes = [
     path: "/practice/box",
     component: PracticeBox,
     name: "PracticeBox",
+  },
+  {
+    path: "/practice/box/:videoId",
+    component: VideoConfirm,
+    name: "videoConfirm",
+
   },
 
   //open vidu
