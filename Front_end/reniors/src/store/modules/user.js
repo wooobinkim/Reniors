@@ -265,7 +265,22 @@ export const user = {
         .catch(err => {
           console.log(err)
         })
-      }
+      },
+
+      findPwd({ commit }, credentials){
+        axios({
+          url: drf.user.userpwd(credentials.name, credentials.userAppId),
+          method: 'get',
+        })
+        .then((res)=> {
+          console.log(res.data)
+          console.log(commit)
+          router.push({ name: 'FindPasswordResult'})
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      },
     },
 
 
