@@ -1,6 +1,7 @@
 package com.common.reniors.domain.entity;
 
 import com.common.reniors.domain.entity.Type.JobOpeningProcess;
+import com.common.reniors.domain.entity.notification.Notification;
 import com.common.reniors.domain.entity.user.User;
 import com.common.reniors.dto.apply.ApplyUpdateRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -10,7 +11,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,6 +38,9 @@ public class Apply {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_opening_id")
     JobOpening jobOpening;
+
+    @OneToMany(mappedBy = "apply", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Notification> notifications = new ArrayList<>();
 
     public Apply(User user, JobOpening jobOpening) {
         this.jobOpeningProcess = JobOpeningProcess.서류심사중;

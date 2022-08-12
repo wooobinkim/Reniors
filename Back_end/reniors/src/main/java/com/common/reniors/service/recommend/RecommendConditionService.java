@@ -28,7 +28,6 @@ public class RecommendConditionService {
     private final GugunRepository gugunRepository;
     private final RecommendConditionRepository recommendConditionRepository;
 
-
     @Transactional
     public Long create(Long userId, RecommendConditionCreateRequest request) {
         User user = userRepository.findById(userId)
@@ -44,6 +43,10 @@ public class RecommendConditionService {
         return recommendConditionRepository.save(recommendCondition).getId();
     }
 
+    @Transactional
+    public RecommendConditionResponse read(Long userId) {
+        return RecommendConditionResponse.response(recommendConditionRepository.findByUserId(userId).get());
+    }
 
     @Transactional
     public void update(Long userId, RecommendConditionUpdateRequest request) {
@@ -56,18 +59,10 @@ public class RecommendConditionService {
         recommendCondition.update(jobParentCategory, gugun, request.getWorkingDay(), request.getMinSalary());
     }
 
-
     @Transactional
     public void delete(Long userId) {
         RecommendCondition recommendCondition = recommendConditionRepository.findByUserId(userId)
                 .orElseThrow(()->new NotFoundException(RECOMMEND_CONDITION_NOT_FOUND));
         recommendConditionRepository.delete(recommendCondition);
-    }
-
-
-    @Transactional
-    public RecommendConditionResponse read(Long userId) {
-        RecommendConditionResponse recommendConditionResponse = RecommendConditionResponse.response(recommendConditionRepository.findByUserId(userId).get());
-        return recommendConditionResponse;
     }
 }
