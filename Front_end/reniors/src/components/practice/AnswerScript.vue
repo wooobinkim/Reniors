@@ -28,9 +28,11 @@ export default{
     computed:{
         ...mapGetters(['answer'])
     },
-    created(){
+    async created(){
         if(this.checklist.includes(this.selectedQ[this.idx])){
-            this.fetchAnswer(this.selectedQ[this.idx] + 1)
+            console.log("selectedQ : "+this.selectedQ[this.idx]);
+            await this.fetchAnswer(this.selectedQ[this.idx])
+            console.log(this.answer);
         }
     },
 
@@ -40,7 +42,7 @@ export default{
     watch:{
         idx: function(data){
             if(this.checklist.includes(this.selectedQ[this.idx])){
-            this.fetchAnswer(this.selectedQ[data] + 1)}
+            this.fetchAnswer(this.selectedQ[data])}
             
         }
     }
