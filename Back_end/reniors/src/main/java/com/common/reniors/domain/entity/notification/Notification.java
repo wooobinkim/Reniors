@@ -28,6 +28,7 @@ public class Notification {
     private JobOpeningProcess jobOpeningProcess;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private IsRead isRead;
 
     @NotNull
