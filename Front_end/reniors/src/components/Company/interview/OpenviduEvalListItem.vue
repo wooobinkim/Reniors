@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   props: {
     evalquestion: Object,
@@ -23,7 +23,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("company", ["interviewer"]),
+    ...mapGetters("company", ["interviewer"]),
   },
   methods: {
     ...mapActions("company", ["registUserEval"]),

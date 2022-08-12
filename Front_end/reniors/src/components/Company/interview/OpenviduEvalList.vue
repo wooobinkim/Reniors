@@ -5,11 +5,13 @@
       :key="evalquestion.id"
       :evalquestion="evalquestion"
     ></openvidu-eval-list-item>
+
+    <button @click="finish()">평가 마치기</button>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import OpenviduEvalListItem from "./OpenviduEvalListItem.vue";
 export default {
   components: {
@@ -19,10 +21,19 @@ export default {
     this.getEvalQuestionList(this.$route.params.no);
   },
   computed: {
-    ...mapState("company", ["evalquestionlist"]),
+    ...mapGetters("company", ["evalquestionlist"]),
   },
   methods: {
-    ...mapActions("company", ["getEvalQuestionList"]),
+    ...mapActions("company", ["getEvalQuestionList", "updateApply"]),
+    finish() {
+      this.updateApply({
+        jobOpeningId: this.$route.params.no,
+        applyId: this.interviewer,
+        apply: {
+          jobOpeningProcess: "면접심사중",
+        },
+      });
+    },
   },
 };
 </script>

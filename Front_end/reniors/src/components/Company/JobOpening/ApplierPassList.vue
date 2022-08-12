@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-for="apply in applylist" :key="apply.id">
+    <template v-for="apply in applies" :key="apply.id">
       <template v-if="apply.jobOpeningProcess == '최종합격'">
         <div>
           <applier-pass-list-item
@@ -9,7 +9,7 @@
           >
           </applier-pass-list-item>
         </div>
-        <hr>
+        <hr />
       </template>
     </template>
   </div>
@@ -17,27 +17,44 @@
 
 <script setup>
 import "@vuepic/vue-datepicker/dist/main.css";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 </script>
 <script>
-import ApplierPassListItem from "./ApplierInterviewListItem.vue";
+import ApplierPassListItem from "./ApplierPassListItem.vue";
 export default {
   components: {
     ApplierPassListItem,
   },
   props: {
     // apply: Object,
-    jobopeningdetail:Object,
+    jobopeningdetail: Object,
   },
-
-  created(){
+  data() {
+    return {
+      applies: null,
+    };
+  },
+  watch: {
+    applylist: function (datas) {
+      this.applies = [];
+      datas.forEach((data) => {
+        data.interviewDate = new Date(data.interviewDate);
+        this.applies.push(data);
+      });
+    },
+  },
+  created() {
     this.getapplylist(this.$route.params.no);
   },
   computed: {
-    ...mapState("company", ["jobopening","applylist"]),
+    ...mapGetters("company", ["jobopening", "applylist"]),
   },
   methods: {
-    ...mapActions("company", ["getapplylist", "progressJobOpening","updateApply"]),
+    ...mapActions("company", [
+      "getapplylist",
+      "progressJobOpening",
+      "updateApply",
+    ]),
 
     resumeview() {
       this.$router.push({

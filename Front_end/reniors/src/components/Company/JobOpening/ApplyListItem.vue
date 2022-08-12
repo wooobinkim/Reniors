@@ -17,7 +17,7 @@
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 // import { ref } from "vue";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 // import moment from "moment";
 </script>
 <script>
@@ -39,7 +39,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("company", ["jobopening"]),
+    ...mapGetters("company", ["jobopening"]),
   },
   methods: {
     ...mapActions("company", ["updateApply", "registRoom"]),

@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 // import { mapActions } from "vuex";
 export default {
   data() {
@@ -80,7 +80,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("company", ["resume", "interviewer"]),
+    ...mapGetters("company", ["resume", "interviewer"]),
     ...mapMutations("company", ["CLEAR_INTERVIEWER"]),
   },
   created() {
