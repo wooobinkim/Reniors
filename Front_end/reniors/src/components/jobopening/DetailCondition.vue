@@ -2,7 +2,7 @@
   <div>
     <div class="jobopening-box">
       <h4>{{ jobopening.title }}</h4>
-      <p>{{ '회사이름이 안넘어옴 ㅠㅠ' }}</p>
+      <p>회사이름: null</p>
       <div class="jobopening-box-date">
         <div class="start-badge">시작</div>
         <p>{{ jobopening.createdDate?.split('T')[0] }}</p>
@@ -16,26 +16,24 @@
       <h3>모집조건</h3>
       <hr>
       <ConditionItem left="모집기간" :right="period" />
-      <ConditionItem left="경력" :right="jobopening.minCareer" />
+      <ConditionItem left="경력" :right="jobopening.minCareer + '년 이상'" />
       <ConditionItem left="학력" :right="jobopening.lastEdu" />
-      <ConditionItem left="성별" right="null" />
     </div>
     <div class="jobopening-box">
       <h3>근무조건</h3>
       <hr>
       <ConditionItem left="급여" :right="jobopening.minSalary + '원'" />
-      <ConditionItem left="지역" :right="sidos?.find((sido) => sido.value===jobopening?.sidoId)?.text + ' ' + guguns?.find((gugun) => gugun.value===jobopening?.gugunId)?.text" />
-      <ConditionItem left="근무기간" right="null" />
-      <ConditionItem left="근무요일" :right="jobopening.workingDay" />
-      <ConditionItem left="근무시간" right="null" />
+      <ConditionItem left="지역" :right="sidos?.find((sido) => sido.id===jobopening?.sidoId)?.name + ' ' + guguns?.find((gugun) => gugun.id===jobopening?.gugunId)?.name" />
+      <ConditionItem left="근무일" :right="'주 ' + jobopening.workingDay + '일'" />
     </div>
     <div class="jobopening-box">
       <h3>모집내용</h3>
       <hr>
-      <ConditionItem left="직책" :right="parents?.find((parent) => parent.value===jobopening?.jobParentCategory)?.text" />
-      <ConditionItem left="직무" :right="childs?.find((child) => child.value===jobopening?.jobChildCategoryId)?.text" />
+      <ConditionItem left="직책" :right="jobopening.jobPosition" />
+      <ConditionItem left="직무" :right="parents?.find((parent) => parent.id===jobopening?.jobParentCategory)?.name" />
+      <ConditionItem left="직무(상셰)" :right="childs?.find((child) => child.id===jobopening?.jobChildCategoryId)?.name" />
       <ConditionItem left="고용형태" :right="jobopening.typeEmployment" />
-      <ConditionItem left="모집인원" :right="jobopening.numberPeople" />
+      <ConditionItem left="모집인원" :right="jobopening.numberPeople + '명'" />
     </div>
   </div>
 </template>
@@ -110,8 +108,8 @@ export default {
 }
 
 .start-badge {
-  border: 1px solid var(--color-black-3);
-  color: var(--color-black-3);
+  border: 1px solid var(--color-black-2);
+  color: var(--color-black-2);
 }
 
 .end-badge {
