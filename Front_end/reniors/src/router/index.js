@@ -1,9 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-<<<<<<< HEAD
-import store from "@/store";
-=======
+
 // import store from '@/store'
->>>>>>> feature/FE_KAKAOLOGIN
+
 import ResumeStepOne from "../components/resume/ResumeStepOne.vue";
 import ResumeStepTwo from "../components/resume/ResumeStepTwo.vue";
 import ResumeStepThree from "../components/resume/ResumeStepThree.vue";
