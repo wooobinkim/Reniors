@@ -27,6 +27,7 @@ export default {
   margin-left: 10px;
   text-align: left;
   font-weight: bold;
+  font-size: 20px;
 }
 
 .home-jobopening-list {

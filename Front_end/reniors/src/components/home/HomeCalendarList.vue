@@ -1,58 +1,35 @@
 <template>
   <div>
-    <ul class="home-calendar-list">
-      <li class="home-calendar-item" v-for="todo, index in todos" :key="index" :id="'homeCalendarItem'+index">
-        <div>{{ todo.title }}</div>
-        <div>{{ todo.started_at }}</div>
-        <div>{{ todo.finished_at }}</div>
-      </li>
-    </ul>
+    <h2 class="home-jobopening-type">내가 북마크한 공고</h2>
+    <div class="home-calendar-list">
+      <router-link :to="{ name: 'JobopeningDetail', params: { jobopeningId: bookmark.jobOpeningResponse.id } }" class="home-calendar-item" v-for="bookmark, index in bookmarks" :key="index" :id="'homeCalendarItem'+index">
+        <div>{{ bookmark.jobOpeningResponse.companyName }}</div>
+        <div>{{ bookmark.jobOpeningResponse.title }}</div>
+        <div>~ {{ bookmark.jobOpeningResponse.finishedDate.split('T')[0] }}</div>
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
 export default {
   name: 'HomeCalendarList',
   setup() {
-    const todos = [
-      {
-        title: '관심 채용공고 제목 1 공고기간 끝남',
-        contents: '관심 채용공고 내용111111',
-        contents_img_path: 'https://i.pinimg.com/736x/b5/1f/dd/b51fdd7fca9aa714db29141ebd84f453.jpg',
-        started_at: '2022-07-20',
-        finished_at: '2022-07-30'
-      },
-      {
-        title: '관심 채용공고 제목 2',
-        contents: '관심 채용공고 222222222222',
-        contents_img_path: 'https://i.pinimg.com/736x/b5/1f/dd/b51fdd7fca9aa714db29141ebd84f453.jpg',
-        started_at: '2022-07-28',
-        finished_at: '2022-08-04'
-      },
-      {
-        title: '관심 채용공고 제목 3',
-        contents: '관심 채용공고 내용3',
-        contents_img_path: 'https://i.pinimg.com/736x/b5/1f/dd/b51fdd7fca9aa714db29141ebd84f453.jpg',
-        started_at: '2022-08-01',
-        finished_at: '2022-08-20'
-      },
-      {
-        title: '관심 채용공고 제목 4 미래',
-        contents: '관심 채용공고44444',
-        contents_img_path: 'https://i.pinimg.com/736x/b5/1f/dd/b51fdd7fca9aa714db29141ebd84f453.jpg',
-        started_at: '2022-08-10',
-        finished_at: '2022-08-20'
-      },
-    ]
+    const store = useStore()
+
+    const fetchBookmark = () => store.dispatch('jobopening/fetchBookmark')
+    fetchBookmark()
+
+    const bookmarks = computed(() => store.getters['jobopening/bookmarks'])
+    console.log(bookmarks)
 
     return {
-      todos
+      bookmarks,
     }
   },
-  mounted() {
-    const activeItem = document.querySelector('#homeCalendarItem1')
-    activeItem.classList.add('active')
-  }
 }
 </script>
 
@@ -64,10 +41,11 @@ export default {
   flex-wrap: no-wrap;
   overflow-x: scroll;
   overflow-y: hidden;
+  text-align: start;
 }
 
 .home-calendar-item {
-  background-color: var(--color-orange-4);
+  background-color: var(--color-orange-5);
   border: 1px solid var(--color-orange-1);
   border-radius: 0.3rem;
   margin: 10px;
@@ -75,10 +53,14 @@ export default {
   color: black;
   list-style: none;
   flex: 0 0 auto;
+  text-decoration: none;
 }
 
-.home-calendar-item.active {
-  background-color: var(--color-orange-1);
-  color: white;
+.home-calendar-item:hover {
+  color: black;
+}
+
+.home-calendar-item > div:first-child {
+  font-weight: bold;
 }
 </style>
