@@ -92,7 +92,7 @@ const routes = [
 
   //user
   {
-    path: "/api/users/login/kakao",
+    path: "/kakaologin",
     name: "kakaoLogin",
     component: () => import("../views/user/kakaoLogin.vue")
   },

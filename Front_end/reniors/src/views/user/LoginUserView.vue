@@ -86,7 +86,7 @@ export default {
     //     }
     //   }
     kakaologin(){
-      window.location.replace("https://kauth.kakao.com/oauth/authorize?client_id=4e4c47797fd9117b5651478290547b4f&redirect_uri=https://i7b307.p.ssafy.io/api/users/login/kakao&response_type=code")
+      window.location.replace("https://kauth.kakao.com/oauth/authorize?client_id=4e4c47797fd9117b5651478290547b4f&redirect_uri=https://i7b307.p.ssafy.io/kakaologin&response_type=code")
     }
   },
 };

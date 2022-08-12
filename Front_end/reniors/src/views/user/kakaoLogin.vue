@@ -43,6 +43,7 @@ export default {
   methods: {
     create(){
       this.codes = this.$route.query.code
+      console.log('확인')
       // this.getToken()
     },
     kakaologin(){
