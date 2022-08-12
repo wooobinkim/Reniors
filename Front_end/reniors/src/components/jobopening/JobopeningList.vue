@@ -2,8 +2,8 @@
   <div class="jobopening-list">
     <div v-if="isJobopenings">
       <JobopeningItem
-        v-for="jobopening in jobopenings"
-        :key="jobopening.job_opening_id"
+        v-for="(jobopening, index) in jobopenings"
+        :key="index"
         :jobopening="jobopening"
       />
     </div>
