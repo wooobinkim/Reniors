@@ -15,7 +15,8 @@ import FindPasswordView from "../views/user/FindPasswordView.vue";
 import FindUsernameView from "../views/user/FindUsernameView.vue";
 import MyPageView from "../views/user/MyPageView.vue";
 import MyinfoEdit from "../components/user/MyinfoEdit.vue";
-
+import FindUsernameResult from "../components/user/FindUsernameResult.vue"
+import FindPasswordResult from "../components/user/FindPasswordResult.vue"
 import PreferSetting from "../components/user/PreferSetting";
 import PreferSettingComplete from "../views/user/PreferSettingCompleteView.vue";
 
@@ -118,9 +119,19 @@ const routes = [
     component: FindPasswordView,
   },
   {
+    path: "/find/password",
+    name: "FindPasswordResult",
+    component: FindPasswordResult,
+  },
+  {
     path: "/find/username",
     name: "FindUsername",
     component: FindUsernameView,
+  },
+  {
+    path: "/find/username",
+    name: "FindUsernameResult",
+    component: FindUsernameResult,
   },
   {
     path: "/mypage",
