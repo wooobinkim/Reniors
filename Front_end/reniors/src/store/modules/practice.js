@@ -66,8 +66,8 @@ export default{
               router.push({ name: "QuestionList" });
             });
         },
-        fetchAnswer({getters, commit}, questionId) {
-            axios({
+        async fetchAnswer({getters, commit}, questionId) {
+            await axios({
               url:
                 "https://i7b307.p.ssafy.io/api" +
                 "/questions" +
@@ -79,6 +79,8 @@ export default{
               .then(
                 (res) => {
                   commit("SET_ANSWER", res.data);
+              }).catch((err)=> {
+                console.log(err);
               })
         },
         updateAnswer({getters, commit}, {questionId, content}) {

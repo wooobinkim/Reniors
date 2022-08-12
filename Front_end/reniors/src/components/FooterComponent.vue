@@ -12,19 +12,15 @@
     <div v-if="isLogginedIn" class="footer-profile" @click="dropdown">
       <img :src="this.currentUser.baseURL + this.currentUser.userProfile" alt="">
       <div class="footer-profile-dropdown" id="footerDropdown">
-        <router-link to="/mypage">MyPage</router-link> <br>
-        <p @click="removeToken">Logout</p> 
+        <router-link to="/mypage" class="footer-profile-dropdown-item">MyPage</router-link> <br>
+        <p class="footer-profile-dropdown-item" @click="removeToken">Logout</p> 
       </div>
     </div> 
     <router-link v-else class="footroute" to="/login">
       <i class="bi bi-person"></i>
       <p>Login</p>
     </router-link> 
-    <router-link  v-if="inter.id !== 1" class="footroute" :to="{name: 'boardMain', params:{'category_id' : inter.id}}">
-      <i class="bi bi-chat-left-quote"></i>
-      <p>커뮤니티</p>
-    </router-link> 
-    <router-link v-if="inter.id === 1" class="footroute" :to="{name: 'boardMain', params:{'category_id' : 1}}">
+    <router-link class="footroute" :to="{name: 'boardMain', params:{'category_id' : 1}}">
       <i class="bi bi-chat-left-quote"></i>
       <p>커뮤니티</p>
     </router-link> 
@@ -47,21 +43,18 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['fetchInterest', 'removeToken']),
+    ...mapActions(['removeToken']),
     dropdown () {
       document.querySelector('#footerDropdown').classList.toggle('active')
     },
   },
-  created(){
-    this.fetchInterest()
-  },
   computed:{
-    ...mapGetters(['interest', 'currentUser', 'isLogginedIn']),
+    ...mapGetters(['currentUser', 'isLogginedIn']),
   },
 };
 </script>
 
-<style scoped>
+<style>
 
 .footer {
   position: fixed;
@@ -146,5 +139,22 @@ export default {
 
 .footer-profile-dropdown.active {
   display: block;
+  animation: fade-in 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+
+.footer-profile-dropdown-item:hover {
+  cursor: pointer;
 }
 </style>

@@ -16,9 +16,7 @@
             <p>Q{{questionId}}. {{questions[questionId-1].question}}</p>
     </div>
     <answer-form
-        :answerObject="answer"
         action="update"
-        
     ></answer-form>
   </div>
 </template>
@@ -26,7 +24,7 @@
 
 
 import AnswerForm from '@/components/practice/AnswerForm.vue'
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default{ 
     name:'AnswerUpdate',
@@ -37,21 +35,14 @@ export default{
         };
     },
     setup(){},
-    created(){
-        this.fetchAnswer(this.questionId)
-    },
-    watch:{
-        $route: function(from){
-            this.fetchAnswer(from.params.question_id)
-        }
-    },
+    async created(){},
+    watch:{},
     mounted(){},
     unmounted(){},
     methods:{
-        ...mapActions(['fetchAnswer'])
     },
     computed:{
-        ...mapGetters(['answer', 'questions'])
+        ...mapGetters(['questions'])
     }
 }
 </script>
