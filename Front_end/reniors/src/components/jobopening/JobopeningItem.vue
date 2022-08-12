@@ -4,7 +4,7 @@
       <p class="jobopening-item-company">{{ jobopening.companyName }}</p>
       <p class="jobopening-item-title">{{ jobopening.title }}</p>
     </div>
-    <p class="jobopening-item-period">{{ createDate }} ~ {{ finishedDate }}</p>
+    <p class="jobopening-item-period">{{ createDate }} ~ <br>{{ finishedDate }}</p>
   </router-link>
 </template>
 
@@ -44,8 +44,8 @@ export default {
       const dayName = days[source.getDay()]
       return [year, month, day].join('-') + ` (${dayName})`;
     }
-    const createDate = tSBF(stringToDate(props.jobopening.createdDate))
-    const finishedDate = tSBF(stringToDate(props.jobopening.finishedDate))
+    const createDate = tSBF(stringToDate(props.jobopening?.createdDate))
+    const finishedDate = tSBF(stringToDate(props.jobopening?.finishedDate))
 
     return {
       createDate, finishedDate,
