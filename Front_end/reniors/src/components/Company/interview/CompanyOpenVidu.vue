@@ -39,13 +39,13 @@
     <div id="session" v-if="session">
       <div id="session-header">
         <h1 id="session-title">{{ mySessionId }}</h1>
-        <input
+        <!-- <input
           class="btn btn-large btn-danger"
           type="button"
           id="buttonLeaveSession"
           @click="leaveSession"
           value="Leave session"
-        />
+        /> -->
       </div>
       <!-- <div id="main-video" class="col-md-6">
         <user-video :stream-manager="mainStreamManager" />
@@ -74,6 +74,7 @@
       <template v-if="!audioflag">
         <button @click="audioonoff()">마이크켜기</button>
       </template>
+      <button @click="chatopen()">채팅</button>
 
       <div>지원자 : {{ interviewer }}</div>
       <template v-if="tab == 'resume'">
@@ -90,6 +91,18 @@
         <span @click="changeresume()">이력서보기 | </span>
         <span @click="changeeval()">평가하기</span>
       </div>
+      <div v-if="chatopenclose">
+        <input type="text" v-model="msg" />
+        <button @click="sendchat()">보내기</button>
+        <div><textarea v-model="receivemsg" /></div>
+      </div>
+      <input
+        class="btn btn-large btn-danger"
+        type="button"
+        id="buttonLeaveSession"
+        @click="leaveSession"
+        value="Leave session"
+      />
     </div>
   </div>
 </template>
@@ -135,6 +148,10 @@ export default {
       videoflag: true,
       audioflag: false,
       tab: "resume",
+      sendmsg: "",
+      receivemsg: "",
+      msgflag: true,
+      chatopenclose: false,
       //   myUserName: "Participant" + Math.floor(Math.random() * 100),
     };
   },
@@ -145,11 +162,15 @@ export default {
     companyinfo: function (data) {
       this.myUserName = data.name;
     },
+    session: function () {
+      this.session.on("signal", (event) => {
+        this.receivemsg += event.from + event.data + "\n";
+      });
+    },
   },
   created() {
     this.getCompany();
   },
-
   methods: {
     ...mapActions("company", ["getCompany"]),
     changeresume() {
@@ -166,6 +187,24 @@ export default {
       // } else {
       //   this.session.unpublishVideo(this.publisher);
       // }
+    },
+    sendchat() {
+      this.session
+        .signal({
+          data: this.sendmsg,
+          to: [],
+          type: "my-chat",
+        })
+        .then(() => {
+          this.msgflag = !this.msgflag;
+          this.sendmsg = "";
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    chatopen() {
+      this.chatopenclose = !this.chatopenclose;
     },
     audioonoff() {
       this.audioflag = !this.audioflag;

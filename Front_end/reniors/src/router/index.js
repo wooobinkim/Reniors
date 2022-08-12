@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import store from '@/store'
+import store from "@/store";
 import ResumeStepOne from "../components/resume/ResumeStepOne.vue";
 import ResumeStepTwo from "../components/resume/ResumeStepTwo.vue";
 import ResumeStepThree from "../components/resume/ResumeStepThree.vue";
@@ -19,8 +19,8 @@ import MyinfoEdit from "../components/user/MyinfoEdit.vue";
 import PreferSetting from "../components/user/PreferSetting";
 import PreferSettingComplete from "../views/user/PreferSettingCompleteView.vue";
 
-import CreateSetting from "../views/user/CreateSetting.vue"
-import UpdateSetting from "../views/user/UpdateSetting.vue"
+import CreateSetting from "../views/user/CreateSetting.vue";
+import UpdateSetting from "../views/user/UpdateSetting.vue";
 
 // import PreferSettingMain from "../components/user/PreferSettingMain"
 import CompanyHomeView from "@/views/home/CompanyHomeView.vue";
@@ -62,10 +62,9 @@ import QuestionList from "@/views/practice/QuestionList.vue";
 import QuestionAnswer from "@/views/practice/QuestionAnswer.vue";
 import VideoPractice from "@/views/practice/VideoPractice.vue";
 import VideoPracticeList from "@/views/practice/VideoPracticeList.vue";
-import AnswerUpdate from "@/views/practice/AnswerUpdate.vue"
-import PracticePage from "@/views/practice/PracticePage.vue"
-import PracticeBox from "@/views/practice/PracticeBox.vue"
-
+import AnswerUpdate from "@/views/practice/AnswerUpdate.vue";
+import PracticePage from "@/views/practice/PracticePage.vue";
+import PracticeBox from "@/views/practice/PracticeBox.vue";
 
 //interview
 import OpenVidu from "@/views/openvidu/OpenVidu.vue";
@@ -398,26 +397,31 @@ const routes = [
   },
 ];
 
-
-
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-})
+});
 
 router.beforeEach((to, from, next) => {
-
-  const { isLogginedIn } = store.getters
-  console.log(isLogginedIn)
-  const noAuthPages = ['Login', 'LoginUser', 'LoginCompany', 'Signup', 'SignupComplete', 'FindPassword', 'FindUsername', 'home']
-  const isAuthRequired = !noAuthPages.includes(to.name)
+  const { isLogginedIn } = store.getters;
+  const noAuthPages = [
+    "Login",
+    "LoginUser",
+    "LoginCompany",
+    "Signup",
+    "SignupComplete",
+    "FindPassword",
+    "FindUsername",
+    "home",
+  ];
+  const isAuthRequired = !noAuthPages.includes(to.name);
 
   if (isAuthRequired && !isLogginedIn) {
-    alert('Require Login. Redirecting..')
-    next({ name: 'Login' })
+    alert("Require Login. Redirecting..");
+    next({ name: "Login" });
   } else {
-    next()
+    next();
   }
-})
+});
 
 export default router;
