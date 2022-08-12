@@ -33,6 +33,8 @@ export default {
     authError: (state) => state.authError,
     // Authorization: `Token ${state.token}`
     authHeader: (state) => ({ Authorization: `Bearer ${state.token}` }),
+    jobopeninglisting: (state) => state.jobopeninglisting,
+    jobopeninglisted: (state) => state.jobopeninglisted,
   },
 
   mutations: {

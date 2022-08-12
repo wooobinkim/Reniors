@@ -45,6 +45,7 @@ export default {
     },
     finish() {
       this.finishJobOpening(this.jobopening.id);
+      this.$router.push({ name: "companyjobopeninglist" });
     },
   },
 };
