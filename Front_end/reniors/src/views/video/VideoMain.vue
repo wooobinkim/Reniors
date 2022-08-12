@@ -1,11 +1,21 @@
 <template>
   <div class="list">
     <div class="one">
-        <router-link :to="{ name:'openVidu' }" >
-            <button class="btn1">
+        <router-link :to="{ name:'userInterview' }" >
+            <button class="btn1" v-if="!this.title">
                 <div>
                     <i class="bi bi-chat-square-quote-fill " style="font-size:48px; color:#FF843E;"></i>
                     <p style="color:#FF843E; font-size: 20px; font-weight: bold; margin: 4px auto;">면접 보러 가기</p>
+                    
+                </div>
+            </button>
+            <button class="btn11" v-if="this.title">
+                <div class="btn112">
+                    <i class="bi bi-chat-square-quote-fill " style="font-size:48px; color:white;"></i>
+                    <div style="margin: 4px 4px;">
+                        <p style="color:white; font-size: 22px; font-weight: bold; margin: 0; ">면접 보러 가기</p>
+                        <p style="color:white; font-size: 16px; margin: 0;">기업명: {{title}}</p>
+                    </div>
                     
                 </div>
             </button>
@@ -33,20 +43,33 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex';
 
 export default{ 
     name:'VideoMain',
     components:{},
     data(){
         return{
-            sampleData:''
+            title: null,
+            sub: ',',
+            interviewId: ''
         };
     },
     setup(){},
-    created(){},
-    mounted(){},
-    unmounted(){},
-    methods:{}
+    created(){
+        this.fetchRooms()
+        if(this.rooms.length >= 1){
+            this.title = this.rooms[0].companyName
+            this.sub = this.rooms[0].jobOpeningName
+            this.interviewId = this.rooms[0].sessionId
+        }
+    },
+    methods:{
+        ...mapActions(['fetchRooms'])
+    },
+    computed:{
+        ...mapGetters(['rooms'])
+    }
 }
 </script>
 
@@ -83,11 +106,24 @@ export default{
     height: 160px;
     border: solid 1px;
     border-color: #FF843E;
-    background-color: #FFF5F0;
     border-radius: 10px;
     background-color: white;
     box-shadow: 1px 1px 1px gray;
     
+}
+.btn11 {
+    width: 82%;
+    height: 160px;
+    border: none;
+    background-color: #FF843E;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px gray;
+    
+}
+.btn112{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 .btn2 {
     width: 60%;
