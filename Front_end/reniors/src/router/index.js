@@ -54,10 +54,11 @@ import EvalRegist from "@/components/Company/interview/EvalRegist.vue";
 import BoardMain from "@/views/board/BoardMain.vue";
 import BoardDetail from "@/views/board/BoardDetail.vue";
 import BoardCreate from "@/views/board/BoardCreate.vue";
-import BoardUpdate from "@/views/board/BoardUpdate.vue";
+import BoardUpdate from "@/views/board/BoardUpdate.vue"
 
 //video
 import VideoMain from "@/views/video/VideoMain.vue";
+import UserInterview from "@/views/video/UserIntereview.vue";
 
 //practice
 import QuestionList from "@/views/practice/QuestionList.vue";
@@ -366,6 +367,11 @@ const routes = [
     path: "/video",
     component: VideoMain,
     name: "VideoMain",
+  },
+  {
+    path: "/video/user",
+    component: UserInterview,
+    name: "userInterview"
   },
 
   //video practice
