@@ -18,7 +18,8 @@ export default {
     login: () => HOST + USER,
     kakaoSignup: () => HOST + USER + "/kakao",
     kakaoLogin: () => HOST + USER + "/kakao",
-    userDetail: (userId) => HOST + USER + `/${userId}`,
+    userid: (name, phone) => HOST + USER + `/${name}` + '/findid' + `/${phone}`,
+    userpwd: (name, userAppId) => HOST + USER + `/${name}` + '/findpwd' + `/${userAppId}`,
     // id찾기, 비밀번호 찾기 이해를 못하겠음
     //
     userList: () => HOST + USER + "/list",

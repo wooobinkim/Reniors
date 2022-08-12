@@ -3,11 +3,11 @@
     <div class="jobopening-box">
       <h3>기업정보</h3>
       <hr>
-      <img src="" alt="">
-      <h5>{{ company.name }}</h5>
-      <ConditionItem left="설립연도" right="정보없음" />
-      <ConditionItem left="기업주소" right="정보없음" />
-      <ConditionItem left="홈페이지" right="정보없음" />
+      <img :src="jobopening.baseURL + jobopening.companyId" alt="">
+      <h5>{{ jobopening.companyName }}</h5>
+      <ConditionItem left="설립연도" :right="jobopening.companyEstablishedAt" />
+      <ConditionItem left="기업주소" :right="jobopening.companyAddress" />
+      <ConditionItem left="홈페이지" :right="jobopening.companyUrl" />
       <h4>이 기업의 다른 채용 공고</h4>
       <hr class="small">
       <div class="jobopening-detail-content" v-for="(jobopening, index) in relatedJobopenings" :key="index">
@@ -41,28 +41,10 @@ export default {
     const store = useStore()
 
     const jobopening = computed(() => store.getters['jobopening/selectedJobopening'])
-    const company = jobopening.value.companyDto
-
-    // dummy datas
-    const relatedJobopenings = [
-      {
-        title: '채용공고1',
-        jobPostion: '디자인',
-        minCareer: '경력무관',
-        lastEdu: '학력무관',
-        finishedDate: '2000.00.00 (금)'
-      },
-      {
-        title: '채용공고2',
-        jobPostion: '설계',
-        minCareer: '경력무관',
-        lastEdu: '초졸',
-        finishedDate: '2000.00.00 (금)'
-      },
-    ]
+    const company = computed(() => jobopening.value?.companyDto)
 
     return {
-      company, relatedJobopenings,
+      jobopening, company
     }
   }
 }

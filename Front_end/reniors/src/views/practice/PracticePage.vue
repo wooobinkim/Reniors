@@ -64,6 +64,7 @@
             <modal-pop 
                 v-if="isModal==true"
                 :url="this.url"
+
             ></modal-pop>
 
             <!-- footer -->
@@ -82,6 +83,9 @@
             </div>
         </div>
 	</div>
+
+        
+
 
 
   </div>
@@ -130,11 +134,12 @@ export default{
         questions:function (data) {
             const target = { ...data }
             this.realquestions = target;
-            this.selectedQ= {...this.selected}   
+
+            this.selectedQ= {...this.selected}         
             this.question = {...target[this.selectedQ[0]-1]}.question
+            
         },
         idx:function(data){
-            console.log(data);
             this.question = this.realquestions[this.selectedQ[data]-1].question
         },
     },

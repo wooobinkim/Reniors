@@ -251,7 +251,7 @@ export default {
     progressJobOpening: ({ commit }, data) => {
       console.log(data);
       http
-        .put(`/company/progress/${data.no}`,data.progress)
+        .put(`/company/progress/${data.no}`, data.progress)
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
         })
@@ -305,7 +305,7 @@ export default {
     },
     getResume: ({ commit }, no) => {
       http
-        .get(`/company/userInfo/${no}`)
+        .get(`/company/userdetail/${no}`)
         .then(({ data }) => {
           commit("SET_RESUME", data);
         })
