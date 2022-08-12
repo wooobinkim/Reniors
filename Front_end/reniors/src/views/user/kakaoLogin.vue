@@ -9,7 +9,7 @@
     <input type="text" v-model="form.lastEdu">
     <input type="text" v-model="form.birth">
     <input type="text" v-model="form.gender">
-    <input type="text" v-model="form.isOpen">
+    <input type="text" v-model="form.kakaoId">
   </div>
 </template>
 <script>
@@ -21,8 +21,6 @@ export default {
     return {
       codes: '',
       form: {
-        userAppId: '',
-        userAppPwd: '',
         name: '',
         phone: '',
         address: '',
@@ -31,6 +29,9 @@ export default {
         birth: '',
         gender: '',
         isOpen: 'CLOSE',
+        kakaoId: '',
+        totalCareer: 0,
+        userProfile: ''
       }
     }
   },
@@ -43,25 +44,21 @@ export default {
   methods: {
     create(){
       this.codes = this.$route.query.code
-      console.log('확인')
-      // this.getToken()
-    },
-    kakaologin(){
-      axios
-        .post()
+      this.getToken()
     },
     getToken(){
       axios
-        .get("https://i7b307.p.ssafy.io/api/users/login/kakao?code=" + this.codes)
+        .get("https://i7b307.p.ssafy.io/api/users/kakao/callback?code=" + this.codes)
         .then((res) => {
-          this.form.userAppId = res.data.email
-          this.form.userAppPwd = res.data.id
-          if (this.form.userAppPwd == undefined){
-            alert('틀림')
-            this.$router.push('/')
-          } else {
-            this.kakaologin()
-          }
+          console.log(res)
+          console.log(1)
+          this.form.kakaoId = res.data.kakaoUserInfo.email
+          this.form.gender = res.data.kakaoUserInfo.gender
+          this.form.userProfile = res.data.kakaoUserInfo.profileImage
+        })
+        .catch((err) => {
+          console.log(2)
+          console.log(err)
         })
     }
   }
