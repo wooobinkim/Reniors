@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -33,6 +35,12 @@ public class JobOpeningDetailResponse {
     private Long jobParentCategory;
     private Long jobChildCategoryId;
     private IsFinish isFinish;
+    private String companyName;
+    private String companyEstablishedAt;
+    private String companyAddress;
+    private String companyExtraAddress;
+    private String companyUrl;
+    private List<JobOpeningResponse> companyJobOpening;
 
     public static JobOpeningDetailResponse response(JobOpening jobOpening){
         return new JobOpeningDetailResponse(
@@ -54,7 +62,13 @@ public class JobOpeningDetailResponse {
                 jobOpening.getGugun().getId(),
                 jobOpening.getJobChildCategory().getParent().getId(),
                 jobOpening.getJobChildCategory().getId(),
-                jobOpening.getIsFinish()
+                jobOpening.getIsFinish(),
+                jobOpening.getCompany().getName(),
+                jobOpening.getCompany().getEstablishedAt(),
+                jobOpening.getCompany().getAddress(),
+                jobOpening.getCompany().getExtraAddress(),
+                jobOpening.getCompany().getCompanyUrl(),
+                jobOpening.getCompany().getJobOpenings().stream().map(j->JobOpeningResponse.response(j)).collect(Collectors.toList())
         );
     }
 }
