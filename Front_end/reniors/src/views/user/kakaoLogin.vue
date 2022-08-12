@@ -3,14 +3,14 @@
     <h1>카카오 로그인</h1>
     <form @submit.prevent="submit(forms)">
       {{ codes }}
-      <input type="text" v-model="form.name">
-      <input type="text" v-model="form.phone">
-      <input type="text" v-model="form.address">
-      <input type="text" v-model="form.extraAddress">
-      <input type="text" v-model="form.lastEdu">
-      <input type="date" v-model="form.birth">
-      <input type="text" v-model="form.gender">
-      <input type="text" v-model="form.kakaoId">
+      <input type="text" v-model="forms.name">
+      <input type="text" v-model="forms.phone">
+      <input type="text" v-model="forms.address">
+      <input type="text" v-model="forms.extraAddress">
+      <input type="text" v-model="forms.lastEdu">
+      <input type="date" v-model="forms.birth">
+      <input type="text" v-model="forms.gender">
+      <input type="text" v-model="forms.kakaoId">
       <button>제출</button>
     </form>
   </div>
