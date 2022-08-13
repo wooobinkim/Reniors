@@ -241,6 +241,24 @@ export const user = {
         })
         .catch((err) => console.error(err.response));
     },
+
+    kakaologin({ dispatch }){
+      axios({
+        url: "https://i7b307.p.ssafy.io/api/users/kakao/login",
+        method: 'post',
+        data: JSON.stringify(this.forms)        
+      })
+      .then((res) => {
+        const token = res.headers["authorization"]
+        dispatch("saveToken", token)
+        dispatch("fetchCurrentUser")
+        console.log(res)
+        router.push({ name: "home" })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
   },
 
   modules: {},
