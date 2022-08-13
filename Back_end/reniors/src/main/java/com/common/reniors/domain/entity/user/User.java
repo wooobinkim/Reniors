@@ -174,7 +174,7 @@ public class User {
        this.userAppPwd = newPwd;
     }
 
-    public static User createKakaoUser(KakaoUserCreateRequest request, String baseURL) {
+    public static User createKakaoUser(KakaoUserCreateRequest request, String baseURL, String userProfile) {
        User user = new User();
        user.kakaoId = request.getKakaoId();
        user.name = request.getName();
@@ -188,7 +188,7 @@ public class User {
        user.isOpen = request.getIsOpen();
        user.lastEdu = request.getLastEdu();
        user.baseURL = baseURL;
-       user.userProfile = request.getUserProfile();
+       user.userProfile = userProfile;
        return user;
     }
 }
