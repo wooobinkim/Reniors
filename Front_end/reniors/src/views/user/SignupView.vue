@@ -25,7 +25,7 @@
           <p>먼저, 로그인 시 사용하실 <span>이메일</span>과 <span>비밀번호</span>를 입력해주세요!</p>
           <br>
           <p class="forminfo">이메일</p>
-          <b-form-input class="mb-3 user-form-control" v-model="user.userAppId" type="text" placeholder="사용하실 이메일을 입력해주세요." ></b-form-input>
+          <b-form-input class="mb-3 user-form-control" v-model="user.userAppId" type="email" placeholder="사용하실 이메일을 입력해주세요." ></b-form-input>
           <p class="forminfo">비밀번호</p>
           <b-form-input class="mb-3 user-form-control" v-model="user.userAppPwd" type="password" placeholder="비밀번호를 입력해주세요." ></b-form-input>
           <p class="forminfo">비밀번호 확인</p>
