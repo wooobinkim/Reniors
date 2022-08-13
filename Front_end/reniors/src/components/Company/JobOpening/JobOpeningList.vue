@@ -49,9 +49,6 @@ export default {
     await this.getJobOpeningList();
   },
   watch: {
-    "jobopeninglisting.length":function(){
-      console.log(this.jobopeninglisting.length);
-    }
   },
   mounted() {
     //this.$router.go();

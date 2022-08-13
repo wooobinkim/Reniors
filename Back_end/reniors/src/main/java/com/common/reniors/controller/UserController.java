@@ -107,6 +107,7 @@ public class UserController {
     public ResponseEntity<?> readUser(
             @ApiIgnore @LoginUser User user
     ) {
+        System.out.println("USER : " + user);
         return ResponseEntity.ok(userService.readUser(user));
     }
 

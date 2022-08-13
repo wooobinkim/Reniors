@@ -69,7 +69,7 @@ public class UserService {
         } else {
             //비밀번호 확인
             if (passwordEncoder.matches(request.getUserAppPwd(), findUser.get().getUserAppPwd())) {
-                return jwtUtil.createToken(findUser.get().getId(), findUser.get().getName());
+                return jwtUtil.createToken(findUser.get().getId(), "user");
             } else {
                 throw new NotMatchException(PASSWORD_NOT_MATCH);
             }
@@ -196,7 +196,7 @@ public class UserService {
 
     // 로그인 처리 및 토큰 발급
     public String LoginKakaoUser(User kakaoUser) {
-        return jwtUtil.createToken(kakaoUser.getId(), kakaoUser.getName());
+        return jwtUtil.createToken(kakaoUser.getId(), "user");
     }
 
     @Transactional

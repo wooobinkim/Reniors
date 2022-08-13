@@ -3,7 +3,7 @@
     <div class="title">
       {{ jobopening.title }}
     </div>
-    <div class="title">
+    <div class="sub-title">
       {{jobopening.jobOpeningProcess}}
     </div>
     <div class="job-category">{{ jobopening.jobChildCategoryName }}</div>
@@ -30,7 +30,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .company-jobOpening-ing-list-item{
   width: 328px;
   padding: 20px;
@@ -44,6 +44,12 @@ export default {
   text-align: left;
   font-weight: bold;
   font-size: 16px;
+}
+.company-jobOpening-ing-list-item > .sub-title {
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  font-size: 14px;
 }
 .company-jobOpening-ing-list-item > .job-category {
   width: 100%;
