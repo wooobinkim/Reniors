@@ -59,7 +59,7 @@ public class UserController {
     }
 
     // 카카오 회원가입/로그인
-    @GetMapping("/kakao/login")
+    @PostMapping("/kakao/login")
     @ApiOperation(value = "카카오 로그인/회원가입", notes = "카카오 계정으로 로그인/회원가입을 합니다.")
     public ResponseEntity<?> kakaoLogin(
             @Valid @RequestBody KakaoUserCreateRequest request
