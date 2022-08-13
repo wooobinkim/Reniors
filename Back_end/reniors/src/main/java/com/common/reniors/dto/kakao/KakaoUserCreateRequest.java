@@ -45,7 +45,4 @@ public class KakaoUserCreateRequest {
 
     @Enumerated(EnumType.STRING)
     private LastEdu lastEdu;
-
-    @NotBlank
-    private String userProfile;
 }

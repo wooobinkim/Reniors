@@ -58,14 +58,49 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    // 카카오 회원가입/로그인
-    @PostMapping("/kakao/login")
-    @ApiOperation(value = "카카오 로그인/회원가입", notes = "카카오 계정으로 로그인/회원가입을 합니다.")
-    public ResponseEntity<?> kakaoLogin(
-            @Valid @RequestBody KakaoUserCreateRequest request
+    @PostMapping("/kakao/check")
+    @ApiOperation(value = "카카오 계정의 회원가입 여부 확인", notes = "카카오 계정의 회원가입 여부를 확인합니다.")
+    public ResponseEntity<?> checkKakaoUser(
+            @Valid @RequestBody KakaoUserInfo kakaoUser
     ) {
-        User kakaoUser = userService.registerKakaoUserIfNeed(request, baseURL);
+        User user = userService.findByKakaoId(kakaoUser);
+        Map<String, Boolean> response = new HashMap<>();
+        if (user == null) {
+            // 회원가입이 필요한 유저
+            response.put("res", false);
+            return ResponseEntity.ok(response);
+        }
+        // 이미 가입된 유저
+        response.put("res", true);
+        return ResponseEntity.ok(response);
+    }
+
+    // 카카오 회원가입 후 로그인
+    @PostMapping(path = "/kakao/regist", consumes = {"multipart/form-data"})
+    @ApiOperation(value = "카카오 계정 회원가입 후 로그인", notes = "카카오 계정으로 회원가입 후 로그인합니다.")
+    public ResponseEntity<?> kakaoLogin(
+            @RequestPart(value = "img", required = false) final MultipartFile file,
+            @Valid @RequestPart(value = "data", required = true) final KakaoUserCreateRequest request
+    ) {
+        String userProfile = "userBaseProfile.png";
+        if (file != null) {
+            userProfile = awsS3Service.uploadFile(file, "user/");
+        }
+        User kakaoUser = userService.registerKakaoUser(request, baseURL, "user/" + userProfile);
         String authentication = userService.LoginKakaoUser(kakaoUser);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(HttpHeaders.AUTHORIZATION, authentication)
+                .build();
+    }
+
+    // 카카오 로그인
+    @PostMapping("/kakao/login")
+    @ApiOperation(value = "카카오 로그인", notes = "카카오 계정으로 로그인합니다.")
+    public ResponseEntity<?> kakaoLogin(
+            @Valid @RequestBody KakaoUserInfo kakaoUser
+    ) {
+        User user = userService.findByKakaoId(kakaoUser);
+        String authentication = userService.LoginKakaoUser(user);
         return ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.AUTHORIZATION, authentication)
                 .build();

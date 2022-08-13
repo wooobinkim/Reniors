@@ -162,10 +162,6 @@ public class UserService {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(responseBody);
 
-        System.out.println("jsonNode = " + jsonNode);
-
-        String nickname = jsonNode.get("properties")
-                .get("nickname").asText();
         String email = jsonNode.get("kakao_account").get("email").asText();
         String genderKakao = jsonNode.get("kakao_account").get("gender").asText();
         Gender gender = null;
@@ -176,21 +172,22 @@ public class UserService {
         } else {
             gender = Gender.공개안함;
         }
-        String profileImage = jsonNode.get("properties").get("profile_image").asText();
-        return new KakaoUserInfo(nickname, email, gender, profileImage);
+        return new KakaoUserInfo(email, gender);
+    }
+
+    // 이미 가입된 카카오 계정인지 확인
+    @Transactional
+    public User findByKakaoId(KakaoUserInfo kakaoUser) {
+        User user = userRepository.findByKakaoId(kakaoUser.getEmail())
+                .orElse(null);
+        return user;
     }
 
     // 카카오ID로 회원가입 처리
     @Transactional
-    public User registerKakaoUserIfNeed(KakaoUserCreateRequest request, String baseUrl) {
-        // DB에 중복된 kakaoId가 있는지 확인
-        User kakaoUser = userRepository.findByKakaoId(request.getKakaoId())
-                .orElse(null);
-        if (kakaoUser == null) {
-            // 회원가입
-            kakaoUser = User.createKakaoUser(request, baseUrl);
-            userRepository.save(kakaoUser);
-        }
+    public User registerKakaoUser(KakaoUserCreateRequest request, String baseUrl, String userProfile) {
+        User kakaoUser = User.createKakaoUser(request, baseUrl, userProfile);
+        userRepository.save(kakaoUser);
         return kakaoUser;
     }
 
