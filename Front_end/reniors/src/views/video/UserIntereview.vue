@@ -1,39 +1,58 @@
 <template>
-  <div id="main-container" class="container">
-    <div id="join" v-if="!session">
-      <div id="img-div" class="header-logo">
-        <img src="@/assets/logo.png" />
-      </div>
-      <div id="join-dialog" class="jumbotron vertical-center">
-        <h1>화상면접을 진행합니다.</h1>
-        <div class="form-group">
-          <p>
-            <label>참가자명</label>
-            <input
-              v-model="myUserName"
-              class="form-control"
-              type="text"
-              required
-              readonly
-            />
-          </p>
-          <p>
-            <label>세션번호</label>
-            <input
-              v-model="mySessionId"
-              class="form-control"
-              type="text"
-              required
-              readonly
-            />
-          </p>
-          <p class="text-center">
-            <button class="btn btn-lg btn-success" @click="joinSession()">
-              면접방 들어가기
-            </button>
-          </p>
+  <div id="main-container" >
+    <div id="join" v-if="!session" class="join row ">
+      <!-- left -->
+        <div class="col-6 lefttop">
+            <div class="left">
+                <div class="header-logo">
+                  <img src="@/assets/logo.png" />
+                  <p><span style="color:#37BF99">{{companyName}}</span>의 면접입니다.</p>
+                  <br>
+                  <div class="tips">
+                    <div>
+                        <p style="font-size:16px; margin:8px 24px;">🙂화상면접 Tips🙂</p>
+                        <p>1. 카메라 위치 및 조명을 조정해보세요:) </p>
+                        <p>2. 깔끔한 배경과 조용한 공간이 바람직합니다:) </p>
+                        <p>3. 카메라를 집중력있게 응시한다면 자신감을 충분히 전달할 수 있어요:)</p>
+                        <p>4. 깔끔한 복장은 좋은 인상을 주는데 도움이 됩니다:)</p>
+                        <p>5. <span style="color: #FF843E">리니어즈</span>의 화상면접 연습을 활용해보세요:)</p>
+                    </div>
+                  </div>
+                </div>
+            </div>
         </div>
-      </div>
+
+    <!-- right -->
+        <div class="righttop col-6">
+            <div class="right">
+                <div class="fomrs">
+                    <div style="margin: 16px 0;">
+                        <p class="label">지원자명</p>
+                        <input
+                            v-model="myUserName"
+                            class="rightinput"
+                            type="text"
+                            required
+                            readonly
+                        />
+                    </div>
+                    <div style="margin: 16px 0; ">
+                        <p class="label">면접방 번호</p>
+                        <input
+                            v-model="mySessionId"
+                            class="rightinput"
+                            type="text"
+                            required
+                            readonly
+                        />
+                    </div>
+                    <div class="submitBtn">
+                        <button @click="joinSession()">면접방 들어가기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
     </div>
 
     <div id="session" v-if="session">
@@ -125,7 +144,16 @@ export default {
       receivemsg: "",
       msgflag: true,
       chatopenclose: false,
+      companyName: '',
 
+      tips:[
+        "카메라 위치 및 조명을 조정하면 더 좋습니다!",  
+        "깔끔한 배경과 조용한 공간이 바람직합니다:)", 
+        "카메라를 집중력있게 응시한다면 자신감을 충분히 전달할 수 있어요:)",
+        "깔끔한 복장은 좋은 인상을 주는데 도움이 됩니다:)",
+        ],
+      
+    
     };
   },
   computed: {
@@ -147,10 +175,14 @@ export default {
         this.myUserName = this.currentUser.name
         this.fetchRooms(),
         this.mySessionId = this.rooms[0].sessionId
+        this.companyName = this.rooms[0].companyName
 
   },
   methods: {
     ...mapActions(['fetchCurrentUser', 'fetchRooms']),
+    getTip(){
+        
+    },
     videoonoff() {
       this.videoflag = !this.videoflag;
       this.publisher.publishVideo(this.videoflag);
@@ -319,14 +351,124 @@ export default {
 };
 </script>
 <style>
+#main-container{
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: #FFF5F0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.join{
+    width: 80vw;
+    height: 80vh;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 1px gray;
+    background: linear-gradient(90deg,  white 50%, #FF843E 50%);
+
+}
 .header-logo {
-  width: 80%;
-  height: 120px;
+  width: 50%;
+  height: auto;
+  margin: 0 32px;
+}
+.header-logo p{
+    font-weight: bold;
+    font-size: 24px;
+    width: 400px;
+    text-align: left;
+    margin:0 32px;
+    
+}
+.tips{
+    width: 500px;
+    height: 200px;
+    border: none;
+    border-radius: 10px;
+    background-color:#FFF5F0;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin: 16px 0; 
+    display: flex;
+    align-items: center;
+}
+.tips p{
+    width: 450px;
+    font-size: 14px;
+    margin: 0 0 2px 28px;
+}
+.lefttop{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    padding: 64px
+}
+.left{
+    display: flex;
+    align-items: center;
+}
+.righttop{
+    display: flex;
+    align-items: center;
+    padding: 64px;
+    justify-content: center;
+}
+.right{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.rightinput{
+    margin: auto;
+    display: block;
+    width: 480px;
+    height: 48px;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.375rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.label{
+    text-align: left;
+    font-size: 20px;
+    color:white;
+    margin: 0 12px;
+    font-weight: bold;
+
+}
+.submitBtn{
+    margin: 8px;
+}
+.submitBtn button{
+    width: 480px;
+    height: 48px;
+    background-color: #FFB400;
+    opacity:0.7;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    margin: 8px 0;
+}
+.submitBtn button:hover{
+    background-color: #FFB400;
+    opacity: 1;
 }
 
 .header-logo > img {
-  height: 100%;
-  width: 100%;
+  height: 100px;
+  width: 400px;
   object-fit: cover;
+  margin: 16px 0;
 }
 </style>

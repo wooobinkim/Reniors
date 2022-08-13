@@ -47,7 +47,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 0 64px 0;
+  padding : 0 0 0 0;
 }
 
 .app-view {
