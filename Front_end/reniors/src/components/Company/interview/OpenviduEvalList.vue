@@ -31,8 +31,8 @@ export default {
     finish() {
       console.log(this.interviewer);
       this.finishInterview({
-        jobOpeningId: this.$route.params.no,
-        applyId: this.$route.params.userId,
+        // jobOpeningId: this.$route.params.no,
+        applyId: this.$route.params.no,
       });
     },
   },

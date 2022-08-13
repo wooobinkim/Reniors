@@ -13,7 +13,7 @@
       </router-link>
     </template>
     <template v-else>
-      <router-link :to="{ name: 'companyopenvidu',params:{no : this.$route.params.no, userId:this.interviewapply.userId} }">
+      <router-link :to="{ name: 'companyopenvidu',params:{no : this.interviewapply.id, userId:this.interviewapply.userId} }">
         <button @click="regist()">면접보기</button>
       </router-link>
     </template>
@@ -29,9 +29,9 @@ export default {
   },
   methods: {
     ...mapActions("company",["setInterviewer"]),
-    regist() {
-      this.setInterviewer(this.interviewapply.userId);
-    },
+    // regist() {
+    //   this.setInterviewer(this.interviewapply.userId);
+    // },
   },
 };
 </script>

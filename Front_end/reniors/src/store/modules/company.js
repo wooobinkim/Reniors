@@ -317,11 +317,13 @@ export default {
         });
     },
     finishInterview:({commit},data)=>{
+      console.log(data);
       http
         .put(
           `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}/finishInterview`
         )
         .then(({ data }) => {
+          console.log(data);
           commit("SET_DATASTATE", data);
         })
         .catch((error) => {
