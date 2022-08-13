@@ -117,7 +117,7 @@ export default {
     CLEAR_INTERVIEWER(state) {
       state.interviewer = null;
     },
-    SET_INTERVIEWER_LIST(state, data) {
+    SET_INTERVIEWER(state, data) {
       state.interviewer = data;
     },
     SET_RESUME(state, data) {
@@ -423,6 +423,10 @@ export default {
           console.log(error);
         });
     },
+    setInterviewer:({commit},data)=>{
+      console.log(data);
+      commit("SET_INTERVIEWER",data);
+    }
   },
 
   modules: {},

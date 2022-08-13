@@ -72,6 +72,9 @@ export default {
       resumeinfo: null,
     };
   },
+  props:{
+    interviewer : Number,
+  },
   watch: {
     resume: function (data) {
       this.birth = new Date(data.birth);
@@ -80,12 +83,12 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("company", ["resume", "interviewer"]),
+    ...mapGetters("company", ["resume"]),
     ...mapMutations("company", ["CLEAR_INTERVIEWER"]),
   },
   created() {
     // if (this.interviewer) this.getResume(this.interviewer.id);
-    this.getResume(this.$route.params.no);
+    this.getResume(this.$route.params.userId);
     // this.birth = new Date(this.resume.birth);
     this.CLEAR_INTERVIEWER;
   },
