@@ -55,51 +55,64 @@
       
     </div>
 
-    <div id="session" v-if="session">
-      <div id="session-header">
-        <h1 id="session-title">{{ mySessionId }}</h1>
-
-      </div>
-
-      <div id="video-container" class="col-md-6">
-        <user-video
-          :stream-manager="publisher"
-          @click="updateMainVideoStreamManager(publisher)"
-        />
-        <user-video
-          v-for="sub in subscribers"
-          :key="sub.stream.connection.connectionId"
-          :stream-manager="sub"
-          @click="updateMainVideoStreamManager(sub)"
-        />
-      </div>
-      <template v-if="videoflag">
-        <button @click="videoonoff()">비디오끄기</button>
-      </template>
-      <template v-if="!videoflag">
-        <button @click="videoonoff()">비디오켜기</button>
-      </template>
-      <template v-if="audioflag">
-        <button @click="audioonoff()">마이크끄기</button>
-      </template>
-      <template v-if="!audioflag">
-        <button @click="audioonoff()">마이크켜기</button>
-      </template>
-      <button @click="chatopen()">채팅</button>
+    <div id="session" v-if="session" class="insession row">
+        <!-- left -->
+        <div class="col-6">
+            <div id="video-container" >
+                <user-video
+                :stream-manager="publisher"
+                @click="updateMainVideoStreamManager(publisher)"
+                class="myvideo"
+                />
+            </div>
+            <div>
+                <user-video
+                v-for="sub in subscribers"
+                :key="sub.stream.connection.connectionId"
+                :stream-manager="sub"
+                @click="updateMainVideoStreamManager(sub)"
+                class="myvideo"
+                />
+            </div>
       
-      
-      <div v-if="chatopenclose">
-        <input type="text" v-model="msg" />
-        <button @click="sendchat()">보내기</button>
-        <div><textarea v-model="receivemsg" /></div>
       </div>
-      <input
-        class="btn btn-large btn-danger"
-        type="button"
-        id="buttonLeaveSession"
-        @click="leaveSession"
-        value="Leave session"
-      />
+
+      <!-- right -->
+      <div class="col-6" style="margin:0; padding:0;">
+        <div class="userSTT" v-if="!chatopenclose">
+
+        </div>
+        <div class="chatbox" v-if="chatopenclose">
+            <div class="chatlist"><textarea v-model="receivemsg" /></div>
+            <div class="chatform">
+                <input class="chatinput" type="text" v-model="msg" />
+                <button class="chatsubmit" @click="sendchat()"><i class="bi bi-send"></i></button>    
+
+            </div>
+        </div>
+
+        <div class="rightbtn">
+            <button @click="chatopen()" class="chatbtn"><i class="bi bi-chat-dots-fill"></i></button>
+            <template v-if="audioflag">
+                <button @click="audioonoff()" class="videobtn"><i class="bi bi-mic"></i></button>
+            </template>
+            <template v-if="!audioflag">
+                <button @click="audioonoff()" class="videobtn"><i class="bi bi-mic-mute"></i></button>
+            </template>
+            <template v-if="videoflag">
+                <button @click="videoonoff()" class="videobtn"><i class="bi bi-camera-video"></i></button>
+            </template>
+            <template v-if="!videoflag">
+                <button @click="videoonoff()" class="videobtn"><i class="bi bi-camera-video-off"></i></button>
+            </template>
+            
+            
+            
+            <button @click="leaveSession" class="leavebtn">
+                <span><i class="bi bi-box-arrow-right"></i> 퇴장</span>
+            </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -358,13 +371,14 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+
 }
 .join{
     width: 80vw;
     height: 80vh;
     border-radius: 20px;
     border: none;
-    box-shadow: 1px gray;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     background: linear-gradient(90deg,  white 50%, #FF843E 50%);
 
 }
@@ -471,4 +485,136 @@ export default {
   object-fit: cover;
   margin: 16px 0;
 }
+
+/* IN session */
+
+.insession{
+    width: 80vw;
+    height: 80vh;
+}
+.myvideo{
+    width: 35vw;
+    height: 38vh;
+    background-color: rgba(100, 100, 111, 0.2);
+    border-radius: 5px;
+    border: none;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin: 16px 0;
+}
+.userSTT{
+    width: 30vw;
+    height: 65vh;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin: 16px 0;
+
+}
+.chatbox{
+    width: 30vw;
+    height: 65vh;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin: 16px 0;
+}
+.chatlist{
+    width: 30vw;
+    height: 59vh;
+    border: none;
+}
+.chatlist textarea{
+    width: 28vw;
+    height: 56vh;
+    border: none;
+    margin: 1vh 1vw;
+}
+.chatform{
+    width: 29vw;
+    height: 5vh;
+    border: none;
+    border-radius: 30px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    background-color: #EAEAEA;
+    margin: 4px;
+    display: flex;
+    align-items: center;
+}
+.chatinput{
+    width: 24vw;
+    height: 4vh;
+    border: none;
+    margin: 0 8px 0 0;
+    background-color: #EAEAEA;
+    border-radius: 20px;
+}
+.chatsubmit{
+    width: 2vw;
+    height: 2vw;
+    border: none;
+    border-radius: 20px;
+    margin: 2px 2px 0 2px;
+    background-color: #EAEAEA;
+    display: flex;
+    align-items: center;
+}
+.chatsubmit > i{
+    font-size: 28px;
+    transform: rotate(45deg);
+    margin: 0;
+}
+
+.rightbtn{
+    width: 30vw
+}
+.chatbtn{
+    width: 4vw;
+    height: 4vw;
+    border-radius: 100%;
+    border: none;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin: 6px;
+}
+.chatbtn i{
+    font-size: 32px;
+    color: #8CD6C1;
+    font-weight: bold;
+    
+}
+.videobtn{
+    width: 4vw;
+    height: 4vw;
+    border-radius: 100%;
+    border: none;
+    background-color: #8CD6C1;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin: 6px;
+}
+.videobtn i{
+    font-size: 32px;
+    color: white;
+    font-weight: bold;
+    
+}
+.leavebtn{
+    width: 8vw;
+    height: 4vw;
+    border-radius: 30px;
+    border: none;
+    background-color: #F3620F;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin: 6px;
+    
+}
+.leavebtn i{
+    font-size: 32px;
+    color: white;
+    font-weight: bold; 
+}
+.leavebtn span{
+    font-size: 24px;
+    color: white;
+}
+
 </style>
