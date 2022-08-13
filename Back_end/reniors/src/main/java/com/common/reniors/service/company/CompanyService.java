@@ -251,4 +251,14 @@ public class CompanyService {
         apply.update(applyUpdateRequest,apply.getUser(), apply.getJobOpening());
         System.out.println("apply.getInterviewDate() = " + apply.getInterviewDate());
     }
+
+    //회사 공고 지원자 인터뷰 종료하기
+    @Transactional
+    public void updateApplyFinishInterview(Company company, Long applyId, ApplyUpdateRequest applyUpdateRequest){
+        if(company.getId() != applyRepository.findById(applyId).get().getJobOpening().getCompany().getId())
+            throw new NotAuthException(COMPANY_NO_AUTH);
+        Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found Apply"));
+        apply.finishInterview();
+//        apply.update(applyUpdateRequest,apply.getUser(), apply.getJobOpening());
+    }
 }

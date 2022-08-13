@@ -222,6 +222,17 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
+    //회사 공고 지원자 인터뷰 종료하기
+    @PutMapping("/jobopening/{jobOpeningId}/apply/{applyId}/finishInterview")
+    @ApiOperation(value = "공고 지원자 상태수정", notes = "올린 공고의 지원자들의 정보를 수정한다")
+    public ResponseEntity<?> updateApplyFinishInterview( @ApiIgnore @LoginCompany Company company,
+                                          @PathVariable("applyId") Long applyId,
+                                          @RequestBody ApplyUpdateRequest applyUpdateRequest){
+
+        companyService.updateapply(company, applyId, applyUpdateRequest);
+        return ResponseEntity.status(HttpStatus.OK).body("success");
+    }
+
     @GetMapping("/userdetail/{userId}")
     @ApiOperation(value = "회원 상세 정보 조회", notes = "회원의 상세 정보를 조회한다")
     public ResponseEntity<?> getUserDetails(

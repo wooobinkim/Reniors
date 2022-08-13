@@ -375,13 +375,30 @@ public class JobOpeningService {
         return id;
     }
 
+    //지원이력 조회(날짜 오름차순)
+    @Transactional
+    public List<ApplyResponse> getApplyListDateAsc(User user){
+        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
+        QApply a = new QApply("a");
+
+        List<Apply> applyList = jpaQueryFactory.selectFrom(a)
+                .where(a.interviewDate.isNotNull())
+                .orderBy(a.interviewDate.asc()).fetch();
+
+        List<ApplyResponse> applyResponseList = applyList.stream().map(res->ApplyResponse.response(
+                res
+        )).collect(Collectors.toList());
+
+        return applyResponseList;
+    }
+
     //지원이력 조회
     @Transactional
     public List<ApplyResponse> getApplyList(User user){
         List<Apply> applyList = applyRepository.findByUser(user);
 
         List<ApplyResponse> applyResponseList = applyList.stream().map(a->ApplyResponse.response(
-                a
+                        a
                 )
         ).collect(Collectors.toList());
 
