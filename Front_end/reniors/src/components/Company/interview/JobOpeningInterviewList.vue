@@ -1,5 +1,5 @@
 <template>
-  <div>회사 공고</div>
+  <div class="company-jobOpening-list-title">면접 공고</div>
   <job-opening-interview-list-item
     v-for="jobopening in jobopeninglisting"
     :key="jobopening.id"
