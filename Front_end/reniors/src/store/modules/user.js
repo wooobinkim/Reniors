@@ -129,6 +129,20 @@ export const user = {
           });
       }
     },
+    kakaoRegist({ commit }, formData){
+      
+      console.log(commit)
+      multipart
+        .post(`/users/kakao/regist`, formData)
+        .then(() => {
+          console.log('성공')
+          router.push({ name: "Login" })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+
 
     registUser({ commit }, formData) {
       console.log(formData);
