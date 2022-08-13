@@ -80,6 +80,7 @@ export default{
 
   justify-content: center;
   min-height: 100vh;
+  min-width: 70vw;
   background-color: #FFF5F0;
 
 }
