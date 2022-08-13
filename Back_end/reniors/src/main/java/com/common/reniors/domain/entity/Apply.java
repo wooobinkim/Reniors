@@ -54,6 +54,7 @@ public class Apply {
     public void update(ApplyUpdateRequest applyUpdateRequest, User user, JobOpening jobOpening) {
         this.jobOpeningProcess = applyUpdateRequest.getJobOpeningProcess();
         this.interviewDate = applyUpdateRequest.getInterviewDate();
+        this.sessionId = applyUpdateRequest.getSessionId();
         this.user = user;
         this.jobOpening = jobOpening;
     }

@@ -14,5 +14,6 @@ import java.util.Date;
 public class ApplyUpdateRequest {
     private JobOpeningProcess jobOpeningProcess;
     private Date interviewDate;
+    private String sessionId;
 
 }

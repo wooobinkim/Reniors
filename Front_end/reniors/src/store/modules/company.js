@@ -309,6 +309,19 @@ export default {
           data.apply
         )
         .then(({ data }) => {
+          console.log(data);
+          commit("SET_DATASTATE", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    finishInterview:({commit},data)=>{
+      http
+        .put(
+          `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}/finishInterview`
+        )
+        .then(({ data }) => {
           commit("SET_DATASTATE", data);
         })
         .catch((error) => {
