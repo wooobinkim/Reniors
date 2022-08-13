@@ -24,14 +24,11 @@ export default {
     ...mapGetters("company", ["evalquestionlist"]),
   },
   methods: {
-    ...mapActions("company", ["getEvalQuestionList", "updateApply"]),
+    ...mapActions("company", ["getEvalQuestionList", "finishInterview"]),
     finish() {
-      this.updateApply({
+      this.finishInterview({
         jobOpeningId: this.$route.params.no,
         applyId: this.interviewer,
-        apply: {
-          jobOpeningProcess: "면접심사중",
-        },
       });
     },
   },

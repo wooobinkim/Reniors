@@ -54,6 +54,7 @@ export default {
       applyinfo: {
         jobOpeningProcess: null,
         interviewDate: new Date(),
+        sessionId: null,
       },
     };
   },
@@ -65,22 +66,24 @@ export default {
     updateapply() {
       this.applyinfo.jobOpeningProcess = "면접";
       // console.log(this.applyinfo);
+      this.applyinfo.sessionId = "InterviewSession" + this.jobopening.id;
       let data = {
         jobOpeningId: this.jobopening.id,
         applyId: this.apply.id,
         apply: this.applyinfo,
       };
+      console.log(data);
       this.updateApply(data);
 
-      let room = {
-        isActive: "CLOSE",
-        sessionId: "InterviewSession" + this.jobopening.id,
-        userId: this.apply.userId,
-        jobOpeningId: this.jobopening.id,
-      };
+      // let room = {
+      //   isActive: "CLOSE",
+      //   sessionId: "InterviewSession" + this.jobopening.id,
+      //   userId: this.apply.userId,
+      //   jobOpeningId: this.jobopening.id,
+      // };
 
-      this.registRoom(room);
-      this.$router.go();
+      // this.registRoom(room);
+      // this.$router.go();
     },
     interviewflag() {
       this.flag = !this.flag;
