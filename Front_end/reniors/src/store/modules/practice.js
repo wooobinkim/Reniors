@@ -1,6 +1,6 @@
-import axios from "axios"
-import router from "@/router"
-import qs from 'qs'
+import axios from "axios";
+import router from "@/router";
+import qs from "qs";
 export default {
   state: {
     questions: [],
@@ -157,6 +157,7 @@ export default {
     },
 
     issueToken({ commit, state }) {
+      console.log("issueToken 들어옴?");
       axios({
         url: "https://openapi.vito.ai/v1/authenticate",
         method: "post",
@@ -167,56 +168,67 @@ export default {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-      }).then((res) => {
-        console.log("token", res.data.access_token);
-        commit("SET_VITOTOKEN", res.data.access_token);
-        console.log(state.vitotoken);
       })
-      .catch((err) => console.error(err.response))
+        .then((res) => {
+          console.log("token", res.data.access_token);
+          commit("SET_VITOTOKEN", res.data.access_token);
+          console.log(state.vitotoken);
+        })
+        .catch((err) => console.error(err.response));
     },
 
-    createSubtitles({ commit, state, dispatch }, myfile) {
-      dispatch("issueToken");
+    async createSubtitles({ commit, state }, myfile) {
+      console.log("createSubtitles 들어옴?");
+      console.log(myfile);
+      // await dispatch("issueToken");
       const fd = new FormData();
-      const cf = {
-            diarization: {
-              use_ars: false,
-              use_verification: false,
-              user_id: false,
-              partner_id: false,
-            },
-            use_multi_channel: false,
-            use_itn: false,
-            use_disfluency_filter: false,
-            use_profanity_filter: false,
-            paragraph_splitter: {
-              min: 10,
-              max: 500,
-            },
-          }
-      fd.append("config", cf)
-      fd.append("file", myfile)
+
+      const config = {
+        diarization: {
+          use_ars: false,
+          use_verification: false,
+          user_id: null,
+          partner_id: null,
+        },
+        use_multi_channel: false,
+        use_itn: false,
+        use_disfluency_filter: false,
+        use_profanity_filter: false,
+        paragraph_splitter: {
+          min: 10,
+          max: 500,
+        },
+      };
+      fd.append("config", config);
+      fd.append("file", myfile);
+      console.log(fd);
       axios({
-        url: "https://openapi.vito.ai/v1/transcribe",
+        url:
+          "https://cors-anywhere.herokuapp.com/" +
+          "https://openapi.vito.ai/v1/transcribe",
         method: "post",
         data: fd,
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${state.vitotoken}`,
-          withCredentials: true
+          withCredentials: true,
         },
       })
         .then((res) => {
+          console.log("createSubtitles 결과");
           commit("SET_SUBTITLESID", res.data.id);
         })
         .catch((err) => {
-          console.log('error');
-          console.error(err)});
+          console.log("error");
+          console.error(err);
+        });
     },
 
-    fetchSubtitles({ commit, getters, state, dispatch }, myfile ) {
-      dispatch("createSubtitles", myfile)
-      const id = getters.subtitlesId
+    async fetchSubtitles({ commit, getters, state }, myfile) {
+      console.log("fetchSubtitles 들어옴?");
+      console.log(myfile);
+      // await dispatch("createSubtitles", myfile);
+      const id = getters.subtitlesId;
       axios({
         url: "https://openapi.vito.ai/v1/transcribe/" + `${id}`,
         method: "get",
@@ -225,7 +237,7 @@ export default {
         },
       })
         .then((res) => {
-          console.log(res.data);
+          console.log("fetchSubtitles 결과");
           commit("SET_SUBTITLES", res.data);
         })
         .catch((err) => console.error(err.response));
