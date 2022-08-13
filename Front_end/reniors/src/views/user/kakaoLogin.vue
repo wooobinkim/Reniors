@@ -123,7 +123,7 @@ export default {
       .then((res) => {
         console.log(res)
         if (res.data.res) {
-          this.klogin(this.info)
+          this.kakaologin(this.info)
         }
       })
       .catch((err) => {
@@ -131,20 +131,20 @@ export default {
       })
     },
 
-    klogin(info){
-      axios({
-        url: "https://i7b307.p.ssafy.io/api/users/kakao/login",
-        method: "post",
-        data: JSON.stringify(info) 
-      })
-      .then((res) => {
-        console.log(res)
-        this.$router.push({ name: 'home' })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    },
+    // klogin(info){
+    //   axios({
+    //     url: "https://i7b307.p.ssafy.io/api/users/kakao/login",
+    //     method: "post",
+    //     data: JSON.stringify(info) 
+    //   })
+    //   .then((res) => {
+    //     console.log(res)
+    //     this.$router.push({ name: 'home' })
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+    // },
 
     kregist(){
       const formData = new FormData()

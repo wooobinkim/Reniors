@@ -129,14 +129,16 @@ export const user = {
           });
       }
     },
-    kakaoRegist({ commit }, formData){
-      
-      console.log(commit)
+    kakaoRegist({ dispatch }, formData){
       multipart
         .post(`/users/kakao/regist`, formData)
-        .then(() => {
+        .then((res) => {
           console.log('성공')
-          router.push({ name: "Login" })
+          const token = res.headers["authorization"]
+          dispatch("saveToken", token)
+          dispatch("fetchCurrentUser")
+          console.log(res)
+          router.push({ name: "home" })
         })
         .catch((err) => {
           console.log(err)
