@@ -47,7 +47,7 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
-    ...mapActions["kakaologin"],
+    ...mapActions(["kakaologin"]),
     create(){
       this.codes = this.$route.query.code
       this.getInfo()
