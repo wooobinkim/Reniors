@@ -66,7 +66,7 @@ export default {
     submit(){
       axios({
         url: "https://i7b307.p.ssafy.io/api/users/kakao/login",
-        methods: 'get',
+        methods: 'post',
         data: JSON.stringify(this.forms)
       })
       .then((res) => {
