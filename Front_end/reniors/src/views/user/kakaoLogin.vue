@@ -3,6 +3,8 @@
     <h1>카카오 로그인</h1>
     <form @submit.prevent="kakaologin(forms)">
       {{ codes }}
+
+      {{ forms.name }}
       <input type="text" v-model="forms.name">
       <input type="text" v-model="forms.phone">
       <input type="text" v-model="forms.address">
