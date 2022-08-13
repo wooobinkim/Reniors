@@ -108,6 +108,16 @@ public class JobOpeningController {
         return ResponseEntity.status(HttpStatus.OK).body(ApplyList);
     }
 
+    //지원이력 조회
+    @GetMapping("/apply/dateAsc")
+    @ApiOperation(value = "지원이력 조회", notes = "지원이력을 조회한다.")
+    public ResponseEntity<?> getApplyListDateAsc(
+            @ApiIgnore @LoginUser User user){
+        List<ApplyResponse> ApplyList = jobOpeningService.getApplyListDateAsc(user);
+
+        return ResponseEntity.status(HttpStatus.OK).body(ApplyList);
+    }
+
     //지원이력 상세조회
     @GetMapping("/apply/{applyId}")
     @ApiOperation(value = "지원이력 상세조회", notes = "지원이력을 상세조회한다.")
