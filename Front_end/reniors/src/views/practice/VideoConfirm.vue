@@ -43,15 +43,18 @@ export default{
     },
     created(){
         this.fetchRecording()
+
     },
     watch:{
         records: function(data){
             this.myrecords = { ...data }
             this.record = {...data}[this.idx]
+            this.fetchSubtitles(this.record.recordURL)
         },
+        
     },
     methods:{
-        ...mapActions(['fetchRecording']),
+        ...mapActions(['fetchRecording', 'fetchSubtitles', 'createSubtitles', 'issueToken']),
 
     }
         
