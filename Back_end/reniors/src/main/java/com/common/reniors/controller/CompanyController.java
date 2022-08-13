@@ -226,10 +226,9 @@ public class CompanyController {
     @PutMapping("/jobopening/{jobOpeningId}/apply/{applyId}/finishInterview")
     @ApiOperation(value = "공고 지원자 상태수정", notes = "올린 공고의 지원자들의 정보를 수정한다")
     public ResponseEntity<?> updateApplyFinishInterview( @ApiIgnore @LoginCompany Company company,
-                                          @PathVariable("applyId") Long applyId,
-                                          @RequestBody ApplyUpdateRequest applyUpdateRequest){
+                                          @PathVariable("applyId") Long applyId){
 
-        companyService.updateapply(company, applyId, applyUpdateRequest);
+        companyService.updateApplyFinishInterview(company, applyId);
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 

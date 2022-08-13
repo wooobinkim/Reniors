@@ -17,6 +17,9 @@ export default {
   components: {
     OpenviduEvalListItem,
   },
+  props:{
+    interviewer : Number,
+  },
   created() {
     this.getEvalQuestionList(this.$route.params.no);
   },
@@ -26,9 +29,10 @@ export default {
   methods: {
     ...mapActions("company", ["getEvalQuestionList", "finishInterview"]),
     finish() {
+      console.log(this.interviewer);
       this.finishInterview({
         jobOpeningId: this.$route.params.no,
-        applyId: this.interviewer,
+        applyId: this.$route.params.userId,
       });
     },
   },

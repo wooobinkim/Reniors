@@ -156,7 +156,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("company", ["companyinfo", "interviewer"]),
+    ...mapGetters("company", ["companyinfo","interviewer"]),
+    // ...mapState("company",["interviewer"])
   },
   watch: {
     companyinfo: function (data) {

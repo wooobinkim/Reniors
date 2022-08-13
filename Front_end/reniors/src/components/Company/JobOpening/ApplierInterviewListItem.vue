@@ -66,7 +66,7 @@ export default {
     updateapply() {
       this.applyinfo.jobOpeningProcess = "면접";
       // console.log(this.applyinfo);
-      this.applyinfo.sessionId = "InterviewSession" + this.jobopening.id;
+      this.applyinfo.sessionId = this.jobopening.title + this.jobopening.id;
       let data = {
         jobOpeningId: this.jobopening.id,
         applyId: this.apply.id,

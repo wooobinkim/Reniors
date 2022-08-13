@@ -13,7 +13,7 @@
       </router-link>
     </template>
     <template v-else>
-      <router-link :to="{ name: 'companyopenvidu' }">
+      <router-link :to="{ name: 'companyopenvidu',params:{no : this.$route.params.no, userId:this.interviewapply.userId} }">
         <button @click="regist()">면접보기</button>
       </router-link>
     </template>
@@ -21,16 +21,16 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   props: {
     interviewapply: Object,
   },
   methods: {
+    ...mapActions("company",["setInterviewer"]),
     regist() {
-      this.$store.commit(
-        "company/SET_INTERVIEWER_LIST",
-        this.interviewapply.userId
-      );
+      this.setInterviewer(this.interviewapply.userId);
     },
   },
 };
