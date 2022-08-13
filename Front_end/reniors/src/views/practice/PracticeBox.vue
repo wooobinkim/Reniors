@@ -13,11 +13,14 @@
         <div class="content row">
             <div v-for="(record, index) in this.myrecords" :key="index" style="width:144px; padding: 0;" >
                 <!-- 비디오섬네일 -->
-                <div class="videobox col-6">
-                    <video :src='record.recordURL'></video>
-                    <p>{{record.fileName}}</p>
-                </div>
-                
+                <router-link :to="{path: '/practice/box/'+ index}">
+                    <div class="videobox col-6">
+                        <video :src='record.recordURL'></video>
+                        <p>{{record.fileName}}</p>
+                    </div>
+                    
+
+                </router-link>
                 
                 <!-- 비디오재생 -->
                 <!-- <video autoplay :src='record.recordURL' controls></video> -->
@@ -51,7 +54,8 @@ export default{
         },
     },
     methods:{
-        ...mapActions(['fetchRecording'])
+        ...mapActions(['fetchRecording']),
+
     }
 }
 </script>
