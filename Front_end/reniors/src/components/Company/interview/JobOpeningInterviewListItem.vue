@@ -7,7 +7,7 @@
       {{ jobopening.jobChildCategoryName }}
     </div>
     <div class="period">
-      {{ jobopening.createdDate }} ~ {{ jobopening.finishedDate }}
+      {{ dateFormat(jobopening.createdDate) }} ~ {{ dateFormat(jobopening.finishedDate) }}
     </div>
 
     <div class="jobOpening-detail-btn-box">
@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import dayjs from 'dayjs';
+
 export default {
   props: {
     jobopening: Object,
@@ -55,12 +57,15 @@ export default {
         params: { no: this.jobopening.id },
       });
     },
+    dateFormat(val) {
+      return dayjs(val).format("YYYY-MM-DD");
+    },
   },
 };
 </script>
 
 <style scoped>
-.company-jobOpening-ing-list-item{
+.company-jobOpening-ing-list-item {
   width: 328px;
   padding: 20px;
   border-radius: 10px;
