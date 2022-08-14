@@ -20,8 +20,7 @@ export default {
     kakaoLogin: () => HOST + USER + "/kakao",
     userid: (name, phone) => HOST + USER + `/${name}` + '/findid' + `/${phone}`,
     userpwd: (name, userAppId) => HOST + USER + `/${name}` + '/findpwd' + `/${userAppId}`,
-    // id찾기, 비밀번호 찾기 이해를 못하겠음
-    //
+    changePwd: (userAppPwd) => HOST + USER + `/${userAppPwd}`,
     userList: () => HOST + USER + "/list",
     bookmark: (userId) => HOST + USER + `/${userId}` + "/bookmark",
     bookmarkEdit: (userId, jobOpeningId) =>

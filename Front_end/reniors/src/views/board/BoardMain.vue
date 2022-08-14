@@ -46,11 +46,15 @@ export default{
       ...mapGetters(['articles', 'isLogginedIn', 'parents'])
     },
     methods:{
-      ...mapActions(['fetchArticles'])
+      ...mapActions(['fetchArticles', 'fetchParents'])
     },
     created(){
+      console.log(this.$route.params.category_id);
+      this.fetchParents()
+      console.log( this.parents[this.$route.params.category_id - 1]);
       this.fetchArticles(this.category_id)
       this.jobname = this.parents[this.$route.params.category_id - 1].name
+
     },
     mounted(){},
     unmounted(){},
