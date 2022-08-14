@@ -17,7 +17,7 @@ export default {
     jobopening: null,
     companyinfo: {},
     applylist: [],
-    apply:null,
+    apply: null,
     interviewapplylist: [],
     interviewapplylistasc: [],
     applyuser: null,
@@ -39,7 +39,7 @@ export default {
     jobopening: (state) => state.jobopening,
     companyinfo: (state) => state.companyinfo,
     applylist: (state) => state.applylist,
-    apply:(state)=> state.apply,
+    apply: (state) => state.apply,
     applyuser: (state) => state.applyuser,
     evalquestionlist: (state) => state.evalquestionlist,
     userevallist: (state) => state.userevallist,
@@ -280,6 +280,8 @@ export default {
       http
         .get(`/company/jobopening/${no}/apply`)
         .then(({ data }) => {
+          console.log("getapplylist : " + no);
+          console.log(data);
           commit("SET_APPLY_LIST", data);
         })
         .catch((error) => {
@@ -331,7 +333,7 @@ export default {
           console.log(error);
         });
     },
-    finishInterview:({commit},data)=>{
+    finishInterview: ({ commit }, data) => {
       console.log(data);
       http
         .put(
@@ -440,10 +442,10 @@ export default {
           console.log(error);
         });
     },
-    setInterviewer:({commit},data)=>{
+    setInterviewer: ({ commit }, data) => {
       console.log(data);
-      commit("SET_INTERVIEWER",data);
-    }
+      commit("SET_INTERVIEWER", data);
+    },
   },
 
   modules: {},
