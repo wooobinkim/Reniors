@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-for="apply in applies" :key="apply.id">
+    <template v-for="apply in applylist" :key="apply.id">
       <template
         v-if="
           apply.jobOpeningProcess == '면접' ||
@@ -23,9 +23,6 @@
     <button @click="interviewpass()" class="apply-interview-pass-btn">
       최종합격
     </button>
-    <!-- <div for="check">이름 :{{ apply.userId }}</div>
-
-    <button @click="resumeview()">이력서보기</button> -->
   </div>
 </template>
 
@@ -38,33 +35,17 @@ import ApplierInterviewListItem from "./ApplierInterviewListItem.vue";
 export default {
   components: {
     ApplierInterviewListItem,
-    
   },
   props: {
-    // apply: Object,
     jobopeningdetail: Object,
   },
   data() {
     return {
-      // applyinfo: {
-      //   // jobOpeningProcess: null,
-      //   // interviewDate: new Date(),
-      // },
       passUser: [],
-      applies: null,
-      //   passuserId: [],
-      // flag: false,
+      applies: [],
     };
   },
-  watch: {
-    applylist: function (datas) {
-      this.applies = [];
-      datas.forEach((data) => {
-        data.interviewDate = new Date(data.interviewDate);
-        this.applies.push(data);
-      });
-    },
-  },
+  watch: {},
   async created() {
     await this.getapplylist(this.$route.params.no);
   },
@@ -118,7 +99,6 @@ export default {
         },
       };
       this.progressJobOpening(data);
-      // this.$router.go();
     },
   },
 };

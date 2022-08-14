@@ -5,7 +5,7 @@
     <div class="apply-pass-btn-box">
       <button @click="resumeview()">이력서보기</button>
       <router-link
-        :to="{ name: 'usereval', params: { no: this.apply.userId } }"
+        :to="{ name: 'usereval', params: { no: apply.userId } }"
       >
         <button>면접평가보기</button></router-link
       >
@@ -15,9 +15,6 @@
 
 <script setup>
 import "@vuepic/vue-datepicker/dist/main.css";
-// import { ref } from "vue";
-// import { mapActions, mapState } from "vuex";
-// import moment from "moment";
 </script>
 <script>
 export default {
@@ -28,9 +25,8 @@ export default {
   data() {
     return {};
   },
-  computed: {
-    // ...mapState("company", ["jobopening"]),
-  },
+  created() {},
+  computed: {},
   methods: {
     resumeview() {
       this.$router.push({
@@ -38,7 +34,6 @@ export default {
         params: { no: this.apply.userId },
       });
     },
-    // ...mapActions("company", ["updateApply", "registRoom"]),
   },
 };
 </script>

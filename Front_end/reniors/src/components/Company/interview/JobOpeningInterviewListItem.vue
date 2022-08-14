@@ -16,19 +16,23 @@
       >
         <i class="bi bi-gear"></i>
       </router-link>
-      <router-link
-        :to="{ name: 'companyinterviewlist', params: { no: jobopening.id } }"
-        class="to-apply-list-btn"
-      >
-        면접일정 관리
-      </router-link>
-      <router-link
-        :to="{ name: 'companyeval', params: { no: jobopening.id } }"
-        class="to-apply-list-btn"
-      >
-        면접평가 관리
-      </router-link>
-
+      <div>
+        <button class="to-apply-list-btn">
+          <router-link
+            :to="{ name: 'companyinterviewlist', params: { no: jobopening.id } }"
+            class="to-apply-list-btn"
+          >
+            면접일정 관리
+          </router-link>
+        </button>
+        <button class="to-apply-list-btn">
+          <router-link
+            :to="{ name: 'companyeval', params: { no: jobopening.id } }"
+          >
+            면접평가 관리
+          </router-link>
+        </button>
+      </div>
       <!-- <button class="to-apply-list-btn" @click="interview()">
         면접일정 관리
       </button>
@@ -77,42 +81,45 @@ export default {
   width: 100%;
   text-align: left;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 17px;
 }
 .company-jobOpening-ing-list-item > .job-category {
   width: 100%;
   text-align: right;
-  font-size: 12px;
-  color: var(--color-orange-2);
+  font-size: 14px;
+  color: var(--color-green-1);
 }
 .company-jobOpening-ing-list-item > .period {
   width: 100%;
   text-align: right;
-  font-size: 12px;
-  color: var(--color-orange-2);
+  font-size: 14px;
+  color: var(--color-green-1);
 }
-.jobOpening-detail-btn-box{
+.jobOpening-detail-btn-box {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 10px;
 }
-.jobOpening-detail-btn-box > a {
+.jobOpening-detail-btn-box > div > .to-apply-list-btn > a {
   text-decoration: none;
-  color: var(--color-black-2);
 }
 .jobOpening-detail-btn-box > a > .bi-gear {
   font-size: 20px;
+  color: var(--color-black-2);
 }
-.to-apply-list-btn:link {
+.to-apply-list-btn {
+  height: 40px;
+  margin: auto 3px;
+  background-color: var(--color-red-2);
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
+.to-apply-list-btn > a:link {
   color: white;
 }
-.to-apply-list-btn:visited {
+.to-apply-list-btn > a:visited {
   color: white;
-}
-.to-apply-list-btn{
-  padding: 5px 10px;
-  background-color: var(--color-red-1);
-  border-radius: 5px;
-  font-size: 15px;
 }
 </style>

@@ -24,16 +24,17 @@
         <button @click="interviewflag()">면접일정잡기</button>
       </template>
       <template v-if="apply.jobOpeningProcess == '면접심사중'">
-        <router-link
-          :to="{ name: 'usereval', params: { no: this.apply.userId } }"
-        >
+        <router-link :to="{ name: 'usereval', params: { no: apply.userId } }">
           <button>면접평가보기</button></router-link
         >
       </template>
     </div>
 
-    <div v-if="this.flag">
-      <datepicker v-model="applyinfo.interviewDate" />
+    <div v-if="flag">
+      <datepicker
+        v-model="applyinfo.interviewDate"
+        class="interview-datepicker"
+      />
       <button @click="updateapply()">수정</button>
     </div>
   </div>
@@ -42,10 +43,7 @@
 <script setup>
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-// import { log } from "console";
-// import { ref } from "vue";
 import { mapActions, mapGetters } from "vuex";
-// import moment from "moment";
 </script>
 <script>
 export default {
@@ -72,7 +70,6 @@ export default {
     ...mapActions("company", ["updateApply", "registRoom"]),
     updateapply() {
       this.applyinfo.jobOpeningProcess = "면접";
-      // console.log(this.applyinfo);
       this.applyinfo.sessionId = this.jobopening.title + this.jobopening.id;
       let data = {
         jobOpeningId: this.jobopening.id,
@@ -81,16 +78,6 @@ export default {
       };
       console.log(data);
       this.updateApply(data);
-
-      // let room = {
-      //   isActive: "CLOSE",
-      //   sessionId: "InterviewSession" + this.jobopening.id,
-      //   userId: this.apply.userId,
-      //   jobOpeningId: this.jobopening.id,
-      // };
-
-      // this.registRoom(room);
-      // this.$router.go();
     },
     interviewflag() {
       this.flag = !this.flag;
@@ -111,7 +98,7 @@ export default {
   border-bottom: 2px solid var(--color-black-3);
   padding: 10px;
 }
-.apply-interview-item-info-box > div:not(:last-child) {
+.apply-interview-item-info-box > div:not(:nth-child(4), :nth-child(5)) {
   width: 100%;
   text-align: left;
   margin-left: 10px;
@@ -132,5 +119,8 @@ export default {
   font-weight: bold;
   font-size: 14px;
   margin: 0;
+}
+.interview-datepicker {
+  margin: 10px 0;
 }
 </style>

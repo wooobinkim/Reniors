@@ -55,6 +55,7 @@ export default {
 
   mutations: {
     SET_TOKEN: (state, token) => (state.token = token),
+    GET_TOKEN: (state) => console.log(state.token),
     SET_CURRENT_USER: (state, user) => (state.currentUser = user),
     SET_PROFILE: (state, profile) => (state.profile = profile),
     SET_AUTH_ERROR: (state, error) => (state.authError = error),
@@ -252,6 +253,7 @@ export default {
         .then(({ data }) => {
           commit("SET_JOBOPENING", data);
         })
+
         .catch((error) => {
           console.log(error);
         });
@@ -290,8 +292,6 @@ export default {
       http
         .get(`/company/jobopening/${no}/apply`)
         .then(({ data }) => {
-          console.log("getapplylist : " + no);
-          console.log(data);
           commit("SET_APPLY_LIST", data);
         })
         .catch((error) => {

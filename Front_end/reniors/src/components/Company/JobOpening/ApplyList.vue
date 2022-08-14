@@ -39,21 +39,18 @@
     <template v-if="this.progress == '서류심사중'">
       <applier-resume-list
         :jobopeningdetail="jobopeningdetail"
-        :no="this.$route.params.no"
       ></applier-resume-list>
     </template>
 
     <template v-if="this.progress == '면접심사중'">
       <applier-interview-list
         :jobopeningdetail="jobopeningdetail"
-        :no="this.$route.params.no"
       ></applier-interview-list>
     </template>
 
     <template v-if="this.progress == '최종합격'">
       <applier-pass-list
         :jobopeningdetail="jobopeningdetail"
-        :no="this.$route.params.no"
       ></applier-pass-list>
     </template>
   </div>
@@ -74,7 +71,6 @@ export default {
     };
   },
   async created() {
-    console.log(this.$route.params.no);
     await this.getJobOpening(this.$route.params.no);
   },
   mounted() {},
