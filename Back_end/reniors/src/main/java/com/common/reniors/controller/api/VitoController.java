@@ -30,17 +30,17 @@ import java.util.Scanner;
 @Api(tags={"STT API"})
 public class VitoController {
     private final VitoService vitoService;
-    @GetMapping(path="/videoId", consumes = {"multipart/form-data"})
+    @PostMapping("/videoId")
     @ApiOperation(value = "vito 일반stt 비디오 등록", notes = "vito 일반stt에 비디오를 등록하고 아이디를 리턴합니다.")
-    public ResponseEntity<?> getVideoId(@Valid @RequestPart(value = "data") final VitoIdCreateRequest vitoIdCreateRequest){
+    public ResponseEntity<?> getVideoId(@RequestBody VitoIdCreateRequest vitoIdCreateRequest){
         String videoId = vitoService.getVideoId(vitoIdCreateRequest);
 
         return ResponseEntity.status(HttpStatus.OK).body(videoId);
     }
 
-    @GetMapping(path="/audioMsg", consumes = {"multipart/form-data"})
+    @PostMapping("/audioMsg")
     @ApiOperation(value = "vito 일반stt 자막", notes = "vito 일반stt 자막을 리턴합니다.")
-    public ResponseEntity<?> getAudioMsg(@Valid @RequestPart(value = "data") final VitoMsgCreateRequest vitoMsgCreateRequest){
+    public ResponseEntity<?> getAudioMsg(@RequestBody VitoMsgCreateRequest vitoMsgCreateRequest){
         String audioMsg = vitoService.getAudioMsg(vitoMsgCreateRequest);
 
         return ResponseEntity.status(HttpStatus.OK).body(audioMsg);
