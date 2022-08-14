@@ -266,7 +266,6 @@ export default {
         });
     },
     progressJobOpening: ({ commit }, data) => {
-      console.log(data);
       http
         .put(`/company/progress/${data.no}`, data.progress)
         .then(({ data }) => {
@@ -317,7 +316,6 @@ export default {
         });
     },
     updateApply: ({ commit }, data) => {
-      console.log(data);
       http
         .put(
           `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,

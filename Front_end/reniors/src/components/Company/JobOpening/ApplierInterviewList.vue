@@ -41,10 +41,12 @@ import ApplierInterviewListItem from "./ApplierInterviewListItem.vue";
 export default {
   components: {
     ApplierInterviewListItem,
+    
   },
   props: {
     // apply: Object,
     jobopeningdetail: Object,
+    no : String,
   },
   data() {
     return {
@@ -68,7 +70,7 @@ export default {
     },
   },
   created() {
-    this.getapplylist(this.$route.params.no);
+    this.getapplylist(this.no);
   },
   computed: {
     ...mapGetters("company", ["jobopening", "applylist"]),
@@ -80,7 +82,9 @@ export default {
       "updateApply",
     ]),
     interviewpass() {
+      console.log("면접합격자");
       this.passUser.forEach((data) => {
+        console.log(data);
         this.updateApply({
           jobOpeningId: this.jobopeningdetail.id,
           applyId: data,
@@ -90,6 +94,7 @@ export default {
         });
       });
 
+      console.log("면접탈락자");
       let tmparr = [];
       this.applylist.forEach((apply) => {
         if (
@@ -100,6 +105,7 @@ export default {
       });
       let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
       unpassUser.forEach((data) => {
+        console.log(data);
         this.updateApply({
           jobOpeningId: this.jobopeningdetail.id,
           applyId: data,
@@ -116,7 +122,7 @@ export default {
         },
       };
       this.progressJobOpening(data);
-      this.$router.go();
+      // this.$router.go();
     },
   },
 };

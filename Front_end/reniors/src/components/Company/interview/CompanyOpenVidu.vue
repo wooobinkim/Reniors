@@ -98,6 +98,9 @@
         <template v-for="msg in receivemsg" :key="msg">
           <div>{{msg}}</div>
         </template>
+        <!-- <component v-for="msg in receivemsg" :key="msg" :is="msg">
+          asd
+        </component> -->
       </div>
       <input
         class="btn btn-large btn-danger"
@@ -117,6 +120,7 @@ import UserVideo from "@/components/openvidu/UserVideo.vue";
 import ResumeView from "@/components/Company/interview/ResumeView.vue";
 import { mapActions, mapGetters,mapState } from "vuex";
 import OpenviduEvalList from "@/components/Company/interview/OpenviduEvalList.vue";
+// import OpenViduChat from "@/components/Company/interview/OpenViduChat.vue";
 // import { mapActions } from "vuex";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -127,6 +131,7 @@ const OPENVIDU_SERVER_SECRET = "reniors";
 
 export default {
   name: "App",
+  
   props: {
     userId: Number,
     jobOpeningId: Number,
@@ -136,6 +141,7 @@ export default {
     UserVideo,
     OpenviduEvalList,
     ResumeView,
+    // OpenViduChat,
   },
 
   data() {
@@ -156,6 +162,7 @@ export default {
       msgflag: true,
       chatopenclose: false,
       applyinfo:null,
+      sessionleave:false,
       //   myUserName: "Participant" + Math.floor(Math.random() * 100),
     };
   },
@@ -167,15 +174,31 @@ export default {
     companyinfo: function (data) {
       this.myUserName = data.name;
     },
-    // session: function () {
-    //   this.session.on("signal", (event) => {
-    //     this.receivemsg += event.from + event.data + "\n";
-    //   });
-    // },
+    session: function () {
+      if(!this.sessionleave){
+      this.session.on("signal", (event) => {
+          let name = event.from.data;
+          name = name.substr(15);
+          name = name.substring(0,name.length-2);
+        this.receivemsg.push(name +" : "+ event.data);
+        console.log(this.receivemsg);
+        });
+      }
+    },
     apply:function (data) {
       console.log(data);
       this.applyinfo = data;
-    }
+    },
+    // msgflag:function () {
+    //   console.log("여기안와요..?");
+    //   this.session.on("signal", (event) => {
+    //       let name = event.from.data;
+    //       name = name.substr(15);
+    //       name = name.substring(0,name.length-2);
+    //     this.receivemsg.push(name +" : "+ event.data);
+    //     console.log(this.receivemsg);
+    //     });
+    // }
   },
   created() {
     this.getCompany();
@@ -200,6 +223,7 @@ export default {
       // }
     },
     sendchat() {
+      console.log("센센~~~~~~~~~~~~~~~");
       this.session
         .signal({
           data: this.sendmsg,
@@ -213,12 +237,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-        this.session.on("signal:my-chat", (event) => {
-          let name = event.from.data;
-          name = name.substr(15);
-          name = name.substring(0,name.length-2);
-        this.receivemsg.push(name +" : "+ event.data + "\n");
-      });
+        
     },
     chatopen() {
       this.chatopenclose = !this.chatopenclose;
@@ -296,6 +315,7 @@ export default {
     },
 
     leaveSession() {
+      this.sessionleave = true;
       // --- Leave the session by calling 'disconnect' method over the Session object ---
       if (this.session) this.session.disconnect();
 
