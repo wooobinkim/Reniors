@@ -52,7 +52,9 @@ export default {
 .interview-date {
   width: 100%;
   text-align: left;
-  font-size: 12px;
+  font-weight: bold;
+  font-size: 15px;
+  margin-left: 5px;
 }
 .interview-list-item {
   width: 328px;
@@ -62,23 +64,23 @@ export default {
   border-color: var(--color-black-2); 
   box-shadow: inset 0 0 1px 1px var(--color-black-3), 0 0 5px var(--color-black-3);
 }
-.interview-list-item > title {
+.interview-list-item > .title {
   width: 100%;
   text-align: left;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 17px;
 }
 .interview-list-item > .name {
   width: 100%;
   text-align: right;
-  font-size: 12px;
-  color: var(--color-orange-2);
+  font-size: 13px;
+  color: var(--color-green-1);
 }
 .interview-list-item > .part {
   width: 100%;
   text-align: right;
-  font-size: 12px;
-  color: var(--color-orange-2);
+  font-size: 13px;
+  color: var(--color-green-1);
 }
 .interview-list-item > .interview-detail-btn {
   display: flex;
@@ -87,9 +89,10 @@ export default {
 }
 .about-interview-btn {
   padding: 5px 10px;
-  background-color: var(--color-red-1);
-  border-radius: 5px;
-  font-size: 15px;
+  background-color: var(--color-red-2);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
 }
 .about-interview-btn:link {
   color: white;
