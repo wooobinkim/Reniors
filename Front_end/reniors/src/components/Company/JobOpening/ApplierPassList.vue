@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-for="apply in this.applies" :key="apply.id">
+    <template v-for="apply in applies" :key="apply.id">
       <template v-if="apply.jobOpeningProcess == '최종합격'">
         <div>
           <applier-pass-list-item :apply="apply"> </applier-pass-list-item>

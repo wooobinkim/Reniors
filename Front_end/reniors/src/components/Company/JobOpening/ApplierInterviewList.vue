@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-for="apply in this.applies" :key="apply.id">
+    <template v-for="apply in applies" :key="apply.id">
       <template
         v-if="
           apply.jobOpeningProcess == '면접' ||
@@ -12,7 +12,7 @@
           <input
             :value="apply.id"
             type="checkbox"
-            v-model="this.passUser"
+            v-model="passUser"
             class="apply-interview-list-checkbox"
           />
           <applier-interview-list-item :apply="apply">

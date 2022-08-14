@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-for="apply in this.applylist" :key="apply.id">
+    <template v-for="apply in applylist" :key="apply.id">
       <template
         v-if="
           apply.jobOpeningProcess == '서류심사중' ||
@@ -11,7 +11,7 @@
           <input
             :value="apply.id"
             type="checkbox"
-            v-model="this.passUser"
+            v-model="passUser"
             class="apply-resume-list-checkbox"
           />
           <applier-resume-list-item :apply="apply"> </applier-resume-list-item>
