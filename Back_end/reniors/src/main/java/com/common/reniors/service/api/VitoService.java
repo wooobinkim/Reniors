@@ -1,15 +1,13 @@
-package com.common.reniors.controller.API;
+package com.common.reniors.service.api;
 
 import com.common.reniors.common.exception.ApiRequestException;
+import com.common.reniors.dto.api.VitoIdCreateRequest;
+import com.common.reniors.dto.api.VitoMsgCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-//import org.apache.commons.io.FileUtils;
+import org.springframework.stereotype.Service;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -20,22 +18,21 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
 
-@RestController
-@RequestMapping("/vito")
+@Service
 @RequiredArgsConstructor
-public class VitoController {
-    @GetMapping("/videoId/{token}/{videoUrl}")
-    public ResponseEntity<?> getVideoId(@PathVariable("token")String token,@PathVariable("videoUrl")String videoUrl){
+public class VitoService {
+
+    public String getVideoId(VitoIdCreateRequest vitoIdCreateRequest){
         try {
             URL url = new URL("https://openapi.vito.ai/v1/transcribe");
             HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
             httpConn.setRequestMethod("POST");
             httpConn.setRequestProperty("accept", "application/json");
-            httpConn.setRequestProperty("Authorization", "Bearer "+ token);
+            httpConn.setRequestProperty("Authorization", "Bearer "+ vitoIdCreateRequest.getToken());
             httpConn.setRequestProperty("Content-Type", "multipart/form-data;boundary=authsample");
             httpConn.setDoOutput(true);
 
-            URL vurl = new URL(videoUrl);
+            URL vurl = new URL(vitoIdCreateRequest.getVideoUrl());
             File file = new File("video.mp4");
 
             FileUtils.copyURLToFile(vurl,file);
@@ -88,21 +85,20 @@ public class VitoController {
             String response = s.hasNext() ? s.next() : "";
             s.close();
 
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return response;
         }
         catch (Exception e){
             throw new ApiRequestException(e.getMessage());
         }
     }
 
-    @GetMapping("/audioMsg/{token}/{videoId}")
-    public ResponseEntity<?> getAudioMsg(@PathVariable("token")String token,@PathVariable("videoId") String videoId) throws Exception{
+    public String getAudioMsg(VitoMsgCreateRequest vitoMsgCreateRequest){
         try {
-            URL url = new URL("https://openapi.vito.ai/v1/transcribe/"+videoId);
+            URL url = new URL("https://openapi.vito.ai/v1/transcribe/"+vitoMsgCreateRequest.getVideoId());
             HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
             httpConn.setRequestMethod("GET");
             httpConn.setRequestProperty("accept", "application/json");
-            httpConn.setRequestProperty("Authorization", "Bearer "+token);
+            httpConn.setRequestProperty("Authorization", "Bearer "+vitoMsgCreateRequest.getToken());
 
             InputStream responseStream = httpConn.getResponseCode() / 100 == 2
                     ? httpConn.getInputStream()
@@ -111,10 +107,9 @@ public class VitoController {
             String response = s.hasNext() ? s.next() : "";
             s.close();
 
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return response;
         }catch (Exception e){
             throw new ApiRequestException(e.getMessage());
         }
     }
-
 }
