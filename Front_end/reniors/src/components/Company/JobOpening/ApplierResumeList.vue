@@ -71,10 +71,10 @@ export default {
       "updateApply",
     ]),
     resumepass() {
+      console.log("서류합격자");
       this.passUser.forEach((data) => {
         console.log(data);
-        console.log(this.jobopeningdetail.id);
-        this.updateApply({
+         this.updateApply({
           jobOpeningId: this.jobopeningdetail.id,
           applyId: data,
           apply: {
@@ -83,12 +83,16 @@ export default {
         });
       });
 
+      console.log("서류탈락자");
       let tmparr = [];
       this.applylist.forEach((apply) => {
-        tmparr.push(apply.id);
+        if(apply.jobOpeningProcess == "서류심사중"){
+            tmparr.push(apply.id);
+        }
       });
       let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
       unpassUser.forEach((data) => {
+        console.log(data);
         this.updateApply({
           jobOpeningId: this.jobopeningdetail.id,
           applyId: data,
