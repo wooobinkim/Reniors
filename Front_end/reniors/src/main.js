@@ -16,7 +16,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 
-import dayjs from 'dayjs';
+import { dayjs } from 'dayjs'
 
 library.add(fas, far, fab)
 
