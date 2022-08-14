@@ -45,5 +45,4 @@ public class VitoController {
 
         return ResponseEntity.status(HttpStatus.OK).body(audioMsg);
     }
-
 }

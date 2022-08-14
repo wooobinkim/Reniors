@@ -10,6 +10,7 @@ export default {
   components: {
     CompanyHome,
   },
+  
 };
 </script>
 
