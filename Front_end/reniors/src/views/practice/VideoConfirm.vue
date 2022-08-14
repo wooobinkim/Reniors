@@ -26,7 +26,7 @@
       <!-- 발음확인 창 -->
       <div class="sttTotal">
         <div class="sttScript" v-if="isShow">
-          <p v-for="(subtitle,index) in subtitles" :key="index" style="margin:2px;">
+          <p v-for="(subtitle,index) in subtitles" :key="index" style="margin:2px; text-align: left;">
             {{subtitle.msg}}
           </p>
         </div>
@@ -155,7 +155,7 @@ video {
 .sttScript{
   background-color: white;
     overflow: scroll;
-    padding: 2px;
+    padding: 4px;
     /* position: fixed; */
     bottom: 120px;
     height: 150px;
