@@ -44,7 +44,6 @@ export default {
   props: {
     // apply: Object,
     jobopeningdetail: Object,
-    no: String,
   },
   data() {
     return {
@@ -57,8 +56,14 @@ export default {
       // flag: false,
     };
   },
+  watch: {
+    passUser: function () {
+      console.log(this.passUser);
+    },
+  },
   created() {
-    this.getapplylist(this.no);
+    console.log(this.$route.params);
+    this.getapplylist(this.$route.params.no);
   },
   computed: {
     ...mapGetters("company", ["jobopening", "applylist"]),
@@ -71,6 +76,8 @@ export default {
     ]),
     resumepass() {
       this.passUser.forEach((data) => {
+        console.log(data);
+        console.log(this.jobopeningdetail.id);
         this.updateApply({
           jobOpeningId: this.jobopeningdetail.id,
           applyId: data,
@@ -102,7 +109,7 @@ export default {
         },
       };
       this.progressJobOpening(data);
-      this.$router.go();
+      // this.$router.go();
     },
 
     resumeview() {

@@ -1,6 +1,6 @@
 <template>
   <div class="apply-interview-item-info-box">
-    <div>이름 : {{ apply.userId }}</div>
+    <div>이름 :{{ apply.name }}</div>
     <div>
       면접날짜 : {{ new Date(apply.interviewDate).getFullYear() }}-{{
         new Date(apply.interviewDate).getMonth() + 1

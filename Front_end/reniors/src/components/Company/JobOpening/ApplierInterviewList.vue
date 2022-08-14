@@ -45,7 +45,6 @@ export default {
   props: {
     // apply: Object,
     jobopeningdetail: Object,
-    no: String,
   },
   data() {
     return {
@@ -68,8 +67,9 @@ export default {
       });
     },
   },
-  created() {
-    this.getapplylist(this.no);
+  async created() {
+    console.log(this.$route.params.no);
+    await this.getapplylist(this.$route.params.no);
   },
   computed: {
     ...mapGetters("company", ["jobopening", "applylist"]),
