@@ -85,6 +85,7 @@
         <div class="chatbox" v-if="chatopenclose">
             <div class="chatlist"><textarea v-model="receivemsg" /></div>
             <div class="chatform">
+                <p style="width: 1vw">  </p>
                 <input class="chatinput" type="text" v-model="msg" />
                 <button class="chatsubmit" @click="sendchat()"><i class="bi bi-send"></i></button>    
 
@@ -547,6 +548,9 @@ export default {
     margin: 0 8px 0 0;
     background-color: #EAEAEA;
     border-radius: 20px;
+}
+.chatinput:hover{
+    border: none;
 }
 .chatsubmit{
     width: 2vw;
