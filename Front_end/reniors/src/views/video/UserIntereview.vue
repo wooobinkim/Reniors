@@ -1,6 +1,6 @@
 <template>
   <div id="main-container" >
-    <div id="join" v-if="!session" class="join row ">
+    <div id="join" v-if="!session" class="join row">
       <!-- left -->
         <div class="col-6 lefttop">
             <div class="left">
