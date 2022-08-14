@@ -24,12 +24,19 @@
           <p style="font-size: 14px">간단한 회원가입을 진행하려고 해요.</p>
           <p>먼저, 로그인 시 사용하실 <span>이메일</span>과 <span>비밀번호</span>를 입력해주세요!</p>
           <br>
-          <p class="forminfo">이메일</p>
-          <b-form-input class="mb-3 user-form-control" v-model="user.userAppId" type="email" placeholder="사용하실 이메일을 입력해주세요." ></b-form-input>
-          <p class="forminfo">비밀번호</p>
-          <b-form-input class="mb-3 user-form-control" v-model="user.userAppPwd" type="password" placeholder="비밀번호를 입력해주세요." ></b-form-input>
-          <p class="forminfo">비밀번호 확인</p>
-          <b-form-input class="mb-3 user-form-control" v-model="password" type="password" placeholder="비밀번호를 한번 더 입력해주세요." ></b-form-input>
+          <div>
+            <p class="forminfo">이메일</p>
+            <b-form-input class="mb-3 user-form-control" v-model="user.userAppId" type="email" placeholder="사용하실 이메일을 입력해주세요." ></b-form-input>
+            <button class="check" style="float: right;" @click="idcheck(user.userAppId)">중복확인</button>
+          </div>
+          <br>
+          <br>
+          <div>
+            <p class="forminfo">비밀번호</p>
+            <b-form-input class="mb-3 user-form-control" v-model="user.userAppPwd" type="password" placeholder="비밀번호를 입력해주세요." ></b-form-input>
+            <p class="forminfo">비밀번호 확인</p>
+            <b-form-input class="mb-3 user-form-control" v-model="password" type="password" placeholder="비밀번호를 한번 더 입력해주세요." ></b-form-input>
+          </div>
         </div>
 
         <div v-show="page===2">
@@ -99,6 +106,7 @@
 import { mapActions, mapState } from 'vuex'
 // import { register } from "@/api/user.js"
 import axios from 'axios'
+import drf from '@/api/drf'
 
 export default {
   name: 'SignupView',
@@ -134,6 +142,7 @@ export default {
       page: 1,
       password: '',
       userImg:'',
+      idconfirm: false
       
     }
   },
@@ -173,19 +182,36 @@ export default {
         alert('주소를 입력해주세요.')
       } else if (this.user.gender == '') {
         alert('성별을 선택해주세요.')
+      } else if (this.idconfirm == false) {
+        alert('아이디를 확인해주세요.')
       } else {
         const formData = new FormData()
         formData.append('img',this.userImg[0])
         formData.append('data',new Blob([JSON.stringify(this.user)],{type : "application/json"}))
-
-
         this.registUser(formData)
-
       }
     },
-
-
-
+    idcheck(id){
+      axios({
+        url: drf.user.idcheck(id),
+        method: 'get',
+      })
+      .then((res)=> {
+        console.log(res)
+        if (res.data.res) {
+          alert('이미 사용중인 아이디 입니다.')
+          this.idconfirm = false
+        } else {
+          alert('사용가능한 아이디 입니다.')
+          this.idconfirm = true
+        }
+        })
+      .catch((err) => {
+        console.log(err)
+        
+      })
+      
+    },
 
     signup(){
       axios({
@@ -254,6 +280,19 @@ export default {
 </script>
 
 <style scoped>
+  .check {
+    background-color: #8CD6C1;
+    width: 90PX;
+    height: 38px;
+    border-radius: 10px;
+    /* border-color: var(--color-red-2); */
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    border-style: none;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+
+  }
 
   header{
     height: 120px;

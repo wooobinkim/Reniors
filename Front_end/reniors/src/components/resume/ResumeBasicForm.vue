@@ -44,7 +44,8 @@
           />
         </div>
         <footer style="width: 312px; "> 
-          <button>다음</button>
+          <button v-if="this.action=='info'">완료</button>
+          <button v-else>다음</button>
         </footer>
       </form>
     </div>
@@ -59,6 +60,7 @@ export default {
   components: {},
   props: {
     currentUser: Object,
+    action: String,
   },
 
   data() {
