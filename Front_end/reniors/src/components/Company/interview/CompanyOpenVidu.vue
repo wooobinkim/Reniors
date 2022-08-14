@@ -152,7 +152,7 @@ export default {
       audioflag: false,
       tab: "resume",
       sendmsg: "",
-      receivemsg: "",
+      receivemsg: [],
       msgflag: true,
       chatopenclose: false,
       applyinfo:null,
@@ -217,7 +217,7 @@ export default {
           let name = event.from.data;
           name = name.substr(15);
           name = name.substring(0,name.length-2);
-        this.receivemsg = name +" : "+ event.data + "\n";
+        this.receivemsg.push(name +" : "+ event.data + "\n");
       });
     },
     chatopen() {

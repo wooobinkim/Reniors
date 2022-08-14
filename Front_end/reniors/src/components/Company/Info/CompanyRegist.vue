@@ -205,7 +205,10 @@ export default {
         formData.append("img", this.companyImg[0]);
         formData.append(
           "data",
-          new Blob([JSON.stringify(this.company)], { type: "application/json" })
+          new Blob(
+            [JSON.stringify(this.company)], 
+            { type: "application/json" }
+            )
         );
         this.registCompany(formData);
         this.$router.push({ name: "Login" });
