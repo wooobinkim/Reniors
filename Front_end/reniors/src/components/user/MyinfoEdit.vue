@@ -82,13 +82,14 @@ export default {
   }
 
   button {
-    background-color: white;
+    background-color: #8CD6C1;
     height: 38px;
     border-radius: 10px;
-    border-color: var(--color-red-2);
-    color: var(--color-red-2);
-    font-weight: 500;
-    border-style: solid;
+    /* border-color: var(--color-red-2); */
+    color: white;
+    font-weight: 600;
+    border-style: none;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 
   }
 
