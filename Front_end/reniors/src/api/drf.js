@@ -19,6 +19,7 @@ export default {
     kakaoSignup: () => HOST + USER + "/kakao",
     kakaoLogin: () => HOST + USER + "/kakao",
     userid: (name, phone) => HOST + USER + `/${name}` + '/findid' + `/${phone}`,
+    idcheck: (userAppId) => HOST + USER + '/idCheck' + `/${userAppId}`,
     userpwd: (name, userAppId) => HOST + USER + `/${name}` + '/findpwd' + `/${userAppId}`,
     changePwd: (userAppPwd) => HOST + USER + `/${userAppPwd}`,
     userList: () => HOST + USER + "/list",
