@@ -1,24 +1,24 @@
 <template>
   <div class="apply-interview-item-info-box">
-    <div>이름 : {{ apply.name }}</div>
+    <div>이름 : {{ this.apply.name }}</div>
     <div>
-      면접날짜 : {{ new Date(apply.interviewDate).getFullYear() }}-{{
-        new Date(apply.interviewDate).getMonth() + 1
-      }}-{{ new Date(apply.interviewDate).getDate() }}
-      {{ new Date(apply.interviewDate).getHours() }}시
+      면접날짜 : {{ new Date(this.apply.interviewDate).getFullYear() }}-{{
+        new Date(this.apply.interviewDate).getMonth() + 1
+      }}-{{ new Date(this.apply.interviewDate).getDate() }}
+      {{ new Date(this.apply.interviewDate).getHours() }}시
       {{
-        new Date(apply.interviewDate).getMinutes() == 0
+        new Date(this.apply.interviewDate).getMinutes() == 0
           ? null
-          : new Date(apply.interviewDate).getMinutes() + "분"
+          : new Date(this.apply.interviewDate).getMinutes() + "분"
       }}
     </div>
-    <div>채용현황 : {{ apply.jobOpeningProcess }}</div>
+    <div>채용현황 : {{ this.apply.jobOpeningProcess }}</div>
     <div class="apply-interview-btn-box">
       <button @click="resumeview()">이력서보기</button>
-      <template v-if="apply.jobOpeningProcess == '면접'">
+      <template v-if="this.apply.jobOpeningProcess == '면접'">
         <button @click="interviewflag()">면접일정잡기</button>
       </template>
-      <template v-if="apply.jobOpeningProcess == '면접심사중'">
+      <template v-if="this.apply.jobOpeningProcess == '면접심사중'">
         <router-link
           :to="{ name: 'usereval', params: { no: this.apply.userId } }"
         >
