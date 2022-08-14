@@ -22,9 +22,11 @@ public class RecordingResponse {
     @NotBlank
     String recordURL;
 
+    String videoId;
+
     @NotNull LocalDateTime updatedAt;
 
     public static RecordingResponse response(Recording recording){
-        return new RecordingResponse(recording.getId(), recording.getFileName(), recording.getRecordURL(), recording.getCreatedAt());
+        return new RecordingResponse(recording.getId(), recording.getFileName(), recording.getRecordURL(), recording.getVideoId(),recording.getCreatedAt());
     }
 }
