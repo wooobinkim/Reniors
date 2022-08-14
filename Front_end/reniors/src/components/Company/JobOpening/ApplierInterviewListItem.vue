@@ -1,27 +1,25 @@
 <template>
   <div class="apply-interview-item-info-box">
-    <div>이름 : {{ this.apply.name }}</div>
+    <div>이름 : {{ apply.name }}</div>
     <div>
-      면접날짜 : {{ new Date(this.apply.interviewDate).getFullYear() }}-{{
-        new Date(this.apply.interviewDate).getMonth() + 1
-      }}-{{ new Date(this.apply.interviewDate).getDate() }}
-      {{ new Date(this.apply.interviewDate).getHours() }}시
+      면접날짜 : {{ new Date(apply.interviewDate).getFullYear() }}-{{
+        new Date(apply.interviewDate).getMonth() + 1
+      }}-{{ new Date(apply.interviewDate).getDate() }}
+      {{ new Date(apply.interviewDate).getHours() }}시
       {{
-        new Date(this.apply.interviewDate).getMinutes() == 0
+        new Date(apply.interviewDate).getMinutes() == 0
           ? null
-          : new Date(this.apply.interviewDate).getMinutes() + "분"
+          : new Date(apply.interviewDate).getMinutes() + "분"
       }}
     </div>
-    <div>채용현황 : {{ this.apply.jobOpeningProcess }}</div>
+    <div>채용현황 : {{ apply.jobOpeningProcess }}</div>
     <div class="apply-interview-btn-box">
       <button @click="resumeview()">이력서보기</button>
-      <template v-if="this.apply.jobOpeningProcess == '면접'">
+      <template v-if="apply.jobOpeningProcess == '면접'">
         <button @click="interviewflag()">면접일정잡기</button>
       </template>
-      <template v-if="this.apply.jobOpeningProcess == '면접심사중'">
-        <router-link
-          :to="{ name: 'usereval', params: { no: this.apply.userId } }"
-        >
+      <template v-if="apply.jobOpeningProcess == '면접심사중'">
+        <router-link :to="{ name: 'usereval', params: { no: apply.userId } }">
           <button>면접평가보기</button></router-link
         >
       </template>
@@ -67,7 +65,6 @@ export default {
     ...mapActions("company", ["updateApply", "registRoom"]),
     updateapply() {
       this.applyinfo.jobOpeningProcess = "면접";
-      // console.log(this.applyinfo);
       this.applyinfo.sessionId = this.jobopening.title + this.jobopening.id;
       let data = {
         jobOpeningId: this.jobopening.id,
