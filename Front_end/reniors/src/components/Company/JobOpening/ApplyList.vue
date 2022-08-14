@@ -70,7 +70,9 @@ export default {
       progress: "",
     };
   },
-  created() {
+  created() {},
+  mounted() {
+    console.log(this.$route.params.no);
     this.getJobOpening(this.$route.params.no);
   },
   watch: {

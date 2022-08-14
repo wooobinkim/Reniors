@@ -10,13 +10,16 @@
 
     <div class="jobOpening-detail-btn-box">
       <router-link
-        :to="{ name: 'companyjobopeningdetail', params: { no: jobopening.id } }"
+        :to="{
+          name: 'companyjobopeningdetail',
+          params: { no: this.jobopening.id },
+        }"
       >
         <i class="bi bi-gear"></i>
       </router-link>
 
       <router-link
-        :to="{ name: 'applylist', params: { no: jobopening.id } }"
+        :to="{ name: 'applylist', params: { no: this.jobopening.id } }"
         class="to-apply-list-btn"
       >
         <i class="bi bi-person-lines-fill"></i> 지원자
