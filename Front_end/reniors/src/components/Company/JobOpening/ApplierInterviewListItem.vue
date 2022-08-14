@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div>이름 :{{ apply.userId }}</div>
+  <div class="apply-interview-item-info-box">
+    <div>이름 : {{ apply.userId }}</div>
     <div>
       면접날짜 : {{ new Date(apply.interviewDate).getFullYear() }}-{{
         new Date(apply.interviewDate).getMonth() + 1
@@ -12,18 +12,20 @@
           : new Date(apply.interviewDate).getMinutes() + "분"
       }}
     </div>
-    <div>{{ apply.jobOpeningProcess }}</div>
-    <button @click="resumeview()">이력서보기</button>
-    <template v-if="apply.jobOpeningProcess == '면접'">
-      <button @click="interviewflag()">면접일정잡기</button>
-    </template>
-    <template v-if="apply.jobOpeningProcess == '면접심사중'">
-      <router-link
-        :to="{ name: 'usereval', params: { no: this.apply.userId } }"
-      >
-        <button>면접평가보기</button></router-link
-      >
-    </template>
+    <div>채용현황 : {{ apply.jobOpeningProcess }}</div>
+    <div class="apply-interview-btn-box">
+      <button @click="resumeview()">이력서보기</button>
+      <template v-if="apply.jobOpeningProcess == '면접'">
+        <button @click="interviewflag()">면접일정잡기</button>
+      </template>
+      <template v-if="apply.jobOpeningProcess == '면접심사중'">
+        <router-link
+          :to="{ name: 'usereval', params: { no: this.apply.userId } }"
+        >
+          <button>면접평가보기</button></router-link
+        >
+      </template>
+    </div>
 
     <div v-if="this.flag">
       <datepicker v-model="applyinfo.interviewDate" />
@@ -98,4 +100,32 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.apply-interview-item-info-box {
+  width: 100%;
+  border-bottom: 2px solid var(--color-black-3);
+  padding: 10px;
+}
+.apply-interview-item-info-box > div:not(:last-child) {
+  width: 100%;
+  text-align: left;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+.apply-interview-btn-box {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+.apply-interview-item-info-box button {
+  border: none;
+  background-color: var(--color-green-2);
+  padding: 6px 20px;
+  color: black;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+  margin: 0;
+}
+</style>
