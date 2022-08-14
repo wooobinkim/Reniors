@@ -1,7 +1,14 @@
 <template>
   <div class="company-jobOpening-ing-list-item">
-    <div class="title">제목 : {{ jobopening.title }}</div>
-    <div class="job-category">{{ jobopening.jobChildCategoryName }}</div>
+    <div class="title">
+      {{ jobopening.title }}
+    </div>
+    <div class="job-category">
+      {{ jobopening.jobChildCategoryName }}
+    </div>
+    <div class="period">
+      {{ jobopening.createdDate }} ~ {{ jobopening.finishedDate }}
+    </div>
 
     <div class="jobOpening-detail-btn-box">
       <router-link
@@ -52,4 +59,55 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.company-jobOpening-ing-list-item{
+  width: 328px;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  border-color: var(--color-black-2); 
+  box-shadow: inset 0 0 1px 1px var(--color-black-3), 0 0 5px var(--color-black-3);
+}
+.company-jobOpening-ing-list-item > .title {
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  font-size: 16px;
+}
+.company-jobOpening-ing-list-item > .job-category {
+  width: 100%;
+  text-align: right;
+  font-size: 12px;
+  color: var(--color-orange-2);
+}
+.company-jobOpening-ing-list-item > .period {
+  width: 100%;
+  text-align: right;
+  font-size: 12px;
+  color: var(--color-orange-2);
+}
+.jobOpening-detail-btn-box{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.jobOpening-detail-btn-box > a {
+  text-decoration: none;
+  color: var(--color-black-2);
+}
+.jobOpening-detail-btn-box > a > .bi-gear {
+  font-size: 20px;
+}
+.to-apply-list-btn:link {
+  color: white;
+}
+.to-apply-list-btn:visited {
+  color: white;
+}
+.to-apply-list-btn{
+  padding: 5px 10px;
+  background-color: var(--color-red-1);
+  border-radius: 5px;
+  font-size: 15px;
+}
+</style>

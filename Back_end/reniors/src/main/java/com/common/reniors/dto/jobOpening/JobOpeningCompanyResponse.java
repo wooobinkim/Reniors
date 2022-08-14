@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,6 +17,8 @@ public class JobOpeningCompanyResponse {
     private Long id;
     private String title;
     private String jobChildCategoryName;
+    private Date createdDate;
+    private Date finishedDate;
     private int applies;
     private IsFinish isFinish;
     private JobOpeningProcess jobOpeningProcess;
@@ -24,6 +28,8 @@ public class JobOpeningCompanyResponse {
                 jobOpening.getId(),
                 jobOpening.getTitle(),
                 jobOpening.getJobChildCategory().getName(),
+                jobOpening.getCreatedDate(),
+                jobOpening.getFinishedDate(),
                 jobOpening.getApplies().size(),
                 jobOpening.getIsFinish(),
                 jobOpening.getJobOpeningProcess()
