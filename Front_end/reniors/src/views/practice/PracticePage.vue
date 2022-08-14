@@ -143,7 +143,9 @@ export default{
             this.question = this.realquestions[this.selectedQ[data]-1].question
         },
         question: function(data) {
-            this.speech(data)
+            if(this.session){
+                this.speech(data)
+            }
         }
     },
     created(){
@@ -158,7 +160,7 @@ export default{
         ...mapGetters(['selected','currentUser', 'questions', 'checklist']),
         ...mapMutations(['CLEAR_QUESTIONS']),
 
-    },
+    }, 
     methods:{
         speech1(){
             setTimeout(() => {
@@ -182,6 +184,7 @@ export default{
                 this.idx += 1
                 this.isEnd = false
                 this.isStart = false
+                
             } else if(this.idx+1 in this.selectedQ){
                 this.idx += 1
                 this.isEnd = true
@@ -323,9 +326,7 @@ export default{
 						},
 					})
 					.then(res => {
-					console.log(res)
 					this.nowRecordingId = res.data.id 
-                    console.log(this.nowRecordingId);
                     })
                     .catch((err)=>{
                         console.log(err);    
@@ -348,11 +349,8 @@ export default{
 					})
 					.then(res => res.data)
 					.then(data => {
-                        console.log(data);
 						this.url = data.url
-                        console.log(this.url);
                         this.reactModal
-                        console.log(this.isModal);
 					})
 			})
 		},

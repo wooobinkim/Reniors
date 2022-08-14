@@ -42,14 +42,16 @@ export default{
         };
     },
     setup(){},
-    created(){
+    async created(){
         this.fetchQuestions()
+        await this.clearSelected()
+        
     },
     computed:{
         ...mapGetters(['questions'])
     },
     methods:{
-        ...mapActions(['fetchQuestions'])
+        ...mapActions(['fetchQuestions', 'clearSelected']),
     }
 }
 </script>
