@@ -92,9 +92,12 @@
         <span @click="changeeval()">평가하기</span>
       </div>
       <div v-if="chatopenclose">
-        <input type="text" v-model="msg" />
+        <input type="text" v-model="sendmsg" />
         <button @click="sendchat()">보내기</button>
-        <div><textarea v-model="receivemsg" /></div>
+        <!-- <div><textarea v-model="receivemsg" /></div> -->
+        <template v-for="msg in receivemsg" :key="msg">
+          <div>{{msg}}</div>
+        </template>
       </div>
       <input
         class="btn btn-large btn-danger"
@@ -164,11 +167,11 @@ export default {
     companyinfo: function (data) {
       this.myUserName = data.name;
     },
-    session: function () {
-      this.session.on("signal", (event) => {
-        this.receivemsg += event.from + event.data + "\n";
-      });
-    },
+    // session: function () {
+    //   this.session.on("signal", (event) => {
+    //     this.receivemsg += event.from + event.data + "\n";
+    //   });
+    // },
     apply:function (data) {
       console.log(data);
       this.applyinfo = data;
@@ -210,6 +213,12 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+        this.session.on("signal:my-chat", (event) => {
+          let name = event.from.data;
+          name = name.substr(15);
+          name = name.substring(0,name.length-2);
+        this.receivemsg = name +" : "+ event.data + "\n";
+      });
     },
     chatopen() {
       this.chatopenclose = !this.chatopenclose;
