@@ -12,6 +12,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   props: {
     evalquestion: Object,
+    applyinfo:Object,
   },
   data() {
     return {
@@ -29,8 +30,8 @@ export default {
     ...mapActions("company", ["registUserEval"]),
     regist() {
       let data = {
-        jobOpeningId: this.$route.params.no,
-        userId: this.interviewer,
+        jobOpeningId: this.applyinfo.jobOpeningId,
+        userId: this.applyinfo.userId,
         usereval: this.usereval,
       };
       console.log(data);

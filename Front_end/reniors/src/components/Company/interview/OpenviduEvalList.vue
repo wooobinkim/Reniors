@@ -4,6 +4,7 @@
       v-for="evalquestion in evalquestionlist"
       :key="evalquestion.id"
       :evalquestion="evalquestion"
+      :applyinfo="applyinfo"
     ></openvidu-eval-list-item>
 
     <button @click="finish()">평가 마치기</button>
@@ -29,12 +30,17 @@ export default {
     ...mapGetters("company", ["evalquestionlist"]),
   },
   methods: {
-    ...mapActions("company", ["getEvalQuestionList", "finishInterview"]),
+    ...mapActions("company", ["getEvalQuestionList", "finishInterview","updateApply"]),
     finish() {
-      console.log(this.interviewer);
-      this.finishInterview({
-        // jobOpeningId: this.$route.params.no,
-        applyId: this.applyinfo.userId,
+      let apply = {
+        jobOpeningProcess: "면접심사중",
+        interviewDate:null,
+        sessionId: null,
+      }
+      this.updateApply({
+        jobOpeningId : this.applyinfo.jobOpeningId,
+        applyId : this.applyinfo.id,
+        apply: apply,
       });
     },
   },
