@@ -4,6 +4,7 @@
       v-for="evalquestion in evalquestionlist"
       :key="evalquestion.id"
       :evalquestion="evalquestion"
+      :applyinfo="applyinfo"
     ></openvidu-eval-list-item>
 
     <button @click="finish()">평가 마치기</button>
