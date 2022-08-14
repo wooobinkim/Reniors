@@ -16,6 +16,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 
+import dayjs from 'dayjs';
+
 library.add(fas, far, fab)
 
-createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(store).use(router).use(BootstrapVue3).use(BToastPlugin).mount('#app')
+createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(store).use(router).use(BootstrapVue3).use(BToastPlugin).use(dayjs).mount('#app')
