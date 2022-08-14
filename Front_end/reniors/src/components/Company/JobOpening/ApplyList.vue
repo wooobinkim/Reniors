@@ -73,9 +73,11 @@ export default {
       progress: "",
     };
   },
-  created() {
-    this.getJobOpening(this.$route.params.no);
+  async created() {
+    console.log(this.$route.params.no);
+    await this.getJobOpening(this.$route.params.no);
   },
+  mounted() {},
   watch: {
     jobopening: function (data) {
       this.jobopeningdetail = data;

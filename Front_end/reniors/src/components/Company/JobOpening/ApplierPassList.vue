@@ -3,11 +3,7 @@
     <template v-for="apply in applies" :key="apply.id">
       <template v-if="apply.jobOpeningProcess == '최종합격'">
         <div>
-          <applier-pass-list-item
-            :apply="apply"
-            :jobOpeningId="this.$route.params.no"
-          >
-          </applier-pass-list-item>
+          <applier-pass-list-item :apply="apply"> </applier-pass-list-item>
         </div>
       </template>
     </template>
@@ -27,7 +23,6 @@ export default {
   props: {
     // apply: Object,
     jobopeningdetail: Object,
-    no : String,
   },
   data() {
     return {
@@ -44,7 +39,7 @@ export default {
     },
   },
   created() {
-    this.getapplylist(this.no);
+    this.getapplylist(this.$route.params.no);
   },
   computed: {
     ...mapGetters("company", ["jobopening", "applylist"]),

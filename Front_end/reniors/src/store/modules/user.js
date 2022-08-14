@@ -246,6 +246,20 @@ export const user = {
           console.log(err);
         });
     },
+
+    changePassword({ getters }, data) {
+      axios({
+        url: drf.user.changePwd(data),
+        method: 'put',
+        headers: getters.authHeader,
+      })
+      .then((res) => {
+        alert('변경되었습니다!')
+        console.log(res)
+      })
+      .catch((err) => console.log(err))
+    },
+
     fetchRooms({ getters, commit }) {
       axios({
         url: "https://i7b307.p.ssafy.io/api" + "/room/user",

@@ -15,10 +15,7 @@
             v-model="passUser"
             class="apply-interview-list-checkbox"
           />
-          <applier-interview-list-item
-            :apply="apply"
-            :jobOpeningId="this.$route.params.no"
-          >
+          <applier-interview-list-item :apply="apply">
           </applier-interview-list-item>
         </div>
       </template>
@@ -46,7 +43,6 @@ export default {
   props: {
     // apply: Object,
     jobopeningdetail: Object,
-    no : String,
   },
   data() {
     return {
@@ -69,8 +65,8 @@ export default {
       });
     },
   },
-  created() {
-    this.getapplylist(this.no);
+  async created() {
+    await this.getapplylist(this.$route.params.no);
   },
   computed: {
     ...mapGetters("company", ["jobopening", "applylist"]),
