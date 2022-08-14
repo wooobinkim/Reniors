@@ -26,7 +26,9 @@
       <!-- 발음확인 창 -->
       <div class="sttTotal">
         <div class="sttScript" v-if="isShow">
-          {{this.subtitles}}
+          <p v-for="(subtitle,index) in subtitles" :key="index" style="margin:2px;">
+            {{subtitle.msg}}
+          </p>
         </div>
       </div>
 
@@ -54,6 +56,7 @@ export default {
       idx: this.$route.params.videoId,
       record: {},
       isShow: false,
+
     };
   },
   computed: {
