@@ -47,7 +47,13 @@ export default {
   },
 
   getters: {
+    jobparents:state=>state.jobparents,
     jobchilds: state => state.jobchilds,
+    sidos: state => state.sidos,
+    guguns: state => state.guguns,
+    lastedus: state => state.lastedus,
+    typeemployments: state => state.typeemployments,
+    typecompanies: state => state.typecompanies
   },
 
   mutations: {

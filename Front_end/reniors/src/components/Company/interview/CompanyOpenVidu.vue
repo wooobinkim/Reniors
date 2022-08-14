@@ -79,12 +79,12 @@
       <div>지원자 : {{ interviewer }}</div>
       <template v-if="tab == 'resume'">
         <div>
-          <resume-view></resume-view>
+          <resume-view :applyinfo="this.applyinfo"></resume-view>
         </div>
       </template>
       <template v-if="tab == 'eval'">
         <div>
-          <openvidu-eval-list></openvidu-eval-list>
+          <openvidu-eval-list :applyinfo="this.applyinfo"></openvidu-eval-list>
         </div>
       </template>
       <div>
@@ -112,7 +112,7 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "@/components/openvidu/UserVideo.vue";
 import ResumeView from "@/components/Company/interview/ResumeView.vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters,mapState } from "vuex";
 import OpenviduEvalList from "@/components/Company/interview/OpenviduEvalList.vue";
 // import { mapActions } from "vuex";
 
@@ -143,7 +143,7 @@ export default {
       publisher: undefined,
       subscribers: [],
 
-      mySessionId: "InterviewSession" + this.$route.params.no,
+      mySessionId: "InterviewSession" + this.$route.params.jobOpeningId,
       myUserName: "",
       videoflag: true,
       audioflag: false,
@@ -152,12 +152,13 @@ export default {
       receivemsg: "",
       msgflag: true,
       chatopenclose: false,
+      applyinfo:null,
       //   myUserName: "Participant" + Math.floor(Math.random() * 100),
     };
   },
   computed: {
     ...mapGetters("company", ["companyinfo","interviewer"]),
-    // ...mapState("company",["interviewer"])
+    ...mapState("company",["apply"])
   },
   watch: {
     companyinfo: function (data) {
@@ -168,12 +169,18 @@ export default {
         this.receivemsg += event.from + event.data + "\n";
       });
     },
+    apply:function (data) {
+      console.log(data);
+      this.applyinfo = data;
+    }
   },
   created() {
     this.getCompany();
+    this.getapply({jobOpeningId:this.$route.params.jobOpeningId,
+    applyId:this.$route.params.no})
   },
   methods: {
-    ...mapActions("company", ["getCompany"]),
+    ...mapActions("company", ["getCompany","getapply"]),
     changeresume() {
       this.tab = "resume";
     },

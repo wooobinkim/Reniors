@@ -17,6 +17,7 @@ export default {
     jobopening: null,
     companyinfo: {},
     applylist: [],
+    apply:null,
     interviewapplylist: [],
     interviewapplylistasc: [],
     applyuser: null,
@@ -38,6 +39,7 @@ export default {
     jobopening: (state) => state.jobopening,
     companyinfo: (state) => state.companyinfo,
     applylist: (state) => state.applylist,
+    apply:(state)=> state.apply,
     applyuser: (state) => state.applyuser,
     evalquestionlist: (state) => state.evalquestionlist,
     userevallist: (state) => state.userevallist,
@@ -76,6 +78,9 @@ export default {
     },
     SET_APPLY_LIST(state, datas) {
       state.applylist = datas;
+    },
+    SET_APPLY(state, data) {
+      state.apply = data;
     },
     SET_APPLY_USER(state, data) {
       state.applyuser = data;
@@ -276,6 +281,16 @@ export default {
         .get(`/company/jobopening/${no}/apply`)
         .then(({ data }) => {
           commit("SET_APPLY_LIST", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getapply: ({ commit }, data) => {
+      http
+        .get(`/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`)
+        .then(({ data }) => {
+          commit("SET_APPLY", data);
         })
         .catch((error) => {
           console.log(error);

@@ -73,7 +73,7 @@ export default {
     };
   },
   props:{
-    interviewer : Number,
+    applyinfo : Object,
   },
   watch: {
     resume: function (data) {
@@ -87,8 +87,10 @@ export default {
     ...mapMutations("company", ["CLEAR_INTERVIEWER"]),
   },
   created() {
+    console.log("리주메");
+    console.log(this.applyinfo);
     // if (this.interviewer) this.getResume(this.interviewer.id);
-    this.getResume(this.$route.params.userId);
+    this.getResume(this.applyinfo.userId);
     // this.birth = new Date(this.resume.birth);
     this.CLEAR_INTERVIEWER;
   },
