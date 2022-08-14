@@ -24,6 +24,8 @@ public class Recording extends BaseEntity{
     @NotNull
     private String recordURL;
 
+    private String videoId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -34,5 +36,9 @@ public class Recording extends BaseEntity{
         recording.recordURL = recordName;
         recording.user = user;
         return recording;
+    }
+
+    public void videoSave(String videoId){
+        this.videoId = videoId;
     }
 }

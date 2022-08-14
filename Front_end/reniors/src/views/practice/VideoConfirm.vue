@@ -53,7 +53,7 @@ export default {
       this.myrecords = { ...data };
       this.record = { ...data }[this.idx];
       this.issueToken();
-
+      console.log(this.record.recordURL);
       //   this.fetchSubtitles(this.record.recordURL);
     },
   },
