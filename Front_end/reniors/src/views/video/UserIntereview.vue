@@ -178,11 +178,11 @@ export default {
     companyinfo: function (data) {
       this.myUserName = data.name;
     },
-    session: function () {
-      this.session.on("signal", (event) => {
-        this.receivemsg += event.from + event.data + "\n";
-      });
-    },
+    // session: function () {
+    //   this.session.on("signal", (event) => {
+    //     this.receivemsg += event.from + event.data + "\n";
+    //   });
+    // },
   },
   created() {
         this.fetchCurrentUser(),
@@ -212,6 +212,9 @@ export default {
         .then(() => {
           this.msgflag = !this.msgflag;
           this.sendmsg = "";
+          this.session.on("signal", (event) => {
+        this.receivemsg += event.from + event.data + "\n";
+      });
         })
         .catch((error) => {
           console.log(error);
