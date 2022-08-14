@@ -9,7 +9,6 @@
           >
           </applier-pass-list-item>
         </div>
-        <hr />
       </template>
     </template>
   </div>

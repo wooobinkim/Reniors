@@ -9,17 +9,23 @@
         "
       >
         <div>
-          <input :value="apply.id" type="checkbox" v-model="passUser" />
+          <input
+            :value="apply.id"
+            type="checkbox"
+            v-model="passUser"
+            class="apply-interview-list-checkbox"
+          />
           <applier-interview-list-item
             :apply="apply"
             :jobOpeningId="this.$route.params.no"
           >
           </applier-interview-list-item>
         </div>
-        <hr />
       </template>
     </template>
-    <button @click="interviewpass()">최종합격</button>
+    <button @click="interviewpass()" class="apply-interview-pass-btn">
+      최종합격
+    </button>
     <!-- <div for="check">이름 :{{ apply.userId }}</div>
 
     <button @click="resumeview()">이력서보기</button> -->
@@ -116,4 +122,47 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.apply-interview-list-checkbox {
+  float: right;
+  margin-right: 10px;
+  margin-top: 10px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  border-radius: 5px;
+  -webkit-appearance: none;
+  border: 2px solid var(--color-black-3);
+  position: relative;
+  display: inline-block;
+}
+.apply-interview-list-checkbox:checked {
+  background-color: white;
+}
+.apply-interview-list-checkbox:checked::after {
+  content: "✔";
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: auto;
+  line-height: 24px;
+  color: var(--color-yellow-1);
+}
+.apply-interview-pass-btn {
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border: none;
+  padding: 6px 40px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: var(--color-green-1);
+  color: white;
+}
+</style>
