@@ -12,7 +12,7 @@
           <input
             :value="apply.id"
             type="checkbox"
-            v-model="passUser"
+            v-model="this.passUser"
             class="apply-interview-list-checkbox"
           />
           <applier-interview-list-item :apply="apply">

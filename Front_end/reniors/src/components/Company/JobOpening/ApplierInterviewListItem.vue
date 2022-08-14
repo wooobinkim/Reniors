@@ -27,8 +27,11 @@
       </template>
     </div>
 
-    <div v-if="this.flag">
-      <datepicker v-model="applyinfo.interviewDate" />
+    <div v-if="flag">
+      <datepicker
+        v-model="applyinfo.interviewDate"
+        class="interview-datepicker"
+      />
       <button @click="updateapply()">수정</button>
     </div>
   </div>
@@ -93,7 +96,7 @@ export default {
   border-bottom: 2px solid var(--color-black-3);
   padding: 10px;
 }
-.apply-interview-item-info-box > div:not(:last-child) {
+.apply-interview-item-info-box > div:not(:nth-child(4), :nth-child(5)) {
   width: 100%;
   text-align: left;
   margin-left: 10px;
@@ -114,5 +117,8 @@ export default {
   font-weight: bold;
   font-size: 14px;
   margin: 0;
+}
+.interview-datepicker {
+  margin: 10px 0;
 }
 </style>

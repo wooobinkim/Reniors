@@ -1,7 +1,7 @@
 <template>
   <div class="apply-pass-item-info-box">
-    <div>이름 : {{ apply.name }}</div>
-    <div>채용현황 : {{ apply.jobOpeningProcess }}</div>
+    <div>이름 : {{ this.apply.name }}</div>
+    <div>채용현황 : {{ this.apply.jobOpeningProcess }}</div>
     <div class="apply-pass-btn-box">
       <button @click="resumeview()">이력서보기</button>
       <router-link

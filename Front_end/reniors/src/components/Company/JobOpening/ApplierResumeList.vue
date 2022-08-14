@@ -11,7 +11,7 @@
           <input
             :value="apply.id"
             type="checkbox"
-            v-model="passUser"
+            v-model="this.passUser"
             class="apply-resume-list-checkbox"
           />
           <applier-resume-list-item :apply="apply"> </applier-resume-list-item>
