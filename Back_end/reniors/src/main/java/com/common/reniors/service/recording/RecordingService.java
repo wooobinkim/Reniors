@@ -8,6 +8,7 @@ import com.common.reniors.domain.entity.user.User;
 import com.common.reniors.domain.repository.recording.RecordingRepository;
 import com.common.reniors.dto.recording.RecordingCreateRequest;
 import com.common.reniors.dto.recording.RecordingResponse;
+import com.common.reniors.dto.recording.RecordingVideoCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +49,16 @@ public class RecordingService {
                 .map(RecordingResponse::response)
                 .collect(Collectors.toList());
         return recordings;
+    }
+
+    @Transactional
+    public void updateVideoId(User user, Long recordingId, RecordingVideoCreateRequest recordingVideoCreateRequest){
+        Recording recording = recordingRepository.findById(recordingId).orElseThrow(() -> new NotFoundException(RECORDING_NOT_FOUND));
+        if(recording.getUser().getId() == user.getId()){
+            recording.videoSave(recordingVideoCreateRequest.getVideoId());
+        }else{
+            throw new NotAuthException(USER_NO_AUTH);
+        }
     }
 
 }
