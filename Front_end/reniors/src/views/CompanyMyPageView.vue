@@ -14,10 +14,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .company-header {
   background-color: #ffffff;
   height: 40px;
-  width: 100%;
 }
 </style>
