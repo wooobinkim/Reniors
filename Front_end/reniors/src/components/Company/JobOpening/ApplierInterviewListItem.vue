@@ -1,6 +1,10 @@
 <template>
   <div class="apply-interview-item-info-box">
     <div>이름 : {{ apply.name }}</div>
+    <template v-if="new Date(apply.interviewDate).getFullYear() == 1970">
+      <div>면접날짜 : 미정</div>
+    </template>
+    <template v-else>
     <div>
       면접날짜 : {{ new Date(apply.interviewDate).getFullYear() }}-{{
         new Date(apply.interviewDate).getMonth() + 1
@@ -12,6 +16,7 @@
           : new Date(apply.interviewDate).getMinutes() + "분"
       }}
     </div>
+    </template>
     <div>채용현황 : {{ apply.jobOpeningProcess }}</div>
     <div class="apply-interview-btn-box">
       <button @click="resumeview()">이력서보기</button>

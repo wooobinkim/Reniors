@@ -1,13 +1,22 @@
 <template>
-  <button @click="prevpage()">이전</button>
-  헤더헤더
-  <button @click="mainpage()">홈</button>
-  <button @click="logout()">로그아웃</button>
-  <!-- <img src="https://i7b307.p.ssafy.io/images/company/2" alt="" /> -->
+  <i @click="prevpage()" class="bi bi-arrow-left-circle"></i>
+  {{this.header}}
+  <i @click="mainpage()" class="bi bi-house"></i>
+  <!-- <button @click="logout()">로그아웃</button> -->
+  <img
+    :src="this.companyimg"
+    alt="test"
+    class="header-img"
+  />
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
+  computed:{
+    ...mapGetters("company",["header","companyimg"]),
+  },
   methods: {
     prevpage() {
       this.$router.go(-1);
@@ -24,4 +33,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.header-img{
+  width: 30px;
+  height: 30px;
+}
+</style>
