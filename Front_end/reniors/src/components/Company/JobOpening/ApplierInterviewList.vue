@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-for="apply in applies" :key="apply.id">
+    <template v-for="apply in this.applies" :key="apply.id">
       <template
         v-if="
           apply.jobOpeningProcess == '면접' ||
@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       passUser: [],
-      applies: null,
+      applies: [],
     };
   },
   watch: {
@@ -56,6 +56,11 @@ export default {
   },
   async created() {
     await this.getapplylist(this.$route.params.no);
+    this.applies = [];
+    this.applylist.forEach((data) => {
+      data.interviewDate = new Date(data.interviewDate);
+      this.applies.push(data);
+    });
   },
   computed: {
     ...mapGetters("company", ["jobopening", "applylist"]),

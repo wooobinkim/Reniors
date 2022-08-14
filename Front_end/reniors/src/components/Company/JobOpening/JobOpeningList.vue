@@ -51,13 +51,11 @@ export default {
   },
   components: { JobOpeningIngListItem, JobOpeningEdListItem },
   async created() {
-    this.CLEAR_JOBOPENING_LIST;
+    await this.CLEAR_JOBOPENING_LIST;
     await this.getJobOpeningList();
   },
   watch: {},
-  mounted() {
-    //this.$router.go();
-  },
+  mounted() {},
   computed: {
     ...mapGetters("company", ["jobopeninglisting", "jobopeninglisted"]),
     ...mapMutations("company", ["CLEAR_JOBOPENING_LIST"]),

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-for="apply in applylist" :key="apply.id">
+    <template v-for="apply in this.applylist" :key="apply.id">
       <template
         v-if="
           apply.jobOpeningProcess == '서류심사중' ||
@@ -56,7 +56,6 @@ export default {
       "updateApply",
     ]),
     resumepass() {
-      console.log("서류합격자");
       this.passUser.forEach((data) => {
         this.updateApply({
           jobOpeningId: this.jobopeningdetail.id,
@@ -67,7 +66,6 @@ export default {
         });
       });
 
-      console.log("서류탈락자");
       let tmparr = [];
       this.applylist.forEach((apply) => {
         if (apply.jobOpeningProcess == "서류심사중") {
