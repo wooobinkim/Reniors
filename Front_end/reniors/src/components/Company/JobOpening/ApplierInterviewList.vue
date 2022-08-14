@@ -15,10 +15,7 @@
             v-model="passUser"
             class="apply-interview-list-checkbox"
           />
-          <applier-interview-list-item
-            :apply="apply"
-            :jobOpeningId="this.$route.params.no"
-          >
+          <applier-interview-list-item :apply="apply">
           </applier-interview-list-item>
         </div>
       </template>

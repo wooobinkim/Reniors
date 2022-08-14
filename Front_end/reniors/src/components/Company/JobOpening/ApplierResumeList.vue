@@ -14,11 +14,7 @@
             v-model="passUser"
             class="apply-resume-list-checkbox"
           />
-          <applier-resume-list-item
-            :apply="apply"
-            :jobOpeningId="this.$route.params.no"
-          >
-          </applier-resume-list-item>
+          <applier-resume-list-item :apply="apply"> </applier-resume-list-item>
         </div>
       </template>
     </template>

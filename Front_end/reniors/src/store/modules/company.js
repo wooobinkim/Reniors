@@ -76,8 +76,8 @@ export default {
     SET_COMPANY(state, data) {
       state.companyinfo = data;
     },
-    SET_APPLY_LIST(state, datas) {
-      state.applylist = datas;
+    SET_APPLY_LIST(state, data) {
+      state.applylist = data;
     },
     SET_APPLY(state, data) {
       state.apply = data;
