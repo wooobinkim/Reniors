@@ -8,12 +8,14 @@
     {{new Date(interviewapply.interviewDate).getMinutes()==0?null:new Date(interviewapply.interviewDate).getMinutes()+"분"}}
       </div>
     <template v-if="interviewapply.jobOpeningProcess == '면접심사중'">
-      <router-link :to="{ name: 'companyopenvidu' }">
-        <button @click="regist()">평가보기</button>
-      </router-link>
+      <router-link
+        :to="{ name: 'usereval', params: { no: this.interviewapply.userId } }"
+      >
+        <button>면접평가보기</button></router-link
+      >
     </template>
     <template v-else>
-      <router-link :to="{ name: 'companyopenvidu',params:{no : this.$route.params.no, userId:this.interviewapply.userId} }">
+      <router-link :to="{ name: 'companyopenvidu',params:{no : this.interviewapply.id, jobOpeningId:this.interviewapply.jobOpeningId} }">
         <button @click="regist()">면접보기</button>
       </router-link>
     </template>
@@ -29,9 +31,9 @@ export default {
   },
   methods: {
     ...mapActions("company",["setInterviewer"]),
-    regist() {
-      this.setInterviewer(this.interviewapply.userId);
-    },
+    // regist() {
+    //   this.setInterviewer(this.interviewapply.userId);
+    // },
   },
 };
 </script>

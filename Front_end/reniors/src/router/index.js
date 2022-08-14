@@ -332,7 +332,7 @@ const routes = [
         component: CompanyInterviewList,
       },
       {
-        path: "interviewroom/:no/:userId",
+        path: "interviewroom/:no/:jobOpeningId",
         name: "companyopenvidu",
         component: CompanyOpenVidu,
       },

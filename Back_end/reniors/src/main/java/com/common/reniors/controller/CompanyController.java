@@ -207,8 +207,8 @@ public class CompanyController {
     @GetMapping("/jobopening/{jobOpeningId}/apply/{applyId}")
     @ApiOperation(value = "공고 지원자 상세목록", notes = "올린 공고의 지원자 중 한명의 정보를 가져온다.")
     public ResponseEntity<?> getApplicant( @ApiIgnore @LoginCompany Company company, @PathVariable("applyId") Long applyId){
-        UserResponse User = companyService.getapplicant(company, applyId);
-        return ResponseEntity.status(HttpStatus.OK).body(User);
+        ApplyResponse apply = companyService.getapplicant(company, applyId);
+        return ResponseEntity.status(HttpStatus.OK).body(apply);
     }
 
     //회사 공고 지원자 상태수정
