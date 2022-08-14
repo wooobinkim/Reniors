@@ -56,7 +56,7 @@ import EvalRegist from "@/components/Company/interview/EvalRegist.vue";
 import BoardMain from "@/views/board/BoardMain.vue";
 import BoardDetail from "@/views/board/BoardDetail.vue";
 import BoardCreate from "@/views/board/BoardCreate.vue";
-import BoardUpdate from "@/views/board/BoardUpdate.vue"
+import BoardUpdate from "@/views/board/BoardUpdate.vue";
 
 //video
 import VideoMain from "@/views/video/VideoMain.vue";
@@ -70,7 +70,7 @@ import VideoPracticeList from "@/views/practice/VideoPracticeList.vue";
 import AnswerUpdate from "@/views/practice/AnswerUpdate.vue";
 import PracticePage from "@/views/practice/PracticePage.vue";
 import PracticeBox from "@/views/practice/PracticeBox.vue";
-import VideoConfirm from "@/views/practice/VideoConfirm.vue"
+import VideoConfirm from "@/views/practice/VideoConfirm.vue";
 
 //interview
 import OpenVidu from "@/views/openvidu/OpenVidu.vue";
@@ -95,7 +95,7 @@ const routes = [
   {
     path: "/kakaologin",
     name: "kakaoLogin",
-    component: () => import("../views/user/kakaoLogin.vue")
+    component: () => import("../views/user/kakaoLogin.vue"),
   },
   {
     path: "/login",
@@ -348,7 +348,6 @@ const routes = [
       },
     ],
   },
-
   {
     path: "/boards/:category_id",
     component: BoardMain,
@@ -422,7 +421,6 @@ const routes = [
     path: "/practice/box/:videoId",
     component: VideoConfirm,
     name: "videoConfirm",
-
   },
 
   //open vidu
@@ -439,7 +437,6 @@ const router = createRouter({
   routes,
 });
 
-
 // router.beforeEach((to, from, next) => {
 
 //   const { isLogginedIn } = store.getters
@@ -454,6 +451,5 @@ const router = createRouter({
 //     next()
 //   }
 // })
-
 
 export default router;
