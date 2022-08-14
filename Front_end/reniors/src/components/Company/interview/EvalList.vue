@@ -1,12 +1,19 @@
 <template>
   <div>
     <eval-list-item
-      v-for="evalquestion in evalquestionlist"
+      v-for="(evalquestion, idx) in evalquestionlist"
       :key="evalquestion.id"
+      :idx="idx"
       :evalquestion="evalquestion"
     ></eval-list-item>
-    <div v-if="registflag"><eval-regist></eval-regist></div>
-    <button @click="changeflag()">평가항목 추가</button>
+    <div v-if="registflag">
+    <eval-regist/>
+    </div>
+    <div class="add-flag">
+      <p @click="changeflag()">
+        <i class="bi bi-plus-circle"></i> 평가 항목 추가
+      </p>
+    </div>
   </div>
 </template>
 
@@ -39,4 +46,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style scope>
+.add-flag {
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--color-green-1);
+}
+</style>
