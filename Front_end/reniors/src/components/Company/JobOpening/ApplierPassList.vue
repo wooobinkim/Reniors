@@ -39,7 +39,6 @@ export default {
     },
   },
   created() {
-    console.log(this.$route.params);
     this.getapplylist(this.$route.params.no);
   },
   computed: {
