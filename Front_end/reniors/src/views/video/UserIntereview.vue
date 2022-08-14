@@ -86,7 +86,7 @@
             <div class="chatlist"><textarea v-model="receivemsg" /></div>
             <div class="chatform">
                 <p style="width: 1vw">  </p>
-                <input class="chatinput" type="text" v-model="msg" />
+                <input class="chatinput" @keyup.enter="sendchat()" type="text" v-model="msg" />
                 <button class="chatsubmit" @click="sendchat()"><i class="bi bi-send"></i></button>    
 
             </div>
