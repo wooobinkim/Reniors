@@ -21,9 +21,6 @@
     <button @click="resumepass()" class="apply-resume-pass-btn">
       서류합격
     </button>
-    <!-- <div for="check">이름 :{{ apply.userId }}</div>
-
-    <button @click="resumeview()">이력서보기</button> -->
   </div>
 </template>
 
@@ -38,28 +35,16 @@ export default {
     ApplierResumeListItem,
   },
   props: {
-    // apply: Object,
     jobopeningdetail: Object,
   },
   data() {
     return {
-      // applyinfo: {
-      //   // jobOpeningProcess: null,
-      //   // interviewDate: new Date(),
-      // },
       passUser: [],
-      //   passuserId: [],
-      // flag: false,
     };
   },
-  watch: {
-    passUser: function () {
-      console.log(this.passUser);
-    },
-  },
-  created() {
-    console.log(this.$route.params);
-    this.getapplylist(this.$route.params.no);
+  watch: {},
+  async created() {
+    await this.getapplylist(this.$route.params.no);
   },
   computed: {
     ...mapGetters("company", ["jobopening", "applylist"]),
@@ -73,8 +58,7 @@ export default {
     resumepass() {
       console.log("서류합격자");
       this.passUser.forEach((data) => {
-        console.log(data);
-         this.updateApply({
+        this.updateApply({
           jobOpeningId: this.jobopeningdetail.id,
           applyId: data,
           apply: {
@@ -86,13 +70,12 @@ export default {
       console.log("서류탈락자");
       let tmparr = [];
       this.applylist.forEach((apply) => {
-        if(apply.jobOpeningProcess == "서류심사중"){
-            tmparr.push(apply.id);
+        if (apply.jobOpeningProcess == "서류심사중") {
+          tmparr.push(apply.id);
         }
       });
       let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
       unpassUser.forEach((data) => {
-        console.log(data);
         this.updateApply({
           jobOpeningId: this.jobopeningdetail.id,
           applyId: data,
@@ -109,7 +92,6 @@ export default {
         },
       };
       this.progressJobOpening(data);
-      // this.$router.go();
     },
 
     resumeview() {

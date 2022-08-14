@@ -15,9 +15,6 @@
 
 <script setup>
 import "@vuepic/vue-datepicker/dist/main.css";
-// import { ref } from "vue";
-// import { mapActions, mapState } from "vuex";
-// import moment from "moment";
 </script>
 <script>
 export default {
@@ -28,9 +25,7 @@ export default {
   data() {
     return {};
   },
-  computed: {
-    // ...mapState("company", ["jobopening"]),
-  },
+  computed: {},
   methods: {
     resumeview() {
       this.$router.push({
@@ -38,7 +33,6 @@ export default {
         params: { no: this.apply.userId },
       });
     },
-    // ...mapActions("company", ["updateApply", "registRoom"]),
   },
 };
 </script>

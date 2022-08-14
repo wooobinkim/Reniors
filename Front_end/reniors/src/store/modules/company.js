@@ -279,8 +279,6 @@ export default {
       http
         .get(`/company/jobopening/${no}/apply`)
         .then(({ data }) => {
-          console.log("getapplylist : " + no);
-          console.log(data);
           commit("SET_APPLY_LIST", data);
         })
         .catch((error) => {

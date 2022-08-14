@@ -23,9 +23,6 @@
     <button @click="interviewpass()" class="apply-interview-pass-btn">
       최종합격
     </button>
-    <!-- <div for="check">이름 :{{ apply.userId }}</div>
-
-    <button @click="resumeview()">이력서보기</button> -->
   </div>
 </template>
 
@@ -38,22 +35,14 @@ import ApplierInterviewListItem from "./ApplierInterviewListItem.vue";
 export default {
   components: {
     ApplierInterviewListItem,
-    
   },
   props: {
-    // apply: Object,
     jobopeningdetail: Object,
   },
   data() {
     return {
-      // applyinfo: {
-      //   // jobOpeningProcess: null,
-      //   // interviewDate: new Date(),
-      // },
       passUser: [],
       applies: null,
-      //   passuserId: [],
-      // flag: false,
     };
   },
   watch: {
@@ -118,7 +107,6 @@ export default {
         },
       };
       this.progressJobOpening(data);
-      // this.$router.go();
     },
   },
 };

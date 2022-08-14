@@ -37,10 +37,7 @@
 <script setup>
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-// import { log } from "console";
-// import { ref } from "vue";
 import { mapActions, mapGetters } from "vuex";
-// import moment from "moment";
 </script>
 <script>
 export default {
@@ -76,16 +73,6 @@ export default {
       };
       console.log(data);
       this.updateApply(data);
-
-      // let room = {
-      //   isActive: "CLOSE",
-      //   sessionId: "InterviewSession" + this.jobopening.id,
-      //   userId: this.apply.userId,
-      //   jobOpeningId: this.jobopening.id,
-      // };
-
-      // this.registRoom(room);
-      // this.$router.go();
     },
     interviewflag() {
       this.flag = !this.flag;

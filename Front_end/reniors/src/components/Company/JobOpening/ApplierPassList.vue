@@ -21,7 +21,6 @@ export default {
     ApplierPassListItem,
   },
   props: {
-    // apply: Object,
     jobopeningdetail: Object,
   },
   data() {
@@ -38,8 +37,8 @@ export default {
       });
     },
   },
-  created() {
-    this.getapplylist(this.$route.params.no);
+  async created() {
+    await this.getapplylist(this.$route.params.no);
   },
   computed: {
     ...mapGetters("company", ["jobopening", "applylist"]),
@@ -50,13 +49,6 @@ export default {
       "progressJobOpening",
       "updateApply",
     ]),
-
-    resumeview() {
-      this.$router.push({
-        name: "resumeview",
-        params: { no: this.apply.userId },
-      });
-    },
   },
 };
 </script>
