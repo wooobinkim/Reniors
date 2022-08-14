@@ -8,6 +8,7 @@ export default {
   namespaced: true,
   state: {
     token: localStorage.getItem("token") || "",
+    header:"",
     currentUser: {},
     profile: {},
     authError: null,
@@ -16,6 +17,7 @@ export default {
     jobopeninglisted: [],
     jobopening: null,
     companyinfo: {},
+    companyimg:"",
     applylist: [],
     apply: null,
     interviewapplylist: [],
@@ -34,10 +36,12 @@ export default {
     authError: (state) => state.authError,
     // Authorization: `Token ${state.token}`
     authHeader: (state) => ({ Authorization: `Bearer ${state.token}` }),
+    header:(state)=>state.header,
     jobopeninglisting: (state) => state.jobopeninglisting,
     jobopeninglisted: (state) => state.jobopeninglisted,
     jobopening: (state) => state.jobopening,
-    companyinfo: (state) => state.companyinfo,
+    companyinfo: (state) => {state.companyinfo},
+    companyimg:(state)=>state.companyimg,
     applylist: (state) => state.applylist,
     apply: (state) => state.apply,
     applyuser: (state) => state.applyuser,
@@ -76,6 +80,7 @@ export default {
     },
     SET_COMPANY(state, data) {
       state.companyinfo = data;
+      state.companyimg = data.baseURL + data.companyProfile;
     },
     SET_APPLY_LIST(state, data) {
       state.applylist = data;
@@ -129,9 +134,15 @@ export default {
     SET_RESUME(state, data) {
       state.resume = data;
     },
+    SET_HEADER(state, data) {
+      state.header = data;
+    },
   },
 
   actions: {
+    setheader({commit},data){
+      commit("SET_HEADER",data);
+    },
     saveToken({ commit }, token) {
       commit("SET_TOKEN", token);
       localStorage.setItem("token", token);
