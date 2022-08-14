@@ -18,10 +18,12 @@ export default {
     OpenviduEvalListItem,
   },
   props:{
-    interviewer : Number,
+    applyinfo : Object,
   },
   created() {
-    this.getEvalQuestionList(this.$route.params.no);
+    console.log("오픈이발");
+    console.log(this.applyinfo);
+    this.getEvalQuestionList(this.applyinfo.jobOpeningId);
   },
   computed: {
     ...mapGetters("company", ["evalquestionlist"]),
@@ -31,8 +33,8 @@ export default {
     finish() {
       console.log(this.interviewer);
       this.finishInterview({
-        jobOpeningId: this.$route.params.no,
-        applyId: this.$route.params.userId,
+        // jobOpeningId: this.$route.params.no,
+        applyId: this.applyinfo.userId,
       });
     },
   },
