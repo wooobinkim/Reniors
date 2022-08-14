@@ -1,15 +1,10 @@
 <template>
   <div>
-    <template v-for="apply in applies" :key="apply.id">
+    <template v-for="apply in applylist" :key="apply.id">
       <template v-if="apply.jobOpeningProcess == '최종합격'">
         <div>
-          <applier-pass-list-item
-            :apply="apply"
-            :jobOpeningId="this.$route.params.no"
-          >
-          </applier-pass-list-item>
+          <applier-pass-list-item :apply="apply"> </applier-pass-list-item>
         </div>
-        <hr />
       </template>
     </template>
   </div>
@@ -26,25 +21,16 @@ export default {
     ApplierPassListItem,
   },
   props: {
-    // apply: Object,
     jobopeningdetail: Object,
   },
   data() {
     return {
-      applies: null,
+      applies: [],
     };
   },
-  watch: {
-    applylist: function (datas) {
-      this.applies = [];
-      datas.forEach((data) => {
-        data.interviewDate = new Date(data.interviewDate);
-        this.applies.push(data);
-      });
-    },
-  },
-  created() {
-    this.getapplylist(this.$route.params.no);
+  watch: {},
+  async created() {
+    await this.getapplylist(this.$route.params.no);
   },
   computed: {
     ...mapGetters("company", ["jobopening", "applylist"]),
@@ -55,13 +41,6 @@ export default {
       "progressJobOpening",
       "updateApply",
     ]),
-
-    resumeview() {
-      this.$router.push({
-        name: "resumeview",
-        params: { no: this.apply.userId },
-      });
-    },
   },
 };
 </script>

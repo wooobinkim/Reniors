@@ -1,25 +1,30 @@
 <template>
-  <router-link class="jobopening-item" :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }">
+  <router-link
+    class="jobopening-item"
+    :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }"
+  >
     <div>
       <p class="jobopening-item-company">{{ jobopening.companyName }}</p>
       <p class="jobopening-item-title">{{ jobopening.title }}</p>
     </div>
-    <p class="jobopening-item-period">{{ createDate }} ~ <br>{{ finishedDate }}</p>
+    <p class="jobopening-item-period">
+      {{ createDate }} ~ <br />{{ finishedDate }}
+    </p>
   </router-link>
 </template>
 
-<script>
+<script scoped>
 export default {
-  name: 'JobopeningItem',
+  name: "JobopeningItem",
   props: {
     jobopening: Object,
   },
   setup(props) {
     const stringToDate = (rawDate) => {
-      let dateComponents = rawDate.split('T');
+      let dateComponents = rawDate.split("T");
       let datePieces = dateComponents[0].split("-");
-      return (new Date(datePieces[0], (datePieces[1] - 1), datePieces[2]))
-    }
+      return new Date(datePieces[0], datePieces[1] - 1, datePieces[2]);
+    };
     // toStringByFormatting
     function tSBF(source) {
       function leftPad(value) {
@@ -29,29 +34,22 @@ export default {
 
         return `0${value}`;
       }
-      const days = [
-        '일',
-        '월',
-        '화',
-        '수',
-        '목',
-        '금',
-        '토'
-      ]
+      const days = ["일", "월", "화", "수", "목", "금", "토"];
       const year = source.getFullYear();
       const month = leftPad(source.getMonth() + 1);
       const day = leftPad(source.getDate());
-      const dayName = days[source.getDay()]
-      return [year, month, day].join('-') + ` (${dayName})`;
+      const dayName = days[source.getDay()];
+      return [year, month, day].join("-") + ` (${dayName})`;
     }
-    const createDate = tSBF(stringToDate(props.jobopening?.createdDate))
-    const finishedDate = tSBF(stringToDate(props.jobopening?.finishedDate))
+    const createDate = tSBF(stringToDate(props.jobopening?.createdDate));
+    const finishedDate = tSBF(stringToDate(props.jobopening?.finishedDate));
 
     return {
-      createDate, finishedDate,
-    }
+      createDate,
+      finishedDate,
+    };
   },
-}
+};
 </script>
 
 <style>
@@ -73,7 +71,8 @@ export default {
   text-align: start;
 }
 
-.jobopening-item-company, .jobopening-item-title {
+.jobopening-item-company,
+.jobopening-item-title {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;

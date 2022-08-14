@@ -1,29 +1,36 @@
 <template>
-  <div>
-    <div>{{ interviewapply.name }}</div>
-    <div>{{ new Date(interviewapply.interviewDate).getFullYear() }}
-    -{{new Date(interviewapply.interviewDate).getMonth()+1 }}
-    -{{new Date(interviewapply.interviewDate).getDate()}} 
-    {{new Date(interviewapply.interviewDate).getHours()}}시 
-    {{new Date(interviewapply.interviewDate).getMinutes()==0?null:new Date(interviewapply.interviewDate).getMinutes()+"분"}}
-      </div>
-    <template v-if="interviewapply.jobOpeningProcess == '면접심사중'">
-      <router-link
-        :to="{ name: 'usereval', params: { no: this.interviewapply.userId } }"
-      >
-        <button>면접평가보기</button></router-link
-      >
-    </template>
-    <template v-else>
-      <router-link :to="{ name: 'companyopenvidu',params:{no : this.interviewapply.id, jobOpeningId:this.interviewapply.jobOpeningId} }">
-        <button @click="regist()">면접보기</button>
-      </router-link>
-    </template>
+  <div class="interview-date">{{ dateFormat(interviewapply.interviewDate) }}</div>
+  <div class="interview-list-item">
+    <div class="title">{{ interviewapply.jobOpeningTitle }}</div>
+    <div class="name">지원자 : {{ interviewapply.name }}</div>
+    <div class="part">지원 분야 : {{ interviewapply.jobChildCategoryName }}</div>
+    <div class="interview-detail-btn">
+      <template v-if="interviewapply.jobOpeningProcess == '면접심사중'">
+        <button class="about-interview-btn">
+          <router-link
+            :to="{ name: 'usereval', params: { no: this.interviewapply.userId } }"
+          >
+          면접평가보기
+          </router-link>
+        </button>
+      </template>
+      <template v-else>
+        <button @click="regist()" class="about-interview-btn">
+          <router-link
+            :to="{ name: 'companyopenvidu',params:{no : this.interviewapply.id, jobOpeningId:this.interviewapply.jobOpeningId} }"
+          >
+          면접보기
+          </router-link>
+        </button>
+      </template>
+    </div>
   </div>
+  <hr />
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+import dayjs from 'dayjs';
 
 export default {
   props: {
@@ -34,8 +41,67 @@ export default {
     // regist() {
     //   this.setInterviewer(this.interviewapply.userId);
     // },
+    dateFormat(val) {
+      return dayjs(val).format("YYYY년 MM월 DD일");
+    },
   },
 };
 </script>
 
-<style></style>
+<style scope>
+.interview-date {
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  font-size: 15px;
+  margin-left: 5px;
+}
+.interview-list-item {
+  width: 328px;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border-color: var(--color-black-2); 
+  box-shadow: inset 0 0 1px 1px var(--color-black-3), 0 0 5px var(--color-black-3);
+}
+.interview-list-item > .title {
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  font-size: 17px;
+}
+.interview-list-item > .name {
+  width: 100%;
+  text-align: right;
+  font-size: 13px;
+  color: var(--color-green-1);
+}
+.interview-list-item > .part {
+  width: 100%;
+  text-align: right;
+  font-size: 13px;
+  color: var(--color-green-1);
+}
+.interview-list-item > .interview-detail-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.about-interview-btn {
+  padding: 5px 10px;
+  background-color: var(--color-red-2);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.about-interview-btn:link {
+  color: white;
+}
+.about-interview-btn:visited {
+  color: white;
+}
+.about-interview-btn > a {
+  text-decoration: none;
+  color: white;
+}
+</style>

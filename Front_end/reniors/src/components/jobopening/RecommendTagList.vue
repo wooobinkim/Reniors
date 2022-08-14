@@ -9,28 +9,28 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
-import RecommendTagItem from './RecommendTagItem.vue'
+import { computed } from "vue";
+import { useStore } from "vuex";
+import RecommendTagItem from "./RecommendTagItem.vue";
 
 export default {
-  name: 'RecommendTagList',
+  name: "RecommendTagList",
   components: {
     RecommendTagItem,
   },
   setup() {
-    const store = useStore()
+    const store = useStore();
 
-    const tags = computed(() => store.getters['jobopening/tags'])
+    const tags = computed(() => store.getters["jobopening/tags"]);
 
     return {
-      tags
-    }
-  }
-}
+      tags,
+    };
+  },
+};
 </script>
 
-<style>
+<style scoped>
 .recommend-tag-title {
   display: flex;
   justify-content: space-between;

@@ -17,7 +17,7 @@ export default {
     jobopening: null,
     companyinfo: {},
     applylist: [],
-    apply:null,
+    apply: null,
     interviewapplylist: [],
     interviewapplylistasc: [],
     applyuser: null,
@@ -39,7 +39,7 @@ export default {
     jobopening: (state) => state.jobopening,
     companyinfo: (state) => state.companyinfo,
     applylist: (state) => state.applylist,
-    apply:(state)=> state.apply,
+    apply: (state) => state.apply,
     applyuser: (state) => state.applyuser,
     evalquestionlist: (state) => state.evalquestionlist,
     userevallist: (state) => state.userevallist,
@@ -51,6 +51,7 @@ export default {
 
   mutations: {
     SET_TOKEN: (state, token) => (state.token = token),
+    GET_TOKEN: (state) => console.log(state.token),
     SET_CURRENT_USER: (state, user) => (state.currentUser = user),
     SET_PROFILE: (state, profile) => (state.profile = profile),
     SET_AUTH_ERROR: (state, error) => (state.authError = error),
@@ -76,8 +77,8 @@ export default {
     SET_COMPANY(state, data) {
       state.companyinfo = data;
     },
-    SET_APPLY_LIST(state, datas) {
-      state.applylist = datas;
+    SET_APPLY_LIST(state, data) {
+      state.applylist = data;
     },
     SET_APPLY(state, data) {
       state.apply = data;
@@ -241,6 +242,7 @@ export default {
         .then(({ data }) => {
           commit("SET_JOBOPENING", data);
         })
+
         .catch((error) => {
           console.log(error);
         });
@@ -266,7 +268,6 @@ export default {
         });
     },
     progressJobOpening: ({ commit }, data) => {
-      console.log(data);
       http
         .put(`/company/progress/${data.no}`, data.progress)
         .then(({ data }) => {
@@ -317,7 +318,6 @@ export default {
         });
     },
     updateApply: ({ commit }, data) => {
-      console.log(data);
       http
         .put(
           `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
@@ -331,7 +331,7 @@ export default {
           console.log(error);
         });
     },
-    finishInterview:({commit},data)=>{
+    finishInterview: ({ commit }, data) => {
       console.log(data);
       http
         .put(
@@ -440,10 +440,10 @@ export default {
           console.log(error);
         });
     },
-    setInterviewer:({commit},data)=>{
+    setInterviewer: ({ commit }, data) => {
       console.log(data);
-      commit("SET_INTERVIEWER",data);
-    }
+      commit("SET_INTERVIEWER", data);
+    },
   },
 
   modules: {},

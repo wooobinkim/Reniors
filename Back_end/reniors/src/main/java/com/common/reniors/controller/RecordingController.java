@@ -3,6 +3,7 @@ package com.common.reniors.controller;
 import com.common.reniors.common.config.web.LoginUser;
 import com.common.reniors.domain.entity.user.User;
 import com.common.reniors.dto.recording.RecordingCreateRequest;
+import com.common.reniors.dto.recording.RecordingVideoCreateRequest;
 import com.common.reniors.service.recording.RecordingService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -51,6 +52,16 @@ public class RecordingController {
             @PathVariable Long recordingId
     ){
         recordingService.delete(recordingId, user);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PutMapping("/{recordingId}/videoId")
+    @ApiOperation(value = "녹화본의 vito 아이디를 저장한다.", notes = "녹화본의 vito 아이디를 저장한다.")
+    public ResponseEntity<?> updateVideoId(@ApiIgnore @LoginUser User user,
+                                           @PathVariable Long recordingId,
+                                           @RequestBody RecordingVideoCreateRequest recordingVideoCreateRequest){
+        recordingService.updateVideoId(user,recordingId,recordingVideoCreateRequest);
+
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

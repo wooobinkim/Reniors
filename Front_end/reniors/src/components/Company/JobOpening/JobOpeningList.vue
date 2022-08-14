@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="company-jobOpening-btn-box">
-      <div @click="changeing()">
-        <div class="number" :class="{ 'now-tab': this.tab == 'ing' }">
+      <div @click="changeing()" :class="{ 'now-tab': this.tab == 'ing' }">
+        <div class="number">
           {{ jobopeninglisting.length }}
         </div>
         <div>채용 중</div>
       </div>
 
-      <div @click="changeed()">
-        <div class="number" :class="{ 'now-tab': this.tab == 'ed' }">
+      <div @click="changeed()" :class="{ 'now-tab': this.tab == 'ed' }">
+        <div class="number">
           {{ jobopeninglisted.length }}
         </div>
         <div>채용 완료</div>
@@ -39,7 +39,7 @@
   </button>
 </template>
 
-<script>
+<script scoped>
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import JobOpeningIngListItem from "./JobOpeningIngListItem.vue";
 import JobOpeningEdListItem from "./JobOpeningEdListItem.vue";
@@ -51,14 +51,11 @@ export default {
   },
   components: { JobOpeningIngListItem, JobOpeningEdListItem },
   async created() {
-    this.CLEAR_JOBOPENING_LIST;
+    await this.CLEAR_JOBOPENING_LIST;
     await this.getJobOpeningList();
   },
-  watch: {
-  },
-  mounted() {
-    //this.$router.go();
-  },
+  watch: {},
+  mounted() {},
   computed: {
     ...mapGetters("company", ["jobopeninglisting", "jobopeninglisted"]),
     ...mapMutations("company", ["CLEAR_JOBOPENING_LIST"]),
@@ -98,7 +95,8 @@ export default {
   font-size: 24px;
 }
 .now-tab {
-  color: var(--color-red-2);
+  color: white;
+  background-color: var(--color-green-1) !important;
 }
 .company-jobOpening-list-title {
   font-size: 24px;

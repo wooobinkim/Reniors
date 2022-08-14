@@ -1,6 +1,6 @@
 <template>
   <div class="jobopening-list">
-    {{jobopenings}}
+    {{ jobopenings }}
     <div v-if="isJobopenings">
       <JobopeningItem
         v-for="(jobopening, index) in jobopenings"
@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
-import JobopeningItem from './JobopeningItem.vue'
+import { computed } from "vue";
+import { useStore } from "vuex";
+import JobopeningItem from "./JobopeningItem.vue";
 
 export default {
   name: "JobopeningList",
@@ -23,19 +23,22 @@ export default {
     JobopeningItem,
   },
   setup() {
-    const store = useStore()
+    const store = useStore();
 
-    const jobopenings = computed(() => store.getters['jobopening/jobopenings'])
-    const isJobopenings = computed(() => store.getters['jobopening/isJobopenings'])
+    const jobopenings = computed(() => store.getters["jobopening/jobopenings"]);
+    const isJobopenings = computed(
+      () => store.getters["jobopening/isJobopenings"]
+    );
 
     return {
-      jobopenings, isJobopenings,
+      jobopenings,
+      isJobopenings,
     };
   },
 };
 </script>
 
-<style>
+<style scoped>
 .jobopening-list > div {
   display: grid;
   grid-template-columns: 170px 170px;
