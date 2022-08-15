@@ -1,25 +1,38 @@
 <template>
-  <div class="interview-date">{{ dateFormat(interviewapply.interviewDate) }}</div>
+  <div class="interview-date">
+    {{ dateFormat(interviewapply.interviewDate) }}
+  </div>
   <div class="interview-list-item">
     <div class="title">{{ interviewapply.jobOpeningTitle }}</div>
     <div class="name">지원자 : {{ interviewapply.name }}</div>
-    <div class="part">지원 분야 : {{ interviewapply.jobChildCategoryName }}</div>
+    <div class="part">
+      지원 분야 : {{ interviewapply.jobChildCategoryName }}
+    </div>
     <div class="interview-detail-btn">
       <template v-if="interviewapply.jobOpeningProcess == '면접심사중'">
         <button class="about-interview-btn">
           <router-link
-            :to="{ name: 'usereval', params: { no: this.interviewapply.userId } }"
+            :to="{
+              name: 'usereval',
+              params: { no: this.interviewapply.userId },
+            }"
           >
-          면접평가보기
+            면접평가보기
           </router-link>
         </button>
       </template>
       <template v-else>
-        <button @click="regist()" class="about-interview-btn">
+        <button class="about-interview-btn">
           <router-link
-            :to="{ name: 'companyopenvidu',params:{no : this.interviewapply.id, jobOpeningId:this.interviewapply.jobOpeningId} }"
+            :to="{
+              name: 'companyInterviewVideo',
+              params: {
+                no: this.interviewapply.id,
+                jobOpeningId: this.interviewapply.jobOpeningId,
+              },
+            }"
           >
-          면접보기
+            면접보기
           </router-link>
         </button>
       </template>
@@ -29,20 +42,17 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import dayjs from 'dayjs';
+import { mapActions } from "vuex";
+import dayjs from "dayjs";
 
 export default {
   props: {
     interviewapply: Object,
   },
   methods: {
-    ...mapActions("company",["setInterviewer"]),
-    // regist() {
-    //   this.setInterviewer(this.interviewapply.userId);
-    // },
+    ...mapActions("company", ["setInterviewer"]),
     dateFormat(val) {
-      return dayjs(val).format("YYYY년 MM월 DD일");
+      return dayjs(val).format("YYYY년 MM월 DD일 HH시 MM분");
     },
   },
 };
@@ -61,8 +71,9 @@ export default {
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
-  border-color: var(--color-black-2); 
-  box-shadow: inset 0 0 1px 1px var(--color-black-3), 0 0 5px var(--color-black-3);
+  border-color: var(--color-black-2);
+  box-shadow: inset 0 0 1px 1px var(--color-black-3),
+    0 0 5px var(--color-black-3);
 }
 .interview-list-item > .title {
   width: 100%;

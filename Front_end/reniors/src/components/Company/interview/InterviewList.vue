@@ -16,9 +16,10 @@ export default {
   created() {
     this.CLEAR_INTERVIEW_APPLY_LIST_ASC;
     this.getinterviewapplylistasc(this.$route.params.no);
+    this.setheader('면접일정');
   },
   methods: {
-    ...mapActions("company", ["getinterviewapplylistasc"]),
+    ...mapActions("company", ["getinterviewapplylistasc","setheader"]),
   },
   computed: {
     ...mapGetters("company", ["interviewapplylistasc"]),

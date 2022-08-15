@@ -1,6 +1,6 @@
 <template>
   <img
-    :src="companyinfo.baseURL + companyinfo.companyProfile"
+    :src="companyimg"
     alt="test"
     class="logo-img"
   />
@@ -33,22 +33,23 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
-  async created() {
-    await this.CLEAR_JOBOPENING_LIST;
-    await this.getJobOpeningList();
-    await this.getCompany();
-    console.log(this.companyinfo);
+  created() {
+    this.CLEAR_JOBOPENING_LIST;
+    this.getJobOpeningList();
+    this.setheader("마이페이지")
+    // this.getCompany();
   },
   computed: {
     ...mapGetters("company", [
       "jobopeninglisting",
       "jobopeninglisted",
       "companyinfo",
+      "companyimg"
     ]),
     ...mapMutations("company", ["CLEAR_JOBOPENING_LIST"]),
   },
   methods: {
-    ...mapActions("company", ["getJobOpeningList", "getCompany"]),
+    ...mapActions("company", ["getJobOpeningList", "getCompany","setheader"]),
   },
 };
 </script>

@@ -83,10 +83,14 @@
 
         </div>
         <div class="chatbox" v-if="chatopenclose">
-            <div class="chatlist"><textarea v-model="receivemsg" /></div>
+            <template v-for="msg in receivemsg" :key="msg">
+          <div>{{msg}}</div>
+        </template>
+
+            <!-- <div class="chatlist"><textarea v-model="receivemsg" /></div> -->
             <div class="chatform">
                 <p style="width: 1vw">  </p>
-                <input class="chatinput" @keyup.enter="sendchat()" type="text" v-model="msg" />
+                <input class="chatinput" @keyup.enter="sendchat()" type="text" v-model="sendmsg" />
                 <button class="chatsubmit" @click="sendchat()"><i class="bi bi-send"></i></button>    
 
             </div>
@@ -155,10 +159,11 @@ export default {
       videoflag: true,
       audioflag: false,
       sendmsg: "",
-      receivemsg: "",
+      receivemsg: [],
       msgflag: true,
       chatopenclose: false,
       companyName: '',
+      sessionleave:false,
 
       tips:[
         "카메라 위치 및 조명을 조정하면 더 좋습니다!",  
@@ -178,11 +183,16 @@ export default {
     companyinfo: function (data) {
       this.myUserName = data.name;
     },
-    // session: function () {
-    //   this.session.on("signal", (event) => {
-    //     this.receivemsg += event.from + event.data + "\n";
-    //   });
-    // },
+    session: function () {
+      if(!this.sessionleave){
+      this.session.on("signal", (event) => {
+          let name = event.from.data;
+          name = name.substr(15);
+          name = name.substring(0,name.length-2);
+        this.receivemsg.push(name +" : "+ event.data);
+        });
+      }
+    },
   },
   created() {
         this.fetchCurrentUser(),
@@ -210,11 +220,8 @@ export default {
           type: "my-chat",
         })
         .then(() => {
-          this.msgflag = !this.msgflag;
+           this.msgflag = !this.msgflag;
           this.sendmsg = "";
-          this.session.on("signal", (event) => {
-        this.receivemsg += event.from + event.data + "\n";
-      });
         })
         .catch((error) => {
           console.log(error);
@@ -285,6 +292,7 @@ export default {
     },
 
     leaveSession() {
+      this.sessionleave = true;
       if (this.session) this.session.disconnect();
 
       this.session = undefined;

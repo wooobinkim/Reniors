@@ -12,7 +12,6 @@ import com.common.reniors.domain.repository.resume.LicenseRepository;
 import com.common.reniors.domain.repository.user.UserRepository;
 import com.common.reniors.dto.kakao.KakaoUserCreateRequest;
 import com.common.reniors.dto.kakao.KakaoUserInfo;
-import com.common.reniors.dto.kakao.KakaoUserResponse;
 import com.common.reniors.dto.mail.MailDto;
 import com.common.reniors.dto.resume.AwardResponse;
 import com.common.reniors.dto.resume.CareerDetailResponse;
@@ -163,12 +162,16 @@ public class UserService {
         JsonNode jsonNode = objectMapper.readTree(responseBody);
 
         String email = jsonNode.get("kakao_account").get("email").asText();
-        String genderKakao = jsonNode.get("kakao_account").get("gender").asText();
         Gender gender = null;
-        if (genderKakao.equals("male")) {
-            gender = Gender.M;
-        } else if (genderKakao.equals("female")) {
-            gender = Gender.F;
+        if (jsonNode.get("kakao_account").get("gender_needs_agreement").asBoolean()) {
+            String genderKakao = jsonNode.get("kakao_account").get("gender").asText();
+            if (genderKakao.equals("male")) {
+                gender = Gender.M;
+            } else if (genderKakao.equals("female")) {
+                gender = Gender.F;
+            } else {
+                gender = Gender.공개안함;
+            }
         } else {
             gender = Gender.공개안함;
         }
@@ -201,13 +204,6 @@ public class UserService {
         User findUser = userRepository.findById(user.getId())
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
         return UserResponse.response(findUser);
-    }
-
-    @Transactional
-    public KakaoUserResponse readKakaoUser(User user) {
-        User findKakaoUser = userRepository.findByKakaoId(user.getKakaoId())
-                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
-        return KakaoUserResponse.response(findKakaoUser);
     }
 
     @Transactional

@@ -1,13 +1,13 @@
 <template>
   <div>
     <eval-list-item
-      v-for="(evalquestion, idx) in evalquestionlist"
+      v-for="(evalquestion, idx) in this.list"
       :key="evalquestion.id"
       :idx="idx"
       :evalquestion="evalquestion"
     ></eval-list-item>
     <div v-if="registflag">
-    <eval-regist/>
+      <eval-regist />
     </div>
     <div class="add-flag">
       <p @click="changeflag()">
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import EvalRegist from "./EvalRegist.vue";
 import EvalListItem from "./EvalListItem.vue";
 export default {
@@ -29,16 +29,25 @@ export default {
   data() {
     return {
       registflag: false,
+      list: null,
     };
+  },
+  watch: {
+    evalquestionlist: function (data) {
+      console.log(data);
+      this.list = data;
+    },
   },
   created() {
     this.getEvalQuestionList(this.$route.params.no);
+    this.setheader('면접평가');
   },
   computed: {
-    ...mapGetters("company", ["jobopening", "evalquestionlist"]),
+    ...mapGetters("company", ["jobopening"]),
+    ...mapState("company", ["evalquestionlist"]),
   },
   methods: {
-    ...mapActions("company", ["getEvalQuestionList"]),
+    ...mapActions("company", ["getEvalQuestionList","setheader"]),
     changeflag() {
       this.registflag = !this.registflag;
     },

@@ -1,5 +1,5 @@
 <template>
-  <div class="company-header shadow-sm pt-2 mb-3 rounded">
+  <div class="company-header shadow pt-2 mb-3 rounded">
     <company-header></company-header>
   </div>
   <router-view></router-view>
@@ -14,10 +14,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .company-header {
   background-color: #ffffff;
   height: 40px;
-  width: 100%;
 }
 </style>
