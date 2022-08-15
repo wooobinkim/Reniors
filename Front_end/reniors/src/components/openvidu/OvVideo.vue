@@ -18,7 +18,7 @@ export default {
 
 <style scoped>
 video{
-	height: 38vh;
-	width: auto;
+	height: 35vh;
+	width: 85vw;
 }
 </style>
