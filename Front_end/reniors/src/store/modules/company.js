@@ -40,7 +40,7 @@ export default {
     jobopeninglisting: (state) => state.jobopeninglisting,
     jobopeninglisted: (state) => state.jobopeninglisted,
     jobopening: (state) => state.jobopening,
-    companyinfo: (state) => {state.companyinfo},
+    companyinfo: (state) => state.companyinfo,
     companyimg:(state)=>state.companyimg,
     applylist: (state) => state.applylist,
     apply: (state) => state.apply,

@@ -7,7 +7,7 @@
         <!-- <form style="width: 312px;"> -->
         <b-form-input
           style="width: 100%; height: 48px"
-          class="mb-2"
+          class="mb-2 user-form-control"
           v-model="credentials.userAppId"
           type="text"
           placeholder="아이디"
@@ -15,7 +15,7 @@
         ></b-form-input>
         <b-form-input
           style="width: 100%; height: 48px"
-          class="mb-4"
+          class="mb-4 user-form-control"
           v-model="credentials.userAppPwd"
           type="password"
           placeholder="비밀번호"
@@ -156,5 +156,9 @@ export default {
   line-height: 17px;
   color: #6d6d6d;
   text-decoration: none;
+}
+.user-form-control:focus {
+  border-color: var(--color-red-2) !important;
+  box-shadow: inset 0 1px 1px var(--color-red-1), 0 0 8px var(--color-red-2) !important;
 }
 </style>

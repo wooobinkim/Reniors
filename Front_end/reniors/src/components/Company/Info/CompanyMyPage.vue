@@ -33,10 +33,11 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
-  created() {
-    this.CLEAR_JOBOPENING_LIST;
-    this.getJobOpeningList();
-    this.getCompany();
+  async created() {
+    await this.CLEAR_JOBOPENING_LIST;
+    await this.getJobOpeningList();
+    await this.getCompany();
+    console.log(this.companyinfo);
   },
   computed: {
     ...mapGetters("company", [

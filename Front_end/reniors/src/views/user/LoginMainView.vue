@@ -75,28 +75,35 @@ export default {
 
 .userbtn {
   width: auto;
-  height: 200px;
+  height: 160px;
   border: solid;
   /* border-color: #FF843E;
   background-color: #FFF5F0; */
   background-color: #FF843E;
   border-radius: 10px;
   color: white;
+  font-weight: bold;
+  padding: 10px;
+  font-size: 20px;
 }
 
 .companybtn {
   width: auto;
-  height: 200px;
+  height: 160px;
   border: solid;
   /* border-color: #37BF99;
   background-color: #ECFFFA; */
   background-color: #37BF99;
   border-radius: 10px;
   color: white;
+    font-weight: bold;
+  padding: 10px;
+  font-size: 20px;
 }
 
 .proposal {
   color: #6d6d6d;
+  font-size: 16px;
 }
 
 .link {
@@ -109,5 +116,7 @@ export default {
   line-height: 17px;
   color: #6d6d6d;
   text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
 }
 </style>
