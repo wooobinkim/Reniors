@@ -12,7 +12,7 @@
       <span> 평가 항목 : {{ evalquestion.contents }} </span>
     </div>
   </div>
-  <hr />
+  <br />
 </template>
 
 <script>
@@ -37,7 +37,9 @@ export default {
       this.updateflag = !this.updateflag;
     },
     deleteQuestion() {
-      this.deleteEvalQuestion(this.evalquestion.id);
+      if (confirm("삭제하시겠습니까?")) {
+        this.deleteEvalQuestion(this.evalquestion.id);
+      }
     },
   },
 };
@@ -48,6 +50,7 @@ export default {
   width: 328px;
   padding: 5px 10px;
   font-size: 16px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 .eval-question-list-item > .section1 {
   display: flex;

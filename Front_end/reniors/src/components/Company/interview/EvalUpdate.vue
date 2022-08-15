@@ -20,9 +20,9 @@ export default {
   data() {
     return {
       evalquestionData: {
-        no: this.$route.params.no,
+        no: this.evalquestion.id,
         evalquestion: {
-          contents: this.$props.evalquestion.contents,
+          contents: this.evalquestion.contents,
         },
       },
     };
@@ -73,6 +73,8 @@ export default {
   font-size: 18px;
   font-weight: bold;
   color: white;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 .input-question-box > .save-btn:link {
   color: white;
