@@ -83,6 +83,7 @@ export default {
       this.flag = !this.flag;
     },
     resumeview() {
+      console.log(this.apply.userId);
       this.$router.push({
         name: "resumeview",
         params: { no: this.apply.userId },
@@ -103,7 +104,7 @@ export default {
   text-align: left;
   margin-left: 10px;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
 }
 .apply-interview-btn-box {
   display: flex;
