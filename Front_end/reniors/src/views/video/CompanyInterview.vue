@@ -416,7 +416,7 @@ export default {
   },
 };
 </script>
-<style scped>
+<style scoped>
 #main-container{
     min-height: 100vh;
     min-width: 100vw;
