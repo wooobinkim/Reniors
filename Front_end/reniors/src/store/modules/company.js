@@ -8,7 +8,8 @@ export default {
   namespaced: true,
   state: {
     token: localStorage.getItem("token") || "",
-    header: "",
+    isCompanyLogin:null,
+    header:"",
     currentUser: {},
     profile: {},
     authError: null,
@@ -32,6 +33,7 @@ export default {
   getters: {
     isLogginedIn: (state) => !!state.token,
     currentUser: (state) => state.currentUser,
+    isCompanyLogin:(state)=>state.isCompanyLogin,
     profile: (state) => state.profile,
     authError: (state) => state.authError,
     // Authorization: `Token ${state.token}`
@@ -56,6 +58,8 @@ export default {
   mutations: {
     SET_TOKEN: (state, token) => (state.token = token),
     GET_TOKEN: (state) => console.log(state.token),
+    IS_COMPANY_LOGIN_TRUE:(state)=>(state.isCompanyLogin=true),
+    IS_COMPANY_LOGIN_FALSE:(state)=>(state.isCompanyLogin=false),
     SET_CURRENT_USER: (state, user) => (state.currentUser = user),
     SET_PROFILE: (state, profile) => (state.profile = profile),
     SET_AUTH_ERROR: (state, error) => (state.authError = error),
@@ -145,11 +149,13 @@ export default {
     },
     saveToken({ commit }, token) {
       commit("SET_TOKEN", token);
+      commit("IS_COMPANY_LOGIN_TRUE");
       localStorage.setItem("token", token);
     },
 
     removeToken({ commit }) {
       commit("SET_TOKEN", "");
+      commit("IS_COMPANY_LOGIN_FALSE");
       localStorage.setItem("token", "");
     },
 
@@ -172,7 +178,11 @@ export default {
       // error 부분 추가
     },
 
-    registCompany: ({ commit, getters }, formData) => {
+    companylogout:({dispatch})=>{
+      dispatch("removeToken");
+    },
+
+    registCompany: ({ commit,getters }, formData) => {
       // multipart
       //   .post(`/company`, formData)
       axios({

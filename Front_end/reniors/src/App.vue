@@ -2,17 +2,31 @@
   <div class="container">
     <b-container :toast="{root: true}" fluid="sm" position="position-fixed" style="z-index: 999;"></b-container>
     <router-view class="app-view" />
-    <FooterComponent />
+    <template v-if="!this.isCompanyLogin">
+      <FooterComponent />
+    </template>
+    <template v-else>
+      <CompanyFooterComponent />
+    </template>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import FooterComponent from "./components/FooterComponent.vue";
+import CompanyFooterComponent from "./components/CompanyFooterComponent.vue";
 
 export default {
   name: "App",
   components: {
     FooterComponent,
+    CompanyFooterComponent
+},
+  computed:{
+    ...mapGetters("company",["isCompanyLogin"]),
+  },
+  created(){
+    console.log(this.isCompanyLogin);
   },
 };
 </script>

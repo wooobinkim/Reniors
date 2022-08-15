@@ -7,7 +7,7 @@
       :evalquestion="evalquestion"
     ></eval-list-item>
     <div v-if="registflag">
-      <eval-regist />
+      <eval-regist @fetch="fetch" />
     </div>
     <div class="add-flag">
       <p @click="changeflag()">
@@ -36,7 +36,6 @@ export default {
     evalquestionlist: function (data) {
       console.log(data);
       this.list = data;
-      // this.getEvalQuestionList(this.$route.params.no);
     },
   },
   created() {
@@ -51,6 +50,9 @@ export default {
     ...mapActions("company", ["getEvalQuestionList", "setheader"]),
     changeflag() {
       this.registflag = !this.registflag;
+    },
+    fetch() {
+      this.getEvalQuestionList(this.$route.params.no);
     },
   },
 };
