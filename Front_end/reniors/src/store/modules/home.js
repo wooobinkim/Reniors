@@ -8,42 +8,11 @@ export default {
   namespaced: true,
   state: {
     isLogin: false,
-    hotJobopenings: [
-      {
-        id: 1,
-        name: '핫한 채용공고 첫 번째',
-        context: 'dsgsdsjdgoihwghgerg'
-      },
-      {
-        id: 2,
-        name: 'second hot jobopening',
-        context: 'asdigaoghrughguiehguigj'
-      }
-    ],
-    recommendJobopenings: [
-      {
-        id: 1,
-        name: '첫 번째 추천 채용공고!',
-        context: '삼성'
-      },
-      {
-        id: 2,
-        name: '두 번째 추천 채용공고!',
-        context: 'LG'
-      },
-      {
-        id: 3,
-        name: '세 번째 추천 채용공고!',
-        context: '한화'
-      },
-      {
-        id: 4,
-        name: '네 번째 추천 채용공고!',
-        context: '한화'
-      },
-    ],
+    hotJobopenings: [],
+    recommendJobopenings: [],
     youtubes: [],
     isYoutube: false,
+    notices: [],
   },
   getters: {
     isLogin: state => state.isLogin,
@@ -51,11 +20,13 @@ export default {
     recommendJobopenings: state => state.recommendJobopenings,
     youtubes: state => state.youtubes,
     isYoutube: state => !_.isEmpty(state.youtubes),
+    notices: state => state.notices,
   },
   mutations: {
     IS_LOGIN: (state, value) => state.isLogin = value,
     YOUTUBES: (state, youtubes) => state.youtubes = youtubes,
     HOTJOBOPENINGS: (state, hots) => state.hotJobopenings = hots,
+    NOTICES: (state, notices) => state.notices = notices,
     DUMMY: () => 0,
   },
   actions: {
@@ -79,6 +50,11 @@ export default {
     async search({ commit }, keyword) {
       console.log(keyword)
       commit('DUMMY')
+    },
+    async fetchNotices({ commit }) {
+      const response = await http.get('/notification')
+      console.log(response)
+      commit('NOTICES', response.data)
     }
   },
 }
