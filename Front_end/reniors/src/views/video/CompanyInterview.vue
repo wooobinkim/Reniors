@@ -241,7 +241,6 @@ export default {
       // }
     },
     sendchat() {
-      console.log("센센~~~~~~~~~~~~~~~");
       this.session
         .signal({
           data: this.sendmsg,
