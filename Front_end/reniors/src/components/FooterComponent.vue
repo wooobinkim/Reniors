@@ -2,9 +2,9 @@
   <div class="footer">
     <router-link class="footroute" :to="{ name: 'home' }">
       <i class="bi bi-house"></i>
-      <p>home</p>
+      <p>홈</p>
     </router-link>
-    <router-link class="footroute" :to="{ name: 'companyjobopening' }">
+    <router-link class="footroute" :to="{ name: 'Jobopening' }">
       <i class="bi bi-file-earmark-text"></i>
       <p>채용공고</p>
     </router-link>
@@ -15,10 +15,10 @@
       />
       <div class="footer-profile-dropdown" id="footerDropdown">
         <router-link to="/mypage" class="footer-profile-dropdown-item"
-          >MyPage</router-link
+          >마이페이지</router-link
         >
         <br />
-        <p class="footer-profile-dropdown-item" @click="removeToken">Logout</p>
+        <p class="footer-profile-dropdown-item" @click="logout()">로그아웃</p>
       </div>
     </div>
     <router-link v-else class="footroute" to="/login">
@@ -54,6 +54,10 @@ export default {
     ...mapActions(["removeToken"]),
     dropdown() {
       document.querySelector("#footerDropdown").classList.toggle("active");
+    },
+    logout() {
+      this.removeToken();
+      this.$router.push({ name: "home" });
     },
   },
   computed: {
