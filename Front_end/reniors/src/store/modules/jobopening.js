@@ -3,6 +3,7 @@ import drf from '@/api/drf'
 import _ from 'lodash'
 import http from '@/api/http'
 import router from '@/router'
+import dayjs from 'dayjs'
 
 
 export default {
@@ -13,6 +14,7 @@ export default {
     selectedJobopening: {},
     bookmarks: [],
     applies: [],
+    interview: []
   },
   getters: {
     tags: state => state.tags,
@@ -25,7 +27,8 @@ export default {
     isApply: state => {
       if (state.applies.find(apply => apply.jobOpeningId === state.selectedJobopening.id) === undefined) return false
       else return true
-    }
+    },
+    interview: state => state.interview
   },
   mutations: {
     TAGS: (state, tags) => state.tags = tags,
@@ -33,6 +36,19 @@ export default {
     SELECTJOB: (state, jobopening) => state.selectedJobopening = jobopening,
     BOOKMARKS: (state, bookmarks) => state.bookmarks = bookmarks,
     APPLIES: (state, applies) => state.applies = applies,
+    INTERVIEW: (state, applies) => {
+      state.interview = []
+      applies.forEach((apply) => {
+        const object = { title: apply.jobOpeningTitle, date: dayjs(apply.interviewDate).format("YYYY-MM-DD") }
+        // object.replace (/"/g,'')
+        console.log(object)
+        // const json = JSON.stringify(object)
+        // const unquoted = object.replace(/"([^"]+)":/g, '$1:')
+        state.interview.push(object)
+        
+
+      })
+    }
   },
   actions: {
     // all jobopenings
@@ -68,6 +84,7 @@ export default {
       const response = await http.get('/jobopening/apply')
       console.log(response)
       commit('APPLIES', response.data)
+      commit('INTERVIEW', response.data)
     },
     async apply(_, jobopeningId) {
       const response = await http.post(`/jobopening/${jobopeningId}/apply`)
