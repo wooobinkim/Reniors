@@ -231,13 +231,14 @@ public class CompanyService {
 
     //회사 공고 지원자 상세목록
     @Transactional
-    public UserResponse getapplicant(Company company, Long applyId){
+    public ApplyResponse getapplicant(Company company, Long applyId){
         if(company.getId() != applyRepository.findById(applyId).get().getJobOpening().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
         Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found Apply"));
-        UserResponse userResponse = UserResponse.response(apply.getUser());
+        ApplyResponse applyResponse = ApplyResponse.response(apply);
+//        UserResponse userResponse = UserResponse.response(apply.getUser());
 
-        return userResponse;
+        return applyResponse;
     }
 
     //회사 공고 지원자 상태수정
@@ -250,5 +251,15 @@ public class CompanyService {
 
         apply.update(applyUpdateRequest,apply.getUser(), apply.getJobOpening());
         System.out.println("apply.getInterviewDate() = " + apply.getInterviewDate());
+    }
+
+    //회사 공고 지원자 인터뷰 종료하기
+    @Transactional
+    public void updateApplyFinishInterview(Company company, Long applyId){
+        if(company.getId() != applyRepository.findById(applyId).get().getJobOpening().getCompany().getId())
+            throw new NotAuthException(COMPANY_NO_AUTH);
+        Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found Apply"));
+        apply.finishInterview();
+//        apply.update(applyUpdateRequest,apply.getUser(), apply.getJobOpening());
     }
 }

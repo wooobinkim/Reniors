@@ -21,6 +21,7 @@ import FindUsernameResult from "../components/user/FindUsernameResult.vue";
 import FindPasswordResult from "../components/user/FindPasswordResult.vue";
 import PreferSetting from "../components/user/PreferSetting";
 import PreferSettingComplete from "../views/user/PreferSettingCompleteView.vue";
+import MyCalendarView from "../views/user/MyCalendarView.vue";
 
 import CreateSetting from "../views/user/CreateSetting.vue";
 import UpdateSetting from "../views/user/UpdateSetting.vue";
@@ -46,7 +47,8 @@ import UserEvalList from "@/components/Company/JobOpening/UserEvalList.vue";
 import ResumeView from "@/components/Company/interview/ResumeView.vue";
 import JobOpeningInterviewList from "@/components/Company/interview/JobOpeningInterviewList.vue";
 import CompanyInterviewList from "@/components/Company/interview/InterviewList.vue";
-import CompanyOpenVidu from "@/components/Company/interview/CompanyOpenVidu.vue";
+// import CompanyOpenVidu from "@/components/Company/interview/CompanyOpenVidu.vue";
+import CompanyInterview from "@/views/video/CompanyInterview.vue";
 import EvalList from "@/components/Company/interview/EvalList.vue";
 import EvalRegist from "@/components/Company/interview/EvalRegist.vue";
 // import CompanyInterview from "@/components/Company/Interview/CompanyInterview.vue";
@@ -56,7 +58,7 @@ import EvalRegist from "@/components/Company/interview/EvalRegist.vue";
 import BoardMain from "@/views/board/BoardMain.vue";
 import BoardDetail from "@/views/board/BoardDetail.vue";
 import BoardCreate from "@/views/board/BoardCreate.vue";
-import BoardUpdate from "@/views/board/BoardUpdate.vue"
+import BoardUpdate from "@/views/board/BoardUpdate.vue";
 
 //video
 import VideoMain from "@/views/video/VideoMain.vue";
@@ -70,7 +72,7 @@ import VideoPracticeList from "@/views/practice/VideoPracticeList.vue";
 import AnswerUpdate from "@/views/practice/AnswerUpdate.vue";
 import PracticePage from "@/views/practice/PracticePage.vue";
 import PracticeBox from "@/views/practice/PracticeBox.vue";
-import VideoConfirm from "@/views/practice/VideoConfirm.vue"
+import VideoConfirm from "@/views/practice/VideoConfirm.vue";
 
 //interview
 import OpenVidu from "@/views/openvidu/OpenVidu.vue";
@@ -93,9 +95,14 @@ const routes = [
 
   //user
   {
+    path: "/mypage/calendar",
+    name: "MyCalendarView",
+    component: MyCalendarView,
+  },
+  {
     path: "/kakaologin",
     name: "kakaoLogin",
-    component: () => import("../views/user/kakaoLogin.vue")
+    component: () => import("../views/user/kakaoLogin.vue"),
   },
   {
     path: "/login",
@@ -331,11 +338,11 @@ const routes = [
         name: "companyinterviewlist",
         component: CompanyInterviewList,
       },
-      {
-        path: "interviewroom/:no",
-        name: "companyopenvidu",
-        component: CompanyOpenVidu,
-      },
+      // {
+      //   path: "interviewroom/:no/:jobOpeningId",
+      //   name: "companyopenvidu",
+      //   component: CompanyOpenVidu,
+      // },
       {
         path: "evallist/:no",
         name: "companyeval",
@@ -348,7 +355,6 @@ const routes = [
       },
     ],
   },
-
   {
     path: "/boards/:category_id",
     component: BoardMain,
@@ -380,6 +386,11 @@ const routes = [
     path: "/video/user",
     component: UserInterview,
     name: "userInterview",
+  },
+  {
+    path:"/video/company/:no/:jobOpeningId",
+    component:CompanyInterview,
+    name:"companyInterviewVideo"
   },
 
   //video practice
@@ -422,7 +433,6 @@ const routes = [
     path: "/practice/box/:videoId",
     component: VideoConfirm,
     name: "videoConfirm",
-
   },
 
   //open vidu
@@ -439,7 +449,6 @@ const router = createRouter({
   routes,
 });
 
-
 // router.beforeEach((to, from, next) => {
 
 //   const { isLogginedIn } = store.getters
@@ -454,6 +463,5 @@ const router = createRouter({
 //     next()
 //   }
 // })
-
 
 export default router;

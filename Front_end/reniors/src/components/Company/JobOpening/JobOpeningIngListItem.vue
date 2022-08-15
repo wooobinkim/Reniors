@@ -3,26 +3,34 @@
     <div class="title">
       {{ jobopening.title }}
     </div>
-    <div class="title">
-      {{jobopening.jobOpeningProcess}}
+    <div class="sub-title">
+      {{ jobopening.jobOpeningProcess }}
     </div>
     <div class="job-category">{{ jobopening.jobChildCategoryName }}</div>
 
     <div class="jobOpening-detail-btn-box">
-        <router-link :to="{ name: 'companyjobopeningdetail', params: { no: jobopening.id }}">
-          <i class="bi bi-gear"></i>
-        </router-link>
+      <router-link
+        :to="{
+          name: 'companyjobopeningdetail',
+          params: { no: this.jobopening.id },
+        }"
+      >
+        <i class="bi bi-gear"></i>
+      </router-link>
 
-        <router-link :to="{ name: 'applylist', params: { no: jobopening.id } }" class="to-apply-list-btn"> 
-          <i class="bi bi-person-lines-fill"></i> 지원자 <p>{{ jobopening.applies }}</p>명
-        </router-link>
+      <router-link
+        :to="{ name: 'applylist', params: { no: this.jobopening.id } }"
+        class="to-apply-list-btn"
+      >
+        <i class="bi bi-person-lines-fill"></i> 지원자
+        <p>{{ jobopening.applies }}</p>
+        명
+      </router-link>
     </div>
-
   </div>
-
 </template>
 
-<script>
+<script scoped>
 export default {
   props: {
     jobopening: Object,
@@ -30,14 +38,15 @@ export default {
 };
 </script>
 
-<style>
-.company-jobOpening-ing-list-item{
+<style scoped>
+.company-jobOpening-ing-list-item {
   width: 328px;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 16px;
-  border-color: var(--color-black-2); 
-  box-shadow: inset 0 0 1px 1px var(--color-black-3), 0 0 5px var(--color-black-3);
+  border-color: var(--color-black-2);
+  box-shadow: inset 0 0 1px 1px var(--color-black-3),
+    0 0 5px var(--color-black-3);
 }
 .company-jobOpening-ing-list-item > .title {
   width: 100%;
@@ -45,13 +54,19 @@ export default {
   font-weight: bold;
   font-size: 16px;
 }
+.company-jobOpening-ing-list-item > .sub-title {
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  font-size: 14px;
+}
 .company-jobOpening-ing-list-item > .job-category {
   width: 100%;
   text-align: right;
   font-size: 12px;
   color: var(--color-orange-2);
 }
-.jobOpening-detail-btn-box{
+.jobOpening-detail-btn-box {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
@@ -69,7 +84,7 @@ export default {
 .to-apply-list-btn:visited {
   color: white;
 }
-.to-apply-list-btn{
+.to-apply-list-btn {
   padding: 5px 10px;
   background-color: var(--color-red-1);
   border-radius: 5px;

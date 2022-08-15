@@ -35,18 +35,21 @@ export default{
         };
     },
     setup(){},
-    created(){},
+    created(){
+        
+    },
     mounted(){},
     unmounted(){},
     methods:{
-        ...mapActions(['saveRecording']),
-        onSubmit(){
+        ...mapActions(['saveRecording', 'issueToken']),
+        async onSubmit(){
             if(!this.title){
                 alert('저장할 제목을 입력해주세요!')
             }
+            await this.issueToken()
             this.saveRecording({
                 fileName: this.title,
-                URL: this.url
+                URL: this.url,
             })
         }
     }

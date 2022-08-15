@@ -4,6 +4,7 @@ import com.common.reniors.domain.entity.Type.JobOpeningProcess;
 import com.common.reniors.domain.entity.notification.Notification;
 import com.common.reniors.domain.entity.user.User;
 import com.common.reniors.dto.apply.ApplyUpdateRequest;
+import com.common.reniors.dto.apply.SessionUpdateRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -28,6 +29,8 @@ public class Apply {
     @Enumerated(EnumType.STRING)
     private JobOpeningProcess jobOpeningProcess;
 
+    private String sessionId;
+
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
     private Date interviewDate;
 
@@ -51,7 +54,18 @@ public class Apply {
     public void update(ApplyUpdateRequest applyUpdateRequest, User user, JobOpening jobOpening) {
         this.jobOpeningProcess = applyUpdateRequest.getJobOpeningProcess();
         this.interviewDate = applyUpdateRequest.getInterviewDate();
+        this.sessionId = applyUpdateRequest.getSessionId();
         this.user = user;
         this.jobOpening = jobOpening;
+    }
+
+    public void sessionUpdate(SessionUpdateRequest sessionUpdateRequest){
+        this.sessionId = sessionUpdateRequest.getSessionId();
+    }
+
+    public void finishInterview(){
+        this.sessionId = null;
+        this.interviewDate = null;
+        this.jobOpeningProcess = JobOpeningProcess.면접심사중;
     }
 }

@@ -8,20 +8,19 @@
         "
       >
         <div>
-          <input :value="apply.id" type="checkbox" v-model="passUser" />
-          <applier-resume-list-item
-            :apply="apply"
-            :jobOpeningId="this.$route.params.no"
-          >
-          </applier-resume-list-item>
+          <input
+            :value="apply.id"
+            type="checkbox"
+            v-model="passUser"
+            class="apply-resume-list-checkbox"
+          />
+          <applier-resume-list-item :apply="apply"> </applier-resume-list-item>
         </div>
-        <hr />
       </template>
     </template>
-    <button @click="resumepass()">서류합격</button>
-    <!-- <div for="check">이름 :{{ apply.userId }}</div>
-
-    <button @click="resumeview()">이력서보기</button> -->
+    <button @click="resumepass()" class="apply-resume-pass-btn">
+      서류합격
+    </button>
   </div>
 </template>
 
@@ -36,22 +35,16 @@ export default {
     ApplierResumeListItem,
   },
   props: {
-    // apply: Object,
     jobopeningdetail: Object,
   },
   data() {
     return {
-      // applyinfo: {
-      //   // jobOpeningProcess: null,
-      //   // interviewDate: new Date(),
-      // },
       passUser: [],
-      //   passuserId: [],
-      // flag: false,
     };
   },
-  created() {
-    this.getapplylist(this.$route.params.no);
+  watch: {},
+  async created() {
+    await this.getapplylist(this.$route.params.no);
   },
   computed: {
     ...mapGetters("company", ["jobopening", "applylist"]),
@@ -75,7 +68,9 @@ export default {
 
       let tmparr = [];
       this.applylist.forEach((apply) => {
-        tmparr.push(apply.id);
+        if (apply.jobOpeningProcess == "서류심사중") {
+          tmparr.push(apply.id);
+        }
       });
       let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
       unpassUser.forEach((data) => {
@@ -95,7 +90,6 @@ export default {
         },
       };
       this.progressJobOpening(data);
-      this.$router.go();
     },
 
     resumeview() {
@@ -108,4 +102,50 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.apply-resume-list-box {
+  margin-bottom: 100px;
+}
+.apply-resume-list-checkbox {
+  float: right;
+  margin-right: 10px;
+  margin-top: 10px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  border-radius: 5px;
+  -webkit-appearance: none;
+  border: 2px solid var(--color-black-3);
+  position: relative;
+  display: inline-block;
+}
+.apply-resume-list-checkbox:checked {
+  background-color: white;
+}
+.apply-resume-list-checkbox:checked::after {
+  content: "✔";
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: auto;
+  line-height: 24px;
+  color: var(--color-yellow-1);
+}
+.apply-resume-pass-btn {
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border: none;
+  padding: 6px 40px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: var(--color-green-1);
+  color: white;
+}
+</style>

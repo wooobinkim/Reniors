@@ -2,13 +2,6 @@
   <div class="list">
     <div class="one">
         <router-link :to="{ name:'userInterview' }" >
-            <button class="btn1" v-if="!this.title">
-                <div>
-                    <i class="bi bi-chat-square-quote-fill " style="font-size:48px; color:#FF843E;"></i>
-                    <p style="color:#FF843E; font-size: 20px; font-weight: bold; margin: 4px auto;">면접 보러 가기</p>
-                    
-                </div>
-            </button>
             <button class="btn11" v-if="this.title">
                 <div class="btn112">
                     <i class="bi bi-chat-square-quote-fill " style="font-size:48px; color:white;"></i>
@@ -20,6 +13,13 @@
                 </div>
             </button>
         </router-link>
+        <button class="btn1" v-if="!this.title">
+            <div>
+                <i class="bi bi-chat-square-quote-fill " style="font-size:48px; color:#FF843E;"></i>
+                <p style="color:#FF843E; font-size: 20px; font-weight: bold; margin: 4px auto;">예정된 면접이 없습니다.</p>
+                
+            </div>
+        </button>
 
     </div>
     <div class="two">
@@ -80,6 +80,7 @@ export default{
 
   justify-content: center;
   min-height: 100vh;
+  min-width: 70vw;
   background-color: #FFF5F0;
 
 }

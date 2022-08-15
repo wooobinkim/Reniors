@@ -13,7 +13,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .recommend-tag-item {
   display: inline-block;
   box-sizing: border-box;

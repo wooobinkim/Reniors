@@ -1,93 +1,193 @@
 <template>
-  <div style="width: 360px">
+  <div style="width: 360px" class="prefer-setting-box">
     <header>
-      <div style="margin-top: 16px; padding: 10px; background-color: #F9F9F9;">
+      <div style="margin-top: 16px; padding: 10px; background-color: #f9f9f9">
         <span class="title">관심 설정</span>
       </div>
-    
+
       <div style="float: right; margin-top: 5px">
-        <img class="order" v-if="page===1" src="@/assets/one_active.svg" alt="order">
-        <img class="order" v-else src="@/assets/one.svg" alt="order">
-        <img class="order" v-if="page===2" src="@/assets/two_active.svg" alt="order">
-        <img class="order" v-else src="@/assets/two.svg" alt="order">
-        <img class="order" style="margin-right: 20px" v-if="page===3" src="@/assets/three_active.svg" alt="order">
-        <img class="order" style="margin-right: 20px" v-else src="@/assets/three.svg" alt="order">
+        <img
+          class="order"
+          v-if="page === 1"
+          src="@/assets/one_active.svg"
+          alt="order"
+        />
+        <img class="order" v-else src="@/assets/one.svg" alt="order" />
+        <img
+          class="order"
+          v-if="page === 2"
+          src="@/assets/two_active.svg"
+          alt="order"
+        />
+        <img class="order" v-else src="@/assets/two.svg" alt="order" />
+        <img
+          class="order"
+          style="margin-right: 20px"
+          v-if="page === 3"
+          src="@/assets/three_active.svg"
+          alt="order"
+        />
+        <img
+          class="order"
+          style="margin-right: 20px"
+          v-else
+          src="@/assets/three.svg"
+          alt="order"
+        />
       </div>
     </header>
-  
-  <div style="width: 312px; margin: auto;">
-    <div v-show="page===1" >
-      <img class="num" src="@/assets/bigone.svg" alt="one">
-      <p class="text1">전문분야 및 세부업무 선택</p>
-      <p class="text2">전문분야를 선택해주세요!</p>
-      <!-- <p class="text3">세부업무는 꼭 선택 안 해주셔도 됩니다:)</p> -->
-      <br>
-      <div>
-        <select class="form-select" size="10" aria-label="size 3 select example" v-model="recommend.jobParentCategoryId" style="height: 150px;">
-          <option class="m-2" v-for="parent in parents" :key="parent" :value="parent.id">{{ parent.name }}</option>
-        </select>
-      </div>
-      <br>
-      <p v-show="!recommend.jobParentCategoryId" class="text3"><i class="bi bi-search"></i>  선택 시 관련 업무를 확인할 수 있습니다:)</p>
-      <div v-show="recommend.jobParentCategoryId">
-        <p class="text3"><i class="bi bi-caret-down-fill"></i>&ensp;이런 세부업무가 있어요!</p>
-        <select class="form-select" size="10" aria-label="size 3 select example" style="height: 150px; font-size: 13px;">
-          <option class="m-2" v-for="child in jobchilds" :key="child" :value="child.id">{{ child.name }}</option>
-        </select>
-      </div>
-    </div>
 
-    <div v-show="page===2" style="height: 600px">
-      <img class="num" src="@/assets/bigtwo.svg" alt="two">
-      <p class="text1">지역 선택</p>
-      <p class="text2">일하고 싶은 지역을 선택해주세요!</p>
-      <br>
-      <div>
-        <select class="form-select" size="10" aria-label="size 3 select example" style="margin-bottom: 10px;" v-model="area">
-          <option class="m-2" v-for="sido in sidos" :key="sido" :value="sido.id">{{ sido.name }}</option>
-        </select>
-        <select v-show="area" class="form-select" size="10" aria-label="size 3 select example" v-model="recommend.gugunId" style="height: 200px;">
-          <option class="m-2" v-for="gugun in guguns" :key="gugun" :value="gugun.id">{{ gugun.name }}</option>
-        </select>
-      </div>
-    </div>
-
-    <div v-show="page===3">
-      <img class="num" src="@/assets/bigthree.svg" alt="three">
-      <p class="text1">희망 근무일수 및 연봉</p>
-      <p class="text2">희망 근무일수와 희망 연봉을 입력해주세요!</p>
-      <br>
-      <div class="mb-3">
-        <p class="subtitle"><i class="bi bi-caret-right-fill"></i> 근무 일수</p>
-        <p class="text3" style="padding-left: 10px; margin-bottom: 0px;">주 몇 회 일하고 싶으신가요?</p>
-        <p class="text3" style="padding-left: 10px">1~6회 사이로 입력해주세요.</p>
-        <div style="width: 150px; float: right;">
-          <label for="exampleFormControlInput1" class="form-label">주&emsp;</label>
-          <input type="number" class="form-control" v-model="recommend.workingDay" id="exampleFormControlInput1" style="display: inline; width: 80px; text-align:right;" placeholder="">
-          <label for="exampleFormControlInput1" class="form-label">&ensp;일</label>
+    <div style="width: 312px; margin: auto">
+      <div v-show="page === 1">
+        <img class="num" src="@/assets/bigone.svg" alt="one" />
+        <p class="text1">전문분야 및 세부업무 선택</p>
+        <p class="text2">전문분야를 선택해주세요!</p>
+        <!-- <p class="text3">세부업무는 꼭 선택 안 해주셔도 됩니다:)</p> -->
+        <br />
+        <div class="prefer-setting-select">
+          <select
+            class="form-select"
+            size="10"
+            aria-label="size 3 select example"
+            v-model="recommend.jobParentCategoryId"
+            style="height: 150px"
+          >
+            <option
+              class="m-2"
+              v-for="parent in parents"
+              :key="parent"
+              :value="parent.id"
+            >
+              {{ parent.name }}
+            </option>
+          </select>
         </div>
-        <br>
-        <br>
-        <br>
-        <p class="subtitle"><i class="bi bi-caret-right-fill"></i> 연봉</p>
-        <p class="text3" style="padding-left: 10px">희망 연봉을 알려주세요.</p>
-        <div style="width: 150px; float: right;">
-          <input type="number" class="form-control" v-model="recommend.minSalary" id="exampleFormControlInput1" style="display: inline; width: 80px; text-align:right;" placeholder="">
-          <label for="exampleFormControlInput1" class="form-label">&ensp;만원</label>
+        <br />
+      </div>
+
+      <div v-show="page === 2" style="height: 600px">
+        <img class="num" src="@/assets/bigtwo.svg" alt="two" />
+        <p class="text1">지역 선택</p>
+        <p class="text2">일하고 싶은 지역을 선택해주세요!</p>
+        <br />
+        <div>
+          <select
+            class="form-select"
+            size="10"
+            aria-label="size 3 select example"
+            style="margin-bottom: 10px"
+            v-model="area"
+          >
+            <option
+              class="m-2"
+              v-for="sido in sidos"
+              :key="sido"
+              :value="sido.id"
+            >
+              {{ sido.name }}
+            </option>
+          </select>
+          <select
+            v-show="area"
+            class="form-select"
+            size="10"
+            aria-label="size 3 select example"
+            v-model="recommend.gugunId"
+            style="height: 200px"
+          >
+            <option
+              class="m-2"
+              v-for="gugun in guguns"
+              :key="gugun"
+              :value="gugun.id"
+            >
+              {{ gugun.name }}
+            </option>
+          </select>
         </div>
       </div>
-      <br>
+
+      <div v-show="page === 3">
+        <img class="num" src="@/assets/bigthree.svg" alt="three" />
+        <p class="text1">희망 근무일수 및 연봉</p>
+        <p class="text2">희망 근무일수와 희망 연봉을 입력해주세요!</p>
+        <br />
+        <div class="mb-3">
+          <p class="subtitle">
+            <i class="bi bi-caret-right-fill"></i> 근무 일수
+          </p>
+          <p class="text3" style="padding-left: 10px; margin-bottom: 0px">
+            주 몇 회 일하고 싶으신가요?
+          </p>
+          <p class="text3" style="padding-left: 10px">
+            1~6회 사이로 입력해주세요.
+          </p>
+          <div style="width: 150px; float: right">
+            <label for="exampleFormControlInput1" class="form-label"
+              >주&emsp;</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              v-model="recommend.workingDay"
+              id="exampleFormControlInput1"
+              style="display: inline; width: 80px; text-align: right"
+              placeholder=""
+            />
+            <label for="exampleFormControlInput1" class="form-label"
+              >&ensp;일</label
+            >
+          </div>
+          <br />
+          <br />
+          <br />
+          <p class="subtitle"><i class="bi bi-caret-right-fill"></i> 연봉</p>
+          <p class="text3" style="padding-left: 10px">
+            희망 연봉을 알려주세요.
+          </p>
+          <div style="width: 150px; float: right">
+            <input
+              type="number"
+              class="form-control"
+              v-model="recommend.minSalary"
+              id="exampleFormControlInput1"
+              style="display: inline; width: 80px; text-align: right"
+              placeholder=""
+            />
+            <label for="exampleFormControlInput1" class="form-label"
+              >&ensp;만원</label
+            >
+          </div>
+        </div>
+        <br />
+      </div>
     </div>
 
-  </div>
-
-  <footer style="width: 312px;">
-    <button style="background-color: #FFC0A3;" type="button" v-show="page === 1"><router-link style="text-decoration:none; color: white;" :to="{ name: 'MyPage' }">이전</router-link></button>
-    <button style="background-color: #FFC0A3;" type="button" v-show="page !== 1" @click="decreasePage">이전</button>
-    <button type="button" v-show="page !== 3" @click="increasePage">다음</button>
-    <button @click="prefer" v-show="page === 3">완료!</button>
-  </footer>
-
+    <footer style="width: 312px">
+      <button
+        style="background-color: #ffc0a3"
+        type="button"
+        v-show="page === 1"
+      >
+        <router-link
+          style="text-decoration: none; color: white"
+          :to="{ name: 'MyPage' }"
+          >이전</router-link
+        >
+      </button>
+      <button
+        style="background-color: #ffc0a3"
+        type="button"
+        v-show="page !== 1"
+        @click="decreasePage"
+      >
+        이전
+      </button>
+      <button type="button" v-show="page !== 3" @click="increasePage">
+        다음
+      </button>
+      <button @click="prefer" v-show="page === 3">완료!</button>
+    </footer>
   </div>
 </template>
 <script>
@@ -107,142 +207,149 @@ export default {
         gugunId: null,
         minSalary: null,
         workingDay: null,
-      }
-    }
+      },
+    };
   },
   computed: {
-    ...mapGetters(['parents']),
-    ...mapState('category', ['jobchilds', 'sidos', 'guguns'])
+    ...mapGetters(["parents"]),
+    ...mapState("category", ["jobchilds", "sidos", "guguns"]),
   },
 
   watch: {
-
-    'recommend.jobParentCategoryId'(data){
-      this.getJobChild(data)
+    "recommend.jobParentCategoryId"(data) {
+      this.getJobChild(data);
     },
-    
 
     // jobparents(data){
     //   this.getJobChild(data)
     // },
-    area(data){
-      this.getGugun(data)
-    }
-
+    area(data) {
+      this.getGugun(data);
+    },
   },
   setup() {},
   created() {
-    this.getSido()
-    this.fetchParents()
-    this.fetchPrefer()
+    this.getSido();
+    this.fetchParents();
+    this.fetchPrefer();
   },
 
   mounted() {},
   unmounted() {},
   methods: {
-    ...mapActions(['fetchParents', 'createPrefer', 'fetchPrefer', 'updatePrefer']),
-    ...mapActions('category', ['getJobChild', 'getSido', 'getGugun']),
-    increasePage(){
-      this.page += 1
+    ...mapActions([
+      "fetchParents",
+      "createPrefer",
+      "fetchPrefer",
+      "updatePrefer",
+    ]),
+    ...mapActions("category", ["getJobChild", "getSido", "getGugun"]),
+    increasePage() {
+      this.page += 1;
     },
-    decreasePage(){
-      this.page -= 1
+    decreasePage() {
+      this.page -= 1;
     },
-    prefer(){
-      if (this.action === 'create'){
-        this.createPrefer(this.recommend)
-      } else if (this.action === 'update'){
-        this.updatePrefer(this.recommend)
+    prefer() {
+      if (this.action === "create") {
+        this.createPrefer(this.recommend);
+      } else if (this.action === "update") {
+        this.updatePrefer(this.recommend);
       }
-    }
-    
-    
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
+.prefer-setting-box {
+  margin: auto;
+}
 
-  p {
-    text-align: left;
-  }
+.prefer-setting-select {
+  margin: auto auto;
+  width: 100%;
+}
 
-  label {
-    color: #8A8A8A;
-    font-weight: 400;
-    font-size: 13px;
-    margin-bottom: 5px;   
-  }
+p {
+  text-align: left;
+}
 
-  header{
-    height: 84px;
-    border-style: none none solid none;
-    border-width: 0.5px;
-    border-color: #EAEAEA;
-  }
+label {
+  color: #8a8a8a;
+  font-weight: 400;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
 
-  .title {
-    font-size:22px;
-    margin-top: 4px;
-    color: #FFB400;
-    font-weight: 900;
-  }
+header {
+  height: 84px;
+  border-style: none none solid none;
+  border-width: 0.5px;
+  border-color: #eaeaea;
+}
 
-  .order{
-    margin: 2px;
-  }
+.title {
+  font-size: 22px;
+  margin-top: 4px;
+  color: #ffb400;
+  font-weight: 900;
+}
 
-  .num{
-    float: left;
-    margin: 16px;
-  }
+.order {
+  margin: 2px;
+}
 
-  .text1{
-    font-size: 18px;
-    padding: 20px 4px 6px 4px;
-    font-weight: 900;
-    margin: 0px;
-  }
+.num {
+  float: left;
+  margin: 16px;
+}
 
-  .text2{
-    font-size: 15px;
-    color: #6D6D6D;
-    margin-bottom: 5px;
-  }
+.text1 {
+  font-size: 18px;
+  padding: 20px 4px 6px 4px;
+  font-weight: 900;
+  margin: 0px;
+}
 
-  .text3{
-    font-size: 13px;
-    color: #37BF99;
-    padding-left: 10px;
-  }
+.text2 {
+  font-size: 15px;
+  color: #6d6d6d;
+  margin-bottom: 5px;
+}
 
-  .subtitle{
-    font-size: 15px;
-    font-weight: 700;
-  }
-  footer > button {    
-    background-color: var(--color-red-2);
-    width: 45%;
-    height: 80%;
-    /* height: 40px; */
-    border-radius: 10px;
-    border: none;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
-    cursor: pointer;
-  }
+.text3 {
+  font-size: 13px;
+  color: #37bf99;
+  padding-left: 10px;
+}
 
-  footer {
-    position: fixed;
-    transform: translate(-50%, 0);
-    bottom: 60px;
-    left: 50%;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-  }
+.subtitle {
+  font-size: 15px;
+  font-weight: 700;
+}
+footer > button {
+  background-color: var(--color-red-2);
+  width: 45%;
+  height: 80%;
+  /* height: 40px; */
+  border-radius: 10px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
+  cursor: pointer;
+}
 
+footer {
+  position: fixed;
+  transform: translate(-50%, 0);
+  bottom: 60px;
+  left: 50%;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+}
 </style>

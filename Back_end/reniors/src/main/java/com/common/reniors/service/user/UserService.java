@@ -12,7 +12,6 @@ import com.common.reniors.domain.repository.resume.LicenseRepository;
 import com.common.reniors.domain.repository.user.UserRepository;
 import com.common.reniors.dto.kakao.KakaoUserCreateRequest;
 import com.common.reniors.dto.kakao.KakaoUserInfo;
-import com.common.reniors.dto.kakao.KakaoUserResponse;
 import com.common.reniors.dto.mail.MailDto;
 import com.common.reniors.dto.resume.AwardResponse;
 import com.common.reniors.dto.resume.CareerDetailResponse;
@@ -69,7 +68,7 @@ public class UserService {
         } else {
             //비밀번호 확인
             if (passwordEncoder.matches(request.getUserAppPwd(), findUser.get().getUserAppPwd())) {
-                return jwtUtil.createToken(findUser.get().getId(), findUser.get().getName());
+                return jwtUtil.createToken(findUser.get().getId(), "user");
             } else {
                 throw new NotMatchException(PASSWORD_NOT_MATCH);
             }
@@ -162,41 +161,42 @@ public class UserService {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(responseBody);
 
-        System.out.println("jsonNode = " + jsonNode);
-
-        String nickname = jsonNode.get("properties")
-                .get("nickname").asText();
         String email = jsonNode.get("kakao_account").get("email").asText();
-        String genderKakao = jsonNode.get("kakao_account").get("gender").asText();
         Gender gender = null;
-        if (genderKakao.equals("male")) {
-            gender = Gender.M;
-        } else if (genderKakao.equals("female")) {
-            gender = Gender.F;
+        if (jsonNode.get("kakao_account").get("gender_needs_agreement").asBoolean()) {
+            String genderKakao = jsonNode.get("kakao_account").get("gender").asText();
+            if (genderKakao.equals("male")) {
+                gender = Gender.M;
+            } else if (genderKakao.equals("female")) {
+                gender = Gender.F;
+            } else {
+                gender = Gender.공개안함;
+            }
         } else {
             gender = Gender.공개안함;
         }
-        String profileImage = jsonNode.get("properties").get("profile_image").asText();
-        return new KakaoUserInfo(nickname, email, gender, profileImage);
+        return new KakaoUserInfo(email, gender);
+    }
+
+    // 이미 가입된 카카오 계정인지 확인
+    @Transactional
+    public User findByKakaoId(KakaoUserInfo kakaoUser) {
+        User user = userRepository.findByKakaoId(kakaoUser.getEmail())
+                .orElse(null);
+        return user;
     }
 
     // 카카오ID로 회원가입 처리
     @Transactional
-    public User registerKakaoUserIfNeed(KakaoUserCreateRequest request, String baseUrl) {
-        // DB에 중복된 kakaoId가 있는지 확인
-        User kakaoUser = userRepository.findByKakaoId(request.getKakaoId())
-                .orElse(null);
-        if (kakaoUser == null) {
-            // 회원가입
-            kakaoUser = User.createKakaoUser(request, baseUrl);
-            userRepository.save(kakaoUser);
-        }
+    public User registerKakaoUser(KakaoUserCreateRequest request, String baseUrl, String userProfile) {
+        User kakaoUser = User.createKakaoUser(request, baseUrl, userProfile);
+        userRepository.save(kakaoUser);
         return kakaoUser;
     }
 
     // 로그인 처리 및 토큰 발급
     public String LoginKakaoUser(User kakaoUser) {
-        return jwtUtil.createToken(kakaoUser.getId(), kakaoUser.getName());
+        return jwtUtil.createToken(kakaoUser.getId(), "user");
     }
 
     @Transactional
@@ -204,13 +204,6 @@ public class UserService {
         User findUser = userRepository.findById(user.getId())
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
         return UserResponse.response(findUser);
-    }
-
-    @Transactional
-    public KakaoUserResponse readKakaoUser(User user) {
-        User findKakaoUser = userRepository.findByKakaoId(user.getKakaoId())
-                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
-        return KakaoUserResponse.response(findKakaoUser);
     }
 
     @Transactional

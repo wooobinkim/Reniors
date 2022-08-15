@@ -1,10 +1,13 @@
 <template>
   <div class="total">
     <div >
-        <div v-if="!selected.includes(id)" class="question" @click="onCheck(id)">
+        <div v-if="!selected" class="question" @click="onCheck(id)">
             <p>Q{{idx + 1}}. {{question}}</p>
         </div>
-        <div v-if="selected.includes(id)" class="question" @click="onCheck(id)">
+        <div v-if="selected && !selected.includes(id)" class="question" @click="onCheck(id)">
+            <p>Q{{idx + 1}}. {{question}}</p>
+        </div>
+        <div v-if="selected && selected.includes(id)" class="question" @click="onCheck(id)">
             <p>Q{{idx + 1}}. {{question}}</p>
             <div class="number">
                 <p style="color:white; font-size:16px; font-weight: bold;">{{selected.indexOf(id)+1}}</p>
@@ -35,6 +38,7 @@ export default{
         ...mapActions(['pushSelected']),
         onCheck(id){
             this.pushSelected(id)
+            console.log(this.selected);
         }
     },
     computed:{

@@ -50,6 +50,7 @@ public class NotificationService {
     public NotificationResponse read(Long notificationId) {
         Notification notification = notificationRepository.findById(notificationId)
                 .orElseThrow(()->new NotFoundException(NOTIFICATION_NOT_FOUND));
+        notification.readNotification();
         return NotificationResponse.response(notification);
     }
 

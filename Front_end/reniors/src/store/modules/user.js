@@ -129,6 +129,22 @@ export const user = {
           });
       }
     },
+    kakaoRegist({ dispatch }, formData){
+      multipart
+        .post(`/users/kakao/regist`, formData)
+        .then((res) => {
+          console.log('성공')
+          const token = res.headers["authorization"]
+          dispatch("saveToken", token)
+          dispatch("fetchCurrentUser")
+          console.log(res)
+          router.push({ name: "home" })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+
 
     registUser({ commit }, formData) {
       console.log(formData);
@@ -230,6 +246,20 @@ export const user = {
           console.log(err);
         });
     },
+
+    changePassword({ getters }, data) {
+      axios({
+        url: drf.user.changePwd(data),
+        method: 'put',
+        headers: getters.authHeader,
+      })
+      .then((res) => {
+        alert('변경되었습니다!')
+        console.log(res)
+      })
+      .catch((err) => console.log(err))
+    },
+
     fetchRooms({ getters, commit }) {
       axios({
         url: "https://i7b307.p.ssafy.io/api" + "/room/user",
@@ -241,6 +271,26 @@ export const user = {
         })
         .catch((err) => console.error(err.response));
     },
+
+    kakaologin({ dispatch }, forms){
+      axios({
+        url: "https://i7b307.p.ssafy.io/api/users/kakao/login",
+        method: 'post',
+        data: JSON.stringify(forms)        
+      })
+      .then((res) => {
+        console.log(forms)
+        const token = res.headers["authorization"]
+        dispatch("saveToken", token)
+        dispatch("fetchCurrentUser")
+        console.log(res)
+        router.push({ name: "home" })
+      })
+      .catch((err) => {
+        console.log(forms)
+        console.log(err)
+      })
+    }
   },
 
   modules: {},

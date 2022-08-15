@@ -4,6 +4,7 @@
       v-for="evalquestion in evalquestionlist"
       :key="evalquestion.id"
       :evalquestion="evalquestion"
+      :applyinfo="applyinfo"
     ></openvidu-eval-list-item>
 
     <button @click="finish()">평가 마치기</button>
@@ -17,21 +18,29 @@ export default {
   components: {
     OpenviduEvalListItem,
   },
+  props:{
+    applyinfo : Object,
+  },
   created() {
-    this.getEvalQuestionList(this.$route.params.no);
+    console.log("오픈이발");
+    console.log(this.applyinfo);
+    this.getEvalQuestionList(this.applyinfo.jobOpeningId);
   },
   computed: {
     ...mapGetters("company", ["evalquestionlist"]),
   },
   methods: {
-    ...mapActions("company", ["getEvalQuestionList", "updateApply"]),
+    ...mapActions("company", ["getEvalQuestionList", "finishInterview","updateApply"]),
     finish() {
+      let apply = {
+        jobOpeningProcess: "면접심사중",
+        interviewDate:null,
+        sessionId: null,
+      }
       this.updateApply({
-        jobOpeningId: this.$route.params.no,
-        applyId: this.interviewer,
-        apply: {
-          jobOpeningProcess: "면접심사중",
-        },
+        jobOpeningId : this.applyinfo.jobOpeningId,
+        applyId : this.applyinfo.id,
+        apply: apply,
       });
     },
   },

@@ -1,17 +1,24 @@
 <template>
   <div>
     <eval-list-item
-      v-for="evalquestion in evalquestionlist"
+      v-for="(evalquestion, idx) in this.list"
       :key="evalquestion.id"
+      :idx="idx"
       :evalquestion="evalquestion"
     ></eval-list-item>
-    <div v-if="registflag"><eval-regist></eval-regist></div>
-    <button @click="changeflag()">평가항목 추가</button>
+    <div v-if="registflag">
+    <eval-regist @fetch="fetch"/>
+    </div>
+    <div class="add-flag">
+      <p @click="changeflag()">
+        <i class="bi bi-plus-circle"></i> 평가 항목 추가
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import EvalRegist from "./EvalRegist.vue";
 import EvalListItem from "./EvalListItem.vue";
 export default {
@@ -22,21 +29,41 @@ export default {
   data() {
     return {
       registflag: false,
+      list: null,
     };
+  },
+  watch:{
+    evalquestionlist:function (data) {
+      console.log(data);
+    }
   },
   created() {
     this.getEvalQuestionList(this.$route.params.no);
+    this.setheader('면접평가');
   },
   computed: {
-    ...mapGetters("company", ["jobopening", "evalquestionlist"]),
+    ...mapGetters("company", ["jobopening"]),
+    ...mapState("company", ["evalquestionlist"]),
   },
   methods: {
-    ...mapActions("company", ["getEvalQuestionList"]),
+    ...mapActions("company", ["getEvalQuestionList","setheader"]),
     changeflag() {
       this.registflag = !this.registflag;
     },
+    fetch(){
+      this.getEvalQuestionList(this.$route.params.no);
+    },
+    
   },
 };
 </script>
 
-<style></style>
+<style scope>
+.add-flag {
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--color-green-1);
+}
+</style>

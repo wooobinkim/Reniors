@@ -17,13 +17,13 @@ export default {
     guguns: [{ value: null, text: "선택하세요" }],
     lastedus: [
       { value: null, text: "최종학력을 선택해주세요" },
-      { value: "고교졸업이하", text: "고교졸업이하" },
+      { value: "고교졸업이하", text: "고교졸업 이하" },
       { value: "고등학교졸업", text: "고등학교졸업" },
-      { value: "대학교졸업_4년제", text: "대학교졸업 4년제" },
-      { value: "대학졸업_2_3년제", text: "대학졸업 2,3년제" },
-      { value: "대학원석사졸업", text: "대학원석사졸업" },
-      { value: "대학원박사졸업", text: "대학원박사졸업" },
-      { value: "박사졸업이상", text: "박사졸업이상" },
+      { value: "대학교졸업_4년제", text: "대학교졸업(4년)" },
+      { value: "대학졸업_2_3년제", text: "대학졸업(2,3년)" },
+      { value: "대학원석사졸업", text: "대학원 석사졸업" },
+      { value: "대학원박사졸업", text: "대학원 박사졸업" },
+      { value: "박사졸업이상", text: "박사졸업 이상" },
       { value: "학력무관", text: "학력무관" },
     ],
     typeemployments: [
@@ -47,7 +47,13 @@ export default {
   },
 
   getters: {
+    jobparents:state=>state.jobparents,
     jobchilds: state => state.jobchilds,
+    sidos: state => state.sidos,
+    guguns: state => state.guguns,
+    lastedus: state => state.lastedus,
+    typeemployments: state => state.typeemployments,
+    typecompanies: state => state.typecompanies
   },
 
   mutations: {
