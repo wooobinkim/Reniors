@@ -49,7 +49,7 @@ export default {
   text-align: left;
   margin-left: 10px;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
 }
 .apply-pass-btn-box {
   display: flex;

@@ -171,12 +171,12 @@ public class UserController {
             @RequestPart(value = "img", required = false) final MultipartFile file,
             @Valid @RequestPart(value = "data", required = true) final UserUpdateRequest request
     ) throws Exception {
-        String userProfile = "userBaseProfile.png";
+        String userProfile = null;
         // 프로필사진을 바꿀 것인지 확인
         if (file != null && request.isChangeProfile()) {
             userProfile = awsS3Service.uploadFile(file, "user/");
         }
-        userService.updateUser(user.getId(), request, baseURL + "user/", userProfile);
+        userService.updateUser(user.getId(), request, baseURL,"user/"+userProfile);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
