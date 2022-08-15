@@ -1,7 +1,7 @@
 <template>
   <div>
     <eval-list-item
-      v-for="(evalquestion, idx) in evalquestionlist"
+      v-for="(evalquestion, idx) in this.list"
       :key="evalquestion.id"
       :idx="idx"
       :evalquestion="evalquestion"
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import EvalRegist from "./EvalRegist.vue";
 import EvalListItem from "./EvalListItem.vue";
 export default {
@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       registflag: false,
+      list: null,
     };
   },
   watch:{
@@ -41,7 +42,8 @@ export default {
     this.setheader('면접평가');
   },
   computed: {
-    ...mapGetters("company", ["jobopening", "evalquestionlist"]),
+    ...mapGetters("company", ["jobopening"]),
+    ...mapState("company", ["evalquestionlist"]),
   },
   methods: {
     ...mapActions("company", ["getEvalQuestionList","setheader"]),

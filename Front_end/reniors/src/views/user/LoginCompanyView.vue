@@ -4,12 +4,10 @@
       <img style="width: 80%; max-height: 170px;" alt="logo" src="@/assets/logo.png" />
       <br />
       <form style="width: 312px" @submit.prevent="companylogin(companyinfo)">
-        <br />
-        회사로그인
         <!-- <form style="width: 312px;"> -->
         <b-form-input
           style="width: 100%; height: 48px"
-          class="mb-2"
+          class="mb-2 company-form-control"
           v-model="companyinfo.companyAppId"
           type="text"
           placeholder="아이디"
@@ -17,7 +15,7 @@
         ></b-form-input>
         <b-form-input
           style="width: 100%; height: 48px"
-          class="mb-4"
+          class="mb-4 company-form-control"
           v-model="companyinfo.companyAppPwd"
           type="password"
           placeholder="비밀번호"
@@ -142,5 +140,10 @@ export default {
   line-height: 17px;
   color: #6d6d6d;
   text-decoration: none;
+}
+
+.company-form-control:focus {
+  border-color: var(--color-green-2) !important;
+  box-shadow: inset 0 1px 1px var(--color-green-1), 0 0 8px var(--color-green-2) !important;
 }
 </style>

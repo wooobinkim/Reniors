@@ -3,22 +3,27 @@
     <div class="question-contents">평가 항목</div>
     <input
       type="text"
-      v-model="evalquestion.contents"
+      v-model="evalquestionData.evalquestion.contents"
       placeholder="평가 항목을 입력해주세요."
       class="input-contents"
     />
-    <button class="save-btn" @click="regist()">저장하기</button>
+    <button class="save-btn" @click="update()">수정사항 저장</button>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
+  props: {
+    evalquestion: Object,
+  },
   data() {
     return {
-      evalquestion: {
-        jobOpeningId: this.$route.params.no,
-        contents: "",
+      evalquestionData: {
+        no: this.$route.params.no,
+        evalquestion: {
+          contents: this.$props.evalquestion.contents,
+        },
       },
     };
   },
@@ -26,12 +31,10 @@ export default {
     ...mapGetters("company", ["jobopening"]),
   },
   methods: {
-    ...mapActions("company", ["registEvalQuestion"]),
-    regist() {
-      this.registEvalQuestion(this.evalquestion);
-      this.$emit("fetch");
+    ...mapActions("company", ["updateEvalQuestion"]),
+    update() {
+      this.updateEvalQuestion(this.evalquestionData);
     },
-    
   },
 };
 </script>

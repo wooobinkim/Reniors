@@ -142,17 +142,7 @@ public class UserController {
     public ResponseEntity<?> readUser(
             @ApiIgnore @LoginUser User user
     ) {
-        System.out.println("USER : " + user);
         return ResponseEntity.ok(userService.readUser(user));
-    }
-
-    // 카카오 회원 정보 조회
-    @GetMapping("/kakaouser")
-    @ApiOperation(value = "카카오 회원 정보 조회", notes = "카카오 회원의 정보를 조회합니다.")
-    public ResponseEntity<?> readKakaoUser(
-            @ApiIgnore @LoginUser User user
-    ) {
-        return ResponseEntity.ok(userService.readKakaoUser(user));
     }
 
     // 회원 목록 조회

@@ -18,7 +18,7 @@ export default {
     jobopeninglisted: [],
     jobopening: null,
     companyinfo: {},
-    companyimg:"",
+    companyimg: "",
     applylist: [],
     apply: null,
     interviewapplylist: [],
@@ -38,12 +38,12 @@ export default {
     authError: (state) => state.authError,
     // Authorization: `Token ${state.token}`
     authHeader: (state) => ({ Authorization: `Bearer ${state.token}` }),
-    header:(state)=>state.header,
+    header: (state) => state.header,
     jobopeninglisting: (state) => state.jobopeninglisting,
     jobopeninglisted: (state) => state.jobopeninglisted,
     jobopening: (state) => state.jobopening,
     companyinfo: (state) => state.companyinfo,
-    companyimg:(state)=>state.companyimg,
+    companyimg: (state) => state.companyimg,
     applylist: (state) => state.applylist,
     apply: (state) => state.apply,
     applyuser: (state) => state.applyuser,
@@ -144,8 +144,8 @@ export default {
   },
 
   actions: {
-    setheader({commit},data){
-      commit("SET_HEADER",data);
+    setheader({ commit }, data) {
+      commit("SET_HEADER", data);
     },
     saveToken({ commit }, token) {
       commit("SET_TOKEN", token);
@@ -186,13 +186,13 @@ export default {
       // multipart
       //   .post(`/company`, formData)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company`,
-        method:"post",
-        headers:{
+        url: `https://i7b307.p.ssafy.io/api/company`,
+        method: "post",
+        headers: {
           "Content-Type": "multipart/form-data",
           Authorization: getters.authHeader,
         },
-        data:formData
+        data: formData,
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
@@ -201,13 +201,13 @@ export default {
           console.log(error);
         });
     },
-    getCompany: ({ commit,getters }) => {
+    getCompany: ({ commit, getters }) => {
       // http
       //   .get(`/company`)
       axios({
-        url:"https://i7b307.p.ssafy.io/api/company",
-        method:"get",
-        headers:getters.authHeader,
+        url: "https://i7b307.p.ssafy.io/api/company",
+        method: "get",
+        headers: getters.authHeader,
       })
         .then(({ data }) => {
           commit("SET_COMPANY", data);
@@ -216,17 +216,17 @@ export default {
           console.log(error);
         });
     },
-    updateCompany: ({ commit,getters }, formData) => {
+    updateCompany: ({ commit, getters }, formData) => {
       // multipart
       //   .put(`/company`, JSON.stringify(formData))
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company`,
-        method:"put",
-        headers:{
+        url: `https://i7b307.p.ssafy.io/api/company`,
+        method: "put",
+        headers: {
           "Content-Type": "multipart/form-data",
           Authorization: getters.authHeader,
         },
-        data:formData
+        data: formData,
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
@@ -236,17 +236,17 @@ export default {
         });
     },
 
-    registJobOpening: ({ commit,getters }, formData) => {
+    registJobOpening: ({ commit, getters }, formData) => {
       // multipart
       //   .post(`/company/jobopening`, formData)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company/jobopening`,
-        method:"post",
-        headers:{
+        url: `https://i7b307.p.ssafy.io/api/company/jobopening`,
+        method: "post",
+        headers: {
           "Content-Type": "multipart/form-data",
           Authorization: getters.authHeader,
         },
-        data:formData
+        data: formData,
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
@@ -255,17 +255,17 @@ export default {
           console.log(error);
         });
     },
-    updateJobOpening: ({ commit,getters }, formData) => {
+    updateJobOpening: ({ commit, getters }, formData) => {
       // http
       //   .put(`/company/jobopening/${data.no}`, data.jobopening)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company/jobopening`,
-        method:"put",
-        headers:{
+        url: `https://i7b307.p.ssafy.io/api/company/jobopening`,
+        method: "put",
+        headers: {
           "Content-Type": "multipart/form-data",
           Authorization: getters.authHeader,
         },
-        data:formData
+        data: formData,
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
@@ -274,13 +274,13 @@ export default {
           console.log(error);
         });
     },
-    getJobOpeningList: ({ commit,getters }) => {
+    getJobOpeningList: ({ commit, getters }) => {
       // http
       //   .get(`/company/jobopening`)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company/jobopening`,
-        method:"get",
-        headers:getters.authHeader,
+        url: `https://i7b307.p.ssafy.io/api/company/jobopening`,
+        method: "get",
+        headers: getters.authHeader,
       })
         .then(({ data }) => {
           commit("SET_JOBOPENING_LIST", data);
@@ -289,13 +289,13 @@ export default {
           console.log(error);
         });
     },
-    getJobOpening: ({ commit,getters }, no) => {
+    getJobOpening: ({ commit, getters }, no) => {
       // http
       //   .get(`/company/jobopening/${no}`)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company/jobopening/${no}`,
-        method:"get",
-        headers:getters.authHeader,
+        url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}`,
+        method: "get",
+        headers: getters.authHeader,
       })
         .then(({ data }) => {
           commit("SET_JOBOPENING", data);
@@ -305,13 +305,13 @@ export default {
           console.log(error);
         });
     },
-    deleteJobOpening: ({ commit,getters }, no) => {
+    deleteJobOpening: ({ commit, getters }, no) => {
       // http
       //   .delete(`/company/jobopening/${no}`)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company/jobopening/${no}`,
-        method:"delete",
-        headers:getters.authHeader,
+        url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}`,
+        method: "delete",
+        headers: getters.authHeader,
       })
         .then(({ data }) => {
           commit("SET_JOBOPENING", data);
@@ -320,13 +320,13 @@ export default {
           console.log(error);
         });
     },
-    finishJobOpening: ({ commit,getters }, no) => {
+    finishJobOpening: ({ commit, getters }, no) => {
       // http
       //   .put(`/company/jobopening/${no}/finish`)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company/jobopening/${no}/finish`,
-        method:"put",
-        headers:getters.authHeader,
+        url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}/finish`,
+        method: "put",
+        headers: getters.authHeader,
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
@@ -335,14 +335,14 @@ export default {
           console.log(error);
         });
     },
-    progressJobOpening: ({ commit,getters }, data) => {
+    progressJobOpening: ({ commit, getters }, data) => {
       // http
       //   .put(`/company/progress/${data.no}`, data.progress)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company/progress/${data.no}`,
-        method:"put",
+        url: `https://i7b307.p.ssafy.io/api/company/progress/${data.no}`,
+        method: "put",
         headers: getters.authHeader,
-        data:data.progress,
+        data: data.progress,
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
@@ -351,13 +351,13 @@ export default {
           console.log(error);
         });
     },
-    getapplylist: ({ commit,getters }, no) => {
+    getapplylist: ({ commit, getters }, no) => {
       // http
       //   .get(`/company/jobopening/${no}/apply`)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company/jobopening/${no}/apply`,
-        method:"get",
-        headers:getters.authHeader,
+        url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}/apply`,
+        method: "get",
+        headers: getters.authHeader,
       })
         .then(({ data }) => {
           commit("SET_APPLY_LIST", data);
@@ -366,13 +366,13 @@ export default {
           console.log(error);
         });
     },
-    getapply: ({ commit,getters }, data) => {
+    getapply: ({ commit, getters }, data) => {
       // http
       //   .get(`/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
-        method:"get",
-        headers:getters.authHeader,
+        url: `https://i7b307.p.ssafy.io/api/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
+        method: "get",
+        headers: getters.authHeader,
       })
         .then(({ data }) => {
           commit("SET_APPLY", data);
@@ -381,13 +381,13 @@ export default {
           console.log(error);
         });
     },
-    getinterviewapplylist: ({ commit ,getters}, no) => {
+    getinterviewapplylist: ({ commit, getters }, no) => {
       // http
       //   .get(`/company/jobopening/${no}/apply`)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company/jobopening/${no}/apply`,
-        method:"get",
-        headers:getters.authHeader,
+        url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}/apply`,
+        method: "get",
+        headers: getters.authHeader,
         // data:data.jobopening,
       })
         .then(({ data }) => {
@@ -397,13 +397,13 @@ export default {
           console.log(error);
         });
     },
-    getinterviewapplylistasc: ({ commit,getters }, no) => {
+    getinterviewapplylistasc: ({ commit, getters }, no) => {
       // http
       //   .get(`/company/jobopening/${no}/apply/dateAsc`)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company/jobopening/${no}/apply/dateAsc`,
-        method:"get",
-        headers:getters.authHeader,
+        url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}/apply/dateAsc`,
+        method: "get",
+        headers: getters.authHeader,
         // data:data.jobopening,
       })
         .then(({ data }) => {
@@ -413,17 +413,17 @@ export default {
           console.log(error);
         });
     },
-    updateApply: ({ commit,getters }, data) => {
+    updateApply: ({ commit, getters }, data) => {
       // http
       //   .put(
       //     `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
       //     data.apply
       //   )
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
-        method:"put",
+        url: `https://i7b307.p.ssafy.io/api/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
+        method: "put",
         headers: getters.authHeader,
-        data:data.apply,
+        data: data.apply,
       })
         .then(({ data }) => {
           console.log(data);
@@ -433,16 +433,16 @@ export default {
           console.log(error);
         });
     },
-    finishInterview: ({ commit,getters }, data) => {
+    finishInterview: ({ commit, getters }, data) => {
       // console.log(data);
       // http
       //   .put(
       //     `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}/finishInterview`
       //   )
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}/finishInterview`,
-        method:"put",
-        headers:getters.authHeader,
+        url: `https://i7b307.p.ssafy.io/api/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}/finishInterview`,
+        method: "put",
+        headers: getters.authHeader,
         // data:data.apply,
       })
         .then(({ data }) => {
@@ -453,13 +453,13 @@ export default {
           console.log(error);
         });
     },
-    getResume: ({ commit,getters }, no) => {
+    getResume: ({ commit, getters }, no) => {
       // http
       //   .get(`/company/userdetail/${no}`)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/company/userdetail/${no}`,
-        method:"get",
-        headers:getters.authHeader,
+        url: `https://i7b307.p.ssafy.io/api/company/userdetail/${no}`,
+        method: "get",
+        headers: getters.authHeader,
       })
         .then(({ data }) => {
           commit("SET_RESUME", data);
@@ -468,14 +468,14 @@ export default {
           console.log(error);
         });
     },
-    registRoom: ({ commit,getters }, data) => {
+    registRoom: ({ commit, getters }, data) => {
       // http
       //   .post(`/room/company`, JSON.stringify(data))
       axios({
-        url:`https://i7b307.p.ssafy.io/api/room/company`,
-        method:"post",
+        url: `https://i7b307.p.ssafy.io/api/room/company`,
+        method: "post",
         headers: getters.authHeader,
-        data:data,
+        data: data,
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
@@ -484,14 +484,14 @@ export default {
           console.log(error);
         });
     },
-    registEvalQuestion: ({ commit,getters }, evalquestion) => {
+    registEvalQuestion: ({ commit, getters }, evalquestion) => {
       // http
       //   .post(`/eval`, JSON.stringify(evalquestion))
       axios({
-        url:`https://i7b307.p.ssafy.io/api/eval`,
-        method:"post",
+        url: `https://i7b307.p.ssafy.io/api/eval`,
+        method: "post",
         headers: getters.authHeader,
-        data:evalquestion,
+        data: evalquestion,
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
@@ -500,30 +500,29 @@ export default {
           console.log(error);
         });
     },
-    getEvalQuestionList: ({ commit,getters }, no) => {
+    getEvalQuestionList: ({ commit, getters }, no) => {
       // http
       //   .get(`/eval/search/${no}`)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/eval/search/${no}`,
-        method:"get",
-        headers:getters.authHeader,
+        url: `https://i7b307.p.ssafy.io/api/eval/search/${no}`,
+        method: "get",
+        headers: getters.authHeader,
       })
         .then(({ data }) => {
-          console.log(data);
           commit("SET_EVAL_QUESTION_LIST", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    updateEvalQuestion: ({ commit,getters }, data) => {
+    updateEvalQuestion: ({ commit, getters }, data) => {
       // http
       //   .put(`/eval/${data.no}`, JSON.stringify(data.evalquestion))
       axios({
-        url:`https://i7b307.p.ssafy.io/api/eval/${data.no}`,
-        method:"put",
+        url: `https://i7b307.p.ssafy.io/api/eval/${data.no}`,
+        method: "put",
         headers: getters.authHeader,
-        data:data.evalquestion,
+        data: data.evalquestion,
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
@@ -532,13 +531,13 @@ export default {
           console.log(error);
         });
     },
-    deleteEvalQuestion: ({ commit,getters }, no) => {
+    deleteEvalQuestion: ({ commit, getters }, no) => {
       // http
       //   .delete(`/eval/${no}`)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/eval/${no}`,
-        method:"delete",
-        headers:getters.authHeader,
+        url: `https://i7b307.p.ssafy.io/api/eval/${no}`,
+        method: "delete",
+        headers: getters.authHeader,
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
@@ -547,17 +546,17 @@ export default {
           console.log(error);
         });
     },
-    registUserEval: ({ commit,getters }, data) => {
+    registUserEval: ({ commit, getters }, data) => {
       // http
       //   .post(
       //     `/eval/${data.jobOpeningId}/usereval/${data.userId}`,
       //     JSON.stringify(data.usereval)
       //   )
       axios({
-        url:`https://i7b307.p.ssafy.io/api/eval/${data.jobOpeningId}/usereval/${data.userId}`,
-        method:"post",
+        url: `https://i7b307.p.ssafy.io/api/eval/${data.jobOpeningId}/usereval/${data.userId}`,
+        method: "post",
         headers: getters.authHeader,
-        data:data.usereval,
+        data: data.usereval,
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
@@ -566,13 +565,13 @@ export default {
           console.log(error);
         });
     },
-    getUserEvalList: ({ commit,getters }, data) => {
+    getUserEvalList: ({ commit, getters }, data) => {
       // http
       //   .get(`/eval/${data.jobOpeningId}/usereval/${data.userId}`)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/eval/${data.jobOpeningId}/usereval/${data.userId}`,
-        method:"get",
-        headers:getters.authHeader,
+        url: `https://i7b307.p.ssafy.io/api/eval/${data.jobOpeningId}/usereval/${data.userId}`,
+        method: "get",
+        headers: getters.authHeader,
       })
         .then(({ data }) => {
           console.log(data);
@@ -582,13 +581,13 @@ export default {
           console.log(error);
         });
     },
-    deleteUserEvalList: ({ commit ,getters}, data) => {
+    deleteUserEvalList: ({ commit, getters }, data) => {
       // http
       //   .delete(`/eval/${data.jobOpeningId}/usereval/${data.userId}`)
       axios({
-        url:`https://i7b307.p.ssafy.io/api/eval/${data.jobOpeningId}/usereval/${data.userId}`,
-        method:"delete",
-        headers:getters.authHeader,
+        url: `https://i7b307.p.ssafy.io/api/eval/${data.jobOpeningId}/usereval/${data.userId}`,
+        method: "delete",
+        headers: getters.authHeader,
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);

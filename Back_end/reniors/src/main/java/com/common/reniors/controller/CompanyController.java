@@ -93,7 +93,7 @@ public class CompanyController {
         if(file != null && companyUpdateRequest.isChangeProfile()) {
             companyProfile = awsS3Service.uploadFile(file, "company/");
         }
-        companyService.updateCompany(company, companyUpdateRequest, baseURL+"company/", companyProfile);
+        companyService.updateCompany(company, companyUpdateRequest, baseURL,"company/"+companyProfile);
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 

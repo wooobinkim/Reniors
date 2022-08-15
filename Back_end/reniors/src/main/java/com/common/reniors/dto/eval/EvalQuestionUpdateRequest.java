@@ -9,7 +9,5 @@ import lombok.Setter;
 @Setter(AccessLevel.NONE)
 @NoArgsConstructor
 public class EvalQuestionUpdateRequest {
-
     private String contents;
-
 }
