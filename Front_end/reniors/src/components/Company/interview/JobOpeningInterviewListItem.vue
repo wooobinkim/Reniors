@@ -7,7 +7,8 @@
       {{ jobopening.jobChildCategoryName }}
     </div>
     <div class="period">
-      {{ dateFormat(jobopening.createdDate) }} ~ {{ dateFormat(jobopening.finishedDate) }}
+      {{ dateFormat(jobopening.createdDate) }} ~
+      {{ dateFormat(jobopening.finishedDate) }}
     </div>
 
     <div class="jobOpening-detail-btn-box">
@@ -19,8 +20,10 @@
       <div>
         <button class="to-apply-list-btn">
           <router-link
-            :to="{ name: 'companyinterviewlist', params: { no: jobopening.id } }"
-            class="to-apply-list-btn"
+            :to="{
+              name: 'companyinterviewlist',
+              params: { no: jobopening.id },
+            }"
           >
             면접일정 관리
           </router-link>
@@ -42,7 +45,7 @@
 </template>
 
 <script>
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 
 export default {
   props: {
@@ -74,8 +77,9 @@ export default {
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 16px;
-  border-color: var(--color-black-2); 
-  box-shadow: inset 0 0 1px 1px var(--color-black-3), 0 0 5px var(--color-black-3);
+  border-color: var(--color-black-2);
+  box-shadow: inset 0 0 1px 1px var(--color-black-3),
+    0 0 5px var(--color-black-3);
 }
 .company-jobOpening-ing-list-item > .title {
   width: 100%;
@@ -115,6 +119,8 @@ export default {
   border-radius: 8px;
   border: none;
   font-size: 16px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 .to-apply-list-btn > a:link {
   color: white;

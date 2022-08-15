@@ -7,7 +7,7 @@
       :evalquestion="evalquestion"
     ></eval-list-item>
     <div v-if="registflag">
-    <eval-regist @fetch="fetch"/>
+      <eval-regist @fetch="fetch" />
     </div>
     <div class="add-flag">
       <p @click="changeflag()">
@@ -32,28 +32,28 @@ export default {
       list: null,
     };
   },
-  watch:{
-    evalquestionlist:function (data) {
+  watch: {
+    evalquestionlist: function (data) {
       console.log(data);
-    }
+      this.list = data;
+    },
   },
   created() {
     this.getEvalQuestionList(this.$route.params.no);
-    this.setheader('면접평가');
+    this.setheader("면접평가");
   },
   computed: {
     ...mapGetters("company", ["jobopening"]),
     ...mapState("company", ["evalquestionlist"]),
   },
   methods: {
-    ...mapActions("company", ["getEvalQuestionList","setheader"]),
+    ...mapActions("company", ["getEvalQuestionList", "setheader"]),
     changeflag() {
       this.registflag = !this.registflag;
     },
-    fetch(){
+    fetch() {
       this.getEvalQuestionList(this.$route.params.no);
     },
-    
   },
 };
 </script>
