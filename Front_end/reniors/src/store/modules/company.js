@@ -8,7 +8,7 @@ export default {
   namespaced: true,
   state: {
     token: localStorage.getItem("token") || "",
-    header:"",
+    header: "",
     currentUser: {},
     profile: {},
     authError: null,
@@ -17,7 +17,7 @@ export default {
     jobopeninglisted: [],
     jobopening: null,
     companyinfo: {},
-    companyimg:"",
+    companyimg: "",
     applylist: [],
     apply: null,
     interviewapplylist: [],
@@ -36,12 +36,14 @@ export default {
     authError: (state) => state.authError,
     // Authorization: `Token ${state.token}`
     authHeader: (state) => ({ Authorization: `Bearer ${state.token}` }),
-    header:(state)=>state.header,
+    header: (state) => state.header,
     jobopeninglisting: (state) => state.jobopeninglisting,
     jobopeninglisted: (state) => state.jobopeninglisted,
     jobopening: (state) => state.jobopening,
-    companyinfo: (state) => {state.companyinfo},
-    companyimg:(state)=>state.companyimg,
+    companyinfo: (state) => {
+      state.companyinfo;
+    },
+    companyimg: (state) => state.companyimg,
     applylist: (state) => state.applylist,
     apply: (state) => state.apply,
     applyuser: (state) => state.applyuser,
@@ -140,8 +142,8 @@ export default {
   },
 
   actions: {
-    setheader({commit},data){
-      commit("SET_HEADER",data);
+    setheader({ commit }, data) {
+      commit("SET_HEADER", data);
     },
     saveToken({ commit }, token) {
       commit("SET_TOKEN", token);
@@ -332,7 +334,7 @@ export default {
       http
         .put(
           `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
-          data.apply
+          data.apply,
         )
         .then(({ data }) => {
           console.log(data);
@@ -346,7 +348,7 @@ export default {
       console.log(data);
       http
         .put(
-          `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}/finishInterview`
+          `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}/finishInterview`,
         )
         .then(({ data }) => {
           console.log(data);
@@ -390,7 +392,6 @@ export default {
       http
         .get(`/eval/search/${no}`)
         .then(({ data }) => {
-          console.log(data);
           commit("SET_EVAL_QUESTION_LIST", data);
         })
         .catch((error) => {
@@ -398,6 +399,8 @@ export default {
         });
     },
     updateEvalQuestion: ({ commit }, data) => {
+      console.log(data.no);
+      console.log(data.evalquestion);
       http
         .put(`/eval/${data.no}`, JSON.stringify(data.evalquestion))
         .then(({ data }) => {
@@ -421,7 +424,7 @@ export default {
       http
         .post(
           `/eval/${data.jobOpeningId}/usereval/${data.userId}`,
-          JSON.stringify(data.usereval)
+          JSON.stringify(data.usereval),
         )
         .then(({ data }) => {
           commit("SET_DATASTATE", data);

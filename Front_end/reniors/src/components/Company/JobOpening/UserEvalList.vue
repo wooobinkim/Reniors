@@ -1,8 +1,9 @@
 <template>
   <div>
     <user-eval-list-item
-      v-for="usereval in userevallist"
+      v-for="(usereval, idx) in userevallist"
       :key="usereval"
+      :idx="idx"
       :usereval="usereval"
     ></user-eval-list-item>
   </div>
