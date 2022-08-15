@@ -15,7 +15,7 @@
         </button>
       </template>
       <template v-else>
-        <button @click="regist()" class="about-interview-btn">
+        <button class="about-interview-btn">
           <router-link
             :to="{ name: 'companyopenvidu',params:{no : this.interviewapply.id, jobOpeningId:this.interviewapply.jobOpeningId} }"
           >
@@ -38,9 +38,6 @@ export default {
   },
   methods: {
     ...mapActions("company",["setInterviewer"]),
-    // regist() {
-    //   this.setInterviewer(this.interviewapply.userId);
-    // },
     dateFormat(val) {
       return dayjs(val).format("YYYY년 MM월 DD일");
     },
