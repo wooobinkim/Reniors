@@ -1,8 +1,8 @@
 <template>
   <div id="main-container" >
-    <div id="join" v-if="!session" class="join row">
+    <div id="join" v-if="!session" class="join col">
       <!-- left -->
-        <div class="col-6 lefttop">
+        <div class="row-6 lefttop">
             <div class="left">
                 <div class="header-logo">
                   <img src="@/assets/logo.png" />
@@ -23,7 +23,7 @@
         </div>
 
     <!-- right -->
-        <div class="righttop col-6">
+        <div class="righttop row-6">
             <div class="right">
                 <div class="fomrs">
                     <div style="margin: 16px 0;">
@@ -391,7 +391,7 @@ export default {
     border-radius: 20px;
     border: none;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    background: linear-gradient(90deg,  white 50%, #FF843E 50%);
+    background: linear-gradient(90deg, white 50%, #FF843E 50%);
 
 }
 .header-logo {
