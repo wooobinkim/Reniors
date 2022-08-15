@@ -17,7 +17,7 @@
       <template v-else>
         <button class="about-interview-btn">
           <router-link
-            :to="{ name: 'companyopenvidu',params:{no : this.interviewapply.id, jobOpeningId:this.interviewapply.jobOpeningId} }"
+            :to="{ name: 'companyInterviewVideo',params:{no : this.interviewapply.id, jobOpeningId:this.interviewapply.jobOpeningId} }"
           >
           면접보기
           </router-link>
