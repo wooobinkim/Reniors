@@ -4,9 +4,8 @@
       <i @click="prevpage()" class="bi bi-arrow-left-circle-fill"></i>
       <div class="company-header-msg">{{this.header}}</div>
     </div>
-    <div class="company-right-header">
+    <!-- <div class="company-right-header">
       <i @click="mainpage()" class="bi bi-house"></i>
-      <!-- <button @click="logout()">로그아웃</button> -->
       <div class="company-header-profile">
         <img
           :src="this.companyimg"
@@ -18,7 +17,7 @@
         <a class="company-header-profile-dropdown-item" @click="logout()">로그아웃</a> 
       </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

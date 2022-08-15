@@ -24,10 +24,10 @@ export default {
   methods: {
     ...mapActions("company", ["registEvalQuestion"]),
     regist() {
-      console.log(this.evalquestion);
       this.registEvalQuestion(this.evalquestion);
-      this.$router.go();
+      this.$emit("fetch");
     },
+    
   },
 };
 </script>
