@@ -82,20 +82,29 @@
           </div>
         </div>
         <div class="tabBtn">
-          <div @click="changeresume()" :class="{'noresume':!tab, 'yesresume':tab }"><div>이력서 보기</div></div>
-          <div @click="changeeval()" :class="{'noeval':tab, 'yeseval':!tab }"><div>평가하기</div></div>
+          <div @click="changeresume()" :class="{'noresume':!tab, 'yesresume':tab }">이력서 보기</div>
+          <div @click="changeeval()" :class="{'noeval':tab, 'yeseval':!tab }">평가하기</div>
         </div>
     </div>
 
       <!-- chatting -->
       <div class="chatbox" v-if="chatopenclose">
-        <template v-for="msg in receivemsg" :key="msg">
-          <div>{{msg}}</div>
-        </template>
+        <div class="chatlist">
+          <div v-for="msg in receivemsg" :key="msg" >
+            <div v-if="msg.name == this.myUserName" class="chatitem">
+              <div class="mename"><p style="margin:0;">{{myUserName.slice(0,1)}}</p></div>
+              <div class="datadata"><p style="margin:0;">{{msg.data}}</p></div>
+            </div>
+            <div v-if="msg.name !== this.myUserName" class="chatitem">
+              <div class="youname"><p style="margin:0;">{{interviewer.slice(0,1)}}</p></div>
+              <div class="datadata"><p style="margin:0;">{{msg.data}}</p></div>
+            </div>
+          </div>
+        </div>
         <div class="chatform">
           <p style="width: 1vw">  </p>
           <input class="chatinput" @keyup.enter="sendchat()" type="text" v-model="sendmsg" />
-          <button class="chatsubmit" @click="sendchat()">보내기</button>
+          <button class="chatsubmit" @click="sendchat()"><i class="bi bi-send"></i></button>
         </div>
       </div>
 
@@ -191,7 +200,7 @@ export default {
           let name = event.from.data;
           name = name.substr(15);
           name = name.substring(0,name.length-2);
-        this.receivemsg.push(name +" : "+ event.data);
+        this.receivemsg.push({name:name, data: event.data});
         });
       }
     },
@@ -581,6 +590,7 @@ export default {
   justify-content: center;
   font-size: 20px;
   color: #6D6D6D;
+  background-color: #EEEEEE;
 }
 .noresume :hover{
   color: #8CD6C1;
@@ -595,6 +605,7 @@ export default {
   font-size: 20px;
   color: #8CD6C1;
   font-weight: bold;
+  background-color: #EEEEEE;
 }
 .noeval{
   width: 17.5vw;
@@ -604,6 +615,7 @@ export default {
   justify-content: center;
   font-size: 20px;
   color: #6D6D6D;
+  background-color: #EEEEEE;
 }
 .noeval :hover{
   color: #8CD6C1;
@@ -617,6 +629,7 @@ export default {
   font-size: 20px;
   color: #8CD6C1;
   font-weight: bold;
+  background-color: #EEEEEE;
 }
 
 .chatbox{
@@ -625,11 +638,12 @@ export default {
     border-radius: 10px;
     background-color: white;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 16px 0;
+    margin: 16px;
+    padding: 24px 24px 0 24px;
 }
 .chatlist{
     width: 34vw;
-    height: 59vh;
+    height: 55vh;
     border: none;
 }
 .chatlist textarea{
@@ -639,7 +653,7 @@ export default {
     margin: 1vh 1vw;
 }
 .chatform{
-    width: 34vw;
+    width: 33vw;
     height: 5vh;
     border: none;
     border-radius: 30px;
@@ -650,7 +664,7 @@ export default {
     align-items: center;
 }
 .chatinput{
-    width: 32vw;
+    width: 29vw;
     height: 4vh;
     border: none;
     margin: 0 8px 0 0;
@@ -675,7 +689,47 @@ export default {
     transform: rotate(45deg);
     margin: 0;
 }
+.chatitem{
+  width: 30vw;
+  height: 3vw;
+  padding: 8px;
+  display: flex;
+  align-items: center;
 
+}
+.mename{
+  width: 2vw;
+  height: 2vw;
+  border: none;
+  border-radius: 100px;
+  background-color: #FFB400;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto 4px;
+}
+.youname{
+  width: 2vw;
+  height: 2vw;
+  border: none;
+  border-radius: 100px;
+  background-color: #37BF99;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto 8px auto 4px;
+}
+.datadata{
+  text-align: center;
+  font-size: 24px;
+  margin: auto 8px;
+}
 .rightbtn{
     width: 35vw
 }

@@ -109,12 +109,15 @@ export default {
 </script>
 
 <style scoped>
+*{
+  font-size: 20px;
+}
   .resume-info-box{
     width: 35vw - 48px;
     height: 56vh;
     border: none;
     background-color: white;
-    padding: 20px;
+    padding: 24px;
     margin: 0 8px;
     border-radius: 5px 5px 0 0;
     
@@ -126,7 +129,7 @@ export default {
     border-radius: 5px;
   }
   .resume-info-box > .resume-name{
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
     color: var(--color-green-1);
     border : none;
@@ -135,7 +138,7 @@ export default {
     width: 100%;
     text-align: left;
     margin-top: 10px;
-    font-size: 16px;
+    font-size: 20px;
     margin-right: 20px;
   }
   .resume-base-info-box{
@@ -153,7 +156,7 @@ export default {
     margin-right: 20px;
   }
   .resume-info-box .sub-title{
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
   }
 </style>
