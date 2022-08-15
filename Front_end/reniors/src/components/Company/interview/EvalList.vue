@@ -36,18 +36,19 @@ export default {
     evalquestionlist: function (data) {
       console.log(data);
       this.list = data;
+      // this.getEvalQuestionList(this.$route.params.no);
     },
   },
   created() {
     this.getEvalQuestionList(this.$route.params.no);
-    this.setheader('면접평가');
+    this.setheader("면접평가");
   },
   computed: {
     ...mapGetters("company", ["jobopening"]),
     ...mapState("company", ["evalquestionlist"]),
   },
   methods: {
-    ...mapActions("company", ["getEvalQuestionList","setheader"]),
+    ...mapActions("company", ["getEvalQuestionList", "setheader"]),
     changeflag() {
       this.registflag = !this.registflag;
     },
