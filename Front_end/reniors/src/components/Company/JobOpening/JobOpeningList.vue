@@ -53,6 +53,7 @@ export default {
   async created() {
     await this.CLEAR_JOBOPENING_LIST;
     await this.getJobOpeningList();
+    this.setheader('채용관리');
   },
   watch: {},
   mounted() {},
@@ -61,7 +62,7 @@ export default {
     ...mapMutations("company", ["CLEAR_JOBOPENING_LIST"]),
   },
   methods: {
-    ...mapActions("company", ["getJobOpeningList"]),
+    ...mapActions("company", ["getJobOpeningList","setheader"]),
 
     regjobopening() {
       this.$router.push({ name: "companyjobopeningregist" });
