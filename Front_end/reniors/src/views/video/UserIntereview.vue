@@ -1,28 +1,17 @@
 <template>
   <div id="main-container" >
     <div id="join" v-if="!session" class="join col">
-      <!-- left -->
+      <!-- top -->
         <div class="row-6 lefttop">
             <div class="left">
                 <div class="header-logo">
                   <img src="@/assets/logo.png" />
                   <p><span style="color:#37BF99">{{companyName}}</span>의 면접입니다.</p>
-                  <br>
-                  <div class="tips">
-                    <div>
-                        <p style="font-size:16px; margin:8px 24px;">🙂화상면접 Tips🙂</p>
-                        <p>1. 카메라 위치 및 조명을 조정해보세요:) </p>
-                        <p>2. 깔끔한 배경과 조용한 공간이 바람직합니다:) </p>
-                        <p>3. 카메라를 집중력있게 응시한다면 자신감을 충분히 전달할 수 있어요:)</p>
-                        <p>4. 깔끔한 복장은 좋은 인상을 주는데 도움이 됩니다:)</p>
-                        <p>5. <span style="color: #FF843E">리니어즈</span>의 화상면접 연습을 활용해보세요:)</p>
-                    </div>
-                  </div>
                 </div>
             </div>
         </div>
 
-    <!-- right -->
+    <!-- bottom -->
         <div class="righttop row-6">
             <div class="right">
                 <div class="fomrs">
@@ -391,52 +380,28 @@ export default {
     border-radius: 20px;
     border: none;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    background: linear-gradient(90deg, white 50%, #FF843E 50%);
+    background: linear-gradient(white 50%, #FF843E 50%);
 
 }
 .header-logo {
   width: 50%;
   height: auto;
-  margin: 0 32px;
 }
 .header-logo p{
     font-weight: bold;
     font-size: 24px;
-    width: 400px;
+    width: 200px;
     text-align: left;
-    margin:0 32px;
     
-}
-.tips{
-    width: 500px;
-    height: 200px;
-    border: none;
-    border-radius: 10px;
-    background-color:#FFF5F0;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    margin: 16px 0; 
-    display: flex;
-    align-items: center;
-}
-.tips p{
-    width: 450px;
-    font-size: 14px;
-    margin: 0 0 2px 28px;
 }
 .lefttop{
     display: flex;
     align-items: center;
     /* justify-content: center; */
-    padding: 64px
-}
-.left{
-    display: flex;
-    align-items: center;
 }
 .righttop{
     display: flex;
     align-items: center;
-    padding: 64px;
     justify-content: center;
 }
 .right{
