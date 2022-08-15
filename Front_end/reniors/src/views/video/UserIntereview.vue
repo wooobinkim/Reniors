@@ -132,7 +132,7 @@ const OPENVIDU_SERVER_URL = "https://" + "i7b307openvidu.ssafy.io" + ":4443";
 const OPENVIDU_SERVER_SECRET = "reniors";
 
 export default {
-  name: "App",
+  name: "UserInterview",
   props: {
     userId: Number,
     jobOpeningId: Number,

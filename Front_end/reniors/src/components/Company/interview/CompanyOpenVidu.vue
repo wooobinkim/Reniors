@@ -1,55 +1,62 @@
 <template>
   <div id="main-container" class="container">
-    <div id="join" v-if="!session">
-      <div id="img-div" class="header-logo">
-        <img src="@/assets/logo.png" />
-      </div>
-      <div id="join-dialog" class="jumbotron vertical-center">
-        <h1>화상면접을 진행합니다.</h1>
-        <div class="form-group">
-          <p>
-            <label>참가자명</label>
-            <input
-              v-model="myUserName"
-              class="form-control"
-              type="text"
-              required
-              readonly
-            />
-          </p>
-          <p>
-            <label>세션번호</label>
-            <input
-              v-model="mySessionId"
-              class="form-control"
-              type="text"
-              required
-              readonly
-            />
-          </p>
-          <p class="text-center">
-            <button class="btn btn-lg btn-success" @click="joinSession()">
-              면접방 들어가기
-            </button>
-          </p>
+    <div id="join" v-if="!session" class="join row">
+
+      <!-- left -->
+      <div class="col-6 lefttop">
+        <div class="left">
+          <div class="header-logo">
+              <img src="@/assets/logo.png" />
+              <p>지원자 <span style="color:#37BF99">{{applyinfo.name}}</span>의 면접입니다.</p>
+              <br>
+              <div class="tips">
+                <div>
+                    <p style="font-size:16px; margin:8px 24px;">🙂화상면접 Tips🙂</p>
+                    <p>1. 카메라 위치 및 조명을 조정해보세요:) </p>
+                    <p>2. 깔끔한 배경과 조용한 공간이 바람직합니다:) </p>
+                    <p>3. 카메라를 집중력있게 응시한다면 자신감을 충분히 전달할 수 있어요:)</p>
+                    <p>4. 깔끔한 복장은 좋은 인상을 주는데 도움이 됩니다:)</p>
+                    <p>5. <span style="color: #FF843E">리니어즈</span>의 화상면접 연습을 활용해보세요:)</p>
+                </div>
+              </div>
+            </div>
+
         </div>
+      </div>
+
+      <!-- right -->
+      <div class="righttop col-6">
+          <div class="right">
+              <div class="fomrs">
+                  <div style="margin: 16px 0;">
+                      <p class="label">회사명</p>
+                      <input
+                          v-model="myUserName"
+                          class="rightinput"
+                          type="text"
+                          required
+                          readonly
+                      />
+                  </div>
+                  <div style="margin: 16px 0; ">
+                      <p class="label">면접방 번호</p>
+                      <input
+                          v-model="mySessionId"
+                          class="rightinput"
+                          type="text"
+                          required
+                          readonly
+                      />
+                  </div>
+                  <div class="submitBtn">
+                      <button @click="joinSession()">면접방 들어가기</button>
+                  </div>
+              </div>
+          </div>
       </div>
     </div>
 
     <div id="session" v-if="session" class="insession row">
-      <!-- <div id="session-header">
-        <h1 id="session-title">{{ mySessionId }}</h1>
-        <input
-          class="btn btn-large btn-danger"
-          type="button"
-          id="buttonLeaveSession"
-          @click="leaveSession"
-          value="Leave session"
-        />
-      </div>
-     <div id="main-video" class="col-md-6">
-        <user-video :stream-manager="mainStreamManager" />
-      </div> -->
       <div class="col-6">
         <div id="video-container" class="col-md-6">
           <user-video
@@ -73,7 +80,7 @@
       <div class="chatbox" v-if="chatopenclose">
 
         <template v-for="msg in receivemsg" :key="msg">
-          <div class="chatlist">{{msg}}</div>
+          <div>{{msg}}</div>
         </template>
 
         <div class="chatform">
@@ -136,7 +143,7 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "@/components/openvidu/UserVideo.vue";
 import ResumeView from "@/components/Company/interview/ResumeView.vue";
-import { mapActions, mapGetters,mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import OpenviduEvalList from "@/components/Company/interview/OpenviduEvalList.vue";
 // import OpenViduChat from "@/components/Company/interview/OpenViduChat.vue";
 // import { mapActions } from "vuex";
@@ -185,8 +192,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("company", ["companyinfo","interviewer"]),
-    ...mapState("company",["apply"])
+    ...mapGetters("company", ["companyinfo","interviewer", "apply"]),
   },
   watch: {
     companyinfo: function (data) {
@@ -204,8 +210,7 @@ export default {
       }
     },
     apply:function (data) {
-      console.log(data);
-      this.applyinfo = data;
+      this.applyinfo = {...data};
     },
     // msgflag:function () {
     //   console.log("여기안와요..?");

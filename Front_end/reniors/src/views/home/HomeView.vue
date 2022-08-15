@@ -54,4 +54,5 @@ export default {
 .home {
   max-width: 720px;
 }
+
 </style>
