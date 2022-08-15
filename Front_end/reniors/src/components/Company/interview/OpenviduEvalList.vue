@@ -1,13 +1,14 @@
 <template>
-  <div>
+  <div class="eval-total">
     <openvidu-eval-list-item
-      v-for="evalquestion in evalquestionlist"
+      v-for="(evalquestion, index) in evalquestionlist"
+      :index="index"
       :key="evalquestion.id"
       :evalquestion="evalquestion"
       :applyinfo="applyinfo"
     ></openvidu-eval-list-item>
 
-    <button @click="finish()">평가 마치기</button>
+    <button @click="finish()" class="finishBtn">평가 마치기</button>
   </div>
 </template>
 
@@ -47,4 +48,25 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.eval-total{
+  width: 35vw - 48px;
+  height: 56vh;
+  border: none;
+  background-color: white;
+  padding: 24px;
+  margin: 0 8px;
+  border-radius: 5px 5px 0 0;
+}
+.finishBtn{
+  width: 10vw;
+  height: 6vh;
+  border: none;
+  border-radius: 10px;
+  background-color: #8cd6c1;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}
+
+</style>

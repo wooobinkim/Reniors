@@ -1,9 +1,14 @@
 <template>
-  <div>
-    <div>{{ evalquestion.contents }}</div>
-    <div>점수<input type="text" v-model="usereval.score" /></div>
-    <div>메모<input type="text" v-model="usereval.memo" /></div>
-    <button @click="regist()">저장</button>
+  <div class="listbox formGroup">
+    <div class="title">{{index+1}}. {{ evalquestion.contents }}</div>
+    <div class="box1">
+      <input id="score" class="form-control score" type="number" v-model="usereval.score"  placeholder="숫자만 입력 가능합니다."/>
+      <button class="submitBtn" @click="regist()">저장</button>
+    </div>
+    <div class="box">
+      <textarea id="memo" class="form-control memo"  type="text" v-model="usereval.memo" placeholder="메모를 남겨보세요." />
+    </div>
+    <hr>
   </div>
 </template>
 
@@ -13,6 +18,7 @@ export default {
   props: {
     evalquestion: Object,
     applyinfo:Object,
+    index: Number,
   },
   data() {
     return {
@@ -41,4 +47,48 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.title{
+  font-size: 28px;
+  font-weight: bold;
+  text-align: left;
+}
+label{
+    display: flex;
+    justify-content: start;
+    font-size: 14px;
+    color: #3A3A3A;
+}
+.score{
+    height: 5vh;
+    width: 26vw;
+    margin: 0 1vw 0 0;
+}
+.memo{
+    height: 15vh;
+    padding: 8px 10px 8px 10px;
+    margin: 0 0 4px 0;
+}
+.formGroup{
+    margin: 8px 4px 0 4px;
+}
+.box{
+    margin: 4px;
+}
+.box1{
+  margin:4px;
+  display: flex;
+  align-items: center;
+}
+.submitBtn{
+  width: 4vw;
+  height: 5vh;
+  margin: 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #FFB252;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+</style>
