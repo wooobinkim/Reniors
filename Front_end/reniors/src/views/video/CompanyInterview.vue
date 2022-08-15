@@ -1,5 +1,5 @@
 <template>
-  <div id="main-container" class="container">
+  <div id="main-container">
     <div id="join" v-if="!session" class="join row">
 
       <!-- left -->
@@ -9,16 +9,6 @@
               <img src="@/assets/logo.png" />
               <p>지원자 <span style="color:#37BF99">{{applyinfo.name}}</span>의 면접입니다.</p>
               <br>
-              <div class="tips">
-                <div>
-                    <p style="font-size:16px; margin:8px 24px;">🙂화상면접 Tips🙂</p>
-                    <p>1. 카메라 위치 및 조명을 조정해보세요:) </p>
-                    <p>2. 깔끔한 배경과 조용한 공간이 바람직합니다:) </p>
-                    <p>3. 카메라를 집중력있게 응시한다면 자신감을 충분히 전달할 수 있어요:)</p>
-                    <p>4. 깔끔한 복장은 좋은 인상을 주는데 도움이 됩니다:)</p>
-                    <p>5. <span style="color: #FF843E">리니어즈</span>의 화상면접 연습을 활용해보세요:)</p>
-                </div>
-              </div>
             </div>
 
         </div>
@@ -74,25 +64,43 @@
         </div>
       </div>
 
-<div class="col-6" style="margin:0; padding:0;">
-      <div class="userSTT" v-if="!chatopenclose"></div>
 
+    <!-- right -->
+    <div class="col-6" style="margin:0; padding:0;">
+      <div class="tabs" v-if="!chatopenclose">
+        <!-- <div>지원자 : {{ interviewer }}</div> -->
+        <!-- resume -->
+        <div v-if="tab && !chatopenclose">
+          <div>
+            <resume-view :applyinfo="this.applyinfo"></resume-view>
+          </div>
+        </div>
+        <!-- evaluation -->
+        <div v-if="!tab && !chatopenclose">
+          <div>
+            <openvidu-eval-list :applyinfo="this.applyinfo"></openvidu-eval-list>
+          </div>
+        </div>
+        <div class="tabBtn">
+          <div @click="changeresume()" :class="{'noresume':!tab, 'yesresume':tab }"><div>이력서 보기</div></div>
+          <div @click="changeeval()" :class="{'noeval':tab, 'yeseval':!tab }"><div>평가하기</div></div>
+        </div>
+    </div>
+
+      <!-- chatting -->
       <div class="chatbox" v-if="chatopenclose">
-
         <template v-for="msg in receivemsg" :key="msg">
           <div>{{msg}}</div>
         </template>
-
         <div class="chatform">
           <p style="width: 1vw">  </p>
           <input class="chatinput" @keyup.enter="sendchat()" type="text" v-model="sendmsg" />
           <button class="chatsubmit" @click="sendchat()">보내기</button>
         </div>
-
       </div>
 
       <div class="rightbtn">
-        <button @click="chatopen()" class="chatbtn"><i class="bi bi-chat-dots-fill"></i></button>
+        <button @click="chatopen" class="chatbtn"><i class="bi bi-chat-dots-fill"></i></button>
         <template v-if="audioflag">
           <button @click="audioonoff()"  class="videobtn"><i class="bi bi-mic"></i></button>
         </template>
@@ -105,35 +113,13 @@
         <template v-if="!videoflag">
           <button @click="videoonoff()"  class="videobtn"><i class="bi bi-camera-video-off"></i></button>
         </template>
-      </div>
-
-      <div>지원자 : {{ interviewer }}</div>
-      <template v-if="tab == 'resume'">
-        <div>
-          <resume-view :applyinfo="this.applyinfo"></resume-view>
-        </div>
-      </template>
-      <template v-if="tab == 'eval'">
-        <div>
-          <openvidu-eval-list :applyinfo="this.applyinfo"></openvidu-eval-list>
-        </div>
-      </template>
-      <div>
-        <span @click="changeresume()">이력서보기 | </span>
-        <span @click="changeeval()">평가하기</span>
-      </div>
       
-      <button @click="leaveSession" class="leavebtn">
-                <span><i class="bi bi-box-arrow-right"></i> 퇴장</span>
-            </button>
-</div>
-      <!-- <input
-        class="btn btn-large btn-danger"
-        type="button"
-        id="buttonLeaveSession"
-        @click="leaveSession"
-        value="Leave session"
-      /> -->
+        <button @click="leaveSession" class="leavebtn">
+            <span><i class="bi bi-box-arrow-right"></i> 퇴장</span>
+        </button>
+      </div>
+    </div>
+
     </div>
   </div>
 </template>
@@ -181,7 +167,7 @@ export default {
       myUserName: "",
       videoflag: true,
       audioflag: false,
-      tab: "resume",
+      tab: true,
       sendmsg: "",
       receivemsg: [],
       msgflag: true,
@@ -196,7 +182,8 @@ export default {
   },
   watch: {
     companyinfo: function (data) {
-      this.myUserName = data.name;
+      console.log('여기',{...data});
+      this.myUserName ={ ...data}.name;
     },
     session: function () {
       if(!this.sessionleave){
@@ -205,23 +192,12 @@ export default {
           name = name.substr(15);
           name = name.substring(0,name.length-2);
         this.receivemsg.push(name +" : "+ event.data);
-        console.log(this.receivemsg);
         });
       }
     },
     apply:function (data) {
       this.applyinfo = {...data};
     },
-    // msgflag:function () {
-    //   console.log("여기안와요..?");
-    //   this.session.on("signal", (event) => {
-    //       let name = event.from.data;
-    //       name = name.substr(15);
-    //       name = name.substring(0,name.length-2);
-    //     this.receivemsg.push(name +" : "+ event.data);
-    //     console.log(this.receivemsg);
-    //     });
-    // }
   },
   created() {
     this.getCompany();
@@ -231,19 +207,17 @@ export default {
   methods: {
     ...mapActions("company", ["getCompany","getapply"]),
     changeresume() {
-      this.tab = "resume";
+      this.tab = true;
     },
     changeeval() {
-      this.tab = "eval";
-    },
+      if(!this.tab){
+        this.tab = true
+      }else{
+        this.tab = false
+      }},
     videoonoff() {
       this.videoflag = !this.videoflag;
       this.publisher.publishVideo(this.videoflag);
-      // if (this.videoflag) {
-      //   this.session.publishVideo(this.publisher);
-      // } else {
-      //   this.session.unpublishVideo(this.publisher);
-      // }
     },
     sendchat() {
       this.session
@@ -262,7 +236,7 @@ export default {
         
     },
     chatopen() {
-      this.chatopenclose = !this.chatopenclose;
+      this.chatopenclose = !this.chatopenclose
     },
     audioonoff() {
       this.audioflag = !this.audioflag;
@@ -433,7 +407,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scped>
 #main-container{
     min-height: 100vh;
     min-width: 100vw;
@@ -441,6 +415,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0 0 30px 0;
 
 }
 .join{
@@ -580,8 +555,72 @@ export default {
     margin: 16px 0;
 
 }
+.tabs{
+    width: 35vw;
+    height: 65vh;
+    border-radius: 10px;
+    background-color: #F9F9F9;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin: 16px 0;
+    padding: 8px 0 0 0;
+}
+.tabBtn{
+  width: 35vw;
+  height: 8vh;
+  background-color: #EEEEEE;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.noresume{
+  border-right: solid #C5C5C5 1px;
+  width: 17.5vw;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #6D6D6D;
+}
+.noresume :hover{
+  color: #8CD6C1;
+}
+.yesresume{
+  border-right: solid #C5C5C5 1px;
+  width: 17.5vw;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #8CD6C1;
+  font-weight: bold;
+}
+.noeval{
+  width: 17.5vw;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #6D6D6D;
+}
+.noeval :hover{
+  color: #8CD6C1;
+}
+.yeseval{
+  width: 17.5vw;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #8CD6C1;
+  font-weight: bold;
+}
+
 .chatbox{
-    width: 30vw;
+    width: 35vw;
     height: 65vh;
     border-radius: 10px;
     background-color: white;
@@ -589,18 +628,18 @@ export default {
     margin: 16px 0;
 }
 .chatlist{
-    width: 30vw;
+    width: 34vw;
     height: 59vh;
     border: none;
 }
 .chatlist textarea{
-    width: 28vw;
+    width: 34vw;
     height: 56vh;
     border: none;
     margin: 1vh 1vw;
 }
 .chatform{
-    width: 29vw;
+    width: 34vw;
     height: 5vh;
     border: none;
     border-radius: 30px;
@@ -611,7 +650,7 @@ export default {
     align-items: center;
 }
 .chatinput{
-    width: 24vw;
+    width: 32vw;
     height: 4vh;
     border: none;
     margin: 0 8px 0 0;
@@ -638,7 +677,7 @@ export default {
 }
 
 .rightbtn{
-    width: 30vw
+    width: 35vw
 }
 .chatbtn{
     width: 4vw;

@@ -84,6 +84,9 @@ export default {
       resumeinfo: null,
     };
   },
+  props:{
+    applyinfo:Object,
+  },
   watch: {
     resume: function (data) {
       this.birth = new Date(data.birth);
@@ -96,7 +99,7 @@ export default {
     ...mapMutations("company", ["CLEAR_INTERVIEWER"]),
   },
   async created() {
-    await this.getResume(this.$route.params.no);
+    await this.getResume(this.applyinfo.userId);
     await this.CLEAR_INTERVIEWER;
   },
   methods: {
@@ -107,12 +110,14 @@ export default {
 
 <style scoped>
   .resume-info-box{
-    border-radius: 10px;
-    width: 100%;
-    padding: 30px;
-    border-color: var(--color-black-2); 
-    box-shadow: inset 0 0 1px 1px var(--color-black-3), 0 0 5px var(--color-black-3);
-    margin-bottom: 100px;
+    width: 35vw - 48px;
+    height: 56vh;
+    border: none;
+    background-color: white;
+    padding: 20px;
+    margin: 0 8px;
+    border-radius: 5px 5px 0 0;
+    
   }
   .resume-info-box > img{
     width: 90px;
@@ -123,10 +128,8 @@ export default {
   .resume-info-box > .resume-name{
     font-size: 20px;
     font-weight: bold;
-    background-color: var(--color-green-1);
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
+    color: var(--color-green-1);
+    border : none;
   }
   .resume-info-box > div {
     width: 100%;

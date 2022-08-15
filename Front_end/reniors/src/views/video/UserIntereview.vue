@@ -375,7 +375,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 #main-container{
     min-height: 100vh;
     min-width: 100vw;
@@ -523,7 +523,7 @@ export default {
 
 }
 .chatbox{
-    width: 30vw;
+    width: 35vw;
     height: 65vh;
     border-radius: 10px;
     background-color: white;
@@ -531,18 +531,18 @@ export default {
     margin: 16px 0;
 }
 .chatlist{
-    width: 30vw;
+    width: 35vw;
     height: 59vh;
     border: none;
 }
 .chatlist textarea{
-    width: 28vw;
+    width: 34vw;
     height: 56vh;
     border: none;
     margin: 1vh 1vw;
 }
 .chatform{
-    width: 29vw;
+    width: 34vw;
     height: 5vh;
     border: none;
     border-radius: 30px;
@@ -553,7 +553,7 @@ export default {
     align-items: center;
 }
 .chatinput{
-    width: 24vw;
+    width: 32vw;
     height: 4vh;
     border: none;
     margin: 0 8px 0 0;
@@ -580,7 +580,7 @@ export default {
 }
 
 .rightbtn{
-    width: 30vw
+    width: 35vw
 }
 .chatbtn{
     width: 4vw;
