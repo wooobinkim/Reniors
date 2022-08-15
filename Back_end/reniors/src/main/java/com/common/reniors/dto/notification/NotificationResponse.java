@@ -4,6 +4,7 @@ import com.common.reniors.domain.entity.Type.IsRead;
 import com.common.reniors.domain.entity.Type.JobOpeningProcess;
 import com.common.reniors.domain.entity.notification.Notification;
 import com.common.reniors.dto.apply.ApplyResponse;
+import com.common.reniors.dto.jobOpening.JobOpeningResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,11 +25,15 @@ public class NotificationResponse {
 
     private ApplyResponse applyResponse;
 
+    private JobOpeningResponse jobOpeningResponse;
+
     public static NotificationResponse response(Notification notification) {
         return new NotificationResponse(notification.getId(),
                 notification.getJobOpeningProcess(),
                 notification.getIsRead(),
                 notification.getCreatedDate(),
-                ApplyResponse.response(notification.getApply()));
+                ApplyResponse.response(notification.getApply()),
+                JobOpeningResponse.response(notification.getApply().getJobOpening()));
+
     }
 }
