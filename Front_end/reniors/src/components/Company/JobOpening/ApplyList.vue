@@ -72,6 +72,7 @@ export default {
   },
   async created() {
     await this.getJobOpening(this.$route.params.no);
+    this.setheader('지원자관리')
   },
   mounted() {},
   watch: {
@@ -84,7 +85,7 @@ export default {
     ...mapGetters("company", ["jobopening"]),
   },
   methods: {
-    ...mapActions("company", ["getJobOpening"]),
+    ...mapActions("company", ["getJobOpening","setheader"]),
     change(data) {
       this.progress = data;
     },

@@ -230,6 +230,7 @@ export default {
     ]),
   },
   created() {
+    this.setheader('채용등록')
     this.getSido();
     this.getJobParent();
   },
@@ -240,7 +241,7 @@ export default {
       "getJobParent",
       "getJobChild",
     ]),
-    ...mapActions("company", ["registJobOpening"]),
+    ...mapActions("company", ["registJobOpening","setheader"]),
     regist() {
       this.jobopening.createdDate = new Date(
         moment(this.jobopening.createdDate).format("YYYY-MM-DD")

@@ -41,7 +41,7 @@ export default {
   text-align: left;
   margin-left: 10px;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
 }
 .apply-resume-item-info-box > button {
   border: none;

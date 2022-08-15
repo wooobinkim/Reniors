@@ -40,13 +40,14 @@ export default {
   },
   created() {
     this.getEvalQuestionList(this.$route.params.no);
+    this.setheader('면접평가');
   },
   computed: {
     ...mapGetters("company", ["jobopening"]),
     ...mapState("company", ["evalquestionlist"]),
   },
   methods: {
-    ...mapActions("company", ["getEvalQuestionList"]),
+    ...mapActions("company", ["getEvalQuestionList","setheader"]),
     changeflag() {
       this.registflag = !this.registflag;
     },

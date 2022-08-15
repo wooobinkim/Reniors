@@ -21,6 +21,7 @@ import FindUsernameResult from "../components/user/FindUsernameResult.vue";
 import FindPasswordResult from "../components/user/FindPasswordResult.vue";
 import PreferSetting from "../components/user/PreferSetting";
 import PreferSettingComplete from "../views/user/PreferSettingCompleteView.vue";
+import MyCalendarView from "../views/user/MyCalendarView.vue";
 
 import CreateSetting from "../views/user/CreateSetting.vue";
 import UpdateSetting from "../views/user/UpdateSetting.vue";
@@ -46,7 +47,8 @@ import UserEvalList from "@/components/Company/JobOpening/UserEvalList.vue";
 import ResumeView from "@/components/Company/interview/ResumeView.vue";
 import JobOpeningInterviewList from "@/components/Company/interview/JobOpeningInterviewList.vue";
 import CompanyInterviewList from "@/components/Company/interview/InterviewList.vue";
-import CompanyOpenVidu from "@/components/Company/interview/CompanyOpenVidu.vue";
+// import CompanyOpenVidu from "@/components/Company/interview/CompanyOpenVidu.vue";
+import CompanyInterview from "@/views/video/CompanyInterview.vue";
 import EvalList from "@/components/Company/interview/EvalList.vue";
 import EvalRegist from "@/components/Company/interview/EvalRegist.vue";
 // import CompanyInterview from "@/components/Company/Interview/CompanyInterview.vue";
@@ -92,6 +94,11 @@ const routes = [
   },
 
   //user
+  {
+    path: "/mypage/calendar",
+    name: "MyCalendarView",
+    component: MyCalendarView,
+  },
   {
     path: "/kakaologin",
     name: "kakaoLogin",
@@ -331,11 +338,11 @@ const routes = [
         name: "companyinterviewlist",
         component: CompanyInterviewList,
       },
-      {
-        path: "interviewroom/:no/:jobOpeningId",
-        name: "companyopenvidu",
-        component: CompanyOpenVidu,
-      },
+      // {
+      //   path: "interviewroom/:no/:jobOpeningId",
+      //   name: "companyopenvidu",
+      //   component: CompanyOpenVidu,
+      // },
       {
         path: "evallist/:no",
         name: "companyeval",
@@ -379,6 +386,11 @@ const routes = [
     path: "/video/user",
     component: UserInterview,
     name: "userInterview",
+  },
+  {
+    path:"/video/company/:no/:jobOpeningId",
+    component:CompanyInterview,
+    name:"companyInterviewVideo"
   },
 
   //video practice
