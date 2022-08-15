@@ -29,7 +29,9 @@ export default {
     ...mapActions("company", ["registEvalQuestion"]),
     regist() {
       this.registEvalQuestion(this.evalquestion);
+      this.$emit("fetch");
     },
+    
   },
 };
 </script>

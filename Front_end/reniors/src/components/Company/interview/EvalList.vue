@@ -7,7 +7,7 @@
       :evalquestion="evalquestion"
     ></eval-list-item>
     <div v-if="registflag">
-      <eval-regist />
+    <eval-regist @fetch="fetch"/>
     </div>
     <div class="add-flag">
       <p @click="changeflag()">
@@ -32,11 +32,10 @@ export default {
       list: null,
     };
   },
-  watch: {
-    evalquestionlist: function (data) {
+  watch:{
+    evalquestionlist:function (data) {
       console.log(data);
-      this.list = data;
-    },
+    }
   },
   created() {
     this.getEvalQuestionList(this.$route.params.no);
@@ -51,6 +50,10 @@ export default {
     changeflag() {
       this.registflag = !this.registflag;
     },
+    fetch(){
+      this.getEvalQuestionList(this.$route.params.no);
+    },
+    
   },
 };
 </script>
