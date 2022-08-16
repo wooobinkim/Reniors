@@ -1,10 +1,10 @@
 <template>
-  <div class="home">
-    <div class="header container">
+    <div class="header container-fluid">
         <router-link class="header-logo" :to="{ name: 'home' }">
             <img src="@/assets/logo_cut.png" alt="logo">
         </router-link>
     </div>
+  <div class="home">
     <div class="sub-title">
         <img class="persona" src="@/assets/persona.png" alt="persona">
       <div class="korean-logo-box">

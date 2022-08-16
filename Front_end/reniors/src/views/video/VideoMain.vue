@@ -1,11 +1,11 @@
 <template>
-  <div class="list">
-    <div class="header">
+    <div class="header container-fluid">
         <router-link class="header-logo" :to="{ name: 'home' }">
             <img src="@/assets/logo_cut.png" alt="logo">
         </router-link>
     </div>
-    <div>
+  <div class="list">
+    <div class="video-main-info-box">
     <div class="sub">
         <div class="subBox">
             <p class="sub-title"><span style="color:#FF843E">리니어즈</span>와 함께하는 면접 페이지입니다🙂</p>
@@ -97,16 +97,13 @@ export default{
 <style scoped>
 .list{
   display: flex;
+  width: 100%;
   flex-direction: column;
-
   justify-content: center;
-  min-height: 100vh;
-  min-width: 100vw;
   background-color: #FFF5F0;
 
 }
 .header{
-    min-width: 100vw;
     height: 48px;
     background-color: white;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px -2px;
@@ -115,23 +112,23 @@ export default{
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0 !important; 
 }
 .header img{
     height: 38px;
     margin: auto;
-    width: auto;
 }
 .sub{
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 16px auto 40px;
-    width: 88vw;
-    height: 43vw;
+    height: 300px;
     border-radius: 16px;
     background-color: rgba(256,256,256,0.6);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     padding: 8px;
+    width: 100%;
 }
 .subBox{
     text-align: left;
@@ -145,26 +142,26 @@ export default{
     margin: 0;
 }
 .one{
-   width: 100%;
-   justify-content: center;
-   align-items: center;
+    justify-content: center;
+    align-items: center;
     margin: 8px 0px;
 }
 .one a{
     text-decoration: none;
 }
 .two{
-   width: 100%;
+   width: 90%;
    display: flex;
-   justify-content: center;
+   justify-content: space-between;
    align-items: center;
+   margin: 0 auto;
    margin-bottom: 120px;
 }
 .two a{
     text-decoration: none;
 }
 .btn1 {
-    width: 86%;
+    width: 90%;
     height: 160px;
     border: solid 1px;
     border-color: #FF843E;
@@ -173,22 +170,8 @@ export default{
     box-shadow: 1px 1px 1px gray;
     
 }
-.btn11 {
-    width: 86%;
-    height: 160px;
-    border: none;
-    background-color: #FF843E;
-    border-radius: 10px;
-    box-shadow: 1px 1px 1px gray;
-    
-}
-.btn112{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-}
 .btn2 {
-    width: 60%;
+    width: 75%;
     height: 100px;
     border: solid 1px;
     border-color: #37BF99;
@@ -203,7 +186,7 @@ export default{
     justify-content: center;
 }
 .btn3 {
-    width: 24%;
+    width: 23%;
     height: 100px;
     border: none;
     background-color: #37BF99;
@@ -211,4 +194,21 @@ export default{
     margin: 0 0 0 4px;
     box-shadow: 0.5px 0.5px 0.5px gray;
 }
+.video-main-info-box{
+    width: 100%;
+}
+/* @media(max-width:760px){
+    .btn1{
+        width: 80
+    }
+    .two{
+        width: 700px;
+    }
+    .btn2{
+        width: 500px;
+    }
+    .btn3{
+        width: 180px;
+    }
+} */
 </style>
