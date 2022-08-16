@@ -181,7 +181,6 @@ export default {
       chatopenclose: false,
       applyinfo:null,
       sessionleave:false,
-      //   myUserName: "Participant" + Math.floor(Math.random() * 100),
     };
   },
   computed: {
@@ -250,21 +249,16 @@ export default {
       this.publisher.publishAudio(this.audioflag);
     },
     joinSession() {
-      // --- Get an OpenVidu object ---
+
       this.OV = new OpenVidu();
 
-      // --- Init a session ---
       this.session = this.OV.initSession();
 
-      // --- Specify the actions when events take place in the session ---
-
-      // On every new Stream received...
       this.session.on("streamCreated", ({ stream }) => {
         const subscriber = this.session.subscribe(stream);
         this.subscribers.push(subscriber);
       });
 
-      // On every Stream destroyed...
       this.session.on("streamDestroyed", ({ stream }) => {
         const index = this.subscribers.indexOf(stream.streamManager, 0);
         if (index >= 0) {
@@ -272,15 +266,11 @@ export default {
         }
       });
 
-      // On every asynchronous exception...
+
       this.session.on("exception", ({ exception }) => {
         console.warn(exception);
       });
 
-      // --- Connect to the session with a valid user token ---
-
-      // 'getToken' method is simulating what your server-side should do.
-      // 'token' parameter should be retrieved and returned by your own backend
       this.getToken(this.mySessionId).then((token) => {
         this.session
           .connect(token, { clientData: this.myUserName })
@@ -631,19 +621,14 @@ export default {
     padding: 24px 24px 0 24px;
 }
 .chatlist{
-    width: 34vw;
+    width: 35vw - 48px;
     height: 55vh;
     border: none;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
-.chatlist textarea{
-    width: 34vw;
-    height: 56vh;
-    border: none;
-    margin: 1vh 1vw;
-}
+
 .chatform{
-    width: 33vw;
+    width: 35vw - 48px;
     height: 5vh;
     border: none;
     border-radius: 30px;
@@ -654,7 +639,7 @@ export default {
     align-items: center;
 }
 .chatinput{
-    width: 29vw;
+    width: 28vw;
     height: 4vh;
     border: none;
     margin: 0 8px 0 0;
@@ -665,11 +650,9 @@ export default {
     border: none;
 }
 .chatsubmit{
-    width: 2vw;
-    height: 2vw;
     border: none;
     border-radius: 20px;
-    margin: 2px 2px 0 2px;
+    margin: 2px 8px 0 2px;
     background-color: #EAEAEA;
     display: flex;
     align-items: center;
