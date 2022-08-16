@@ -1,97 +1,140 @@
 <template>
-  <div class="condition-result-item">
-    <h3>어쩌구 회사이름</h3>
-    <div>{{jobopening}}</div>
-    <router-link :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }">공고링크</router-link>
-    <p class="condition-result-item-title">채용공고제목</p>
-    <div class="condition-result-item-job">
-      <p>정규직</p>
-      <p>연봉 <span>4000만원</span></p>
+  <div @click="movejobopening()" class="jobopening-item">
+    <div>
+      <p class="jobopening-item-company">{{ jobopening.companyName }}</p>
+      <p class="jobopening-item-title">{{ jobopening.title }}</p>
     </div>
-    <div class="condition-result-item-region">
-      <font-awesome-icon icon="fa-solid fa-location-dot" /><p>유성구 봉명동</p>
-      <font-awesome-icon icon="fa-regular fa-clock" /><p>주 5일 9:00~18:00</p>
+    <div class="jobopening-item-second">
+      <span class="jobopening-item-te">{{ jobopening.typeEmployment }}</span>
+      <span class="jobopening-item-ms">연봉</span>
+      <span>{{ jobopening.minSalary / 10000 }}만원</span>
     </div>
-    <font-awesome-icon icon="fa-regular fa-bookmark" class="condition-result-item-bookmark" @click="bookmark"/>
+    <div class="jobopening-item-third">
+      <i class="bi bi-geo-alt-fill"
+        >{{ jobopening.sido }} {{ jobopening.gugun }}</i
+      >
+    </div>
+    <p class="jobopening-item-period">{{ createDate }} ~ {{ finishedDate }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ConditionResultItem',
+  name: "ConditionResultItem",
   props: {
     jobopening: Object,
   },
-  setup() {
-    const bookmark = () => console.log('bookmark')
+  setup(props) {
+    const bookmark = () => console.log("bookmark");
+
+    const stringToDate = (rawDate) => {
+      let dateComponents = rawDate.split("T");
+      let datePieces = dateComponents[0].split("-");
+      return new Date(datePieces[0], datePieces[1] - 1, datePieces[2]);
+    };
+    // toStringByFormatting
+    function tSBF(source) {
+      function leftPad(value) {
+        if (value >= 10) {
+          return value;
+        }
+
+        return `0${value}`;
+      }
+      const days = ["일", "월", "화", "수", "목", "금", "토"];
+      const year = source.getFullYear();
+      const month = leftPad(source.getMonth() + 1);
+      const day = leftPad(source.getDate());
+      const dayName = days[source.getDay()];
+      return [year, month, day].join("-") + ` (${dayName})`;
+    }
+    const createDate = tSBF(stringToDate(props.jobopening?.createdDate));
+    const finishedDate = tSBF(stringToDate(props.jobopening?.finishedDate));
 
     return {
       bookmark,
-    }
-  }
-}
+      createDate,
+      finishedDate,
+    };
+  },
+  methods: {
+    movejobopening() {
+      this.$router.push({
+        name: "JobopeningDetail",
+        params: { jobopeningId: this.jobopening.id },
+      });
+    },
+  },
+};
 </script>
 
-<style>
-.condition-result-item {
-  position: relative;
-  border-radius: 0.5rem;
-  background-color: var(--color-red-4);
-  padding: 20px;
-  box-shadow: 0px 0px 3px var(--color-black-2);
-  text-align: start;
-  text-decoration: none;
-  color: black;
-}
-
-.condition-result-item p {
-  margin: 0;
-}
-
-.condition-result-item h3 {
-  margin: 0;
-  font-weight: bolder;
-  font-size: 14px;
-  margin: 5px 0;
-}
-
-.condition-result-item-title {
-  font-size: 20px;
-}
-
-.condition-result-item-job {
+<style scoped>
+.jobopening-item {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   display: flex;
-  justify-content: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background-color: var(--color-red-4);
+  border-radius: 0.4rem;
+  margin: 10px 10px;
+  padding: 10px;
+  height: 150px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.jobopening-item p {
+  margin: 0;
+  text-align: start;
+}
+
+.jobopening-item-company {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  color: black;
+  font-size: 14px;
+}
+
+.jobopening-item-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  color: black;
+  font-size: 20px;
+  /* text-decoration-line: underline; */
+  -webkit-line-clamp: 3;
   font-weight: bold;
 }
 
-.condition-result-item-job > p:first-child {
-  color: var(--color-red-1);
-  margin-right: 10px;
+.jobopening-item-second {
+  display: flex;
+  font-size: 14px;
+  font-weight: bold;
 }
-
-.condition-result-item-job > p:last-child {
-  color: var(--color-green-1);
+.jobopening-item-second > span:first-child {
+  color: #37bf99;
+  margin-right: 16px;
 }
-
-.condition-result-item-job > p:last-child > span {
+.jobopening-item-second > span:nth-child(2) {
+  color: #f28a07;
+  margin-right: 5px;
+}
+.jobopening-item-second > span:nth-child(3) {
   color: black;
 }
-
-.condition-result-item-region {
-  display: grid;
-  grid-template-columns: 30px auto;
-  color: var(--color-black-2);
+.jobopening-item-third {
+  color: var(--color-black-1);
+  display: flex;
+  font-size: 10px;
+  font-weight: bold;
+}
+.jobopening-item-period {
   margin-top: 10px;
-}
-
-.condition-result-item-bookmark {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-}
-
-.condition-result-item-bookmark:hover {
-  cursor: pointer;
+  color: var(--color-black-1);
+  font-size: 10px;
 }
 </style>
