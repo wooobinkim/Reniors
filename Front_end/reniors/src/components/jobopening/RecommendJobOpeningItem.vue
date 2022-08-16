@@ -81,12 +81,12 @@ export default {
 
 <style scoped>
 .jobopening-item {
-  border: 1px solid black;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
-  background-color: white;
+  background-color: var(--color-red-4);
   border-radius: 0.4rem;
   margin: 10px 10px;
   padding: 10px;
@@ -118,7 +118,7 @@ export default {
 }
 
 .jobopening-item-title {
-  text-decoration-line: underline;
+  /* text-decoration-line: underline; */
   -webkit-line-clamp: 3;
   font-weight: bold;
 }

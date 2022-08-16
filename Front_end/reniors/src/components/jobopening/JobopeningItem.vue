@@ -1,24 +1,24 @@
 <template>
-  <router-link
-    class="jobopening-item"
-    :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }"
-  >
-    <div>
-      <p class="jobopening-item-company">{{ jobopening.companyName }}</p>
-      <p class="jobopening-item-title">{{ jobopening.title }}</p>
+    <div
+      @click="movejobopening()"
+      class="jobopening-item"
+    >
+      <div>
+        <p class="jobopening-item-company">{{ jobopening.companyName }}</p>
+        <p class="jobopening-item-title">{{ jobopening.title }}</p>
+      </div>
+      <div class="jobopening-item-second">
+        <span class="jobopening-item-te">{{jobopening.typeEmployment}}</span>
+        <span class="jobopening-item-ms">연봉</span> 
+        <span>{{jobopening.minSalary / 10000}}만원</span>
+      </div>
+      <div class="jobopening-item-third">
+        <i class="bi bi-geo-alt-fill">{{jobopening.sido}} {{jobopening.gugun}}</i>
+      </div>
+      <p class="jobopening-item-period">
+        {{ createDate }} ~ {{ finishedDate }}
+      </p>
     </div>
-    <div class="jobopening-item-second">
-      <span class="jobopening-item-te">{{jobopening.typeEmployment}}</span>
-      <span class="jobopening-item-ms">연봉</span> 
-      <span>{{jobopening.minSalary / 10000}}만원</span>
-    </div>
-    <div class="jobopening-item-third">
-      <i class="bi bi-geo-alt-fill">{{jobopening.sido}} {{jobopening.gugun}}</i>
-    </div>
-    <p class="jobopening-item-period">
-      {{ createDate }} ~ {{ finishedDate }}
-    </p>
-  </router-link>
 </template>
 
 <script scoped>
@@ -57,17 +57,22 @@ export default {
       finishedDate,
     };
   },
+  methods:{
+    movejobopening(){
+      this.$router.push({ name: 'JobopeningDetail', params: { jobopeningId: this.jobopening.id }})
+    }
+  }
 };
 </script>
 
 <style scoped>
 .jobopening-item {
-  border: 1px solid black;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
-  background-color: white;
+  background-color: var(--color-red-4);
   border-radius: 0.4rem;
   margin: 10px 10px;
   padding: 10px;
@@ -96,7 +101,7 @@ export default {
   -webkit-line-clamp: 1;
   color: black;
   font-size: 20px;
-  text-decoration-line: underline;
+  /* text-decoration-line: underline; */
   -webkit-line-clamp: 3;
   font-weight: bold;
 }
