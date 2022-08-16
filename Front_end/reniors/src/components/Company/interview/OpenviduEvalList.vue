@@ -18,7 +18,7 @@ import OpenviduEvalListItem from "./OpenviduEvalListItem.vue";
 export default {
   components: {
     OpenviduEvalListItem,
-  },
+  }, 
   props:{
     applyinfo : Object,
   },
