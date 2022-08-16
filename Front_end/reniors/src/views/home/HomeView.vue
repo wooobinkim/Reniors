@@ -8,8 +8,10 @@
     <div class="sub-title">
         <img class="persona" src="@/assets/persona.png" alt="persona">
       <div class="korean-logo-box">
+        <div>
           <img class="korean-logo" src="@/assets/logo_korean.png" alt="logo">
-          <p style="color:var(--color-green-1)"> 다시 시작하는 나의 <span style="color:#F3620F">일</span>생</p>
+          <p style="color:var(--color-green-1); margin: 0;"> 다시 시작하는 나의 <span style="color:#F3620F">일</span>생</p>
+        </div>
       </div>
     </div>
     <HomeInfo />
@@ -91,18 +93,23 @@ export default {
 .sub-title{
   display: flex;
   width: 100%;
-  justify-content: center;
+  height: 120px;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #FFF5F0;
 }
 .persona{
   height: 200px;
-  float: left;
+  margin-left: 8px;
 }
 .korean-logo{
   height: 100px;
   line-height: 200px;
 }
 .korean-logo-box{
-  margin: auto 0;
+  margin: auto 8px auto 0;
+  display: flex;
+  align-items: center;
 }
 .korean-logo-box > p{
   font-weight: bold;
