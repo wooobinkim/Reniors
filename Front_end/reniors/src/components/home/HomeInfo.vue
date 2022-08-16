@@ -1,6 +1,6 @@
 <template>
-    <router-link class="home-info" :to="{ name: 'companyjobopening' }">
-      <p>시니어를 위한</p>
+    <router-link class="home-info" :to="{ name: 'Jobopening' }">
+      <p>시니어를 위한 </p>
       <p>공고 보러가기 <i class="bi bi-arrow-right-square-fill"></i></p>
       
     </router-link>
@@ -36,11 +36,11 @@ p{
   color: white;
   font-size: 26px;
   font-weight: bold;
+  margin-right: 5px;
 }
 .bi-arrow-right-square-fill{
   font-size: 26px;
   color: white;
-  margin-left: 5px;
 }
 @media(max-width:760px){
   .home-info{
