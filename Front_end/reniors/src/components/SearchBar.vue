@@ -35,14 +35,10 @@ export default {
 
 <style scoped>
 
-.home-header {
-  color: var(--color-red-1);
-  font-weight: bold;
-  margin: 20px;
-}
-
 .home-search {
-  position: relative;
+  position: fixed;
+  top: 56px;
+  width: 95%;
   max-width: 720px;
   margin-bottom: 15px;
 }
