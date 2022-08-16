@@ -1,8 +1,6 @@
 <template>
     <router-link class="home-info" :to="{ name: 'Jobopening' }">
-      <p>시니어를 위한 </p>
-      <p>공고 보러가기 <i class="bi bi-arrow-right-square-fill"></i></p>
-      
+      <p>시니어를 위한 공고 보러가기 <i class="bi bi-arrow-right-square-fill"></i></p>
     </router-link>
 </template>
 
@@ -21,20 +19,17 @@ export default {
     var(--color-orange-1) 72%,
     var(--color-orange-2) 110%
   );
-  border-radius: 0.3rem;
-  margin: auto;
   width: 100%;
-  padding: 40px;
   display: flex;
   justify-content: center;
   align-content: center;
   text-decoration: none;
-  margin-bottom: 30px;
+  margin-bottom: 3rem;
 }
 p{
   margin: 0;
   color: white;
-  font-size: 26px;
+  font-size: 20px;
   font-weight: bold;
   margin-right: 5px;
 }
@@ -45,10 +40,9 @@ p{
 @media(max-width:760px){
   .home-info{
     display: block;
-    padding: 20px;
-    width: 90%;
-    margin: 0 5%;
-    margin-bottom: 30px;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 24px;
   }
 }
 </style>

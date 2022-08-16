@@ -104,14 +104,14 @@ export default {
 
 .youtube-list {
   display: flex;
-  margin: 0;
+  margin: 0 8px;
   padding: 0;
   flex-wrap: no-wrap;
   overflow-x: scroll;
   overflow-y: hidden;
 }
 .youtube-list::-webkit-scrollbar{
-  height: 10px;
+  height: 5px;
 }
 .youtube-list::-webkit-scrollbar-thumb{
   background-color: var(--color-green-1);
@@ -126,7 +126,7 @@ export default {
   border-radius: 0.3rem;
   width: 300px;
   margin: 10px;
-  padding: 10px;
+  /* padding: 10px; */
   list-style: none;
   flex: 0 0 auto;
   background-color: white;
@@ -140,9 +140,14 @@ export default {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  margin: 0;
+  margin: 8px;
   font-weight: bold;
   text-align: left;
+}
+.youtube-item img{
+  width: 300px;
+  border: none;
+  border-radius: 0.3rem 0.3rem 0 0;
 }
 .youtube-item > a{
   color: black;

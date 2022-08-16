@@ -1,14 +1,24 @@
 <template>
   <div id="main-container" >
+    <div class="topheader">
+        <router-link :to="{ name: 'home' }">
+            <img src="@/assets/logo_cut.png" alt="logo">
+        </router-link>
+    </div>
     <div id="join" v-if="!session" class="join">
       <!-- top -->
         <div class="row-6 lefttop">
             <div class="left">
-                <div class="header-logo">
-                  <img src="@/assets/logo.png" />
-                  <p><span style="color:#37BF99">{{companyName}}</span>의 </p>
-                  <p>면접입니다.</p>
-                </div>
+              <div class="backBtnBox">
+                <router-link :to="{name: 'VideoMain'}">
+                    <i class="bi bi-arrow-left-circle-fill" style="color:#9B9B9B; font-size: 32px; margin:0 16px"></i>
+                </router-link>
+              </div>
+              <div class="header-logo">
+                <img src="@/assets/logo.png" />
+                <p><span style="color:#37BF99">{{companyName}}</span>의 </p>
+                <p>면접입니다.</p>
+              </div>
             </div>
         </div>
 
@@ -377,15 +387,30 @@ export default {
     background-color: #FFF5F0;
     display: flex;
     align-items: center;
-
+}
+.topheader{
+    min-width: 100vw;
+    height: 48px;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px -2px;
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.topheader img{
+    height: 38px;
+    margin: auto;
+    width: auto;
 }
 .join{
-    width: 80vw;
+    width: 90vw;
     height: 80vh;
     border-radius: 20px;
     border: none;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    background: linear-gradient(white 50%, #FF843E 50%);
+    background: linear-gradient(white 45%, #FF843E 0%);
     margin: auto;
 }
 .header-logo {
@@ -395,8 +420,7 @@ export default {
 .header-logo p{
     font-weight: bold;
     font-size: 24px;
-    width: 200px;
-    text-align: left;
+    
     margin: 0;
     
 }
@@ -405,6 +429,16 @@ export default {
     align-items: center;
     justify-content: center;
     height: 40vh;
+}
+.left{
+  height: 40vh;
+  width: 90vw;
+}
+.backBtnBox{
+  display: flex;
+  justify-content: start;
+  align-content:flex-end;
+  height: 6vh;
 }
 .righttop{
     display: flex;
@@ -419,7 +453,7 @@ export default {
 .rightinput{
     margin: auto;
     display: block;
-    width: 70vw;
+    width: 80vw;
     height: 6vh;
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
@@ -447,7 +481,7 @@ export default {
     margin: 8px;
 }
 .submitBtn button{
-    width: 70vw;
+    width: 80vw;
     height: 6vh;
     background-color: #FFB400;
     color: white;
