@@ -1,6 +1,7 @@
 package com.common.reniors.common.config.web;
 
 import com.common.reniors.common.exception.NotMatchException;
+import com.common.reniors.domain.entity.Company;
 import com.common.reniors.domain.entity.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -33,6 +34,9 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             System.out.println("authentication.getPrincipal() = " + authentication.getPrincipal());
+            if(authentication.getPrincipal()=="anonymousUser"){
+                return (Company) authentication.getPrincipal();
+            }
             return (User) authentication.getPrincipal();
         } catch (ClassCastException e) {
             throw new NotMatchException("토큰 정보가 잘못되었습니다.");

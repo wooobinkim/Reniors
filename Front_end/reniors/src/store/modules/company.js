@@ -168,11 +168,12 @@ export default {
         url: "https://i7b307.p.ssafy.io/api/company/login",
         method: "post",
         data: credentials,
-      }).then((res) => {
+      }).then(async (res) => {
         const token = res.headers["authorization"];
-        dispatch("saveToken", token);
+        await dispatch("saveToken", token);
         // dispatch("fetchCurrentUser");
         // router 수정
+        console.log(token);
         router.push({ name: "company" });
       });
       // error 부분 추가
@@ -237,8 +238,6 @@ export default {
     },
 
     registJobOpening: ({ commit, getters }, formData) => {
-      // multipart
-      //   .post(`/company/jobopening`, formData)
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening`,
         method: "post",
@@ -252,6 +251,7 @@ export default {
           commit("SET_DATASTATE", data);
         })
         .catch((error) => {
+          console.log(getters.authHeader);
           console.log(error);
         });
     },
@@ -259,7 +259,8 @@ export default {
       // http
       //   .put(`/company/jobopening/${data.no}`, data.jobopening)
       axios({
-        url: `https://i7b307.p.ssafy.io/api/company/jobopening`,
+        // url: `https://i7b307.p.ssafy.io/api/company/jobopening`,
+        url: `localhost:8080/api/company/jobopening`,
         method: "put",
         headers: {
           "Content-Type": "multipart/form-data",

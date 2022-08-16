@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends GenericFilter {
 
         if (StringUtils.hasText(jwtToken) && jwtUtil.isValidToken(jwtToken)) {
             UserDetails userDetails = authService.loadUserByUsername(jwtUtil.getSubject(jwtToken));
-
+            System.out.println(jwtUtil.getSubject(jwtToken));
             StringTokenizer st = new StringTokenizer(jwtUtil.getSubject(jwtToken),",");
             String id = st.nextToken();
             String name = st.nextToken();

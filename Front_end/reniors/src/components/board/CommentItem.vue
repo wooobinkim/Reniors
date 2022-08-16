@@ -4,7 +4,7 @@
         <div>
             <p  class="title2">{{comment.contents}}</p>
             <div class="bottom">
-                <img class="person" :src="comment.baseURL+comment.userProfile" alt="person">
+                <img class="person" :src="comment.baseURL + comment.userProfile" alt="person">
                 <p  class="userName">{{comment.userName}} |</p>
                 <p class="time">{{comment.updatedAt.slice(0,4)}}.{{comment.updatedAt.slice(5,7)}}.{{comment.updatedAt.slice(8,10)}}. {{(Number(comment.updatedAt.slice(11,13))+ 8)%24}}:{{comment.updatedAt.slice(14,16)}}</p>
 
@@ -13,7 +13,7 @@
     </span>
 
     <span v-if="isEditing" class="commentForm">
-        <img class="person" :src="comment.baseURL+comment.userProfile" alt="person">
+        <img class="person" :src="comment.baseURL + comment.userProfile" alt="person">
         <input type="text" v-model="contents" style="">
         <p @click="onUpdate" class="btn-open my-0" style="font-size:14px; color:#37BF99">수정</p>
         <p @click="switchIsEditing" class="btn-close my-0"></p>
@@ -53,7 +53,9 @@ export default{
         }
     },
     setup(){},
-    created(){},
+    created(){
+        console.log(this.comment);
+    },
     mounted(){},
     unmounted(){},
     methods:{

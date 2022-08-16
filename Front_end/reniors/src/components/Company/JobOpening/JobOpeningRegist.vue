@@ -269,7 +269,6 @@ export default {
           type: "application/json",
         })
       );
-
       this.registJobOpening(formData);
       this.$router.push({ name: "companyjobopeninglist" });
     },
