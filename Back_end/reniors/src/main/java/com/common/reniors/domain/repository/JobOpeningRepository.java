@@ -12,4 +12,7 @@ public interface JobOpeningRepository extends JpaRepository<JobOpening, Long>{
 //        Page<JobOpening> pageJobOpeningList(JobOpeningSearchDto jobOpeningSearchDto, Pageable pageable);
             List<JobOpening> findByCompanyId(Long companyId);
             List<JobOpening> findTop10ByOrderByViewsDesc();
+            List<JobOpening> findByCompany_NameLike(String word);
+
+
 }
