@@ -25,7 +25,7 @@ export default {
       this.$router.push({ name: "WholeJobOpening" });
     },
     condition() {
-      this.$router.push({ name: "ConditionJobOpening" });
+      this.$router.push({ name: "Condition" });
     },
   },
 };

@@ -1,37 +1,45 @@
 <template>
   <div class="detail-apply-button">
-    <button @click="apply(isLogin)" 
-      :class="isActive ? 'apply-active' : 'apply-deactive'" 
-    >{{ isApply ? '지원완료' : '지원하기' }}</button>
+    <button
+      @click="apply(isLogin)"
+      :class="isActive ? 'apply-active' : 'apply-deactive'"
+    >
+      {{ isApply ? "지원완료" : "지원하기" }}
+    </button>
   </div>
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
-
+import { computed } from "vue";
+import { useStore } from "vuex";
 export default {
-  name: 'DetailApplyButton',
+  name: "DetailApplyButton",
   props: {
     jobopeningId: [String, Number],
   },
   setup(props) {
-    const store = useStore()
+    const store = useStore();
 
     const apply = (login) => {
-      if (login === true) store.dispatch('jobopening/apply', props.jobopeningId)
-    }
-    const isLogin = computed(() => store.getters['isLogginedIn'])
-    const isApply = computed(() => store.getters['jobopening/isApply'])
-    const isActive = computed(() => !isApply.value && isLogin.value)
-    const fetchApply = () => store.dispatch('jobopening/fetchApply')
-    fetchApply()
+      if (confirm("공고에 지원하시겠습니까?")) {
+        if (login === true)
+          store.dispatch("jobopening/apply", props.jobopeningId);
+      }
+    };
+    const isLogin = computed(() => store.getters["isLogginedIn"]);
+    const isApply = computed(() => store.getters["jobopening/isApply"]);
+    const isActive = computed(() => !isApply.value && isLogin.value);
+    const fetchApply = () => store.dispatch("jobopening/fetchApply");
+    fetchApply();
 
     return {
-      apply, isLogin, isApply, isActive
-    }
-  }
-}
+      apply,
+      isLogin,
+      isApply,
+      isActive,
+    };
+  },
+};
 </script>
 
 <style>
@@ -48,7 +56,7 @@ export default {
 @media screen and (min-width: 720px) {
   .detail-apply-button {
     width: 70vh;
-  }  
+  }
 }
 
 .detail-apply-button > button {

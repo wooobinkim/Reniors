@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="condition-container">
     <HeaderComponent />
     <ConditionList />
     <router-view></router-view>
@@ -7,26 +7,29 @@
 </template>
 
 <script>
-import { useStore } from 'vuex'
-import HeaderComponent from '@/components/HeaderComponent.vue'
-import ConditionList from '@/components/condition/ConditionList.vue'
+import { useStore } from "vuex";
+import HeaderComponent from "@/components/HeaderComponent.vue";
+import ConditionList from "@/components/condition/ConditionList.vue";
 
 export default {
-  name: 'ConditionView',
+  name: "ConditionView",
   components: {
-    HeaderComponent, ConditionList,
+    HeaderComponent,
+    ConditionList,
   },
   setup() {
-    const store = useStore()
+    const store = useStore();
 
-    const fetchParents = () => store.dispatch('category/getJobParent')
-    const fetchSido = () => store.dispatch('category/getSido')
-    fetchParents()
-    fetchSido()
-  }
-}
+    const fetchParents = () => store.dispatch("category/getJobParent");
+    const fetchSido = () => store.dispatch("category/getSido");
+    fetchParents();
+    fetchSido();
+  },
+};
 </script>
 
-<style>
-
+<style scoped>
+.condition-container {
+  height: 1500px;
+}
 </style>
