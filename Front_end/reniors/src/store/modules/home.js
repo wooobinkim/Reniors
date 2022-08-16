@@ -1,8 +1,8 @@
-import axios from 'axios'
-import _ from 'lodash'
-import http from '@/api/http'
+import axios from "axios";
+import _ from "lodash";
+import http from "@/api/http";
 
-const YOUTUBE_API_KEY = 'AIzaSyAF4F4t4ryCtxtxMrF0LgKNNXCITQVyi7E'
+const YOUTUBE_API_KEY = "AIzaSyAF4F4t4ryCtxtxMrF0LgKNNXCITQVyi7E";
 
 export default {
   namespaced: true,
@@ -15,46 +15,53 @@ export default {
     notices: [],
   },
   getters: {
-    isLogin: state => state.isLogin,
-    hotJobopenings: state => state.hotJobopenings,
-    recommendJobopenings: state => state.recommendJobopenings,
-    youtubes: state => state.youtubes,
-    isYoutube: state => !_.isEmpty(state.youtubes),
-    notices: state => state.notices,
+    isLogin: (state) => state.isLogin,
+    hotJobopenings: (state) => state.hotJobopenings,
+    recommendJobopenings: (state) => state.recommendJobopenings,
+    youtubes: (state) => state.youtubes,
+    isYoutube: (state) => !_.isEmpty(state.youtubes),
+    notices: (state) => state.notices,
   },
   mutations: {
-    IS_LOGIN: (state, value) => state.isLogin = value,
-    YOUTUBES: (state, youtubes) => state.youtubes = youtubes,
-    HOTJOBOPENINGS: (state, hots) => state.hotJobopenings = hots,
-    NOTICES: (state, notices) => state.notices = notices,
+    IS_LOGIN: (state, value) => (state.isLogin = value),
+    YOUTUBES: (state, youtubes) => (state.youtubes = youtubes),
+    HOTJOBOPENINGS: (state, hots) => (state.hotJobopenings = hots),
+    NOTICES: (state, notices) => (state.notices = notices),
     DUMMY: () => 0,
   },
   actions: {
+    async createNotice({ commit }, notice) {
+      const response = await http.post("/notification", notice);
+      commit("NOTICES", response.data);
+    },
     async fetchYoutubes({ commit }, keyword) {
-      commit('YOUTUBES', [])
-      const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
-        params: {
-          part: 'snippet',
-          type: 'video',
-          q: keyword,
-          key: YOUTUBE_API_KEY,
-        }
-      })
-      const youtubes = response.data.items
-      commit('YOUTUBES', youtubes)
+      commit("YOUTUBES", []);
+      const response = await axios.get(
+        "https://www.googleapis.com/youtube/v3/search",
+        {
+          params: {
+            part: "snippet",
+            type: "video",
+            q: keyword,
+            key: YOUTUBE_API_KEY,
+          },
+        },
+      );
+      const youtubes = response.data.items;
+      commit("YOUTUBES", youtubes);
     },
     async fetchHot({ commit }) {
-      const response = await http.get('/jobopening/search/viewsDesc')
-      commit('HOTJOBOPENINGS', response.data)
+      const response = await http.get("/jobopening/search/viewsDesc");
+      commit("HOTJOBOPENINGS", response.data);
     },
     async search({ commit }, keyword) {
-      console.log(keyword)
-      commit('DUMMY')
+      console.log(keyword);
+      commit("DUMMY");
     },
     async fetchNotices({ commit }) {
-      const response = await http.get('/notification')
-      console.log(response)
-      commit('NOTICES', response.data)
-    }
+      const response = await http.get("/notification");
+      console.log(response);
+      commit("NOTICES", response.data);
+    },
   },
-}
+};
