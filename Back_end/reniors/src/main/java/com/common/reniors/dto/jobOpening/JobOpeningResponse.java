@@ -19,6 +19,8 @@ public class JobOpeningResponse {
     private String title;
     private IsFinish isFinish;
     private String companyName;
+    private String baseURL;
+    private String companyProfile;
 
 
     public static JobOpeningResponse response(JobOpening jobOpening){
@@ -28,7 +30,9 @@ public class JobOpeningResponse {
                 jobOpening.getFinishedDate(),
                 jobOpening.getTitle(),
                 jobOpening.getIsFinish(),
-                jobOpening.getCompany().getName()
+                jobOpening.getCompany().getName(),
+                jobOpening.getCompany().getBaseURL(),
+                jobOpening.getCompany().getCompanyProfile()
         );
     }
 }
