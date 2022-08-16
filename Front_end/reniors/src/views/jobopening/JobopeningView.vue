@@ -25,12 +25,25 @@
 <script>
 import JobOpeningMainPage from '@/components/jobopening/JobOpeningMainPage.vue'
 
+// import RecommendTagList from '@/components/jobopening/RecommendTagList.vue'
+// import JobopeningList from '@/components/jobopening/JobopeningList.vue'
+import { mapActions, mapGetters } from "vuex";
 export default {
-  name: 'JobopeningView',
+  name: "JobopeningView",
   components: {
     JobOpeningMainPage,
-  }
-}
+  },
+  methods: {
+    ...mapActions("jobopening", ["fetchRecommend", "clearRecommend"]),
+  },
+  computed: {
+    ...mapGetters("jobopening", ["recommendJobopenings"]),
+  },
+  async created() {
+    await this.clearRecommend();
+    await this.fetchRecommend();
+  },
+};
 </script>
 
 <style scoped>

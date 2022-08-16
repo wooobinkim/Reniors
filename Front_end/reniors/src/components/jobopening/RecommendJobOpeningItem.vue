@@ -1,43 +1,19 @@
-<!-- <template>
-  <div>
-    {{ jobopening.id }}
-  </div>
-</template>
-
-<script>
-export default {
-  name: 'RecommendTagItem',
-  props: {
-    jobopening: Object,
-  }
-}
-</script>
-
-<style scoped>
-/* .recommend-tag-item {
-  display: inline-block;
-  box-sizing: border-box;
-  background-color: white;
-  border: 1px solid var(--color-yellow-1);
-  border-radius: 0.4rem;
-  padding: 0 5px;
-  margin: 3px;
-} */
-</style> -->
 <template>
-    <router-link
-      class="jobopening-item"
-      :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }"
-    >
-      <div>
-        <p class="jobopening-item-company">{{ jobopening.companyName }}</p>
-        <p class="jobopening-item-title prevent-overflow">{{ jobopening.title }}</p>
-      </div>
-      
-      <p class="jobopening-item-period">
-        {{ createDate }} ~ <br />{{ finishedDate }}
+  <router-link
+    class="jobopening-item"
+    :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }"
+  >
+    <div>
+      <p class="jobopening-item-company">{{ jobopening.companyName }}</p>
+      <p class="jobopening-item-title prevent-overflow">
+        {{ jobopening.title }}
       </p>
-    </router-link>
+    </div>
+
+    <p class="jobopening-item-period">
+      {{ createDate }} ~ <br />{{ finishedDate }}
+    </p>
+  </router-link>
 </template>
 
 <script scoped>
@@ -90,15 +66,15 @@ export default {
   border-radius: 0.4rem;
   margin: 10px 10px;
   padding: 10px;
-  height: 120px;
+  height: 130px;
   width: 140px;
   text-decoration: none;
 }
 
-.prevent-overflow{
-   overflow-x: auto;
+.prevent-overflow {
+  overflow-x: auto;
   max-width: 100%;
-    width: 100%;
+  width: 100%;
   box-sizing: border-box;
   text-overflow: ellipsis;
 }
@@ -108,16 +84,22 @@ export default {
   text-align: start;
 }
 
-.jobopening-item-company,
+.jobopening-item-company {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  color: black;
+  font-size: 12px;
+}
+
 .jobopening-item-title {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
   -webkit-line-clamp: 1;
   color: black;
-}
-
-.jobopening-item-title {
+  font-size: 17px;
   /* text-decoration-line: underline; */
   -webkit-line-clamp: 3;
   font-weight: bold;

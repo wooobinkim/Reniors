@@ -41,7 +41,7 @@ export default {
 }
 .jobopening-main-page-btn-top-item {
   /* position: relative; */
-  width: 150px;
+  width: 40%;
   height: 200px;
   margin: 12px;
   background-color: #f28a07;
