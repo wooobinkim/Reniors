@@ -42,7 +42,8 @@ export default{
 .jobList{
     background-color:#FF843E ;
     display: flex; 
-    margin: 0; 
+    margin-top: 48px; 
+    margin-bottom: 0;
     padding: 0; 
     flex-wrap: no-wrap; 
     overflow-x: scroll;
