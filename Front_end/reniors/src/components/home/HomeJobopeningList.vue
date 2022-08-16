@@ -3,11 +3,11 @@
     <h2 class="home-jobopening-type">{{ type }}</h2>
     <ul class="home-jobopening-list">
       <router-link class="home-jobopening-item" :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }" v-for="jobopening in jobopenings" :key="jobopening.id">
-        <img class="company-image mb-3" :src="jobopening.baseURL + jobopening.companyProfile">
-        <h4 class="mb-3">[회사명] {{ jobopening.companyName }}</h4>
+        <img class="company-image mb-2" :src="jobopening.baseURL + jobopening.companyProfile">
+        <h4 class="mb-2">{{ jobopening.companyName }}</h4>
         <div class="home-jobopening-info">
-          <p class="mb-1">[공고명] {{ jobopening.title }}</p>
-          <p>[마감일] {{ jobopening.finishedDate.split('T')[0] }}</p>
+          <p class="mb-1">{{ jobopening.title }}</p>
+          <p style="font-size: 14px; color: #FF843E;">{{ jobopening.finishedDate.split('T')[0] }}</p>
         </div>
 
       </router-link>
@@ -44,21 +44,22 @@ export default {
 }
 .home-jobopening-list {
   display: flex;
-  margin: 0;
+  margin: 0 8px;
   padding: 0;
   flex-wrap: no-wrap;
   overflow-x: scroll;
   overflow-y: hidden;
+  text-align: start;
 }
 .home-jobopening-list::-webkit-scrollbar{
-  height: 10px;
+  height: 5px;
 }
 .home-jobopening-list::-webkit-scrollbar-thumb{
-  background-color: var(--color-red-2);
+  background-color: var(--color-green-1);
   border-radius: 10px;
 }
 .home-jobopening-list::-webkit-scrollbar-track{
-  background-color: var(--color-red-3);
+  background-color: var(--color-green-3);
   border-radius: 10px;
 }
 .home-jobopening-item {
@@ -70,7 +71,7 @@ export default {
   list-style: none;
   flex: 0 0 auto;
   text-decoration: none;
-  width: 200px;
+  width: 160px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
