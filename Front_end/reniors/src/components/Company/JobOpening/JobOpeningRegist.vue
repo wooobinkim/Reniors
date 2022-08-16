@@ -39,12 +39,6 @@
       />
     </div>
 
-
-
-
-
-
-
     <div class="mb-3 mt-3 company-form-label">
       <label for="contents company-form-label">상세 내용</label>
       <textarea
@@ -299,6 +293,7 @@ select{
 .company-jobOpening-regist-box{
   margin-bottom: 150px;
   padding: 10px;
+  width: 100%;
 }
 textarea{
   resize: none;

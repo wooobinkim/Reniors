@@ -20,8 +20,8 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         System.out.println("LoginUserArgumentResolver - supportsParameter");
-        boolean isLoginUserAnnotation = parameter.getParameterAnnotation(LoginUser.class) != null;
-        boolean isLongClass = User.class.equals(parameter.getParameterType());
+        boolean isLoginUserAnnotation = parameter.getParameterAnnotation(LoginUser.class) != null || parameter.getParameterAnnotation(LoginCompany.class) != null;
+        boolean isLongClass = User.class.equals(parameter.getParameterType()) || Company.class.equals(parameter.getParameterType());
         return isLoginUserAnnotation && isLongClass;
     }
 
@@ -34,7 +34,8 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             System.out.println("authentication.getPrincipal() = " + authentication.getPrincipal());
-            if(authentication.getPrincipal()=="anonymousUser"){
+            if(Company.class.equals(parameter.getParameterType())){
+                System.out.println("company");
                 return (Company) authentication.getPrincipal();
             }
             return (User) authentication.getPrincipal();

@@ -50,9 +50,11 @@ public class JwtAuthenticationFilter extends GenericFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }else {
                 LoginCompanyDetails loginCompanyDetails = (LoginCompanyDetails) userDetails;
-
+                System.out.println("COMPANY");
+                System.out.println(userDetails);
                 Authentication authentication =
                         new UsernamePasswordAuthenticationToken(loginCompanyDetails.getCompany(), null, userDetails.getAuthorities());
+                System.out.println("authentication : "+authentication);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
