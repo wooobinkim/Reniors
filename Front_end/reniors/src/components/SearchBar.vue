@@ -16,7 +16,7 @@
       />
 
       <font-awesome-icon
-        @click="search"
+        @click="search()"
         class="home-search-button"
         icon="fa-solid fa-magnifying-glass"
       />
@@ -25,17 +25,21 @@
 </template>
 
 <script>
-import { useStore } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "SearchBar",
   components: {},
-  setup() {
-    const store = useStore();
-
-    let key = "";
-    let word = "";
-    const search = function () {
+  setup() {},
+  data() {
+    return {
+      key: "",
+      word: "",
+    };
+  },
+  methods: {
+    ...mapActions("jobopening", ["fetchJobopeningsName"]),
+    search() {
       const formData = new FormData();
       let keyword = {
         key: this.key,
@@ -47,14 +51,9 @@ export default {
           type: "application/json",
         })
       );
-      store.dispatch("jobopening/fetchJobopeningsName", formData);
-    };
-
-    return {
-      key,
-      word,
-      search,
-    };
+      console.log(keyword);
+      this.fetchJobopeningsName(formData);
+    },
   },
 };
 </script>
