@@ -274,10 +274,15 @@ public class JobOpeningService {
 
         RecommendCondition rc = recommendConditionRepository.findById(recommendConditionId).orElseThrow(() -> new NotFoundException("not found rc"));
 
+
+
+
         if(rc.getMinSalary() != 0) booleanBuilder.and(j.minCareer.goe(rc.getMinSalary()));
         if(rc.getWorkingDay() != 0)booleanBuilder.and(j.workingDay.loe(rc.getWorkingDay()));
         if(rc.getGugun() != null) booleanBuilder.and(j.gugun.eq(rc.getGugun()));
         if(rc.getJobParentCategory() != null) booleanBuilder.and(j.jobChildCategory.parent.eq(rc.getJobParentCategory()));
+
+
 
         List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
                 .where(
@@ -383,7 +388,7 @@ public class JobOpeningService {
         QApply a = new QApply("a");
 
         List<Apply> applyList = jpaQueryFactory.selectFrom(a)
-                .where(a.interviewDate.isNotNull())
+                .where(a.interviewDate.isNotNull().and(a.user.eq(user)))
                 .orderBy(a.interviewDate.asc()).fetch();
 
         List<ApplyResponse> applyResponseList = applyList.stream().map(res->ApplyResponse.response(

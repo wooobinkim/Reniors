@@ -1,5 +1,5 @@
 <template>
-  <div  style="width:360px">
+  <div class="board-create-box">
     <board-head-slider></board-head-slider>
     <div class="title">
         <router-link :to="{name: 'boardMain', params:{category_id: categoryId}}">
@@ -45,6 +45,17 @@ export default{
 </script>
 
 <style scoped>
+
+.board-create-box{
+    width: 100%;
+}
+@media(max-width:760px){
+  .board-create-box{
+    width: 100vw;
+  }
+}
+
+
 .title{
   height: 48px;
   display: flex;

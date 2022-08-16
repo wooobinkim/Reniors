@@ -39,12 +39,6 @@
       />
     </div>
 
-
-
-
-
-
-
     <div class="mb-3 mt-3 company-form-label">
       <label for="contents company-form-label">상세 내용</label>
       <textarea
@@ -240,10 +234,10 @@ export default {
       "typeemployments",
     ]),
   },
-  created() {
-    this.setheader('채용등록')
-    this.getSido();
-    this.getJobParent();
+  async created() {
+    await this.setheader('채용등록')
+    await this.getSido();
+    await this.getJobParent();
   },
   methods: {
     ...mapActions("category", [
@@ -269,7 +263,6 @@ export default {
           type: "application/json",
         })
       );
-
       this.registJobOpening(formData);
       this.$router.push({ name: "companyjobopeninglist" });
     },
@@ -300,6 +293,7 @@ select{
 .company-jobOpening-regist-box{
   margin-bottom: 150px;
   padding: 10px;
+  width: 100%;
 }
 textarea{
   resize: none;

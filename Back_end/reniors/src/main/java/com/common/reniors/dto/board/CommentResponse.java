@@ -26,9 +26,15 @@ public class CommentResponse {
     @NotBlank
     String userName;
 
+    @NotNull
+    String baseURL;
+
+    @NotNull
+    String userProfile;
+
     @NotNull LocalDateTime updatedAt;
 
     public static CommentResponse response(Comment comment){
-        return new CommentResponse(comment.getId(), comment.getContents(), comment.getUser().getId(), comment.getUser().getName(), comment.getUpdatedAt());
+        return new CommentResponse(comment.getId(), comment.getContents(), comment.getUser().getId(), comment.getUser().getName(), comment.getUser().getBaseURL(), comment.getUser().getUserProfile(), comment.getUpdatedAt());
     }
 }

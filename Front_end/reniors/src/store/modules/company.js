@@ -37,6 +37,7 @@ export default {
     profile: (state) => state.profile,
     authError: (state) => state.authError,
     // Authorization: `Token ${state.token}`
+    token: (state) => state.token,
     authHeader: (state) => ({ Authorization: `Bearer ${state.token}` }),
     header: (state) => state.header,
     jobopeninglisting: (state) => state.jobopeninglisting,
@@ -241,14 +242,12 @@ export default {
     },
 
     registJobOpening: ({ commit, getters }, formData) => {
-      // multipart
-      //   .post(`/company/jobopening`, formData)
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening`,
         method: "post",
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: getters.authHeader,
+          Authorization: "Bearer " + getters.token,
         },
         data: formData,
       })
@@ -430,7 +429,6 @@ export default {
         data: data.apply,
       })
         .then(({ data }) => {
-          console.log(data);
           commit("SET_DATASTATE", data);
         })
         .catch((error) => {
@@ -438,11 +436,6 @@ export default {
         });
     },
     finishInterview: ({ commit, getters }, data) => {
-      // console.log(data);
-      // http
-      //   .put(
-      //     `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}/finishInterview`
-      //   )
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}/finishInterview`,
         method: "put",
@@ -450,7 +443,6 @@ export default {
         // data:data.apply,
       })
         .then(({ data }) => {
-          console.log(data);
           commit("SET_DATASTATE", data);
         })
         .catch((error) => {
@@ -578,7 +570,6 @@ export default {
         headers: getters.authHeader,
       })
         .then(({ data }) => {
-          console.log(data);
           commit("SET_USER_EVAL_LIST", data);
         })
         .catch((error) => {

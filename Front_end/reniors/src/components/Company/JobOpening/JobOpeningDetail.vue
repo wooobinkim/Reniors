@@ -1,7 +1,6 @@
 <template>
   <div class="company-jobOpening-detail-box">
-    <div class="title">{{ jobopeningdetail.title }}</div>
-    <div>{{ jobopeningdetail.contents }}dqw</div>
+    <div class="title">{{ jobopening.title }}</div>
     <router-link :to="{name: 'companyjobopeningupdate', params: { no: this.$route.params.no },}" class="detail-btn">
       수정
     </router-link>
@@ -22,9 +21,6 @@ export default {
     this.getJobOpening(this.$route.params.no);
   },
   watch: {
-    jobopening: function (data) {
-      this.jobopeningdetail = data;
-    },
   },
   computed: {
     ...mapGetters("company", ["jobopening"]),

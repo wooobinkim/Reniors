@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="onSubmit" class="commentForm">
-    <img class="person" src="https://i7b307.p.ssafy.io/images/user/1" alt="person">
+    <img class="person" :src="currentUser.baseURL+currentUser.userProfile" alt="person">
     <label for="comment"></label>
     <input type="text" id="content" placeholder="내용을 입력해주세요." v-model="content">
     <button type="submit">등록</button>
@@ -18,10 +18,11 @@ export default{
         }
     },
     computed: {
-        ...mapGetters(['article'])
+        ...mapGetters(['article','currentUser'])
     },
     setup(){},
-    created(){},
+    created(){
+    },
     mounted(){},
     unmounted(){},
     methods:{
@@ -76,15 +77,25 @@ button{
     color: white;
     border: none;
     border-radius: 5px;
+    padding: 0 50px;
 }
+
 button:hover{
     background-color: #ff8432;
 }
 .person{
-    width: 28px;
-    height: 28px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     
 }
-
+@media(max-width:760px){
+    button{
+        padding: 10px;
+    }
+    .person{
+        width: 32px;
+        height: 32px;
+    }
+}
 </style>

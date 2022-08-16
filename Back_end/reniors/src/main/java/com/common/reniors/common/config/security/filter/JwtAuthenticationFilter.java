@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends GenericFilter {
 
         if (StringUtils.hasText(jwtToken) && jwtUtil.isValidToken(jwtToken)) {
             UserDetails userDetails = authService.loadUserByUsername(jwtUtil.getSubject(jwtToken));
-
+            System.out.println(jwtUtil.getSubject(jwtToken));
             StringTokenizer st = new StringTokenizer(jwtUtil.getSubject(jwtToken),",");
             String id = st.nextToken();
             String name = st.nextToken();
@@ -50,9 +50,11 @@ public class JwtAuthenticationFilter extends GenericFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }else {
                 LoginCompanyDetails loginCompanyDetails = (LoginCompanyDetails) userDetails;
-
+                System.out.println("COMPANY");
+                System.out.println(userDetails);
                 Authentication authentication =
                         new UsernamePasswordAuthenticationToken(loginCompanyDetails.getCompany(), null, userDetails.getAuthorities());
+                System.out.println("authentication : "+authentication);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

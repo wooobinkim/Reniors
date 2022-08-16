@@ -51,8 +51,8 @@
             <!-- 상대방 -->
             <div>
                 <user-video
-                :stream-manager="subscribers[0]"
-                @click="updateMainVideoStreamManager(subscribers[0])"
+                :stream-manager="subscribers[subscribers.length -1]"
+                @click="updateMainVideoStreamManager(subscribers[subscribers.length -1])"
                 class="myvideo"
                 />
             </div>
@@ -74,7 +74,7 @@
                     <div class="datadata"><p style="margin:0;">{{msg.data}}</p></div>
                   </div>
                   <div v-if="msg.name !== this.myUserName" class="chatitem">
-                    <div class="youname"><p style="margin:0;">{{interviewer.slice(0,1)}}</p></div>
+                    <div class="youname"><p style="margin:0;">{{companyName.slice(0,1)}}</p></div>
                     <div class="datadata"><p style="margin:0;">{{msg.data}}</p></div>
                   </div>
                 </div>
@@ -503,6 +503,7 @@ export default {
     height: 29vh;
     border: none;
     padding: 4px;
+    overflow-y: scroll;
 }
 .chatform{
     width: 83vw;
