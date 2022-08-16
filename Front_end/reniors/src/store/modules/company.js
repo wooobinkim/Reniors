@@ -37,6 +37,7 @@ export default {
     profile: (state) => state.profile,
     authError: (state) => state.authError,
     // Authorization: `Token ${state.token}`
+    token:(state) => state.token,
     authHeader: (state) => ({ Authorization: `Bearer ${state.token}` }),
     header: (state) => state.header,
     jobopeninglisting: (state) => state.jobopeninglisting,
@@ -173,7 +174,6 @@ export default {
         await dispatch("saveToken", token);
         // dispatch("fetchCurrentUser");
         // router 수정
-        console.log(token);
         router.push({ name: "company" });
       });
       // error 부분 추가
@@ -243,7 +243,7 @@ export default {
         method: "post",
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: getters.authHeader,
+          Authorization: "Bearer "+getters.token,
         },
         data: formData,
       })
@@ -251,7 +251,6 @@ export default {
           commit("SET_DATASTATE", data);
         })
         .catch((error) => {
-          console.log(getters.authHeader);
           console.log(error);
         });
     },
@@ -259,8 +258,7 @@ export default {
       // http
       //   .put(`/company/jobopening/${data.no}`, data.jobopening)
       axios({
-        // url: `https://i7b307.p.ssafy.io/api/company/jobopening`,
-        url: `localhost:8080/api/company/jobopening`,
+        url: `https://i7b307.p.ssafy.io/api/company/jobopening`,
         method: "put",
         headers: {
           "Content-Type": "multipart/form-data",
@@ -427,7 +425,6 @@ export default {
         data: data.apply,
       })
         .then(({ data }) => {
-          console.log(data);
           commit("SET_DATASTATE", data);
         })
         .catch((error) => {
@@ -435,11 +432,6 @@ export default {
         });
     },
     finishInterview: ({ commit, getters }, data) => {
-      // console.log(data);
-      // http
-      //   .put(
-      //     `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}/finishInterview`
-      //   )
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}/finishInterview`,
         method: "put",
@@ -447,7 +439,6 @@ export default {
         // data:data.apply,
       })
         .then(({ data }) => {
-          console.log(data);
           commit("SET_DATASTATE", data);
         })
         .catch((error) => {
@@ -575,7 +566,6 @@ export default {
         headers: getters.authHeader,
       })
         .then(({ data }) => {
-          console.log(data);
           commit("SET_USER_EVAL_LIST", data);
         })
         .catch((error) => {
