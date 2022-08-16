@@ -89,7 +89,4 @@ export default {
   padding: 8px;
   border-radius: 5px;
 }
-.home-jobopening-info p{
-  font-weight: 400;
-}
 </style>

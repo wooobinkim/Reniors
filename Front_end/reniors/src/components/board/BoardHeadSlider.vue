@@ -49,7 +49,15 @@ export default{
     overflow-y: hidden;
     align-content: center;
 }
-
+.jobList::-webkit-scrollbar{
+  height: 10px;
+}
+.jobList::-webkit-scrollbar-thumb{
+  background-color: var(--color-red-2);
+}
+.jobList::-webkit-scrollbar-track{
+  background-color: var(--color-red-3);
+}
 .jobItem{    
     margin: 10px;
     padding: 10px; 
@@ -69,8 +77,6 @@ export default{
     color: white;
     font-weight: bold;
     font-size: 16px;
-
-
 }
 
 </style>>
