@@ -1,5 +1,5 @@
 <template>
-    <div class="header container-fluid">
+    <div class="header">
         <router-link class="header-logo" :to="{ name: 'home' }">
             <img src="@/assets/logo_cut.png" alt="logo">
         </router-link>
@@ -99,11 +99,11 @@ export default {
   background-color: #FFF5F0;
 }
 .persona{
-  height: 200px;
+  height: 100px;
   margin-left: 8px;
 }
 .korean-logo{
-  height: 100px;
+  height: 80px;
   line-height: 200px;
 }
 .korean-logo-box{
