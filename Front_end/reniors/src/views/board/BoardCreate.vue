@@ -1,4 +1,5 @@
 <template>
+<real-header></real-header>
   <div class="board-create-box">
     <board-head-slider></board-head-slider>
     <div class="title">
@@ -19,10 +20,11 @@
 import BoardHeadSlider from '@/components/board/BoardHeadSlider.vue'
 import ArticleForm from '@/components/board/ArticleForm.vue';
 import { mapGetters } from 'vuex';
+import RealHeader from '@/components/RealHeader.vue';
 
 export default{ 
     name:'BoardCreate',
-    components:{ ArticleForm, BoardHeadSlider },
+    components:{ ArticleForm, BoardHeadSlider, RealHeader },
     data(){
         return{
             categoryId:this.$route.params.category_id,

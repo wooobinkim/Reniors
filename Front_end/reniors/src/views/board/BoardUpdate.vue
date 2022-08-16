@@ -1,4 +1,5 @@
 <template>
+<real-header></real-header>
   <div class="board-update-box">
     <board-head-slider></board-head-slider>
     <div class="title">
@@ -21,9 +22,10 @@
 import BoardHeadSlider from '@/components/board/BoardHeadSlider.vue'
 import ArticleForm from '@/components/board/ArticleForm.vue';
 import { mapActions, mapGetters } from 'vuex';
+import RealHeader from '@/components/RealHeader.vue';
 export default{ 
     name:'BoardUpdate',
-    components:{ArticleForm, BoardHeadSlider},
+    components:{ArticleForm, BoardHeadSlider, RealHeader},
     data(){
         return{
             categoryId: this.$route.params.category_id,
