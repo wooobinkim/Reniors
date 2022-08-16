@@ -16,7 +16,7 @@ public class ApplyResponse {
     private JobOpeningProcess jobOpeningProcess;
     private Date interviewDate;
     private Long jobOpeningId;
-    private String jobOpeningTitle;
+    private String jobOpeningName;
     private String jobChildCategoryName;
     private String sessionId;
     private Long userId;
@@ -24,6 +24,7 @@ public class ApplyResponse {
     private Gender gender;
     private Date birth;
     private String phone;
+    private String companyName;
 
 
     public static ApplyResponse response(Apply apply){
@@ -39,7 +40,8 @@ public class ApplyResponse {
                 apply.getUser().getName(),
                 apply.getUser().getGender(),
                 apply.getUser().getBirth(),
-                apply.getUser().getPhone()
+                apply.getUser().getPhone(),
+                apply.getJobOpening().getCompany().getName()
         );
     }
 }
