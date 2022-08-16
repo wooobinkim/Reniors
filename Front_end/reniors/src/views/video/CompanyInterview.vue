@@ -634,6 +634,7 @@ export default {
     width: 34vw;
     height: 55vh;
     border: none;
+    overflow-y: scroll;
 }
 .chatlist textarea{
     width: 34vw;
