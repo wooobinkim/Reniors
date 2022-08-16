@@ -67,7 +67,7 @@ public class JobOpeningController {
         return ResponseEntity.status(HttpStatus.OK).body(jobOpeningList);
     }
 
-    //공고 전체조회
+    //공고 전체조회(검색창)
     @GetMapping(path = {"/search/keyword"}, consumes = {"multipart/form-data"})
     @ApiOperation(value = "공고 조회(검색창)", notes = "전체 공고중 검색어를 통해 조회한다.")
     public ResponseEntity<?> getJobOpeningName(

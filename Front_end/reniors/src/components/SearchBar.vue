@@ -1,40 +1,45 @@
 <template>
   <div class="search-bar">
-
-
     <form class="home-search" action="" @submit.prevent="search">
-      <input type="text" name="keyword" class="home-search-text"
-        placeholder="회사명, 직종, 지역 등 검색어를 입력해주세요" v-model="keyword">
-      <font-awesome-icon @click="search" class="home-search-button" icon="fa-solid fa-magnifying-glass" />
+      <input
+        type="text"
+        name="keyword"
+        class="home-search-text"
+        placeholder="회사명, 직종, 지역 등 검색어를 입력해주세요"
+        v-model="keyword"
+      />
+      <font-awesome-icon
+        @click="search"
+        class="home-search-button"
+        icon="fa-solid fa-magnifying-glass"
+      />
     </form>
   </div>
 </template>
 
 <script>
-import { useStore } from 'vuex'
+import { useStore } from "vuex";
 
 export default {
-  name: 'SearchBar',
-  components: {
-  },
+  name: "SearchBar",
+  components: {},
   setup() {
-    const store = useStore()
+    const store = useStore();
 
-    let keyword = ''
-    const search = function(){
-      store.dispatch('home/search', this.keyword)
-    }  
+    let keyword = "";
+    const search = function () {
+      store.dispatch("home/search", this.keyword);
+    };
 
     return {
-      keyword, search
-    }
+      keyword,
+      search,
+    };
   },
-
-}
+};
 </script>
 
 <style scoped>
-
 .home-header {
   color: var(--color-red-1);
   font-weight: bold;
