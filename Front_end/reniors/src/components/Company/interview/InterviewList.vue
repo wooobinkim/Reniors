@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="interview-list-item-box">
     <interview-list-item
       v-for="interviewapply in interviewapplylistasc"
       :key="interviewapply.id"
@@ -16,10 +16,10 @@ export default {
   created() {
     this.CLEAR_INTERVIEW_APPLY_LIST_ASC;
     this.getinterviewapplylistasc(this.$route.params.no);
-    this.setheader('면접일정');
+    this.setheader("면접일정");
   },
   methods: {
-    ...mapActions("company", ["getinterviewapplylistasc","setheader"]),
+    ...mapActions("company", ["getinterviewapplylistasc", "setheader"]),
   },
   computed: {
     ...mapGetters("company", ["interviewapplylistasc"]),
@@ -28,4 +28,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scope>
+.interview-list-item-box {
+  margin-bottom: 6vh;
+}
+</style>

@@ -1,11 +1,12 @@
 <template>
   <div class="jobopening-list">
-    {{ jobopenings }}
+    <!-- {{ jobopenings }} -->
     <div v-if="isJobopenings">
+      <div class="jobopening-msg">검색 결과</div>
       <JobopeningItem
         v-for="(jobopening, index) in jobopenings"
         :key="index"
-        :jobopening="jobopening.jobOpeningResponse"
+        :jobopening="jobopening"
       />
     </div>
     <div v-else>아직 채용공고가 없어요!</div>
@@ -14,7 +15,7 @@
 
 <script>
 import { computed } from "vue";
-import { useStore } from "vuex";
+import { mapActions, useStore } from "vuex";
 import JobopeningItem from "./JobopeningItem.vue";
 
 export default {
@@ -35,11 +36,22 @@ export default {
       isJobopenings,
     };
   },
+  methods: {
+    ...mapActions("jobopening",["fetchJobopenings"]),
+  },
+  created() {
+    this.fetchJobopenings();
+  },
 };
 </script>
 
 <style scoped>
-.jobopening-list > div {
+.jobopening-msg{
+  display: flex;
+  margin-top: 10px;
+  margin-left: 12px;
+}
+/* .jobopening-list > div {
   display: grid;
   grid-template-columns: 170px 170px;
   margin-top: 10px;
@@ -49,5 +61,5 @@ export default {
   .jobopening-list > div {
     grid-template-columns: 20vh 20vh 20vh;
   }
-}
+} */
 </style>

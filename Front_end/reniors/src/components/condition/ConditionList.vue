@@ -1,22 +1,49 @@
 <template>
   <div>
     <Splide class="condition-list" :options="options">
-      <SplideSlide class="condition-item" v-for="(condition, index) in conditions" :key="index" @click="routeResult(condition.id, $event)">
+      <SplideSlide
+        class="condition-item"
+        v-for="(condition, index) in conditions"
+        :key="index"
+        @click="routeResult(condition.id, $event)"
+      >
         <div class="condition-item-header">
-          <p class="condition-item-number">맞춤공고{{ index+1 }}</p>
+          <p class="condition-item-number">맞춤공고{{ index + 1 }}</p>
           <div class="condition-item-function">
-            <font-awesome-icon icon="fa-solid fa-gear" @click.stop="editCondition(condition.id)" />
-            <font-awesome-icon icon="fa-regular fa-trash-can" @click="deleteCondition(condition.id)"/>
+            <font-awesome-icon
+              icon="fa-solid fa-gear"
+              @click.stop="editCondition(condition.id)"
+            />
+            <font-awesome-icon
+              icon="fa-regular fa-trash-can"
+              @click="deleteCondition(condition.id)"
+            />
           </div>
         </div>
         <div class="condition-item-preview">
           <div class="condition-item-region">
             <font-awesome-icon icon="fa-solid fa-location-dot" />
-            <p>{{ condition.hopeAreaResponseList[0]?.gugun }} 등 {{ condition.hopeAreaResponseList?.length }}지역</p>
+            <template v-if="condition.hopeAreaResponseList?.length == 0">
+              <p>맞춤지역을 설정해보세요.</p>
+            </template>
+            <template v-else>
+              <p>
+                {{ condition.hopeAreaResponseList[0]?.gugun }} 등
+                {{ condition.hopeAreaResponseList?.length }}지역
+              </p>
+            </template>
           </div>
-          <p>{{ condition.jobParentCategoryName }}</p>
+
+          <template v-if="!condition.jobParentCategoryName">
+            <p>맞춤직무를 설정해보세요.</p>
+          </template>
+          <template v-else>
+            <p>{{ condition.jobParentCategoryName }}</p>
+          </template>
         </div>
-        <button class="condition-item-button" @click.stop="popover">더 보기</button>
+        <button class="condition-item-button" @click.stop="popover">
+          더 보기
+        </button>
         <div class="condition-item-popover">
           <p>고용형태</p>
           <p>{{ condition.typeEmployment }}</p>
@@ -37,66 +64,76 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
-import { Splide, SplideSlide } from '@splidejs/vue-splide'
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+import { Splide, SplideSlide } from "@splidejs/vue-splide";
 
 export default {
-  name: 'ConditionList',
+  name: "ConditionList",
   components: {
-    Splide, SplideSlide,
+    Splide,
+    SplideSlide,
   },
   setup() {
-    const store = useStore()
-    const router = useRouter()
+    const store = useStore();
+    const router = useRouter();
 
     const routeCreate = (event) => {
-      if (event.currentTarget.classList.contains('is-active')) router.push({ name: 'ConditionCreate' })
-    }
+      if (event.currentTarget.classList.contains("is-active"))
+        router.push({ name: "ConditionCreate" });
+    };
     const routeResult = (id, event) => {
-      if (event.currentTarget.classList.contains('is-active')) {
-        router.push({ name: 'ConditionResult', params: { conditionId: id } })
-        const search = () => store.dispatch('condition/search', id)
-        search()
+      console.log("여기여기");
+      if (event.currentTarget.classList.contains("is-active")) {
+        router.push({ name: "ConditionResult", params: { conditionId: id } });
+        const search = () => store.dispatch("condition/search", id);
+        search();
       }
-    }
+    };
 
-    const fetchConditions = () => store.dispatch('condition/fetchConditions')
-    fetchConditions()
-    const conditions = computed(() => store.getters['condition/conditions'])
+    const fetchConditions = () => store.dispatch("condition/fetchConditions");
+    fetchConditions();
+    const conditions = computed(() => store.getters["condition/conditions"]);
 
     const popover = (event) => {
-      if (event.target.innerText === '더 보기') event.target.innerText = '닫기'
-      else event.target.innerText = '더 보기'
-      event.target.parentElement.classList.toggle('popover-active')
-      event.target.classList.toggle('active')
-      event.target.nextSibling.classList.toggle('active')
-    }
+      if (event.target.innerText === "더 보기") event.target.innerText = "닫기";
+      else event.target.innerText = "더 보기";
+      event.target.parentElement.classList.toggle("popover-active");
+      event.target.classList.toggle("active");
+      event.target.nextSibling.classList.toggle("active");
+    };
 
     const options = {
       padding: 50,
       arrows: false,
       pagination: false,
       isNavigation: true,
-      gap : '1rem',
-    }
+      gap: "1rem",
+    };
 
-    const deleteCondition = (id) => store.dispatch('condition/deleteCondition', id)
-    const editCondition = (id) => router.push({ name: 'ConditionEdit', params: { conditionId: id } })
+    const deleteCondition = (id) =>
+      store.dispatch("condition/deleteCondition", id);
+    const editCondition = (id) =>
+      router.push({ name: "ConditionEdit", params: { conditionId: id } });
 
     return {
-      popover, routeCreate, routeResult, deleteCondition, editCondition,
-      conditions, options,
-    }
+      popover,
+      routeCreate,
+      routeResult,
+      deleteCondition,
+      editCondition,
+      conditions,
+      options,
+    };
   },
-}
+};
 </script>
 
-<style>
-@import '@splidejs/splide/dist/css/themes/splide-default.min.css';
+<style scoped>
+@import "@splidejs/splide/dist/css/themes/splide-default.min.css";
 
-.splide__track--nav>.splide__list>.splide__slide {
+.splide__track--nav > .splide__list > .splide__slide {
   position: relative;
   border: none;
   border-radius: 0.5rem;
@@ -108,15 +145,15 @@ export default {
   transition: height ease 0.5s;
 }
 
-.splide__track--nav>.splide__list>.splide__slide.is-active {
+.splide__track--nav > .splide__list > .splide__slide.is-active {
   border: none;
   box-shadow: 0px 0px 3px var(--color-black-1);
 }
-.splide__track--nav>.splide__list>.splide__slide.popover-active {
+.splide__track--nav > .splide__list > .splide__slide.popover-active {
   height: 225px;
 }
 
-.splide__track--nav>.splide__list>.splide__slide.is-active>button {
+.splide__track--nav > .splide__list > .splide__slide.is-active > button {
   box-shadow: 0px 1.5px 2px var(--color-black-2);
 }
 

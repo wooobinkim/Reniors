@@ -9,7 +9,7 @@
       >
         <div>
           <input
-            :value="apply.id"
+            :value="apply"
             type="checkbox"
             v-model="passUser"
             class="apply-resume-list-checkbox"
@@ -55,41 +55,52 @@ export default {
       "progressJobOpening",
       "updateApply",
     ]),
+    ...mapActions("home", ["createNotice"]),
     resumepass() {
-      this.passUser.forEach((data) => {
-        this.updateApply({
-          jobOpeningId: this.jobopeningdetail.id,
-          applyId: data,
-          apply: {
-            jobOpeningProcess: "면접",
-          },
+      if (confirm("선택된 지원자의 상태를 서류 합격으로 변경하시겠습니까?")) {
+        this.passUser.forEach((data) => {
+          this.updateApply({
+            jobOpeningId: this.jobopeningdetail.id,
+            applyId: data.id,
+            apply: {
+              jobOpeningProcess: "면접",
+            },
+          });
+          this.createNotice({
+            userId: data.userId,
+            applyId: data.id,
+          });
         });
-      });
 
-      let tmparr = [];
-      this.applylist.forEach((apply) => {
-        if (apply.jobOpeningProcess == "서류심사중") {
-          tmparr.push(apply.id);
-        }
-      });
-      let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
-      unpassUser.forEach((data) => {
-        this.updateApply({
-          jobOpeningId: this.jobopeningdetail.id,
-          applyId: data,
-          apply: {
-            jobOpeningProcess: "서류불합격",
-          },
+        let tmparr = [];
+        this.applylist.forEach((apply) => {
+          if (apply.jobOpeningProcess == "서류심사중") {
+            tmparr.push(apply.id);
+          }
         });
-      });
+        let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
+        unpassUser.forEach((data) => {
+          this.updateApply({
+            jobOpeningId: this.jobopeningdetail.id,
+            applyId: data.id,
+            apply: {
+              jobOpeningProcess: "서류불합격",
+            },
+          });
+          this.createNotice({
+            userId: data.userId,
+            applyId: data.id,
+          });
+        });
 
-      let data = {
-        no: this.jobopeningdetail.id,
-        progress: {
-          jobOpeningProcess: "면접심사중",
-        },
-      };
-      this.progressJobOpening(data);
+        let data = {
+          no: this.jobopeningdetail.id,
+          progress: {
+            jobOpeningProcess: "면접심사중",
+          },
+        };
+        this.progressJobOpening(data);
+      }
     },
 
     resumeview() {

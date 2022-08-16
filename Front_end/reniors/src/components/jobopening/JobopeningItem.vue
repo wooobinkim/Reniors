@@ -1,16 +1,21 @@
 <template>
-  <router-link
-    class="jobopening-item"
-    :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }"
-  >
+  <div @click="movejobopening()" class="jobopening-item">
     <div>
       <p class="jobopening-item-company">{{ jobopening.companyName }}</p>
       <p class="jobopening-item-title">{{ jobopening.title }}</p>
     </div>
-    <p class="jobopening-item-period">
-      {{ createDate }} ~ <br />{{ finishedDate }}
-    </p>
-  </router-link>
+    <div class="jobopening-item-second">
+      <span class="jobopening-item-te">{{ jobopening.typeEmployment }}</span>
+      <span class="jobopening-item-ms">연봉</span>
+      <span>{{ jobopening.minSalary / 10000 }}만원</span>
+    </div>
+    <div class="jobopening-item-third">
+      <i class="bi bi-geo-alt-fill"
+        >{{ jobopening.sido }} {{ jobopening.gugun }}</i
+      >
+    </div>
+    <p class="jobopening-item-period">{{ createDate }} ~ {{ finishedDate }}</p>
+  </div>
 </template>
 
 <script scoped>
@@ -49,21 +54,31 @@ export default {
       finishedDate,
     };
   },
+  methods: {
+    movejobopening() {
+      this.$router.push({
+        name: "JobopeningDetail",
+        params: { jobopeningId: this.jobopening.id },
+      });
+    },
+  },
 };
 </script>
 
-<style>
+<style scoped>
 .jobopening-item {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
-  background-color: white;
+  background-color: var(--color-red-4);
   border-radius: 0.4rem;
   margin: 10px 10px;
   padding: 10px;
   height: 150px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .jobopening-item p {
@@ -71,24 +86,52 @@ export default {
   text-align: start;
 }
 
-.jobopening-item-company,
+.jobopening-item-company {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  color: black;
+  font-size: 14px;
+}
+
 .jobopening-item-title {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
   -webkit-line-clamp: 1;
   color: black;
-}
-
-.jobopening-item-title {
-  text-decoration-line: underline;
+  font-size: 20px;
+  /* text-decoration-line: underline; */
   -webkit-line-clamp: 3;
   font-weight: bold;
 }
 
+.jobopening-item-second {
+  display: flex;
+  font-size: 14px;
+  font-weight: bold;
+}
+.jobopening-item-second > span:first-child {
+  color: #37bf99;
+  margin-right: 16px;
+}
+.jobopening-item-second > span:nth-child(2) {
+  color: #f28a07;
+  margin-right: 5px;
+}
+.jobopening-item-second > span:nth-child(3) {
+  color: black;
+}
+.jobopening-item-third {
+  color: var(--color-black-1);
+  display: flex;
+  font-size: 10px;
+  font-weight: bold;
+}
 .jobopening-item-period {
   margin-top: 10px;
-  color: var(--color-green-1);
+  color: var(--color-black-1);
   font-size: 10px;
 }
 </style>

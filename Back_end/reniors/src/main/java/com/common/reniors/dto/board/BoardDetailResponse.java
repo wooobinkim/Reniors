@@ -29,9 +29,15 @@ public class BoardDetailResponse {
     @NotBlank
     String userName;
 
+    @NotNull
+    String baseURL;
+
+    @NotNull
+    String userProfile;
+
     @NotNull LocalDateTime updatedAt;
 
     public static BoardDetailResponse response(Board board){
-        return new BoardDetailResponse(board.getId(), board.getTitle(),board.getUser().getId(), board.getContents(), board.getUser().getName(), board.getUpdatedAt());
+        return new BoardDetailResponse(board.getId(), board.getTitle(),board.getUser().getId(), board.getContents(), board.getUser().getName(), board.getUser().getBaseURL(), board.getUser().getUserProfile(), board.getUpdatedAt());
     }
 }

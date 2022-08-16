@@ -1,8 +1,13 @@
 <template>
   <div class="company-jobOpening-detail-box">
-    <div class="title">{{ jobopeningdetail.title }}</div>
-    <div>{{ jobopeningdetail.contents }}dqw</div>
-    <router-link :to="{name: 'companyjobopeningupdate', params: { no: this.$route.params.no },}" class="detail-btn">
+    <div class="title">{{ jobopening.title }}</div>
+    <router-link
+      :to="{
+        name: 'companyjobopeningupdate',
+        params: { no: this.$route.params.no },
+      }"
+      class="detail-btn"
+    >
       수정
     </router-link>
     <button @click="deletejobopening()" class="detail-btn">삭제</button>
@@ -21,11 +26,7 @@ export default {
   created() {
     this.getJobOpening(this.$route.params.no);
   },
-  watch: {
-    jobopening: function (data) {
-      this.jobopeningdetail = data;
-    },
-  },
+  watch: {},
   computed: {
     ...mapGetters("company", ["jobopening"]),
   },
@@ -48,20 +49,19 @@ export default {
 </script>
 
 <style scoped>
-
-.company-jobOpening-detail-box{
-  width: 100%;
+.company-jobOpening-detail-box {
   padding: 20px;
   margin-top: 20px;
   border-radius: 10px;
-  border-color: var(--color-black-2); 
-  box-shadow: inset 0 0 1px 1px var(--color-black-3), 0 0 5px var(--color-black-3);
+  border-color: var(--color-black-2);
+  box-shadow: inset 0 0 1px 1px var(--color-black-3),
+    0 0 5px var(--color-black-3);
 }
 .company-jobOpening-detail-box > .title {
   font-size: 40px;
   font-weight: bold;
 }
-.company-jobOpening-detail-box > .detail-btn{
+.company-jobOpening-detail-box > .detail-btn {
   width: 320px;
   display: block;
   margin: auto;
@@ -75,10 +75,10 @@ export default {
   font-weight: bold;
   text-decoration: none;
 }
-.company-jobOpening-detail-box > .detail-btn:link{
+.company-jobOpening-detail-box > .detail-btn:link {
   color: white;
 }
-.company-jobOpening-detail-box > .detail-btn:visited{
+.company-jobOpening-detail-box > .detail-btn:visited {
   color: white;
 }
 </style>

@@ -55,10 +55,8 @@
             class="myvideo"
           />
           <user-video
-            v-for="sub in subscribers"
-            :key="sub.stream.connection.connectionId"
-            :stream-manager="sub"
-            @click="updateMainVideoStreamManager(sub)"
+            :stream-manager="subscribers[subscribers.length - 1]"
+            @click="updateMainVideoStreamManager(subscribers.length - 1)"
             class="myvideo"
           />
         </div>
@@ -96,7 +94,7 @@
               <div class="datadata"><p style="margin:0;">{{msg.data}}</p></div>
             </div>
             <div v-if="msg.name !== this.myUserName" class="chatitem">
-              <div class="youname"><p style="margin:0;">{{interviewer.slice(0,1)}}</p></div>
+              <div class="youname"><p style="margin:0;">{{applyinfo.name.slice(0,1)}}</p></div>
               <div class="datadata"><p style="margin:0;">{{msg.data}}</p></div>
             </div>
           </div>
@@ -136,7 +134,7 @@
 <script>
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
-import UserVideo from "@/components/openvidu/UserVideo.vue";
+import UserVideo from "@/components/openvidu/CompanyVideo.vue";
 import ResumeView from "@/components/Company/interview/ResumeView.vue";
 import { mapActions, mapGetters } from "vuex";
 import OpenviduEvalList from "@/components/Company/interview/OpenviduEvalList.vue";
@@ -183,7 +181,6 @@ export default {
       chatopenclose: false,
       applyinfo:null,
       sessionleave:false,
-      //   myUserName: "Participant" + Math.floor(Math.random() * 100),
     };
   },
   computed: {
@@ -252,21 +249,16 @@ export default {
       this.publisher.publishAudio(this.audioflag);
     },
     joinSession() {
-      // --- Get an OpenVidu object ---
+
       this.OV = new OpenVidu();
 
-      // --- Init a session ---
       this.session = this.OV.initSession();
 
-      // --- Specify the actions when events take place in the session ---
-
-      // On every new Stream received...
       this.session.on("streamCreated", ({ stream }) => {
         const subscriber = this.session.subscribe(stream);
         this.subscribers.push(subscriber);
       });
 
-      // On every Stream destroyed...
       this.session.on("streamDestroyed", ({ stream }) => {
         const index = this.subscribers.indexOf(stream.streamManager, 0);
         if (index >= 0) {
@@ -274,15 +266,11 @@ export default {
         }
       });
 
-      // On every asynchronous exception...
+
       this.session.on("exception", ({ exception }) => {
         console.warn(exception);
       });
 
-      // --- Connect to the session with a valid user token ---
-
-      // 'getToken' method is simulating what your server-side should do.
-      // 'token' parameter should be retrieved and returned by your own backend
       this.getToken(this.mySessionId).then((token) => {
         this.session
           .connect(token, { clientData: this.myUserName })
@@ -416,7 +404,7 @@ export default {
   },
 };
 </script>
-<style scped>
+<style scoped>
 #main-container{
     min-height: 100vh;
     min-width: 100vw;
@@ -555,15 +543,6 @@ export default {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     margin: 16px 0;
 }
-.userSTT{
-    width: 30vw;
-    height: 65vh;
-    border-radius: 10px;
-    background-color: white;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 16px 0;
-
-}
 .tabs{
     width: 35vw;
     height: 65vh;
@@ -642,18 +621,14 @@ export default {
     padding: 24px 24px 0 24px;
 }
 .chatlist{
-    width: 34vw;
+    width: 35vw - 48px;
     height: 55vh;
     border: none;
+    overflow-y: auto;
 }
-.chatlist textarea{
-    width: 34vw;
-    height: 56vh;
-    border: none;
-    margin: 1vh 1vw;
-}
+
 .chatform{
-    width: 33vw;
+    width: 35vw - 48px;
     height: 5vh;
     border: none;
     border-radius: 30px;
@@ -664,7 +639,7 @@ export default {
     align-items: center;
 }
 .chatinput{
-    width: 29vw;
+    width: 28vw;
     height: 4vh;
     border: none;
     margin: 0 8px 0 0;
@@ -675,11 +650,9 @@ export default {
     border: none;
 }
 .chatsubmit{
-    width: 2vw;
-    height: 2vw;
     border: none;
     border-radius: 20px;
-    margin: 2px 2px 0 2px;
+    margin: 2px 8px 0 2px;
     background-color: #EAEAEA;
     display: flex;
     align-items: center;

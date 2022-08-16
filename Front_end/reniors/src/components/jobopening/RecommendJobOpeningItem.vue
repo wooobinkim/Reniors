@@ -1,32 +1,28 @@
 <template>
-  <div @click="movejobopening()" class="jobopening-item">
+  <router-link
+    class="jobopening-item"
+    :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }"
+  >
     <div>
       <p class="jobopening-item-company">{{ jobopening.companyName }}</p>
-      <p class="jobopening-item-title">{{ jobopening.title }}</p>
+      <p class="jobopening-item-title prevent-overflow">
+        {{ jobopening.title }}
+      </p>
     </div>
-    <div class="jobopening-item-second">
-      <span class="jobopening-item-te">{{ jobopening.typeEmployment }}</span>
-      <span class="jobopening-item-ms">연봉</span>
-      <span>{{ jobopening.minSalary / 10000 }}만원</span>
-    </div>
-    <div class="jobopening-item-third">
-      <i class="bi bi-geo-alt-fill"
-        >{{ jobopening.sido }} {{ jobopening.gugun }}</i
-      >
-    </div>
-    <p class="jobopening-item-period">{{ createDate }} ~ {{ finishedDate }}</p>
-  </div>
+
+    <p class="jobopening-item-period">
+      {{ createDate }} ~ <br />{{ finishedDate }}
+    </p>
+  </router-link>
 </template>
 
-<script>
+<script scoped>
 export default {
-  name: "ConditionResultItem",
+  name: "JobopeningItem",
   props: {
     jobopening: Object,
   },
   setup(props) {
-    const bookmark = () => console.log("bookmark");
-
     const stringToDate = (rawDate) => {
       let dateComponents = rawDate.split("T");
       let datePieces = dateComponents[0].split("-");
@@ -52,18 +48,9 @@ export default {
     const finishedDate = tSBF(stringToDate(props.jobopening?.finishedDate));
 
     return {
-      bookmark,
       createDate,
       finishedDate,
     };
-  },
-  methods: {
-    movejobopening() {
-      this.$router.push({
-        name: "JobopeningDetail",
-        params: { jobopeningId: this.jobopening.id },
-      });
-    },
   },
 };
 </script>
@@ -79,9 +66,17 @@ export default {
   border-radius: 0.4rem;
   margin: 10px 10px;
   padding: 10px;
-  height: 150px;
+  height: 130px;
+  width: 140px;
   text-decoration: none;
-  cursor: pointer;
+}
+
+.prevent-overflow {
+  overflow-x: auto;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
 }
 
 .jobopening-item p {
@@ -95,7 +90,7 @@ export default {
   overflow: hidden;
   -webkit-line-clamp: 1;
   color: black;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .jobopening-item-title {
@@ -104,37 +99,15 @@ export default {
   overflow: hidden;
   -webkit-line-clamp: 1;
   color: black;
-  font-size: 20px;
+  font-size: 17px;
   /* text-decoration-line: underline; */
   -webkit-line-clamp: 3;
   font-weight: bold;
 }
 
-.jobopening-item-second {
-  display: flex;
-  font-size: 14px;
-  font-weight: bold;
-}
-.jobopening-item-second > span:first-child {
-  color: #37bf99;
-  margin-right: 16px;
-}
-.jobopening-item-second > span:nth-child(2) {
-  color: #f28a07;
-  margin-right: 5px;
-}
-.jobopening-item-second > span:nth-child(3) {
-  color: black;
-}
-.jobopening-item-third {
-  color: var(--color-black-1);
-  display: flex;
-  font-size: 10px;
-  font-weight: bold;
-}
 .jobopening-item-period {
   margin-top: 10px;
-  color: var(--color-black-1);
+  color: var(--color-green-1);
   font-size: 10px;
 }
 </style>

@@ -11,7 +11,7 @@
       <h4>이 기업의 다른 채용 공고</h4>
       <hr class="small">
       <div class="jobopening-detail-list">
-        <div class="jobopening-detail-content" v-for="(jobopening, index) in jobopening.companyJobOpening" :key="index">
+        <div class="jobopening-detail-content" v-for="(jobopening, index) in jobopening.companyJobOpening" :key="index" @click="movejobopening(jobopening.id)">
           <p class="jobopening-detail-content-title">{{ jobopening.title }}</p>
           <p class="jobopening-detail-content-period">~ {{ jobopening.finishedDate?.split('T')[0] }}</p>
         </div>
@@ -38,6 +38,12 @@ export default {
 
     return {
       jobopening, company
+    }
+  },
+  methods:{
+    movejobopening(data){
+      // console.log(data);
+      this.$router.push({ name: 'JobopeningDetail', params: { jobopeningId: data} });
     }
   }
 }

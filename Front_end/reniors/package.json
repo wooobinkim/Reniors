@@ -28,10 +28,12 @@
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
     "openvidu-browser": "^2.22.0",
+    "sweetalert2": "^11.4.26",
     "vue": "^3.2.37",
     "vue-jwt-decode": "^0.1.0",
     "vue-router": "^4.0.3",
     "vue-stepper": "^1.4.2",
+    "vue-sweetalert2": "^5.0.5",
     "vue3-datepicker": "^0.3.4",
     "vuex": "^4.0.0",
     "vuex-persistedstate": "^4.1.0"

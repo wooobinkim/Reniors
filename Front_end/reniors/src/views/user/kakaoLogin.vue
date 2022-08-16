@@ -1,88 +1,128 @@
 <template>
   <div class="container">
     <div class="kakaoform">
-      <img style="width: 128px; max-height: 170px;" alt="logo" src="@/assets/logo.png" />
-      <br>
-      <br>
-      <hr>
+      <img
+        style="width: 128px; max-height: 170px"
+        alt="logo"
+        src="@/assets/logo.png"
+      />
+      <br />
+      <br />
+      <hr />
       <div>
-        <p style="font-size: 14px">리니어즈 이용을 위한 추가정보를 입력해주세요!</p>
-        <br>
-        <p class="forminfo">이름</p>
-        <b-form-input class="mb-3 user-form-control" v-model="forms.name" type="text" placeholder="이름을 입력해주세요." ></b-form-input>
-        <p class="forminfo">휴대전화</p>
-        <b-form-input class="mb-3 user-form-control" v-model="forms.phone" type="text" placeholder="예시)01012345678" ></b-form-input>
-        <p class="forminfo">주소</p>
+        <p style="font-size: 14px">
+          리니어즈 이용을 위한 추가정보를 입력해주세요!
+        </p>
+        <br />
+        <p class="forminfo">이름<span class="required">&nbsp;&nbsp;*</span></p>
+        <b-form-input
+          class="mb-3 user-form-control"
+          v-model="forms.name"
+          type="text"
+          placeholder="이름을 입력해주세요."
+        ></b-form-input>
+        <p class="forminfo">
+          휴대전화<span class="required">&nbsp;&nbsp;*</span>
+        </p>
+        <b-form-input
+          class="mb-3 user-form-control"
+          v-model="forms.phone"
+          type="text"
+          placeholder="예시)01012345678"
+        ></b-form-input>
+        <p class="forminfo">주소<span class="required">&nbsp;&nbsp;*</span></p>
         <div class="address">
-          <b-form-input class="mb-3 user-form-control" style="width:90%;" v-model="forms.address" type="text" placeholder="주소 검색" ></b-form-input>
-          <button class="search" style="margin-bottom:16px;" @click="execDaumPostcode()" type="button" value="우편번호 찾기" ><img src="@/assets/searching.png" alt="search"></button>
+          <b-form-input
+            class="mb-3 user-form-control"
+            style="width: 90%"
+            v-model="forms.address"
+            type="text"
+            placeholder="주소 검색"
+            readonly
+          ></b-form-input>
+          <button
+            class="search"
+            style="margin-bottom: 16px"
+            @click="execDaumPostcode()"
+            type="button"
+            value="우편번호 찾기"
+          >
+            <img src="@/assets/searching.png" alt="search" />
+          </button>
         </div>
-        <b-form-input class="mb-3 user-form-control" v-model="forms.extraAddress" type="text" placeholder="상세주소를 입력해주세요" ></b-form-input>
-        <p class="forminfo">최종학력</p>
-        <b-form-select class="mb-3 user-form-control" v-model="forms.lastEdu">            
+        <b-form-input
+          class="mb-3 user-form-control"
+          v-model="forms.extraAddress"
+          type="text"
+          placeholder="상세주소를 입력해주세요"
+        ></b-form-input>
+        <p class="forminfo">
+          최종학력<span class="required">&nbsp;&nbsp;*</span>
+        </p>
+        <b-form-select class="mb-3 user-form-control" v-model="forms.lastEdu">
           <option
             v-for="lastedu in lastedus"
             :value="lastedu.value"
             :key="lastedu"
           >
             {{ lastedu.text }}
-          </option></b-form-select>
-          <p class="forminfo">생년월일</p>
-          <b-form-input class="mb-3 user-form-control" v-model="forms.birth" type="date" placeholder="생년-월-일" ></b-form-input>
-          <div class="mb-3 mt-3">
-            <p class="forminfo">프로필 사진</p>
-            <input
-              type="file"
-              class="form-control user-form-control"
-              placeholder="이미지를 선택해주세요"
-              ref = "img"
-              @change="changeImg()"
-            />
-          </div>
-        <button
-          id="LoginBtn"
-          @click="kregist()"
+          </option></b-form-select
         >
-          완료!
-        </button>
+        <p class="forminfo">생년월일</p>
+        <b-form-input
+          class="mb-3 user-form-control"
+          v-model="forms.birth"
+          type="date"
+          placeholder="생년-월-일"
+        ></b-form-input>
+        <div class="mb-3 mt-3">
+          <p class="forminfo">프로필 사진</p>
+          <input
+            type="file"
+            class="form-control user-form-control"
+            placeholder="이미지를 선택해주세요"
+            ref="img"
+            @change="changeImg()"
+          />
+        </div>
+        <button id="LoginBtn" @click="kregist()">완료!</button>
       </div>
     </div>
   </div>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import axios from 'axios'
-
+import axios from "axios";
 
 export default {
-  name: 'kakaoLogin',
+  name: "kakaoLogin",
   components: {},
   data() {
     return {
-      codes: '',
+      codes: "",
       forms: {
-        name: '',
-        phone: '',
-        address: '',
-        extraAddress: '',
+        name: "",
+        phone: "",
+        address: "",
+        extraAddress: "",
         lastEdu: null,
-        birth: '',
-        gender: '',
-        isOpen: 'CLOSE',
-        kakaoId: '',
+        birth: "",
+        gender: "",
+        isOpen: "CLOSE",
+        kakaoId: "",
         totalCareer: 0,
-        userProfile: ''
+        userProfile: "",
       },
       info: {
-        email: '',
-        gender: ''
+        email: "",
+        gender: "",
       },
-      userImg:'',
-    }
+      userImg: "",
+    };
   },
   setup() {},
   created() {
-    this.create()
+    this.create();
   },
   computed: {
     ...mapState("category", ["lastedus"]),
@@ -90,52 +130,55 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
-    ...mapActions(["kakaologin","kakaoRegist"]),
-    changeImg(){
+    ...mapActions(["kakaologin", "kakaoRegist"]),
+    changeImg() {
       this.userImg = this.$refs.img.files;
       console.log(this.userImg);
     },
-    create(){
-      this.codes = this.$route.query.code
-      this.getInfo()
+    create() {
+      this.codes = this.$route.query.code;
+      this.getInfo();
     },
-    getInfo(){
+    getInfo() {
       axios
-        .get("https://i7b307.p.ssafy.io/api/users/kakao/callback?code=" + this.codes)
+        .get(
+          "https://i7b307.p.ssafy.io/api/users/kakao/callback?code=" +
+            this.codes,
+        )
         .then((res) => {
-          console.log(res)
-          this.forms.kakaoId = res.data.kakaoUserInfo.email
-          this.forms.gender = res.data.kakaoUserInfo.gender
-          this.info.email = res.data.kakaoUserInfo.email
-          this.info.gender = res.data.kakaoUserInfo.gender
-          this.check(this.info)
+          console.log(res);
+          this.forms.kakaoId = res.data.kakaoUserInfo.email;
+          this.forms.gender = res.data.kakaoUserInfo.gender;
+          this.info.email = res.data.kakaoUserInfo.email;
+          this.info.gender = res.data.kakaoUserInfo.gender;
+          this.check(this.info);
         })
         .catch((err) => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     },
-    check(info){
+    check(info) {
       axios({
         url: "https://i7b307.p.ssafy.io/api/users/kakao/check",
         method: "post",
-        data: JSON.stringify(info) 
+        data: JSON.stringify(info),
       })
-      .then((res) => {
-        console.log(res)
-        if (res.data.res) {
-          this.kakaologin(this.info)
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        .then((res) => {
+          console.log(res);
+          if (res.data.res) {
+            this.kakaologin(this.info);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
 
     // klogin(info){
     //   axios({
     //     url: "https://i7b307.p.ssafy.io/api/users/kakao/login",
     //     method: "post",
-    //     data: JSON.stringify(info) 
+    //     data: JSON.stringify(info)
     //   })
     //   .then((res) => {
     //     console.log(res)
@@ -146,13 +189,15 @@ export default {
     //   })
     // },
 
-    kregist(){
-      const formData = new FormData()
-      formData.append('img', this.userImg[0])
-      formData.append('data', new Blob([JSON.stringify(this.forms)],{type : "application/json"}))
+    kregist() {
+      const formData = new FormData();
+      formData.append("img", this.userImg[0]);
+      formData.append(
+        "data",
+        new Blob([JSON.stringify(this.forms)], { type: "application/json" }),
+      );
 
-      this.kakaoRegist(formData)
-    
+      this.kakaoRegist(formData);
     },
 
     execDaumPostcode() {
@@ -168,7 +213,7 @@ export default {
             // 사용자가 지번 주소를 선택했을 경우(J)
             this.forms.address = data.jibunAddress;
           }
- 
+
           // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
           if (data.userSelectedType === "R") {
             // 법정동명이 있을 경우 추가한다. (법정리는 제외)
@@ -201,67 +246,72 @@ export default {
     //   })
     //   .then((res) => {
 
-        
     //     console.log(res)
     //   })
     //   .catch((err) => {
     //     console.log(err)
     //   })
     // }
-    
-    
-  }
-}
+  },
+};
 </script>
 <style scoped>
-  .findform {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh;
-  }
+.kakaoform {
+  margin-bottom: 6vh;
+}
 
-  p{
-    color: #0F0F0F;
-    font-weight: 800;
-    font-size: 16px;
-  }
+.findform {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
 
-  .forminfo {
-    color: #8A8A8A;
-    font-weight: 400;
-    font-size: 13px;
-    margin-bottom: 5px;
-    text-align: left;
-  }
+p {
+  color: #0f0f0f;
+  font-weight: 800;
+  font-size: 16px;
+}
 
-  .address{
-    display: flex;
-    justify-content: space-between;    
-  }
+.required {
+  font-size: 13px;
+  color: var(--color-red-1);
+}
 
-  .search{
-    border: 0px;
-    background-color:transparent;
-  }
+.forminfo {
+  color: #8a8a8a;
+  font-weight: 400;
+  font-size: 13px;
+  margin-bottom: 5px;
+  text-align: left;
+}
 
-  #LoginBtn {
-    background-color: var(--color-red-2);
-    width: 100%;
-    height: 40px;
-    border-radius: 10px;
-    border: none;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
-    cursor: pointer;
-  }
+.address {
+  display: flex;
+  justify-content: space-between;
+}
 
-  .user-form-control:focus{
-  border-color: var(--color-red-2) !important; 
+.search {
+  border: 0px;
+  background-color: transparent;
+}
+
+#LoginBtn {
+  background-color: var(--color-red-2);
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
+  cursor: pointer;
+}
+
+.user-form-control:focus {
+  border-color: var(--color-red-2) !important;
   box-shadow: inset 0 1px 1px var(--color-red-1), 0 0 8px var(--color-red-2) !important;
-  }
+}
 </style>
-

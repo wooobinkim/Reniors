@@ -1,6 +1,11 @@
 <template>
   <div class="container">
-    <b-container :toast="{root: true}" fluid="sm" position="position-fixed" style="z-index: 999;"></b-container>
+    <b-container
+      :toast="{ root: true }"
+      fluid="sm"
+      position="position-fixed"
+      style="z-index: 999"
+    ></b-container>
     <router-view class="app-view" />
     <template v-if="!this.isCompanyLogin">
       <FooterComponent />
@@ -20,18 +25,19 @@ export default {
   name: "App",
   components: {
     FooterComponent,
-    CompanyFooterComponent
-},
-  computed:{
-    ...mapGetters("company",["isCompanyLogin"]),
+    CompanyFooterComponent,
   },
-  created(){
-    console.log(this.isCompanyLogin);
+  computed: {
+    ...mapGetters("company", ["isCompanyLogin"]),
   },
+  created() {},
 };
 </script>
 
 <style>
+* {
+  font-family: "Happiness-Sans-Regular";
+}
 :root {
   --color-red-1: #f3620f;
   --color-red-2: #ff843e;
@@ -57,11 +63,40 @@ export default {
   --color-black-5: #f9f9f9;
 }
 
+@font-face {
+  font-family: "S-CoreDream-3Light";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard-Light";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Light.woff")
+    format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Happiness-Sans-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/Happiness-Sans-Regular.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "IBMPlexSansKR-Light";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding : 0 0 0 0;
+  padding: 0 0 0 0;
 }
 
 .app-view {
