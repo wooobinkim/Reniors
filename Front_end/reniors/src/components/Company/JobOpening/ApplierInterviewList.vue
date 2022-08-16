@@ -10,7 +10,7 @@
       >
         <div>
           <input
-            :value="apply.id"
+            :value="apply"
             type="checkbox"
             v-model="passUser"
             class="apply-interview-list-checkbox"
@@ -58,17 +58,21 @@ export default {
       "progressJobOpening",
       "updateApply",
     ]),
+    ...mapActions("home", ["createNotice"]),
     interviewpass() {
       if (confirm("선택된 지원자의 상태를 최종 합격으로 변경하시겠습니까?")) {
         console.log("면접합격자");
         this.passUser.forEach((data) => {
-          console.log(data);
           this.updateApply({
             jobOpeningId: this.jobopeningdetail.id,
-            applyId: data,
+            applyId: data.id,
             apply: {
               jobOpeningProcess: "최종합격",
             },
+          });
+          this.createNotice({
+            userId: data.userId,
+            applyId: data.id,
           });
         });
 
@@ -83,13 +87,16 @@ export default {
         });
         let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
         unpassUser.forEach((data) => {
-          console.log(data);
           this.updateApply({
             jobOpeningId: this.jobopeningdetail.id,
-            applyId: data,
+            applyId: data.id,
             apply: {
               jobOpeningProcess: "면접불합격",
             },
+          });
+          this.createNotice({
+            userId: data.userId,
+            applyId: data.id,
           });
         });
 
