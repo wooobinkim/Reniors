@@ -56,40 +56,42 @@ export default {
       "updateApply",
     ]),
     resumepass() {
-      this.passUser.forEach((data) => {
-        this.updateApply({
-          jobOpeningId: this.jobopeningdetail.id,
-          applyId: data,
-          apply: {
-            jobOpeningProcess: "면접",
-          },
+      if (confirm("선택된 지원자의 상태를 서류 합격으로 변경하시겠습니까?")) {
+        this.passUser.forEach((data) => {
+          this.updateApply({
+            jobOpeningId: this.jobopeningdetail.id,
+            applyId: data,
+            apply: {
+              jobOpeningProcess: "면접",
+            },
+          });
         });
-      });
 
-      let tmparr = [];
-      this.applylist.forEach((apply) => {
-        if (apply.jobOpeningProcess == "서류심사중") {
-          tmparr.push(apply.id);
-        }
-      });
-      let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
-      unpassUser.forEach((data) => {
-        this.updateApply({
-          jobOpeningId: this.jobopeningdetail.id,
-          applyId: data,
-          apply: {
-            jobOpeningProcess: "서류불합격",
-          },
+        let tmparr = [];
+        this.applylist.forEach((apply) => {
+          if (apply.jobOpeningProcess == "서류심사중") {
+            tmparr.push(apply.id);
+          }
         });
-      });
+        let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
+        unpassUser.forEach((data) => {
+          this.updateApply({
+            jobOpeningId: this.jobopeningdetail.id,
+            applyId: data,
+            apply: {
+              jobOpeningProcess: "서류불합격",
+            },
+          });
+        });
 
-      let data = {
-        no: this.jobopeningdetail.id,
-        progress: {
-          jobOpeningProcess: "면접심사중",
-        },
-      };
-      this.progressJobOpening(data);
+        let data = {
+          no: this.jobopeningdetail.id,
+          progress: {
+            jobOpeningProcess: "면접심사중",
+          },
+        };
+        this.progressJobOpening(data);
+      }
     },
 
     resumeview() {

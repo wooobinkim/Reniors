@@ -8,8 +8,8 @@ export default {
   namespaced: true,
   state: {
     token: localStorage.getItem("token") || "",
-    isCompanyLogin:null,
-    header:"",
+    isCompanyLogin: null,
+    header: "",
     currentUser: {},
     profile: {},
     authError: null,
@@ -33,7 +33,7 @@ export default {
   getters: {
     isLogginedIn: (state) => !!state.token,
     currentUser: (state) => state.currentUser,
-    isCompanyLogin:(state)=>state.isCompanyLogin,
+    isCompanyLogin: (state) => state.isCompanyLogin,
     profile: (state) => state.profile,
     authError: (state) => state.authError,
     // Authorization: `Token ${state.token}`
@@ -58,8 +58,8 @@ export default {
   mutations: {
     SET_TOKEN: (state, token) => (state.token = token),
     GET_TOKEN: (state) => console.log(state.token),
-    IS_COMPANY_LOGIN_TRUE:(state)=>(state.isCompanyLogin=true),
-    IS_COMPANY_LOGIN_FALSE:(state)=>(state.isCompanyLogin=false),
+    IS_COMPANY_LOGIN_TRUE: (state) => (state.isCompanyLogin = true),
+    IS_COMPANY_LOGIN_FALSE: (state) => (state.isCompanyLogin = false),
     SET_CURRENT_USER: (state, user) => (state.currentUser = user),
     SET_PROFILE: (state, profile) => (state.profile = profile),
     SET_AUTH_ERROR: (state, error) => (state.authError = error),
@@ -161,28 +161,32 @@ export default {
 
     // error 커밋 추가
     companylogin({ dispatch }, credentials) {
-      console.log(credentials);
       axios({
         // url 수정
 
         url: "https://i7b307.p.ssafy.io/api/company/login",
         method: "post",
         data: credentials,
-      }).then((res) => {
-        const token = res.headers["authorization"];
-        dispatch("saveToken", token);
-        // dispatch("fetchCurrentUser");
-        // router 수정
-        router.push({ name: "company" });
-      });
-      // error 부분 추가
+      })
+        .then((res) => {
+          const token = res.headers["authorization"];
+          dispatch("saveToken", token);
+          // dispatch("fetchCurrentUser");
+          // router 수정
+          router.push({ name: "company" });
+        })
+        .catch(() => {
+          alert(
+            "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n입력하신 내용을 다시 확인해주세요.",
+          );
+        });
     },
 
-    companylogout:({dispatch})=>{
+    companylogout: ({ dispatch }) => {
       dispatch("removeToken");
     },
 
-    registCompany: ({ commit,getters }, formData) => {
+    registCompany: ({ commit, getters }, formData) => {
       // multipart
       //   .post(`/company`, formData)
       axios({
