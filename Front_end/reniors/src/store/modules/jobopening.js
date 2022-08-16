@@ -3,12 +3,12 @@ import drf from '@/api/drf'
 import _ from 'lodash'
 import http from '@/api/http'
 import router from '@/router'
-// import user from "@/store/modules/user.js"
+import { user } from './user'
 
 
 
 export default {
-  // namespaced: true,
+  namespaced: true,
   state: {
     tags: [ '#서울 송파구', '#연봉 3000', '#주5일', '#웹디자인', '#백엔드' ],
     jobopenings: [],
@@ -24,6 +24,10 @@ export default {
     tags: state => state.tags,
     isJobopenings: state => !_.isEmpty(state.jobopenings),
     jobopenings: state => state.jobopenings,
+    authHeader: () => ({
+      Authorization: `Bearer ${user.state.token}`,
+      "Content-type": "Application/JSON",
+    }),
     recommendJobopenings: state => state.recommendJobopenings,
     conditionJobopenings: state => state.conditionJobopenings,
     selectedJobopening: state => state.selectedJobopening,
@@ -81,10 +85,9 @@ export default {
       await axios({
         url:`https://i7b307.p.ssafy.io/api/recommendcondition`,
         method:"get",
-        headers: getters.authHeader,
+        headers:getters.authHeader,
       })
       .then(({data})=>{
-        console.log(data);
         dispatch("fetchJobOpeningRecommend",data.id);
       }).catch((error)=>{
         console.log(error);
@@ -94,10 +97,9 @@ export default {
       await axios({
         url:`https://i7b307.p.ssafy.io/api/jobopening/search/recommend/${data}`,
         method:"get",
-        headers: getters.authHeader,
+        headers:getters.authHeader,
       })
       .then(({data})=>{
-        console.log(data);
         commit("RECOMMENDJOBOPENINGS",data.content);
       }).catch((error)=>{
         console.log(error);

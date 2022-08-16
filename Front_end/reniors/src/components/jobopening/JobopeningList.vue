@@ -26,9 +26,9 @@ export default {
   setup() {
     const store = useStore();
 
-    const jobopenings = computed(() => store.getters["jobopenings"]);
+    const jobopenings = computed(() => store.getters["jobopening/jobopenings"]);
     const isJobopenings = computed(
-      () => store.getters["isJobopenings"]
+      () => store.getters["jobopening/isJobopenings"]
     );
 
     return {
@@ -37,7 +37,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["fetchJobopenings"]),
+    ...mapActions("jobopening",["fetchJobopenings"]),
   },
   created() {
     this.fetchJobopenings();
