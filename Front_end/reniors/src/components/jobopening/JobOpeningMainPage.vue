@@ -34,7 +34,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .jobopening-main-page-btn-top {
   display: flex;
   justify-content: center;

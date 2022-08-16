@@ -42,7 +42,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .detail-apply-button {
   position: sticky;
   border: 1px solid var(--color-yellow-3);
