@@ -13,7 +13,7 @@
     </template>
     <!-- <RecommendTagItem v-for="(tag, index) in tags" :key="index" :tag="tag" /> -->
     <div class="jobopening-list">
-      <div>
+      <div v-if="isrecommend">
         <RecommendJobOpeningItem
           v-for="jobopening in recommendJobopenings"
           :key="jobopening"
