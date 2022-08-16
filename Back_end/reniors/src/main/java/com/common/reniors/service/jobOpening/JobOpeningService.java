@@ -383,7 +383,7 @@ public class JobOpeningService {
         QApply a = new QApply("a");
 
         List<Apply> applyList = jpaQueryFactory.selectFrom(a)
-                .where(a.interviewDate.isNotNull())
+                .where(a.interviewDate.isNotNull().and(a.user.eq(user)))
                 .orderBy(a.interviewDate.asc()).fetch();
 
         List<ApplyResponse> applyResponseList = applyList.stream().map(res->ApplyResponse.response(

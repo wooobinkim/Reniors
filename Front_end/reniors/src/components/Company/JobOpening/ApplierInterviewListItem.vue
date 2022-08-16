@@ -70,7 +70,7 @@ export default {
     ...mapActions("company", ["updateApply", "registRoom"]),
     updateapply() {
       this.applyinfo.jobOpeningProcess = "면접";
-      this.applyinfo.sessionId = this.jobopening.title + this.jobopening.id;
+      this.applyinfo.sessionId = "InterviewSession" + this.jobopening.id;
       let data = {
         jobOpeningId: this.jobopening.id,
         applyId: this.apply.id,
