@@ -49,7 +49,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 /* same as DetailCondition.vue */
 .jobopening-box h5 {
   font-weight: bold;

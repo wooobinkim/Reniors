@@ -93,7 +93,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .youtube-type {
   margin-bottom: 0;
   margin-left: 10px;

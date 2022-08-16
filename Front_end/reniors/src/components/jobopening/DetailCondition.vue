@@ -74,7 +74,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .jobopening-box {
   background-color: white;
   border-radius: 1rem;

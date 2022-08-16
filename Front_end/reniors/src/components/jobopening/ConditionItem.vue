@@ -15,7 +15,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .condition-item {
   display: grid;
   grid-template-columns: 120px 200px;
