@@ -1,4 +1,5 @@
 import http from "@/api/http";
+import router from "@/router";
 // import localtest from "@/api/localtest";
 
 export default {
@@ -27,6 +28,7 @@ export default {
       // );
       console.log(response.data);
       commit("CONDITIONS", response.data);
+      router.push({ name: "Condition" });
     },
     async createCondition({ dispatch }, payload) {
       const data = {
@@ -36,10 +38,10 @@ export default {
         minCareer: payload.minCareer,
         minSalary: payload.minSalary,
         typeEmployment: payload.type,
-        workingDay: payload.day
-      }
-      console.log(data)
-      const response = await http.post('/jobopening/condition', data)
+        workingDay: payload.day,
+      };
+      console.log(data);
+      const response = await http.post("/jobopening/condition", data);
       // const response = await localtest.post(`http://localhost:8080/jobopening/condition`)
       const conditionId = response.data;
       payload.hopeareas.map(async (hopearea) => {
@@ -73,7 +75,8 @@ export default {
       const response = await http.get(`/jobopening/search/${conditionId}`);
       console.log(response);
       console.log(`fetch by ${conditionId}th condition`);
-      commit("JOBOPENINGS", response.data);
+      console.log(response.data);
+      commit("JOBOPENINGS", response.data.content);
     },
   },
 };
