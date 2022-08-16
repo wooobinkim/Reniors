@@ -503,6 +503,7 @@ export default {
     height: 29vh;
     border: none;
     padding: 4px;
+    overflow-y: scroll;
 }
 .chatform{
     width: 83vw;
