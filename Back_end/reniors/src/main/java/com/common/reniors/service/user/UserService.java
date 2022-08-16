@@ -163,15 +163,11 @@ public class UserService {
 
         String email = jsonNode.get("kakao_account").get("email").asText();
         Gender gender = null;
-        if (jsonNode.get("kakao_account").get("gender_needs_agreement").asBoolean()) {
-            String genderKakao = jsonNode.get("kakao_account").get("gender").asText();
-            if (genderKakao.equals("male")) {
-                gender = Gender.M;
-            } else if (genderKakao.equals("female")) {
-                gender = Gender.F;
-            } else {
-                gender = Gender.공개안함;
-            }
+        String genderKakao = jsonNode.get("kakao_account").get("gender").asText();
+        if ("male".equals(genderKakao)) {
+            gender = Gender.M;
+        } else if ("female".equals(genderKakao)) {
+            gender = Gender.F;
         } else {
             gender = Gender.공개안함;
         }

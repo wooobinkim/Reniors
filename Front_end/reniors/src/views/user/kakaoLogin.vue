@@ -38,6 +38,7 @@
             v-model="forms.address"
             type="text"
             placeholder="주소 검색"
+            readonly
           ></b-form-input>
           <button
             class="search"
