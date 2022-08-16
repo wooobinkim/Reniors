@@ -42,7 +42,7 @@ export default {
       state.interview = []
       applies.forEach((apply) => {
 
-        const object = { title: apply.jobOpeningTitle, date: apply.interviewDate, child: apply.jobChildCategoryName }
+        const object = { title: apply.jobOpeningName, date: apply.interviewDate, child: apply.jobChildCategoryName }
         // object.replace (/"/g,'')
 
         // const json = JSON.stringify(object)
