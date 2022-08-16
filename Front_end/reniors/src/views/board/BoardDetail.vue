@@ -1,4 +1,5 @@
 <template>
+<real-header></real-header>
   <div class="board-detail-box">
     <board-head-slider></board-head-slider>
     <div class="title">
@@ -44,10 +45,11 @@
 
 import BoardHeadSlider from '@/components/board/BoardHeadSlider.vue'
 import CommentList from '@/components/board/CommentList.vue';
+import RealHeader from '@/components/RealHeader.vue';
 import { mapActions, mapGetters } from 'vuex';
 export default{ 
     name:'BoardDetail',
-    components:{ CommentList, BoardHeadSlider },
+    components:{ CommentList, BoardHeadSlider, RealHeader },
     data(){
         return{
             'categoryId': this.$route.params.category_id,
