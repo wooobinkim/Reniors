@@ -187,6 +187,33 @@ public class JobOpeningService {
     }
 
     @Transactional
+    //공고 전체조회(검색창)
+    public Page<JobOpeningResponse> getJobOpeningName(NameSearchConditionRequest nameSearchConditionRequest,Pageable pageable){
+        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
+        QJobOpening j = new QJobOpening("j");
+
+        List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
+                .where(
+                        nameSearchConditionRequest.getKey().equals("company")?
+                                j.company.name.contains(nameSearchConditionRequest.getWord()):
+                                j.title.contains(nameSearchConditionRequest.getWord())
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        
+        List<JobOpeningResponse> jobOpeningResponses = jobOpeningList.stream().map(jr->JobOpeningResponse.response(
+                jr
+        )).collect(Collectors.toList());
+
+        long total = jobOpeningResponses.size();
+
+        Page jobOpeningDtoPage = new PageImpl<>(jobOpeningResponses,pageable,total);
+
+        return jobOpeningDtoPage;
+    }
+
+    @Transactional
     //공고 전체조회(조회수 탑10)
     public List<JobOpeningResponse> getJobOpeningViewDesc(){
         List<JobOpening> jobOpeningList = jobOpeningRepository.findTop10ByOrderByViewsDesc();
