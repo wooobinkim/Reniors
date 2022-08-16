@@ -491,6 +491,7 @@ export default {
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
+          window.location.reload();
         })
         .catch((error) => {
           console.log(error);
@@ -522,6 +523,7 @@ export default {
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
+          window.location.reload();
         })
         .catch((error) => {
           console.log(error);
@@ -537,6 +539,7 @@ export default {
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
+          window.location.reload();
         })
         .catch((error) => {
           console.log(error);

@@ -3,7 +3,7 @@
     {{ dateFormat(interviewapply.interviewDate) }}
   </div>
   <div class="interview-list-item">
-    <div class="title">{{ interviewapply.jobOpeningTitle }}</div>
+    <div class="title">{{ interviewapply.jobOpeningName }}</div>
     <div class="name">지원자 : {{ interviewapply.name }}</div>
     <div class="part">
       지원 분야 : {{ interviewapply.jobChildCategoryName }}
