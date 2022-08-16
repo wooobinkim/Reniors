@@ -79,7 +79,6 @@ export default {
     INTERVIEW: (state, applies) => {
       state.interview = [];
       applies.forEach((apply) => {
-
         const object = {
           title: apply.jobOpeningTitle,
           date: apply.interviewDate,
@@ -117,6 +116,21 @@ export default {
       const response = await axios.get(drf.jobopening.get());
       const data = response.data.content;
       commit("JOBOPENINGS", data);
+    },
+    async fetchJobopeningsName({ commit, getters }, data) {
+      await axios({
+        url: `https://i7b307.p.ssafy.io/api/jobopening/search/keyword`,
+        method: "post",
+        headers: getters.authHeader,
+        data: data,
+      })
+        .then(({ data }) => {
+          console.log(data);
+          commit("JOBOPENINGS", data.content);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
 
     //추천조건으로 공고 가져오기

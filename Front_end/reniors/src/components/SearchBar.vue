@@ -1,46 +1,71 @@
 <template>
   <div class="search-bar">
-
-
     <form class="home-search" action="" @submit.prevent="search">
-      <input type="text" name="keyword" class="home-search-text"
-        placeholder="회사명, 직종, 지역 등 검색어를 입력해주세요" v-model="keyword">
-      <font-awesome-icon @click="search" class="home-search-button" icon="fa-solid fa-magnifying-glass" />
+      <select v-model="key" class="form-select search-bar-select">
+        <option value="" disabled selected>키워드</option>
+        <option value="company">회사명</option>
+        <option value="jobopening">공고명</option>
+      </select>
+
+      <input
+        type="text"
+        name="keyword"
+        class="home-search-text"
+        placeholder="회사명, 공고명으로 검색"
+        v-model="word"
+      />
+
+      <font-awesome-icon
+        @click="search()"
+        class="home-search-button"
+        icon="fa-solid fa-magnifying-glass"
+      />
     </form>
   </div>
 </template>
 
 <script>
-import { useStore } from 'vuex'
+import { mapActions } from "vuex";
 
 export default {
-  name: 'SearchBar',
-  components: {
-  },
-  setup() {
-    const store = useStore()
-
-    let keyword = ''
-    const search = function(){
-      store.dispatch('home/search', this.keyword)
-    }  
-
+  name: "SearchBar",
+  components: {},
+  setup() {},
+  data() {
     return {
-      keyword, search
-    }
+      key: "",
+      word: "",
+    };
   },
-
-}
+  methods: {
+    ...mapActions("jobopening", ["fetchJobopeningsName"]),
+    async search() {
+      let keyword = {
+        key: this.key,
+        word: this.word,
+      };
+      await this.fetchJobopeningsName(keyword);
+    },
+  },
+};
 </script>
 
 <style scoped>
+.home-header {
+  color: var(--color-red-1);
+  font-weight: bold;
+  margin: 20px;
+}
 
 .home-search {
-  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
   top: 56px;
   width: 95%;
   max-width: 720px;
   margin-bottom: 15px;
+  margin-top: 10px;
 }
 
 .home-search-text {
@@ -49,20 +74,32 @@ export default {
   border: 1px solid var(--color-black-4);
   border-radius: 2rem;
   height: 40px;
-  width: 100%;
+  width: 250px;
   padding: 0 20px;
   font-size: 14px;
+}
+
+.search-bar-select {
+  width: 90px;
+  font-size: 14px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+select option[value=""][disabled] {
+  display: none;
 }
 
 @media screen and (min-width: 720px) {
   .search-bar {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
   }
 
   .home-search {
     align-self: center;
-    margin-top: 40px;
+    margin-top: 10px;
+    width: 500px;
   }
   .home-search-text {
     width: 40vh;
@@ -74,7 +111,7 @@ export default {
   right: 15px;
   top: 6px;
   height: 25px;
-  width: 25px;
+  width: 15px;
   color: var(--color-black-2);
 }
 
