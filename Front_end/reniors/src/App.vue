@@ -25,9 +25,6 @@ export default {
   computed:{
     ...mapGetters("company",["isCompanyLogin"]),
   },
-  created(){
-    console.log(this.isCompanyLogin);
-  },
 };
 </script>
 

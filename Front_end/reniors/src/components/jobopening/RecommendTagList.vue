@@ -45,10 +45,10 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(["recommendJobopenings"]),
+    ...mapGetters("jobopening",["recommendJobopenings"]),
   },
   methods:{
-    ...mapActions(["fetchRecommend"]),
+    ...mapActions("jobopening",["fetchRecommend"]),
   },
   created(){
     this.fetchRecommend();
