@@ -26,15 +26,9 @@ public class BoardResponse {
     @NotBlank
     String userName;
 
-    @NotNull
-    String baseURL;
-
-    @NotNull
-    String userProfile;
-
     @NotNull LocalDateTime updatedAt;
 
     public static BoardResponse response(Board board){
-        return new BoardResponse(board.getId(), board.getTitle(),board.getUser().getId(), board.getUser().getName(), board.getUser().getBaseURL(), board.getUser().getUserProfile(), board.getUpdatedAt());
+        return new BoardResponse(board.getId(), board.getTitle(),board.getUser().getId(), board.getUser().getName(), board.getUpdatedAt());
     }
 }
