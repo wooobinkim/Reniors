@@ -1,29 +1,19 @@
 <template>
   <div id="main-container" >
-    <div id="join" v-if="!session" class="join row">
-      <!-- left -->
-        <div class="col-6 lefttop">
+    <div id="join" v-if="!session" class="join">
+      <!-- top -->
+        <div class="row-6 lefttop">
             <div class="left">
                 <div class="header-logo">
                   <img src="@/assets/logo.png" />
-                  <p><span style="color:#37BF99">{{companyName}}</span>의 면접입니다.</p>
-                  <br>
-                  <div class="tips">
-                    <div>
-                        <p style="font-size:16px; margin:8px 24px;">🙂화상면접 Tips🙂</p>
-                        <p>1. 카메라 위치 및 조명을 조정해보세요:) </p>
-                        <p>2. 깔끔한 배경과 조용한 공간이 바람직합니다:) </p>
-                        <p>3. 카메라를 집중력있게 응시한다면 자신감을 충분히 전달할 수 있어요:)</p>
-                        <p>4. 깔끔한 복장은 좋은 인상을 주는데 도움이 됩니다:)</p>
-                        <p>5. <span style="color: #FF843E">리니어즈</span>의 화상면접 연습을 활용해보세요:)</p>
-                    </div>
-                  </div>
+                  <p><span style="color:#37BF99">{{companyName}}</span>의 </p>
+                  <p>면접입니다.</p>
                 </div>
             </div>
         </div>
 
-    <!-- right -->
-        <div class="righttop col-6">
+    <!-- bottom -->
+        <div class="righttop">
             <div class="right">
                 <div class="fomrs">
                     <div style="margin: 16px 0;">
@@ -55,49 +45,55 @@
       
     </div>
 
-    <div id="session" v-if="session" class="insession row">
+    <div id="session" v-if="session" class="insession">
         <!-- left -->
-        <div class="col-6">
-            <div id="video-container" >
+        <div class="sessionvideo">
+            <!-- 상대방 -->
+            <div>
+                <user-video
+                :stream-manager="subscribers[0]"
+                @click="updateMainVideoStreamManager(subscribers[0])"
+                class="myvideo"
+                />
+            </div>
+            <!-- 본인 -->
+            <div id="video-container" v-if="!chatopenclose">
                 <user-video
                 :stream-manager="publisher"
                 @click="updateMainVideoStreamManager(publisher)"
                 class="myvideo"
                 />
             </div>
-            <div>
-                <user-video
-                v-for="sub in subscribers"
-                :key="sub.stream.connection.connectionId"
-                :stream-manager="sub"
-                @click="updateMainVideoStreamManager(sub)"
-                class="myvideo"
-                />
+
+            <!-- 채팅 -->
+            <div class="chatbox" v-if="chatopenclose">
+              <div class="chatlist">
+                <div v-for="msg in receivemsg" :key="msg" >
+                  <div v-if="msg.name == this.myUserName" class="chatitem">
+                    <div class="mename"><p style="margin:0;">{{myUserName.slice(0,1)}}</p></div>
+                    <div class="datadata"><p style="margin:0;">{{msg.data}}</p></div>
+                  </div>
+                  <div v-if="msg.name !== this.myUserName" class="chatitem">
+                    <div class="youname"><p style="margin:0;">{{interviewer.slice(0,1)}}</p></div>
+                    <div class="datadata"><p style="margin:0;">{{msg.data}}</p></div>
+                  </div>
+                </div>
+              </div>
+              <div class="chatform">
+                <p style="width: 1vw">  </p>
+                <input class="chatinput" @keyup.enter="sendchat()" type="text" v-model="sendmsg" />
+                <button class="chatsubmit" @click="sendchat()"><i class="bi bi-send"></i></button>
+              </div>
             </div>
-      
+
       </div>
 
       <!-- right -->
-      <div class="col-6" style="margin:0; padding:0;">
-        <div class="userSTT" v-if="!chatopenclose">
-
-        </div>
-        <div class="chatbox" v-if="chatopenclose">
-            <template v-for="msg in receivemsg" :key="msg">
-          <div>{{msg}}</div>
-        </template>
-
-            <!-- <div class="chatlist"><textarea v-model="receivemsg" /></div> -->
-            <div class="chatform">
-                <p style="width: 1vw">  </p>
-                <input class="chatinput" @keyup.enter="sendchat()" type="text" v-model="sendmsg" />
-                <button class="chatsubmit" @click="sendchat()"><i class="bi bi-send"></i></button>    
-
-            </div>
-        </div>
+      <div style="margin:0; padding:0;">
+        
 
         <div class="rightbtn">
-            <button @click="chatopen()" class="chatbtn"><i class="bi bi-chat-dots-fill"></i></button>
+            <button @click="chatopen()" :class="{'chatbtn':!alram, 'chatbtn1':alram}"><i class="bi bi-chat-dots-fill"></i></button>
             <template v-if="audioflag">
                 <button @click="audioonoff()" class="videobtn"><i class="bi bi-mic"></i></button>
             </template>
@@ -136,7 +132,7 @@ const OPENVIDU_SERVER_URL = "https://" + "i7b307openvidu.ssafy.io" + ":4443";
 const OPENVIDU_SERVER_SECRET = "reniors";
 
 export default {
-  name: "App",
+  name: "UserInterview",
   props: {
     userId: Number,
     jobOpeningId: Number,
@@ -164,14 +160,7 @@ export default {
       chatopenclose: false,
       companyName: '',
       sessionleave:false,
-
-      tips:[
-        "카메라 위치 및 조명을 조정하면 더 좋습니다!",  
-        "깔끔한 배경과 조용한 공간이 바람직합니다:)", 
-        "카메라를 집중력있게 응시한다면 자신감을 충분히 전달할 수 있어요:)",
-        "깔끔한 복장은 좋은 인상을 주는데 도움이 됩니다:)",
-        ],
-      
+      alram: false,
     
     };
   },
@@ -189,10 +178,15 @@ export default {
           let name = event.from.data;
           name = name.substr(15);
           name = name.substring(0,name.length-2);
-        this.receivemsg.push(name +" : "+ event.data);
+        this.receivemsg.push({name:name, data: event.data});
         });
       }
     },
+    receivemsg: function(){
+      if(!this.chatopenclose){
+        this.alram = true
+      }
+    }
   },
   created() {
         this.fetchCurrentUser(),
@@ -229,6 +223,7 @@ export default {
     },
     chatopen() {
       this.chatopenclose = !this.chatopenclose;
+      this.alram = false
     },
     audioonoff() {
       this.audioflag = !this.audioflag;
@@ -375,14 +370,13 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 #main-container{
     min-height: 100vh;
     min-width: 100vw;
     background-color: #FFF5F0;
     display: flex;
     align-items: center;
-    justify-content: center;
 
 }
 .join{
@@ -391,52 +385,30 @@ export default {
     border-radius: 20px;
     border: none;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    background: linear-gradient(90deg,  white 50%, #FF843E 50%);
-
+    background: linear-gradient(white 50%, #FF843E 50%);
+    margin: auto;
 }
 .header-logo {
-  width: 50%;
+  height: 40vh;
   height: auto;
-  margin: 0 32px;
 }
 .header-logo p{
     font-weight: bold;
     font-size: 24px;
-    width: 400px;
+    width: 200px;
     text-align: left;
-    margin:0 32px;
+    margin: 0;
     
-}
-.tips{
-    width: 500px;
-    height: 200px;
-    border: none;
-    border-radius: 10px;
-    background-color:#FFF5F0;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    margin: 16px 0; 
-    display: flex;
-    align-items: center;
-}
-.tips p{
-    width: 450px;
-    font-size: 14px;
-    margin: 0 0 2px 28px;
 }
 .lefttop{
     display: flex;
     align-items: center;
-    /* justify-content: center; */
-    padding: 64px
-}
-.left{
-    display: flex;
-    align-items: center;
+    justify-content: center;
+    height: 40vh;
 }
 .righttop{
     display: flex;
     align-items: center;
-    padding: 64px;
     justify-content: center;
 }
 .right{
@@ -447,8 +419,8 @@ export default {
 .rightinput{
     margin: auto;
     display: block;
-    width: 480px;
-    height: 48px;
+    width: 70vw;
+    height: 6vh;
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -465,7 +437,7 @@ export default {
 }
 .label{
     text-align: left;
-    font-size: 20px;
+    font-size: 16px;
     color:white;
     margin: 0 12px;
     font-weight: bold;
@@ -475,75 +447,66 @@ export default {
     margin: 8px;
 }
 .submitBtn button{
-    width: 480px;
-    height: 48px;
+    width: 70vw;
+    height: 6vh;
     background-color: #FFB400;
-    opacity:0.7;
     color: white;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     border: none;
     border-radius: 5px;
     margin: 8px 0;
 }
-.submitBtn button:hover{
-    background-color: #FFB400;
-    opacity: 1;
-}
 
 .header-logo > img {
-  height: 100px;
-  width: 400px;
+  height: 50px;
+  width: 240px;
   object-fit: cover;
-  margin: 16px 0;
+  margin: 24px 0;
 }
 
 /* IN session */
 
 .insession{
-    width: 80vw;
-    height: 80vh;
+    width: 100vw;
+    height: 90vh;
+}
+.sessionvideo{
+  width: 90vw;
+  height: 75vh;
+  margin: 0 auto;
+  padding: 16px 0 0 0;
 }
 .myvideo{
-    width: 35vw;
-    height: 38vh;
+    width: 85vw;
+    height: 35vh;
     background-color: rgba(100, 100, 111, 0.2);
     border-radius: 5px;
     border: none;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    margin: 16px 0;
+    margin: 16px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.userSTT{
-    width: 30vw;
-    height: 65vh;
-    border-radius: 10px;
-    background-color: white;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 16px 0;
 
-}
 .chatbox{
-    width: 30vw;
-    height: 65vh;
+    width: 85vw;
+    height: 35vh;
     border-radius: 10px;
     background-color: white;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 16px 0;
+    margin: 16px auto;
 }
 .chatlist{
-    width: 30vw;
-    height: 59vh;
+    width: 85vw;
+    height: 29vh;
     border: none;
-}
-.chatlist textarea{
-    width: 28vw;
-    height: 56vh;
-    border: none;
-    margin: 1vh 1vw;
+    padding: 4px;
 }
 .chatform{
-    width: 29vw;
-    height: 5vh;
+    width: 83vw;
+    height: 4vh;
     border: none;
     border-radius: 30px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -553,10 +516,10 @@ export default {
     align-items: center;
 }
 .chatinput{
-    width: 24vw;
-    height: 4vh;
+    width: 72vw;
+    height: 3vh;
     border: none;
-    margin: 0 8px 0 0;
+    margin: 0 2px 0 0;
     background-color: #EAEAEA;
     border-radius: 20px;
 }
@@ -574,61 +537,119 @@ export default {
     align-items: center;
 }
 .chatsubmit > i{
-    font-size: 28px;
+    font-size: 16px;
     transform: rotate(45deg);
     margin: 0;
 }
 
+.chatitem{
+  width: 78vw;
+  height: 4vh;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+
+}
+.mename{
+  width: 3vh;
+  height: 3vh;
+  border: none;
+  border-radius: 100px;
+  background-color: #FFB400;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto 4px;
+}
+.youname{
+  width: 3vh;
+  height: 3vh;
+  border: none;
+  border-radius: 100px;
+  background-color: #37BF99;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto 8px auto 4px;
+}
+.datadata{
+  text-align: center;
+  font-size: 12px;
+  margin: auto 4px;
+}
+
 .rightbtn{
-    width: 30vw
+    width: 100vw;
+    height: 10vh;
+    position: fixed;
+    bottom: 50px;
 }
 .chatbtn{
-    width: 4vw;
-    height: 4vw;
+    width: 16vw;
+    height: 16vw;
     border-radius: 100%;
     border: none;
     background-color: white;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 6px;
+    margin: 4px;
 }
 .chatbtn i{
-    font-size: 32px;
+    font-size: 24px;
     color: #8CD6C1;
-    font-weight: bold;
-    
+    font-weight: bold;  
+}
+.chatbtn1{
+    width: 16vw;
+    height: 16vw;
+    border-radius: 100%;
+    border: none;
+    background-color: white;
+    box-shadow: #fecc4e 0px 2px 8px 0px;
+    margin: 4px;
+}
+.chatbtn1 i{
+    font-size: 24px;
+    color: #8CD6C1;
+    font-weight: bold;  
 }
 .videobtn{
-    width: 4vw;
-    height: 4vw;
+    width: 16vw;
+    height: 16vw;
     border-radius: 100%;
     border: none;
     background-color: #8CD6C1;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 6px;
+    margin: 4px;
 }
 .videobtn i{
-    font-size: 32px;
+    font-size: 24px;
     color: white;
     font-weight: bold;
     
 }
 .leavebtn{
-    width: 8vw;
-    height: 4vw;
+    width: 26vw;
+    height: 16vw;
     border-radius: 30px;
     border: none;
     background-color: #F3620F;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 6px;
+    margin: 4px;
     
 }
 .leavebtn i{
-    font-size: 32px;
+    font-size: 24px;
     color: white;
     font-weight: bold; 
 }
 .leavebtn span{
-    font-size: 24px;
+    font-size: 16px;
     color: white;
 }
 

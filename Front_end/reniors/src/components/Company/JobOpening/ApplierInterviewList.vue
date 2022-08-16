@@ -135,8 +135,9 @@ export default {
   color: var(--color-yellow-1);
 }
 .apply-interview-pass-btn {
+  width: 328px;
   position: fixed;
-  bottom: 70px;
+  bottom: 55px;
   left: 50%;
   transform: translate(-50%, 0);
   border: none;

@@ -14,7 +14,7 @@
 
 <script>
 import { computed } from "vue";
-import { useStore } from "vuex";
+import { mapActions, useStore } from "vuex";
 import JobopeningItem from "./JobopeningItem.vue";
 
 export default {
@@ -34,6 +34,12 @@ export default {
       jobopenings,
       isJobopenings,
     };
+  },
+  methods: {
+    ...mapActions("jobopening", ["fetchJobopenings"]),
+  },
+  created() {
+    this.fetchJobopenings();
   },
 };
 </script>

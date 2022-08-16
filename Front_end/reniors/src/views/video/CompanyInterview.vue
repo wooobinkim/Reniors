@@ -1,55 +1,52 @@
 <template>
-  <div id="main-container" class="container">
-    <div id="join" v-if="!session">
-      <div id="img-div" class="header-logo">
-        <img src="@/assets/logo.png" />
-      </div>
-      <div id="join-dialog" class="jumbotron vertical-center">
-        <h1>화상면접을 진행합니다.</h1>
-        <div class="form-group">
-          <p>
-            <label>참가자명</label>
-            <input
-              v-model="myUserName"
-              class="form-control"
-              type="text"
-              required
-              readonly
-            />
-          </p>
-          <p>
-            <label>세션번호</label>
-            <input
-              v-model="mySessionId"
-              class="form-control"
-              type="text"
-              required
-              readonly
-            />
-          </p>
-          <p class="text-center">
-            <button class="btn btn-lg btn-success" @click="joinSession()">
-              면접방 들어가기
-            </button>
-          </p>
+  <div id="main-container">
+    <div id="join" v-if="!session" class="join row">
+
+      <!-- left -->
+      <div class="col-6 lefttop">
+        <div class="left">
+          <div class="header-logo">
+              <img src="@/assets/logo.png" />
+              <p>지원자 <span style="color:#37BF99">{{applyinfo.name}}</span>의 면접입니다.</p>
+              <br>
+            </div>
+
         </div>
+      </div>
+
+      <!-- right -->
+      <div class="righttop col-6">
+          <div class="right">
+              <div class="fomrs">
+                  <div style="margin: 16px 0;">
+                      <p class="label">회사명</p>
+                      <input
+                          v-model="myUserName"
+                          class="rightinput"
+                          type="text"
+                          required
+                          readonly
+                      />
+                  </div>
+                  <div style="margin: 16px 0; ">
+                      <p class="label">면접방 번호</p>
+                      <input
+                          v-model="mySessionId"
+                          class="rightinput"
+                          type="text"
+                          required
+                          readonly
+                      />
+                  </div>
+                  <div class="submitBtn">
+                      <button @click="joinSession()">면접방 들어가기</button>
+                  </div>
+              </div>
+          </div>
       </div>
     </div>
 
     <div id="session" v-if="session" class="insession row">
-      <!-- <div id="session-header">
-        <h1 id="session-title">{{ mySessionId }}</h1>
-        <input
-          class="btn btn-large btn-danger"
-          type="button"
-          id="buttonLeaveSession"
-          @click="leaveSession"
-          value="Leave session"
-        />
-      </div>
-     <div id="main-video" class="col-md-6">
-        <user-video :stream-manager="mainStreamManager" />
-      </div> -->
       <div class="col-6">
         <div id="video-container" class="col-md-6">
           <user-video
@@ -67,25 +64,52 @@
         </div>
       </div>
 
-<div class="col-6" style="margin:0; padding:0;">
-      <div class="userSTT" v-if="!chatopenclose"></div>
 
+    <!-- right -->
+    <div class="col-6" style="margin:0; padding:0;">
+      <div class="tabs" v-if="!chatopenclose">
+        <!-- <div>지원자 : {{ interviewer }}</div> -->
+        <!-- resume -->
+        <div v-if="tab && !chatopenclose">
+          <div>
+            <resume-view :applyinfo="this.applyinfo"></resume-view>
+          </div>
+        </div>
+        <!-- evaluation -->
+        <div v-if="!tab && !chatopenclose">
+          <div>
+            <openvidu-eval-list :applyinfo="this.applyinfo"></openvidu-eval-list>
+          </div>
+        </div>
+        <div class="tabBtn">
+          <div @click="changeresume()" :class="{'noresume':!tab, 'yesresume':tab }">이력서 보기</div>
+          <div @click="changeeval()" :class="{'noeval':tab, 'yeseval':!tab }">평가하기</div>
+        </div>
+    </div>
+
+      <!-- chatting -->
       <div class="chatbox" v-if="chatopenclose">
-
-        <template v-for="msg in receivemsg" :key="msg">
-          <div class="chatlist">{{msg}}</div>
-        </template>
-
+        <div class="chatlist">
+          <div v-for="msg in receivemsg" :key="msg" >
+            <div v-if="msg.name == this.myUserName" class="chatitem">
+              <div class="mename"><p style="margin:0;">{{myUserName.slice(0,1)}}</p></div>
+              <div class="datadata"><p style="margin:0;">{{msg.data}}</p></div>
+            </div>
+            <div v-if="msg.name !== this.myUserName" class="chatitem">
+              <div class="youname"><p style="margin:0;">{{interviewer.slice(0,1)}}</p></div>
+              <div class="datadata"><p style="margin:0;">{{msg.data}}</p></div>
+            </div>
+          </div>
+        </div>
         <div class="chatform">
           <p style="width: 1vw">  </p>
           <input class="chatinput" @keyup.enter="sendchat()" type="text" v-model="sendmsg" />
-          <button class="chatsubmit" @click="sendchat()">보내기</button>
+          <button class="chatsubmit" @click="sendchat()"><i class="bi bi-send"></i></button>
         </div>
-
       </div>
 
       <div class="rightbtn">
-        <button @click="chatopen()" class="chatbtn"><i class="bi bi-chat-dots-fill"></i></button>
+        <button @click="chatopen" class="chatbtn"><i class="bi bi-chat-dots-fill"></i></button>
         <template v-if="audioflag">
           <button @click="audioonoff()"  class="videobtn"><i class="bi bi-mic"></i></button>
         </template>
@@ -98,35 +122,13 @@
         <template v-if="!videoflag">
           <button @click="videoonoff()"  class="videobtn"><i class="bi bi-camera-video-off"></i></button>
         </template>
-      </div>
-
-      <div>지원자 : {{ interviewer }}</div>
-      <template v-if="tab == 'resume'">
-        <div>
-          <resume-view :applyinfo="this.applyinfo"></resume-view>
-        </div>
-      </template>
-      <template v-if="tab == 'eval'">
-        <div>
-          <openvidu-eval-list :applyinfo="this.applyinfo"></openvidu-eval-list>
-        </div>
-      </template>
-      <div>
-        <span @click="changeresume()">이력서보기 | </span>
-        <span @click="changeeval()">평가하기</span>
-      </div>
       
-      <button @click="leaveSession" class="leavebtn">
-                <span><i class="bi bi-box-arrow-right"></i> 퇴장</span>
-            </button>
-</div>
-      <!-- <input
-        class="btn btn-large btn-danger"
-        type="button"
-        id="buttonLeaveSession"
-        @click="leaveSession"
-        value="Leave session"
-      /> -->
+        <button @click="leaveSession" class="leavebtn">
+            <span><i class="bi bi-box-arrow-right"></i> 퇴장</span>
+        </button>
+      </div>
+    </div>
+
     </div>
   </div>
 </template>
@@ -136,7 +138,7 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "@/components/openvidu/UserVideo.vue";
 import ResumeView from "@/components/Company/interview/ResumeView.vue";
-import { mapActions, mapGetters,mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import OpenviduEvalList from "@/components/Company/interview/OpenviduEvalList.vue";
 // import OpenViduChat from "@/components/Company/interview/OpenViduChat.vue";
 // import { mapActions } from "vuex";
@@ -174,7 +176,7 @@ export default {
       myUserName: "",
       videoflag: true,
       audioflag: false,
-      tab: "resume",
+      tab: true,
       sendmsg: "",
       receivemsg: [],
       msgflag: true,
@@ -185,12 +187,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("company", ["companyinfo","interviewer"]),
-    ...mapState("company",["apply"])
+    ...mapGetters("company", ["companyinfo","interviewer", "apply"]),
   },
   watch: {
     companyinfo: function (data) {
-      this.myUserName = data.name;
+      console.log('여기',{...data});
+      this.myUserName ={ ...data}.name;
     },
     session: function () {
       if(!this.sessionleave){
@@ -198,25 +200,13 @@ export default {
           let name = event.from.data;
           name = name.substr(15);
           name = name.substring(0,name.length-2);
-        this.receivemsg.push(name +" : "+ event.data);
-        console.log(this.receivemsg);
+        this.receivemsg.push({name:name, data: event.data});
         });
       }
     },
     apply:function (data) {
-      console.log(data);
-      this.applyinfo = data;
+      this.applyinfo = {...data};
     },
-    // msgflag:function () {
-    //   console.log("여기안와요..?");
-    //   this.session.on("signal", (event) => {
-    //       let name = event.from.data;
-    //       name = name.substr(15);
-    //       name = name.substring(0,name.length-2);
-    //     this.receivemsg.push(name +" : "+ event.data);
-    //     console.log(this.receivemsg);
-    //     });
-    // }
   },
   created() {
     this.getCompany();
@@ -226,19 +216,17 @@ export default {
   methods: {
     ...mapActions("company", ["getCompany","getapply"]),
     changeresume() {
-      this.tab = "resume";
+      this.tab = true;
     },
     changeeval() {
-      this.tab = "eval";
-    },
+      if(!this.tab){
+        this.tab = true
+      }else{
+        this.tab = false
+      }},
     videoonoff() {
       this.videoflag = !this.videoflag;
       this.publisher.publishVideo(this.videoflag);
-      // if (this.videoflag) {
-      //   this.session.publishVideo(this.publisher);
-      // } else {
-      //   this.session.unpublishVideo(this.publisher);
-      // }
     },
     sendchat() {
       this.session
@@ -257,7 +245,7 @@ export default {
         
     },
     chatopen() {
-      this.chatopenclose = !this.chatopenclose;
+      this.chatopenclose = !this.chatopenclose
     },
     audioonoff() {
       this.audioflag = !this.audioflag;
@@ -428,7 +416,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 #main-container{
     min-height: 100vh;
     min-width: 100vw;
@@ -436,6 +424,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0 0 30px 0;
 
 }
 .join{
@@ -575,27 +564,96 @@ export default {
     margin: 16px 0;
 
 }
+.tabs{
+    width: 35vw;
+    height: 65vh;
+    border-radius: 10px;
+    background-color: #F9F9F9;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin: 16px 0;
+    padding: 8px 0 0 0;
+}
+.tabBtn{
+  width: 35vw;
+  height: 8vh;
+  background-color: #EEEEEE;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.noresume{
+  border-right: solid #C5C5C5 1px;
+  width: 17.5vw;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #6D6D6D;
+  background-color: #EEEEEE;
+}
+.noresume :hover{
+  color: #8CD6C1;
+}
+.yesresume{
+  border-right: solid #C5C5C5 1px;
+  width: 17.5vw;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #8CD6C1;
+  font-weight: bold;
+  background-color: #EEEEEE;
+}
+.noeval{
+  width: 17.5vw;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #6D6D6D;
+  background-color: #EEEEEE;
+}
+.noeval :hover{
+  color: #8CD6C1;
+}
+.yeseval{
+  width: 17.5vw;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #8CD6C1;
+  font-weight: bold;
+  background-color: #EEEEEE;
+}
+
 .chatbox{
-    width: 30vw;
+    width: 35vw;
     height: 65vh;
     border-radius: 10px;
     background-color: white;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 16px 0;
+    margin: 16px;
+    padding: 24px 24px 0 24px;
 }
 .chatlist{
-    width: 30vw;
-    height: 59vh;
+    width: 34vw;
+    height: 55vh;
     border: none;
 }
 .chatlist textarea{
-    width: 28vw;
+    width: 34vw;
     height: 56vh;
     border: none;
     margin: 1vh 1vw;
 }
 .chatform{
-    width: 29vw;
+    width: 33vw;
     height: 5vh;
     border: none;
     border-radius: 30px;
@@ -606,7 +664,7 @@ export default {
     align-items: center;
 }
 .chatinput{
-    width: 24vw;
+    width: 29vw;
     height: 4vh;
     border: none;
     margin: 0 8px 0 0;
@@ -631,9 +689,49 @@ export default {
     transform: rotate(45deg);
     margin: 0;
 }
+.chatitem{
+  width: 30vw;
+  height: 3vw;
+  padding: 8px;
+  display: flex;
+  align-items: center;
 
+}
+.mename{
+  width: 2vw;
+  height: 2vw;
+  border: none;
+  border-radius: 100px;
+  background-color: #FFB400;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto 4px;
+}
+.youname{
+  width: 2vw;
+  height: 2vw;
+  border: none;
+  border-radius: 100px;
+  background-color: #37BF99;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto 8px auto 4px;
+}
+.datadata{
+  text-align: center;
+  font-size: 24px;
+  margin: auto 8px;
+}
 .rightbtn{
-    width: 30vw
+    width: 35vw
 }
 .chatbtn{
     width: 4vw;

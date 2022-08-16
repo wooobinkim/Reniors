@@ -42,7 +42,7 @@
 
     <div style="width: 312px; margin: auto;" class="ing">
       <div style="display: flex; justify-content: flex-end;">
-        <router-link :to="{ name: 'MyCalendarView' }" class ="calendar"><img style="width: 23px; height: 23px; align: absmiddle; filter: drop-shadow(0px 0.5px 0.5px rgba(0, 0, 0, 0.25));" src="@/assets/calendar.svg" alt="calendar">      나의 <span>일정</span> 확인!</router-link>
+        <router-link :to="{ name: 'MyCalendarView' }" class ="calendar"><img style="width: 23px; height: 23px; align: absmiddle; filter: drop-shadow(0px 0.5px 0.5px rgba(0, 0, 0, 0.25));" src="@/assets/calendar.svg" alt="calendar">      나의 <span>일정</span> 보기!</router-link>
       </div>
       <br>
       <button @click="toApplied"><span style="color: #37BF99; font-size: 20px;">{{ applyNumber }}</span> <br><br> 지원 현황</button>

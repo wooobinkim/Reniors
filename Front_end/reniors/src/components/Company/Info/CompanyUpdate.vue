@@ -37,7 +37,10 @@
 
       <div class="company-update-form">
         <div class="mb-3 mt-3">
-          <label for="name" class="form-label company-form-label">기업명</label>
+          <label for="name" class="form-label company-form-label">
+            기업명
+            <p class="required">*</p>
+          </label>
           <input
             type="text"
             class="form-control company-form-control"
@@ -107,7 +110,8 @@
       <div class="company-update-form">
         <div class="mb-3 mt-3">
           <label for="representativePhone" class="form-label company-form-label"
-            >담당자번호</label
+            >담당자번호
+          <p class="required">*</p></label
           >
           <input
             type="text"
@@ -120,7 +124,7 @@
         </div>
         <div class="mb-3 mt-3">
           <label for="companyPhone" class="form-label company-form-label"
-            >대표번호</label
+            >대표번호<p class="required">*</p></label
           >
           <input
             type="text"
@@ -145,7 +149,7 @@
           />
         </div>
         <div class="mb-3 mt-3">
-          <label class="form-label company-form-label">기업형태</label>
+          <label class="form-label company-form-label">기업형태<p class="required">*</p></label>
           <select
             v-model="company.typeCompany"
             class="form-control company-form-control:focus"
@@ -189,7 +193,7 @@
       <div class="company-update-form">
         <div class="mb-3 mt-3">
           <label for="establishedAt" class="form-label company-form-label"
-            >설립연도</label
+            >설립연도<p class="required">*</p></label
           >
           <input
             type="text"
@@ -202,7 +206,7 @@
         </div>
         <div class="mb-3 mt-3">
           <label for="address" class="form-label company-form-label"
-            >회사주소</label
+            >회사주소<p class="required">*</p></label
           >
           <input
             type="text"
@@ -327,7 +331,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .update-process-box {
   width: 100%;
   display: flex;
@@ -366,7 +370,10 @@ export default {
 .order {
   margin: 2px;
 }
-
+.required{
+  color: red;
+  display: inline;
+}
 footer {
   position: fixed;
   transform: translate(-50%, 0);

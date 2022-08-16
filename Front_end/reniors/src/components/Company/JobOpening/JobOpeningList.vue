@@ -17,23 +17,30 @@
     </div>
   </div>
 
-  <template v-if="tab == 'ing'">
-    <div class="company-jobOpening-list-title">현재 채용중인 공고</div>
-    <job-opening-ing-list-item
-      v-for="jobopening in jobopeninglisting"
-      :key="jobopening.id"
-      :jobopening="jobopening"
-    ></job-opening-ing-list-item>
-  </template>
-  <template v-if="tab == 'ed'">
-    <div class="company-jobOpening-list-title">채용완료 공고</div>
-    <job-opening-ed-list-item
-      v-for="jobopening in jobopeninglisted"
-      :key="jobopening.id"
-      :jobopening="jobopening"
-    >
-    </job-opening-ed-list-item>
-  </template>
+    <template v-if="tab == 'ing'">
+      <div class="company-jobOpening-list-title">현재 채용중인 공고</div>
+        <div class="company-jobOpening-list-box">
+                <job-opening-ing-list-item
+        v-for="jobopening in jobopeninglisting"
+        :key="jobopening.id"
+        :jobopening="jobopening"
+      ></job-opening-ing-list-item>
+        </div>
+
+    </template>
+    <template v-if="tab == 'ed'">
+      <div class="company-jobOpening-list-title">채용완료 공고</div>
+        <div class="company-jobOpening-list-box">
+                <job-opening-ed-list-item
+        v-for="jobopening in jobopeninglisted"
+        :key="jobopening.id"
+        :jobopening="jobopening"
+      >
+      </job-opening-ed-list-item>
+        </div>
+
+    </template>
+
   <button class="create-jobOpening-btn" @click="regjobopening()">
     채용 등록하기
   </button>
@@ -117,5 +124,19 @@ export default {
   font-size: 20px;
   position: fixed;
   bottom: 70px;
+}
+.company-jobOpening-list-box{
+  height: 53vh;
+  overflow-y: scroll;
+  /* height: calc(100vh-20vh); */
+
+}
+@media ( min-width: 768px ) {
+  .company-jobOpening-list-box{
+        height: 65vh;
+  }
+}
+.company-jobOpening-list-box::-webkit-scrollbar{
+  width: 0;
 }
 </style>
