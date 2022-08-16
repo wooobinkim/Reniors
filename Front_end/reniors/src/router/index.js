@@ -77,6 +77,10 @@ import VideoConfirm from "@/views/practice/VideoConfirm.vue";
 //interview
 import OpenVidu from "@/views/openvidu/OpenVidu.vue";
 
+//jobopening
+import WholeJobOpeningView from "@/views/jobopening/WholeJobOpeningView.vue";
+import ConditionJobOpeningView from "@/views/jobopening/ConditionJobOpeningView.vue";
+
 const routes = [
   {
     path: "/",
@@ -246,10 +250,22 @@ const routes = [
     component: () => import("../views/jobopening/JobopeningView.vue"),
   },
   {
+    path:"/jobopening/whole",
+    name:"WholeJobOpening",
+    component:WholeJobOpeningView,
+  },
+  {
+    path:"/jobopening/condition",
+    name:"ConditionJobOpening",
+    component:ConditionJobOpeningView,
+  },
+  {
     path: "/jobopening/:jobopeningId",
     name: "JobopeningDetail",
     component: () => import("../views/jobopening/JobopeningDetailView.vue"),
   },
+
+  //company
   {
     path: "/company",
     name: "company",

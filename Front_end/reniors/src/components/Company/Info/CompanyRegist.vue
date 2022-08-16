@@ -245,7 +245,7 @@
       <button type="button" v-show="pagenum !== 3" @click="increasePage">
         다음
       </button>
-      <button @click="updatecompany()" v-show="pagenum === 3">완료!</button>
+      <button @click="registcompany()" v-show="pagenum === 3">완료!</button>
     </footer>
   </div>
 </template>
