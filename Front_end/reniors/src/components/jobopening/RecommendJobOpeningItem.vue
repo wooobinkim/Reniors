@@ -1,16 +1,42 @@
+<!-- <template>
+  <div>
+    {{ jobopening.id }}
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'RecommendTagItem',
+  props: {
+    jobopening: Object,
+  }
+}
+</script>
+
+<style scoped>
+/* .recommend-tag-item {
+  display: inline-block;
+  box-sizing: border-box;
+  background-color: white;
+  border: 1px solid var(--color-yellow-1);
+  border-radius: 0.4rem;
+  padding: 0 5px;
+  margin: 3px;
+} */
+</style> -->
 <template>
-  <router-link
-    class="jobopening-item"
-    :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }"
-  >
-    <div>
-      <p class="jobopening-item-company">{{ jobopening.companyName }}</p>
-      <p class="jobopening-item-title">{{ jobopening.title }}</p>
-    </div>
-    <p class="jobopening-item-period">
-      {{ createDate }} ~ <br />{{ finishedDate }}
-    </p>
-  </router-link>
+    <router-link
+      class="jobopening-item"
+      :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }"
+    >
+      <div>
+        <p class="jobopening-item-company">{{ jobopening.companyName }}</p>
+        <p class="jobopening-item-title prevent-overflow">{{ jobopening.title }}</p>
+      </div>
+      <p class="jobopening-item-period">
+        {{ createDate }} ~ <br />{{ finishedDate }}
+      </p>
+    </router-link>
 </template>
 
 <script scoped>
@@ -63,8 +89,17 @@ export default {
   border-radius: 0.4rem;
   margin: 10px 10px;
   padding: 10px;
-  height: 150px;
+  height: 120px;
+  width: 140px;
   text-decoration: none;
+}
+
+.prevent-overflow{
+   overflow-x: auto;
+  max-width: 100%;
+    width: 100%;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
 }
 
 .jobopening-item p {
@@ -80,7 +115,6 @@ export default {
   -webkit-line-clamp: 1;
   color: black;
 }
-
 
 .jobopening-item-title {
   text-decoration-line: underline;
