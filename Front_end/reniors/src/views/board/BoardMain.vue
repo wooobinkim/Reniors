@@ -1,6 +1,7 @@
 <template>
+    <real-header></real-header>
   <div class="board-main-box">  
-    <board-head-slider></board-head-slider>
+    <board-head-slider class="slider"></board-head-slider>
     <div class="title">
       <p>{{jobname}}</p>
       <div v-if="isLogginedIn">
@@ -21,12 +22,14 @@
 
 import BoardHeadSlider from '@/components/board/BoardHeadSlider.vue'
 import ArticleItem from '@/components/board/ArticleItem.vue'
+import RealHeader from '@/components/RealHeader.vue';
 import { mapActions, mapGetters } from 'vuex';
 export default{ 
     name:'BoardHome',
     components:{
       BoardHeadSlider,
-      ArticleItem
+      ArticleItem,
+      RealHeader,
     },
     data(){
         return{

@@ -73,6 +73,7 @@ export default {
 .header{
     height: 48px;
     background-color: white;
+    width: 100%;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px -2px;
     display: flex;
     align-items: center;
