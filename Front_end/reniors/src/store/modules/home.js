@@ -13,6 +13,8 @@ export default {
     youtubes: [],
     isYoutube: false,
     notices: [],
+    notice: null,
+    noticeNotReaded: null,
   },
   getters: {
     isLogin: (state) => state.isLogin,
@@ -21,18 +23,27 @@ export default {
     youtubes: (state) => state.youtubes,
     isYoutube: (state) => !_.isEmpty(state.youtubes),
     notices: (state) => state.notices,
+    notice: (state) => state.notice,
+    noticeNotReaded: (state) => state.noticeNotReaded,
   },
   mutations: {
     IS_LOGIN: (state, value) => (state.isLogin = value),
     YOUTUBES: (state, youtubes) => (state.youtubes = youtubes),
     HOTJOBOPENINGS: (state, hots) => (state.hotJobopenings = hots),
     NOTICES: (state, notices) => (state.notices = notices),
+    NOTICE: (state, notice) => (state.notice = notice),
+    noticeNotReaded: (state, noticeNotReaded) =>
+      (state.noticeNotReaded = noticeNotReaded),
     DUMMY: () => 0,
   },
   actions: {
     async createNotice({ commit }, notice) {
       const response = await http.post("/notification", notice);
       commit("NOTICES", response.data);
+    },
+    async readNotice({ commit }, notice) {
+      const response = await http.get(`/notification/${notice}`);
+      commit("NOTICE", response.data);
     },
     async fetchYoutubes({ commit }, keyword) {
       commit("YOUTUBES", []);
@@ -62,6 +73,13 @@ export default {
       const response = await http.get("/notification");
       console.log(response);
       commit("NOTICES", response.data);
+      let notReadNotices = 0;
+      response.data.forEach((notice) => {
+        if (notice.isRead === "NOT_READ") {
+          notReadNotices += 1;
+        }
+      });
+      commit("noticeNotReaded", notReadNotices);
     },
   },
 };
