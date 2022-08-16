@@ -94,7 +94,7 @@
               <div class="datadata"><p style="margin:0;">{{msg.data}}</p></div>
             </div>
             <div v-if="msg.name !== this.myUserName" class="chatitem">
-              <div class="youname"><p style="margin:0;">{{interviewer.slice(0,1)}}</p></div>
+              <div class="youname"><p style="margin:0;">{{applyinfo.name.slice(0,1)}}</p></div>
               <div class="datadata"><p style="margin:0;">{{msg.data}}</p></div>
             </div>
           </div>
