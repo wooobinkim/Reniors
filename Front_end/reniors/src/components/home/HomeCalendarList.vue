@@ -80,7 +80,7 @@ export default {
   flex: 0 0 auto;
   text-decoration: none;
   width: 160px;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24p
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .home-calendar-item p, .home-calendar-item h4 {
   margin: 0;
