@@ -33,6 +33,7 @@ export default {
         <p class="jobopening-item-company">{{ jobopening.companyName }}</p>
         <p class="jobopening-item-title prevent-overflow">{{ jobopening.title }}</p>
       </div>
+      
       <p class="jobopening-item-period">
         {{ createDate }} ~ <br />{{ finishedDate }}
       </p>
