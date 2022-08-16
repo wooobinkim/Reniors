@@ -23,8 +23,6 @@ export default {
     applyinfo : Object,
   },
   created() {
-    console.log("오픈이발");
-    console.log(this.applyinfo);
     this.getEvalQuestionList(this.applyinfo.jobOpeningId);
   },
   computed: {
@@ -43,6 +41,7 @@ export default {
         applyId : this.applyinfo.id,
         apply: apply,
       });
+      alert('평가가 완료되었습니다.')
     },
   },
 };
