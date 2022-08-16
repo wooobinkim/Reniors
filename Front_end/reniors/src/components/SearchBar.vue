@@ -39,20 +39,12 @@ export default {
   },
   methods: {
     ...mapActions("jobopening", ["fetchJobopeningsName"]),
-    search() {
-      const formData = new FormData();
+    async search() {
       let keyword = {
         key: this.key,
         word: this.word,
       };
-      formData.append(
-        "data",
-        new Blob([JSON.stringify(keyword)], {
-          type: "application/json",
-        })
-      );
-      console.log(keyword);
-      this.fetchJobopeningsName(formData);
+      await this.fetchJobopeningsName(keyword);
     },
   },
 };

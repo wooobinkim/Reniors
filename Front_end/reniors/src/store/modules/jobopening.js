@@ -117,19 +117,16 @@ export default {
       const data = response.data.content;
       commit("JOBOPENINGS", data);
     },
-    async fetchJobopeningsName({ commit }, formData) {
+    async fetchJobopeningsName({ commit, getters }, data) {
       await axios({
         url: `https://i7b307.p.ssafy.io/api/jobopening/search/keyword`,
-        method: "get",
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${user.state.token}`,
-        },
-        data: formData,
+        method: "post",
+        headers: getters.authHeader,
+        data: data,
       })
         .then(({ data }) => {
           console.log(data);
-          commit("JOBOPENINGS", data);
+          commit("JOBOPENINGS", data.content);
         })
         .catch((error) => {
           console.log(error);
