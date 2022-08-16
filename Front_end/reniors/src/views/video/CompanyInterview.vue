@@ -55,10 +55,8 @@
             class="myvideo"
           />
           <user-video
-            v-for="sub in subscribers"
-            :key="sub.stream.connection.connectionId"
-            :stream-manager="sub"
-            @click="updateMainVideoStreamManager(sub)"
+            :stream-manager="subscribers[subscribers.length - 1]"
+            @click="updateMainVideoStreamManager(subscribers.length - 1)"
             class="myvideo"
           />
         </div>
@@ -554,15 +552,6 @@ export default {
     border: none;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     margin: 16px 0;
-}
-.userSTT{
-    width: 30vw;
-    height: 65vh;
-    border-radius: 10px;
-    background-color: white;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 16px 0;
-
 }
 .tabs{
     width: 35vw;
