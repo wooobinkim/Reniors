@@ -71,7 +71,7 @@ export default {
   font-weight: 1000;
   color: var(--color-green-1);
   letter-spacing: 0.3rem;
-  margin-top: -16px;
+  margin-top: -50px;
 }
 p{
   display: inline;

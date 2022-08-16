@@ -29,6 +29,7 @@ export default {
   justify-content: center;
   align-content: center;
   text-decoration: none;
+  margin-bottom: 30px;
 }
 p{
   margin: 0;
@@ -47,6 +48,7 @@ p{
     padding: 20px;
     width: 90%;
     margin: 0 5%;
+    margin-bottom: 30px;
   }
 }
 </style>
