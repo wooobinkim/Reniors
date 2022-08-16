@@ -259,11 +259,12 @@ export const user = {
 
     fetchRooms({ getters, commit }) {
       axios({
-        url: "https://i7b307.p.ssafy.io/api" + "/room/user",
+        url: "https://i7b307.p.ssafy.io/api" + "/jobopening/apply/dateAsc",
         method: "get",
         headers: getters.authHeader,
       })
         .then((res) => {
+          console.log('요ㅕ기',res);
           commit("SET_ROOMS", res.data);
         })
         .catch((err) => console.error(err.response));

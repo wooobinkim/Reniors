@@ -51,8 +51,8 @@
             <!-- 상대방 -->
             <div>
                 <user-video
-                :stream-manager="subscribers[0]"
-                @click="updateMainVideoStreamManager(subscribers[0])"
+                :stream-manager="subscribers[subscribers.length -1]"
+                @click="updateMainVideoStreamManager(subscribers[subscribers.length -1])"
                 class="myvideo"
                 />
             </div>
