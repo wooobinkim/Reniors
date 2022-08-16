@@ -3,6 +3,7 @@ import drf from '@/api/drf'
 import _ from 'lodash'
 import http from '@/api/http'
 import router from '@/router'
+import { user } from './user'
 
 
 
@@ -12,6 +13,8 @@ export default {
     tags: [ '#서울 송파구', '#연봉 3000', '#주5일', '#웹디자인', '#백엔드' ],
     jobopenings: [],
     selectedJobopening: {},
+    recommendJobopenings:[],
+    conditionJobopenings:[],
     bookmarks: [],
     applies: [],
     interview: [],
@@ -21,6 +24,12 @@ export default {
     tags: state => state.tags,
     isJobopenings: state => !_.isEmpty(state.jobopenings),
     jobopenings: state => state.jobopenings,
+    authHeader: () => ({
+      Authorization: `Bearer ${user.state.token}`,
+      "Content-type": "Application/JSON",
+    }),
+    recommendJobopenings: state => state.recommendJobopenings,
+    conditionJobopenings: state => state.conditionJobopenings,
     selectedJobopening: state => state.selectedJobopening,
     bookmarks: state => state.bookmarks,
     bookmarkId: state => state.bookmarks.find(bookmark => bookmark.jobOpeningResponse.id === state.selectedJobopening.id)?.id,
@@ -35,6 +44,8 @@ export default {
   mutations: {
     TAGS: (state, tags) => state.tags = tags,
     JOBOPENINGS: (state, jobopenings) => state.jobopenings = jobopenings,
+    RECOMMENDJOBOPENINGS:(state, recommendJobopenings) => state.recommendJobopenings = recommendJobopenings,
+    CONDITIONJOBOPENINGS:(state, conditionJobopenings) => state.conditionJobopenings = conditionJobopenings,
     SELECTJOB: (state, jobopening) => state.selectedJobopening = jobopening,
     BOOKMARKS: (state, bookmarks) => state.bookmarks = bookmarks,
     APPLIES: (state, applies) => state.applies = applies,
@@ -66,8 +77,47 @@ export default {
     async fetchJobopenings({ commit }) {
       const response = await axios.get(drf.jobopening.get())
       const data = response.data.content
-      console.log(data)
       commit('JOBOPENINGS', data)
+    },
+
+    //추천조건으로 공고 가져오기
+    async fetchRecommend({getters,dispatch}){
+      await axios({
+        url:`https://i7b307.p.ssafy.io/api/recommendcondition`,
+        method:"get",
+        headers:getters.authHeader,
+      })
+      .then(({data})=>{
+        dispatch("fetchJobOpeningRecommend",data.id);
+      }).catch((error)=>{
+        console.log(error);
+      })
+    },
+    async fetchJobOpeningRecommend({commit,getters},data){
+      await axios({
+        url:`https://i7b307.p.ssafy.io/api/jobopening/search/recommend/${data}`,
+        method:"get",
+        headers:getters.authHeader,
+      })
+      .then(({data})=>{
+        commit("RECOMMENDJOBOPENINGS",data.content);
+      }).catch((error)=>{
+        console.log(error);
+      })
+    },
+
+    //검색조건으로 공고 가져오기
+    async fetchJobOpeningCondition({commit,getters},data){
+      await axios({
+        url:`https://i7b307.p.ssafy.io/api/jobopening/search/${data}`,
+        method:"get",
+        headers: getters.authHeader,
+      })
+      .then(({data})=>{
+        commit("CONDITIONJOBOPENINGS",data);
+      }).catch((error)=>{
+        console.log(error);
+      })
     },
 
     // applied jobopenings

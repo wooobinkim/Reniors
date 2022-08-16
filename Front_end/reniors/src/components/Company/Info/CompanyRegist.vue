@@ -35,7 +35,9 @@
         <img class="order" v-else src="@/assets/three.svg" alt="order" />
       </div>
       <div class="mb-3 mt-3">
-        <label for="name" class="company-form-label">기업명<p class="required">*</p></label>
+        <label for="name" class="company-form-label"
+          >기업명<span class="required">&nbsp;&nbsp;*</span></label
+        >
         <input
           type="text"
           class="form-control company-form-control"
@@ -46,7 +48,9 @@
         />
       </div>
       <div class="mb-3 mt-3">
-        <label for="companyAppId" class="form-label company-form-label">이메일<p class="required">*</p></label>
+        <label for="companyAppId" class="form-label company-form-label"
+          >이메일<span class="required">&nbsp;&nbsp;*</span></label
+        >
         <input
           type="text"
           class="form-control company-form-control"
@@ -57,7 +61,9 @@
         />
       </div>
       <div class="mb-3 mt-3">
-        <label for="companyAppPwd" class="form-label company-form-label">비밀번호<p class="required">*</p></label>
+        <label for="companyAppPwd" class="form-label company-form-label"
+          >비밀번호<span class="required">&nbsp;&nbsp;*</span></label
+        >
         <input
           type="password"
           class="form-control company-form-control"
@@ -69,7 +75,7 @@
       </div>
       <div class="mb-3 mt-3">
         <label for="ComfirmcompanyAppPwd" class="form-label company-form-label"
-          >비밀번호 확인<p class="required">*</p></label
+          >비밀번호 확인<span class="required">&nbsp;&nbsp;*</span></label
         >
         <input
           type="password"
@@ -107,7 +113,9 @@
         <img class="order" v-else src="@/assets/three.svg" alt="order" />
       </div>
       <div class="mb-3 mt-3">
-        <label for="companyNum" class="form-label company-form-label">사업자번호<p class="required">*</p></label>
+        <label for="companyNum" class="form-label company-form-label"
+          >사업자번호<span class="required">&nbsp;&nbsp;*</span></label
+        >
         <input
           type="text"
           class="form-control company-form-control"
@@ -118,7 +126,9 @@
         />
       </div>
       <div class="mb-3 mt-3">
-        <label for="representativePhone" class="form-label company-form-label">담당자번호<p class="required">*</p></label>
+        <label for="representativePhone" class="form-label company-form-label"
+          >담당자번호<span class="required">&nbsp;&nbsp;*</span></label
+        >
         <input
           type="text"
           class="form-control company-form-control"
@@ -129,7 +139,9 @@
         />
       </div>
       <div class="mb-3 mt-3">
-        <label for="companyPhone" class="form-label company-form-label">대표번호<p class="required">*</p></label>
+        <label for="companyPhone" class="form-label company-form-label"
+          >대표번호<span class="required">&nbsp;&nbsp;*</span></label
+        >
         <input
           type="text"
           class="form-control company-form-control"
@@ -140,7 +152,9 @@
         />
       </div>
       <div class="mb-3 mt-3">
-        <label for="companyUrl" class="form-label company-form-label">회사 홈페이지</label>
+        <label for="companyUrl" class="form-label company-form-label"
+          >회사 홈페이지</label
+        >
         <input
           type="text"
           class="form-control company-form-control"
@@ -151,9 +165,13 @@
         />
       </div>
       <div class="mb-3 mt-3">
-         <label class="form-label company-form-label">기업형태<p class="required">*</p></label>
-        <select v-model="company.typeCompany"
-                    class="form-control company-form-control">
+        <label class="form-label company-form-label"
+          >기업형태<span class="required">&nbsp;&nbsp;*</span></label
+        >
+        <select
+          v-model="company.typeCompany"
+          class="form-control company-form-control"
+        >
           <option
             v-for="typeCompany in typecompanies"
             :value="typeCompany.value"
@@ -190,7 +208,9 @@
         <img class="order" v-else src="@/assets/three.svg" alt="order" />
       </div>
       <div class="mb-3 mt-3">
-        <label for="establishedAt" class="form-label company-form-label">설립연도<p class="required">*</p></label>
+        <label for="establishedAt" class="form-label company-form-label"
+          >설립연도<span class="required">&nbsp;&nbsp;*</span></label
+        >
         <input
           type="text"
           class="form-control company-form-control"
@@ -201,7 +221,9 @@
         />
       </div>
       <div class="mb-3 mt-3">
-        <label for="address" class="form-label company-form-label">회사주소<p class="required">*</p></label>
+        <label for="address" class="form-label company-form-label"
+          >회사주소<span class="required">&nbsp;&nbsp;*</span></label
+        >
         <input
           type="text"
           class="form-control company-form-control"
@@ -245,7 +267,7 @@
       <button type="button" v-show="pagenum !== 3" @click="increasePage">
         다음
       </button>
-      <button @click="updatecompany()" v-show="pagenum === 3">완료!</button>
+      <button @click="registcompany()" v-show="pagenum === 3">완료!</button>
     </footer>
   </div>
 </template>
@@ -295,10 +317,9 @@ export default {
         formData.append("img", this.companyImg[0]);
         formData.append(
           "data",
-          new Blob(
-            [JSON.stringify(this.company)], 
-            { type: "application/json" }
-            )
+          new Blob([JSON.stringify(this.company)], {
+            type: "application/json",
+          }),
         );
         this.registCompany(formData);
         this.$router.push({ name: "Login" });
@@ -309,7 +330,7 @@ export default {
 </script>
 
 <style scoped>
-.regist-process-box{
+.regist-process-box {
   width: 100%;
   display: flex;
   justify-content: right;
@@ -329,8 +350,9 @@ export default {
 .order {
   margin: 2px;
 }
-.required{
-  color: red;
+.required {
+  font-size: 13px;
+  color: var(--color-red-1);
   display: inline;
 }
 footer {

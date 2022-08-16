@@ -234,10 +234,10 @@ export default {
       "typeemployments",
     ]),
   },
-  created() {
-    this.setheader('채용등록')
-    this.getSido();
-    this.getJobParent();
+  async created() {
+    await this.setheader('채용등록')
+    await this.getSido();
+    await this.getJobParent();
   },
   methods: {
     ...mapActions("category", [
