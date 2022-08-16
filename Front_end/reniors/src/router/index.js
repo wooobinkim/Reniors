@@ -79,7 +79,7 @@ import OpenVidu from "@/views/openvidu/OpenVidu.vue";
 
 //jobopening
 import WholeJobOpeningView from "@/views/jobopening/WholeJobOpeningView.vue";
-import ConditionJobOpeningView from "@/views/jobopening/ConditionJobOpeningView.vue";
+// import ConditionJobOpeningView from "@/views/jobopening/ConditionJobOpeningView.vue";
 
 const routes = [
   {
@@ -221,7 +221,7 @@ const routes = [
 
   // condition
   {
-    path: "/condition",
+    path: "/jobopening/condition",
     name: "Condition",
     component: () => import("@/views/condition/ConditionView.vue"),
     children: [
@@ -250,15 +250,15 @@ const routes = [
     component: () => import("../views/jobopening/JobopeningView.vue"),
   },
   {
-    path:"/jobopening/whole",
-    name:"WholeJobOpening",
-    component:WholeJobOpeningView,
+    path: "/jobopening/whole",
+    name: "WholeJobOpening",
+    component: WholeJobOpeningView,
   },
-  {
-    path:"/jobopening/condition",
-    name:"ConditionJobOpening",
-    component:ConditionJobOpeningView,
-  },
+  // {
+  //   path: "/jobopening/condition",
+  //   name: "ConditionJobOpening",
+  //   component: ConditionJobOpeningView,
+  // },
   {
     path: "/jobopening/:jobopeningId",
     name: "JobopeningDetail",
@@ -404,9 +404,9 @@ const routes = [
     name: "userInterview",
   },
   {
-    path:"/video/company/:no/:jobOpeningId",
-    component:CompanyInterview,
-    name:"companyInterviewVideo"
+    path: "/video/company/:no/:jobOpeningId",
+    component: CompanyInterview,
+    name: "companyInterviewVideo",
   },
 
   //video practice
