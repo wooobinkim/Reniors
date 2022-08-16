@@ -1,6 +1,7 @@
 package com.common.reniors.common.config.web;
 
 import com.common.reniors.common.exception.NotMatchException;
+import com.common.reniors.domain.entity.Company;
 import com.common.reniors.domain.entity.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -19,8 +20,8 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         System.out.println("LoginUserArgumentResolver - supportsParameter");
-        boolean isLoginUserAnnotation = parameter.getParameterAnnotation(LoginUser.class) != null;
-        boolean isLongClass = User.class.equals(parameter.getParameterType());
+        boolean isLoginUserAnnotation = parameter.getParameterAnnotation(LoginUser.class) != null || parameter.getParameterAnnotation(LoginCompany.class) != null;
+        boolean isLongClass = User.class.equals(parameter.getParameterType()) || Company.class.equals(parameter.getParameterType());
         return isLoginUserAnnotation && isLongClass;
     }
 
@@ -33,6 +34,10 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             System.out.println("authentication.getPrincipal() = " + authentication.getPrincipal());
+            if(Company.class.equals(parameter.getParameterType())){
+                System.out.println("company");
+                return (Company) authentication.getPrincipal();
+            }
             return (User) authentication.getPrincipal();
         } catch (ClassCastException e) {
             throw new NotMatchException("토큰 정보가 잘못되었습니다.");

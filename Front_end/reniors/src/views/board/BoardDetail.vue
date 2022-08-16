@@ -1,5 +1,5 @@
 <template>
-  <div  style="width:360px">
+  <div class="board-detail-box">
     <board-head-slider></board-head-slider>
     <div class="title">
         <router-link :to="{name: 'boardMain', params:{category_id: categoryId}}">
@@ -13,7 +13,7 @@
         <div>
             <p  class="title2">{{article.title}}</p>
             <div class="bottom">
-                <img class="person" src="https://i7b307.p.ssafy.io/images/user/1" alt="person">
+                <img class="person" :src="article.baseURL+article.userProfile" alt="person">
                 <p  class="userName">{{article.userName}} |</p>
                 <p class="time">{{article.updatedAt.slice(0,4)}}.{{article.updatedAt.slice(5,7)}}.{{article.updatedAt.slice(8,10)}}</p>
             </div>
@@ -66,17 +66,21 @@ export default{
     created(){
         this.fetchArticle(this.articleId)
         this.fetchComments(this.articleId)
+        console.log(this.article);
     },
 }
 </script>
 
 <style scoped>
-.header{
-    height: 80px;
-    display: flex;
-    align-items: center;
-
+.board-detail-box{
+    width: 100%;
 }
+@media(max-width:760px){
+  .board-detail-box{
+    width: 100vw;
+  }
+}
+
 .title{
   height: 48px;
   display: flex;

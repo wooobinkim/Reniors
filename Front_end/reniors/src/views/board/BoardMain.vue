@@ -1,5 +1,5 @@
 <template>
-  <div style="width:360px">  
+  <div class="board-main-box">  
     <board-head-slider></board-head-slider>
     <div class="title">
       <p>{{jobname}}</p>
@@ -64,6 +64,9 @@ export default{
 </script>
 
 <style scoped>
+.board-main-box{
+  width: 100%;
+}
 .title{
   height: 48px;
   display: flex;
@@ -78,6 +81,10 @@ export default{
   color: #FFB400;
   margin: 0 16px;
 }
-
+@media(max-width:760px){
+  .board-main-box{
+    width: 100vw;
+  }
+}
 
 </style>

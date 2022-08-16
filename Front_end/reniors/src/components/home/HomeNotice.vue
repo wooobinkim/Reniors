@@ -4,7 +4,7 @@
       <p>🔔 오늘 확인하셔야 할 알림이 <span class="home-notice-count" v-b-modal.noticeModal>{{ noticeCount }}개</span> 있어요!</p>
       <HomeCalendarList />
     </div>
-    <p v-else>지금 <router-link to="/login">로그인</router-link>을 하고<br>더 정확한 추천공고와 관리를 받아보세요!</p>
+    <p v-else>지금 <router-link to="/login" class="now-login-btn">로그인</router-link>을 하고<br>더 정확한 추천공고와 관리를 받아보세요!</p>
     <b-modal id="noticeModal" v-model="show" title="🔔 알림" hide-footer>
       <div class="notice-list d-block">
         <a v-for="(notice, index) in notices" :key="index" :href="'https://i7b307.p.ssafy.io/jobopening/' + notice.applyResponse.jobOpeningId">
@@ -62,6 +62,7 @@ export default {
 .home-notice p {
   text-align: left;
   margin-left: 10px;
+  font-weight: bold;
 }
 
 .home-notice > div > p {
@@ -99,5 +100,13 @@ export default {
 
 .notice-item p {
   margin: 0;
+}
+.now-login-btn{
+  color: var(--color-green-1);
+  font-weight: bold;
+  font-size: 18px;
+}
+.now-login-btn:hover{
+  color: var(--color-green-1);
 }
 </style>

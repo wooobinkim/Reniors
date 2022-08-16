@@ -12,20 +12,26 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .header-component {
   display: flex;
   justify-content: center;
 }
 
 .header-logo {
-  min-width: 30vh;
-  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .header-logo > img {
-  height: 100%;
   width: 100%;
   object-fit: cover;
+  padding: 0;
+}
+@media(min-width: 720px){
+  .header-logo > img {
+    width: 400px;
+  }
 }
 </style>
