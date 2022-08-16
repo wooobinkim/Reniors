@@ -24,7 +24,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 import { mapGetters } from "vuex";
 import RecommendJobOpeningItem from "./RecommendJobOpeningItem.vue";
 
