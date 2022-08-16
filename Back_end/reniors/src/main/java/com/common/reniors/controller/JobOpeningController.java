@@ -68,10 +68,10 @@ public class JobOpeningController {
     }
 
     //공고 전체조회(검색창)
-    @GetMapping(path = {"/search/keyword"}, consumes = {"multipart/form-data"})
+    @PostMapping("/search/keyword")
     @ApiOperation(value = "공고 조회(검색창)", notes = "전체 공고중 검색어를 통해 조회한다.")
     public ResponseEntity<?> getJobOpeningName(
-            @RequestPart(value = "data") NameSearchConditionRequest nameSearchConditionRequest,
+            @RequestBody NameSearchConditionRequest nameSearchConditionRequest,
             Pageable pageable){
         Page<JobOpeningResponse> jobOpeningList = jobOpeningService.getJobOpeningName(nameSearchConditionRequest,pageable);
         return ResponseEntity.status(HttpStatus.OK).body(jobOpeningList);
