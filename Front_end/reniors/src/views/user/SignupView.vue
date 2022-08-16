@@ -2,149 +2,266 @@
   <div class="container">
     <header>
       <div>
-        <img style="width: 128px; max-height: 170px; margin: 10px" src="@/assets/logo.png" alt="logo" >
-        <br>
+        <img
+          style="width: 128px; max-height: 170px; margin: 10px"
+          src="@/assets/logo.png"
+          alt="logo"
+        />
+        <br />
         <div style="float: right">
-          <img class="order" v-if="page===1" src="@/assets/one_active.svg" alt="order">
-          <img class="order" v-else src="@/assets/one.svg" alt="order">
-          <img class="order" v-if="page===2" src="@/assets/two_active.svg" alt="order">
-          <img class="order" v-else src="@/assets/two.svg" alt="order">
-          <img class="order" v-if="page===3" src="@/assets/three_active.svg" alt="order">
-          <img class="order" v-else src="@/assets/three.svg" alt="order">
+          <img
+            class="order"
+            v-if="page === 1"
+            src="@/assets/one_active.svg"
+            alt="order"
+          />
+          <img class="order" v-else src="@/assets/one.svg" alt="order" />
+          <img
+            class="order"
+            v-if="page === 2"
+            src="@/assets/two_active.svg"
+            alt="order"
+          />
+          <img class="order" v-else src="@/assets/two.svg" alt="order" />
+          <img
+            class="order"
+            v-if="page === 3"
+            src="@/assets/three_active.svg"
+            alt="order"
+          />
+          <img class="order" v-else src="@/assets/three.svg" alt="order" />
         </div>
-
       </div>
-    </header> 
+    </header>
 
     <div>
-      <br>
+      <br />
       <!-- <form @submit.prevent="signup(user)" class="signupform"> -->
       <div class="signupform">
-        <div v-show="page===1">
+        <div v-show="page === 1">
           <p style="font-size: 14px">간단한 회원가입을 진행하려고 해요.</p>
-          <p>먼저, 로그인 시 사용하실 <span>이메일</span>과 <span>비밀번호</span>를 입력해주세요!</p>
-          <br>
+          <p>
+            먼저, 로그인 시 사용하실 <span>이메일</span>과
+            <span>비밀번호</span>를 입력해주세요!
+          </p>
+          <br />
           <div>
-            <p class="forminfo">이메일</p>
-            <b-form-input class="mb-3 user-form-control" v-model="user.userAppId" type="email" placeholder="사용하실 이메일을 입력해주세요." ></b-form-input>
-            <button class="check" style="float: right;" @click="idcheck(user.userAppId)">중복확인</button>
+            <p class="forminfo">
+              이메일<span class="required">&nbsp;&nbsp;*</span>
+            </p>
+            <b-form-input
+              class="mb-3 user-form-control"
+              v-model="user.userAppId"
+              type="email"
+              placeholder="사용하실 이메일을 입력해주세요."
+            ></b-form-input>
+            <button
+              class="check"
+              style="float: right"
+              @click="idcheck(user.userAppId)"
+            >
+              중복확인
+            </button>
           </div>
-          <br>
-          <br>
+          <br />
+          <br />
           <div>
-            <p class="forminfo">비밀번호</p>
-            <b-form-input class="mb-3 user-form-control" v-model="user.userAppPwd" type="password" placeholder="비밀번호를 입력해주세요." ></b-form-input>
-            <p class="forminfo">비밀번호 확인</p>
-            <b-form-input class="mb-3 user-form-control" v-model="password" type="password" placeholder="비밀번호를 한번 더 입력해주세요." ></b-form-input>
+            <p class="forminfo">
+              비밀번호<span class="required">&nbsp;&nbsp;*</span>
+            </p>
+            <b-form-input
+              class="mb-3 user-form-control"
+              v-model="user.userAppPwd"
+              type="password"
+              placeholder="비밀번호를 입력해주세요."
+            ></b-form-input>
+            <p class="forminfo">
+              비밀번호 확인<span class="required">&nbsp;&nbsp;*</span>
+            </p>
+            <b-form-input
+              class="mb-3 user-form-control"
+              v-model="password"
+              type="password"
+              placeholder="비밀번호를 한번 더 입력해주세요."
+            ></b-form-input>
           </div>
         </div>
 
-        <div v-show="page===2">
-          <p>회원님의 <span>이름</span>과 <span>전화번호</span>, <span>주소</span>를 알려주실 수 있나요?</p>
-          <br>
-          <p class="forminfo">이름</p>
-          <b-form-input class="mb-3 user-form-control" v-model="user.name" type="text" placeholder="이름을 입력해주세요." ></b-form-input>
-          <p class="forminfo">휴대전화</p>
-          <b-form-input class="mb-3 user-form-control" v-model="user.phone" type="text" placeholder="예시) 01012345678" ></b-form-input>
-          <p class="forminfo">주소</p>
+        <div v-show="page === 2">
+          <p>
+            회원님의 <span>이름</span>과 <span>전화번호</span>,
+            <span>주소</span>를 알려주실 수 있나요?
+          </p>
+          <br />
+          <p class="forminfo">
+            이름<span class="required">&nbsp;&nbsp;*</span>
+          </p>
+          <b-form-input
+            class="mb-3 user-form-control"
+            v-model="user.name"
+            type="text"
+            placeholder="이름을 입력해주세요."
+          ></b-form-input>
+          <p class="forminfo">
+            휴대전화<span class="required">&nbsp;&nbsp;*</span>
+          </p>
+          <b-form-input
+            class="mb-3 user-form-control"
+            v-model="user.phone"
+            type="text"
+            placeholder="예시) 01012345678"
+          ></b-form-input>
+          <p class="forminfo">
+            주소<span class="required">&nbsp;&nbsp;*</span>
+          </p>
           <div class="address">
-            <b-form-input class="mb-3 user-form-control" style="width:90%;" v-model="user.address" type="text" placeholder="주소 검색" ></b-form-input>
-            <button class="search" style="margin-bottom:16px;" @click="execDaumPostcode()" type="button" value="우편번호 찾기" ><img src="@/assets/searching.png" alt="search"></button>
+            <b-form-input
+              class="mb-3 user-form-control"
+              style="width: 90%"
+              v-model="user.address"
+              type="text"
+              placeholder="주소 검색"
+            ></b-form-input>
+            <button
+              class="search"
+              style="margin-bottom: 16px"
+              @click="execDaumPostcode()"
+              type="button"
+              value="우편번호 찾기"
+            >
+              <img src="@/assets/searching.png" alt="search" />
+            </button>
           </div>
-          <b-form-input class="mb-3 user-form-control" v-model="user.extraAddress" type="text" placeholder="상세주소를 입력해주세요" ></b-form-input>
+          <b-form-input
+            class="mb-3 user-form-control"
+            v-model="user.extraAddress"
+            type="text"
+            placeholder="상세주소를 입력해주세요"
+          ></b-form-input>
           <!-- <b-form-input class="mb-3" v-model="credentials.address" type="text" placeholder="" ></b-form-input> -->
         </div>
 
-        <div v-show="page===3">
+        <div v-show="page === 3">
           <p style="font-size: 14px">마지막 단계입니다!</p>
-          <p><span>최종학력</span>, <span>생년월일</span>, <span>성별</span>을 입력해주세요! <br><span>프로필 사진</span>도 넣어주시면 좋구요 :)</p>
+          <p>
+            <span>최종학력</span>, <span>생년월일</span>, <span>성별</span>을
+            입력해주세요! <br /><span>프로필 사진</span>도 넣어주시면 좋구요 :)
+          </p>
 
-          <br>
+          <br />
           <!-- <p class="forminfo">최종학력</p>
           <b-form-select class="mb-3" v-model="user.lastEdu" :options="lastEdu" ></b-form-select> -->
-          <p class="forminfo">최종학력</p>
-          <b-form-select class="mb-3 user-form-control" v-model="user.lastEdu">            
+          <p class="forminfo">
+            최종학력<span class="required">&nbsp;&nbsp;*</span>
+          </p>
+          <b-form-select class="mb-3 user-form-control" v-model="user.lastEdu">
             <option
               v-for="lastedu in lastedus"
               :value="lastedu.value"
               :key="lastedu"
             >
               {{ lastedu.text }}
-            </option></b-form-select>
+            </option></b-form-select
+          >
           <p class="forminfo">생년월일</p>
-          <b-form-input class="mb-3 user-form-control" v-model="user.birth" type="date" placeholder="생년-월-일" ></b-form-input>
-          <p class="forminfo">성별</p>
-          <b-form-select class="mb-3 user-form-control" v-model="user.gender" :options="gender" ></b-form-select>
+          <b-form-input
+            class="mb-3 user-form-control"
+            v-model="user.birth"
+            type="date"
+            placeholder="생년-월-일"
+          ></b-form-input>
+          <p class="forminfo">
+            성별<span class="required">&nbsp;&nbsp;*</span>
+          </p>
+          <b-form-select
+            class="mb-3 user-form-control"
+            v-model="user.gender"
+            :options="gender"
+          ></b-form-select>
           <div class="mb-3 mt-3">
             <p class="forminfo">프로필 사진</p>
             <input
               type="file"
               class="form-control user-form-control"
               placeholder="이미지를 선택해주세요"
-              ref = "img"
+              ref="img"
               @change="changeImg()"
             />
           </div>
         </div>
 
-        
-        <footer style="width: 312px;">
-          <button style="background-color: var(--color-red-3);" type="button" v-show="page === 1"><router-link style="text-decoration:none; color: white;" :to="{ name: 'Login' }">이전</router-link></button>
-          <button style="background-color: var(--color-red-3);" type="button" v-show="page !== 1" @click="decreasePage">이전</button>
-          <button type="button" v-show="page !== 3" @click="increasePage">다음</button>
+        <footer style="width: 312px">
+          <button
+            style="background-color: var(--color-red-3)"
+            type="button"
+            v-show="page === 1"
+          >
+            <router-link
+              style="text-decoration: none; color: white"
+              :to="{ name: 'Login' }"
+              >이전</router-link
+            >
+          </button>
+          <button
+            style="background-color: var(--color-red-3)"
+            type="button"
+            v-show="page !== 1"
+            @click="decreasePage"
+          >
+            이전
+          </button>
+          <button type="button" v-show="page !== 3" @click="increasePage">
+            다음
+          </button>
           <button @click="regist()" v-show="page === 3">완료!</button>
         </footer>
       </div>
-
-
-
     </div>
-
   </div>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState } from "vuex";
 // import { register } from "@/api/user.js"
-import axios from 'axios'
-import drf from '@/api/drf'
+import axios from "axios";
+import drf from "@/api/drf";
 
 export default {
-  name: 'SignupView',
+  name: "SignupView",
   components: {},
   data() {
     return {
       user: {
         // 변수 이름 설정
-        userAppId: '',
-        userAppPwd: '',
-        name: '',
-        phone: '',
-        address: '',
-        extraAddress: '',
+        userAppId: "",
+        userAppPwd: "",
+        name: "",
+        phone: "",
+        address: "",
+        extraAddress: "",
         // extraAddress: '',
         lastEdu: null,
-        birth: '',
-        gender: '',
-        isOpen: 'CLOSE',
-        kakaoId: '',
-        portfolioName: '',
-        portfolioPath: '',
-        profileImgName: '',
-        profileImgPath: '',
-        totalCareer: 0,        
+        birth: "",
+        gender: "",
+        isOpen: "CLOSE",
+        kakaoId: "",
+        portfolioName: "",
+        portfolioPath: "",
+        profileImgName: "",
+        profileImgPath: "",
+        totalCareer: 0,
         // 이력서 공개 여부
       },
       gender: [
-      { value: null, text: '성별을 선택해주세요.' },          
-      { value: 'F', text: '여자' },
-      { value: 'M', text: '남자' },
+        { value: null, text: "성별을 선택해주세요." },
+        { value: "M", text: "남자" },
+        { value: "F", text: "여자" },
+        { value: "공개안함", text: "공개안함" },
       ],
       page: 1,
-      password: '',
-      userImg:'',
-      idconfirm: false
-      
-    }
+      password: "",
+      userImg: "",
+      idconfirm: false,
+    };
   },
   setup() {},
   created() {},
@@ -163,78 +280,79 @@ export default {
     //     }}
     //   )
     // },
-    changeImg(){
+    changeImg() {
       this.userImg = this.$refs.img.files;
       console.log(this.userImg);
     },
-    regist(){
-      if (this.user.userAppId == '') {
-        alert('사용하실 이메일을 입력해주세요.')
-      } else if (this.user.userAppPwd == '') {
-        alert('사용하실 패스워드를 입력해주세요.')
+    regist() {
+      if (this.user.userAppId == "") {
+        alert("사용하실 이메일을 입력해주세요.");
+      } else if (this.user.userAppPwd == "") {
+        alert("사용하실 패스워드를 입력해주세요.");
       } else if (this.user.userAppPwd != this.password) {
-        alert('비밀번호를 다시 확인해주세요.')
-      } else if (this.user.name == '') {
-        alert('이름을 입력해주세요.')
-      } else if (this.user.phone== '') {
-        alert('전화번호를 입력해주세요.')
-      } else if (this.user.address == '') {
-        alert('주소를 입력해주세요.')
-      } else if (this.user.gender == '') {
-        alert('성별을 선택해주세요.')
+        alert("비밀번호를 다시 확인해주세요.");
+      } else if (this.user.name == "") {
+        alert("이름을 입력해주세요.");
+      } else if (this.user.phone == "") {
+        alert("전화번호를 입력해주세요.");
+      } else if (this.user.address == "") {
+        alert("주소를 입력해주세요.");
+      } else if (this.user.gender == "") {
+        alert("성별을 선택해주세요.");
       } else if (this.idconfirm == false) {
-        alert('아이디를 확인해주세요.')
+        alert("아이디를 확인해주세요.");
       } else {
-        const formData = new FormData()
-        formData.append('img',this.userImg[0])
-        formData.append('data',new Blob([JSON.stringify(this.user)],{type : "application/json"}))
-        this.registUser(formData)
+        const formData = new FormData();
+        formData.append("img", this.userImg[0]);
+        formData.append(
+          "data",
+          new Blob([JSON.stringify(this.user)], { type: "application/json" }),
+        );
+        this.registUser(formData);
       }
     },
-    idcheck(id){
+    idcheck(id) {
       axios({
         url: drf.user.idcheck(id),
-        method: 'get',
+        method: "get",
       })
-      .then((res)=> {
-        console.log(res)
-        if (res.data.res) {
-          alert('이미 사용중인 아이디 입니다.')
-          this.idconfirm = false
-        } else {
-          alert('사용가능한 아이디 입니다.')
-          this.idconfirm = true
-        }
+        .then((res) => {
+          console.log(res);
+          if (res.data.res) {
+            alert("이미 사용중인 아이디 입니다.");
+            this.idconfirm = false;
+          } else {
+            alert("사용가능한 아이디 입니다.");
+            this.idconfirm = true;
+          }
         })
-      .catch((err) => {
-        console.log(err)
-        
-      })
-      
+        .catch((err) => {
+          console.log(err);
+        });
     },
 
-    signup(){
+    signup() {
       axios({
         // url 수정
-        url: 'https://i7b307.p.ssafy.io/api/users/regist',
-        method: 'post',
-        data: this.user
+        url: "https://i7b307.p.ssafy.io/api/users/regist",
+        method: "post",
+        data: this.user,
       })
-      // .then(res) < 수정
-      .then(() => {
-        console.log('성공!')
-        this.$router.push({ name: 'Login' })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        // .then(res) < 수정
+        .then(() => {
+          console.log("성공!");
+          this.$router.push({ name: "Login" });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       // error 부분 추가
     },
-    increasePage(){
-      this.page += 1
+    increasePage() {
+      this.page += 1;
     },
-    decreasePage(){
-      this.page -= 1
+    decreasePage() {
+      this.page -= 1;
     },
     execDaumPostcode() {
       new window.daum.Postcode({
@@ -249,7 +367,7 @@ export default {
             // 사용자가 지번 주소를 선택했을 경우(J)
             this.user.address = data.jibunAddress;
           }
- 
+
           // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
           if (data.userSelectedType === "R") {
             // 법정동명이 있을 경우 추가한다. (법정리는 제외)
@@ -275,101 +393,105 @@ export default {
       }).open();
     },
   },
-}
-
+};
 </script>
 
 <style scoped>
-  .check {
-    background-color: #8CD6C1;
-    width: 90PX;
-    height: 38px;
-    border-radius: 10px;
-    /* border-color: var(--color-red-2); */
-    color: white;
-    font-weight: 600;
-    font-size: 14px;
-    border-style: none;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+.check {
+  background-color: #8cd6c1;
+  width: 90px;
+  height: 38px;
+  border-radius: 10px;
+  /* border-color: var(--color-red-2); */
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  border-style: none;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
 
-  }
+header {
+  height: 120px;
+  border-style: none none solid none;
+  border-width: 0.5px;
+  border-color: #eaeaea;
+}
 
-  header{
-    height: 120px;
-    border-style: none  none solid none;
-    border-width: 0.5px;
-    border-color: #EAEAEA;
-  }
+span {
+  color: var(--color-green-1);
+  font-size: 17px;
+}
 
-  span{
-    color: var(--color-green-1);
-    font-size: 17px;
-  }
-  
-  p{
-    color: #0F0F0F;
-    font-weight: 800;
-    font-size: 16px;
-    text-align:left;
-  }
+p {
+  color: #0f0f0f;
+  font-weight: 800;
+  font-size: 16px;
+  text-align: left;
+}
 
-  .order{
-    margin: 2px;
-  }
+.order {
+  margin: 2px;
+}
 
-  .forminfo {
-    color: #8A8A8A;
-    font-weight: 400;
-    font-size: 13px;
-    margin-bottom: 5px;
-  }
+.required {
+  font-size: 13px;
+  color: var(--color-red-1);
+}
 
-  .signupform {
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-    align-items: center;
-    height: 600px;
-    /* min-height: 100vh; */
-  }
+.forminfo {
+  color: #8a8a8a;
+  font-weight: 400;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
 
-  .address{
-    display: flex;
-    justify-content: space-between;    
-  }
+.signupform {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  height: 600px;
+  /* min-height: 100vh; */
+}
 
-  .search{
-    border: 0px;
-    background-color:transparent;
-  }
+.address {
+  display: flex;
+  justify-content: space-between;
+}
 
-  footer > button {    
-    background-color: var(--color-red-1);
-    width: 45%;
-    height: 80%;
-    /* height: 40px; */
-    border-radius: 10px;
-    border: none;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
-    cursor: pointer;
-  }
+.search {
+  border: 0px;
+  background-color: transparent;
+}
 
-  footer {
-    position: fixed;
-    transform: translate(-50%, 0);
-    bottom: 60px;
-    left: 50%;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-  }
+footer > button {
+  background-color: var(--color-red-1);
+  width: 45%;
+  height: 80%;
+  /* height: 40px; */
+  border-radius: 10px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
+  cursor: pointer;
+}
 
-  .user-form-control:focus{
-  border-color: var(--color-red-2) !important; 
+footer {
+  position: fixed;
+  transform: translate(-50%, 0);
+  bottom: 60px;
+  left: 50%;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-form-control:focus {
+  border-color: var(--color-red-2) !important;
   box-shadow: inset 0 1px 1px var(--color-red-1), 0 0 8px var(--color-red-2) !important;
 }
 </style>

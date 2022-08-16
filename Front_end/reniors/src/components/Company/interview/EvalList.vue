@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="eval-list-item-box">
     <eval-list-item
-      v-for="(evalquestion, idx) in this.list"
+      v-for="(evalquestion, idx) in evalquestionlist"
       :key="evalquestion.id"
       :idx="idx"
       :evalquestion="evalquestion"
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import EvalRegist from "./EvalRegist.vue";
 import EvalListItem from "./EvalListItem.vue";
 export default {
@@ -29,30 +29,19 @@ export default {
   data() {
     return {
       registflag: false,
-      list: null,
     };
-  },
-  watch: {
-    evalquestionlist: function (data) {
-      console.log(data);
-      this.list = data;
-    },
   },
   created() {
     this.getEvalQuestionList(this.$route.params.no);
     this.setheader("면접평가");
   },
   computed: {
-    ...mapGetters("company", ["jobopening"]),
-    ...mapState("company", ["evalquestionlist"]),
+    ...mapGetters("company", ["evalquestionlist"]),
   },
   methods: {
     ...mapActions("company", ["getEvalQuestionList", "setheader"]),
     changeflag() {
       this.registflag = !this.registflag;
-    },
-    fetch() {
-      this.getEvalQuestionList(this.$route.params.no);
     },
   },
 };
@@ -65,5 +54,8 @@ export default {
   font-size: 18px;
   font-weight: bold;
   color: var(--color-green-1);
+}
+.eval-list-item-box {
+  margin-bottom: 6vh;
 }
 </style>
