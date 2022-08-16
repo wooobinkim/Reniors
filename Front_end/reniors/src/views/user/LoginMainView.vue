@@ -5,26 +5,26 @@
       <br />
       <div class="loginmenu">
         <div id="userlogin">
-          <router-link :to="{ name:'LoginUser' }">
-            <button class="userbtn">
-              개인 로그인
-            </button>
+          <router-link :to="{ name: 'LoginUser' }">
+            <button class="userbtn">개인 로그인</button>
           </router-link>
         </div>
         <div id="companylogin">
-          <router-link :to="{ name:'LoginCompany' }">
-            <button class="companybtn">
-              기업 로그인
-            </button>
+          <router-link :to="{ name: 'LoginCompany' }">
+            <button class="companybtn">기업 로그인</button>
           </router-link>
         </div>
       </div>
       <br />
       <p class="proposal">혹시 계정이 없으신가요?</p>
-      <router-link class="link" style="color: #FF843E;" :to="{ name: 'Signup' }">
+      <router-link class="link" style="color: #ff843e" :to="{ name: 'Signup' }">
         개인 회원가입
       </router-link>
-      <router-link class="link" style="color: #37BF99;" :to="{ name: 'companyregist' }">
+      <router-link
+        class="link"
+        style="color: #37bf99"
+        :to="{ name: 'companyregist' }"
+      >
         기업 회원가입
       </router-link>
     </div>
@@ -32,27 +32,26 @@
 </template>
 <script>
 export default {
-  name:'LoginMainView',
+  name: "LoginMainView",
   components: {},
   data() {
     return {
-      example: '',
-    }
+      example: "",
+    };
   },
   setup() {},
   created() {},
   mounted() {},
   unmounted() {},
-  methods: {}
-}
+  methods: {},
+};
 </script>
 
 <style scoped>
 .list {
+  padding-top: 11vh;
   display: flex;
   flex-direction: column;
-
-  justify-content: center;
   min-height: 100vh;
 }
 
@@ -60,7 +59,7 @@ export default {
   width: 100%;
   justify-content: center;
   align-items: center;
-  margin: 8px 0px;  
+  margin: 8px 0px;
 }
 
 .loginmenu {
@@ -79,7 +78,7 @@ export default {
   border: solid;
   /* border-color: #FF843E;
   background-color: #FFF5F0; */
-  background-color: #FF843E;
+  background-color: #ff843e;
   border-radius: 10px;
   color: white;
   font-weight: bold;
@@ -93,10 +92,10 @@ export default {
   border: solid;
   /* border-color: #37BF99;
   background-color: #ECFFFA; */
-  background-color: #37BF99;
+  background-color: #37bf99;
   border-radius: 10px;
   color: white;
-    font-weight: bold;
+  font-weight: bold;
   padding: 10px;
   font-size: 20px;
 }

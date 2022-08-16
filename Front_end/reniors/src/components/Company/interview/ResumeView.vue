@@ -1,9 +1,9 @@
 <template>
   <div class="resume-info-box">
-    <img :src="resume.baseURL+resume.userProfile">
+    <img :src="resume.baseURL + resume.userProfile" />
     <div class="resume-name">{{ resume.name }}</div>
     <div class="resume-base-info-box">
-      <div>{{ resume.gender == "F" ? "여자" : "남자" }}</div>    
+      <div>{{ resume.gender == "F" ? "여자" : "남자" }}</div>
       <div>
         {{ new Date(resume.birth).getFullYear() }}-{{
           new Date(resume.birth).getMonth()
@@ -13,20 +13,25 @@
     </div>
 
     <div>경력&emsp; {{ resume.totalCareer }}년</div>
-    <div><span style="color: #8A8A8A"><i class="bi bi-telephone"></i></span>&emsp;  {{ resume.phone }}</div>
+    <div>
+      <span style="color: #8a8a8a"><i class="bi bi-telephone"></i></span>&emsp;
+      {{ resume.phone }}
+    </div>
     <div class="location-info-box">
-      <div class="location-title"><span style="color: #8A8A8A"><i class="bi bi-house-door"></i></span></div>
-      <div style="display: flex; line-height: 32px;">
-          <div>{{ resume.address }}</div>
-          <div style="margin-right: 10px;">, </div>
-          <div>{{ resume.extraAddress }}</div>
+      <div class="location-title">
+        <span style="color: #8a8a8a"><i class="bi bi-house-door"></i></span>
+      </div>
+      <div style="display: flex; line-height: 32px">
+        <div>{{ resume.address }}</div>
+        <div style="margin-right: 10px">,</div>
+        <div>{{ resume.extraAddress }}</div>
       </div>
     </div>
 
     <!-- <img src="https://i7b307.p.ssafy.io/images/user/{{resume.id}}" /> -->
     <div v-if="resume.careerDetails.length != 0">
       <hr />
-      <p class="subtitle mb-3 sub-title" >경력 사항</p>
+      <p class="subtitle mb-3 sub-title">경력 사항</p>
       <p
         class="box pt-3 pb-3"
         v-for="career in resume.careerDetails"
@@ -84,8 +89,8 @@ export default {
       resumeinfo: null,
     };
   },
-  props:{
-    applyinfo:Object,
+  props: {
+    applyinfo: Object,
   },
   watch: {
     resume: function (data) {
@@ -99,7 +104,11 @@ export default {
     ...mapMutations("company", ["CLEAR_INTERVIEWER"]),
   },
   async created() {
-    await this.getResume(this.applyinfo.userId);
+    if (this.applyinfo) {
+      await this.getResume(this.applyinfo.userId);
+    } else {
+      await this.getResume(this.$route.params.no);
+    }
     await this.CLEAR_INTERVIEWER;
   },
   methods: {
@@ -109,54 +118,53 @@ export default {
 </script>
 
 <style scoped>
-*{
+* {
   font-size: 20px;
 }
-  .resume-info-box{
-    width: 35vw - 48px;
-    height: 56vh;
-    border: none;
-    background-color: white;
-    padding: 24px;
-    margin: 0 8px;
-    border-radius: 5px 5px 0 0;
-    
-  }
-  .resume-info-box > img{
-    width: 90px;
-    height: 120px;
-    float: right;
-    border-radius: 5px;
-  }
-  .resume-info-box > .resume-name{
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--color-green-1);
-    border : none;
-  }
-  .resume-info-box > div {
-    width: 100%;
-    text-align: left;
-    margin-top: 10px;
-    font-size: 20px;
-    margin-right: 20px;
-  }
-  .resume-base-info-box{
-    display: flex;
-  }
-  .resume-base-info-box > div{
-    display: inline-block;
-    margin-right: 20px;
-  }
-  .resume-info-box > .location-info-box {
-    display: flex;
-  }
-  .resume-info-box > div > .location-title {
-    line-height: 32px;
-    margin-right: 20px;
-  }
-  .resume-info-box .sub-title{
-    font-size: 20px;
-    font-weight: bold;
-  }
+.resume-info-box {
+  width: 35vw - 48px;
+  height: 56vh;
+  border: none;
+  background-color: white;
+  padding: 24px;
+  margin: 0 8px;
+  border-radius: 5px 5px 0 0;
+}
+.resume-info-box > img {
+  width: 90px;
+  height: 120px;
+  float: right;
+  border-radius: 5px;
+}
+.resume-info-box > .resume-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-green-1);
+  border: none;
+}
+.resume-info-box > div {
+  width: 100%;
+  text-align: left;
+  margin-top: 10px;
+  font-size: 20px;
+  margin-right: 20px;
+}
+.resume-base-info-box {
+  display: flex;
+}
+.resume-base-info-box > div {
+  display: inline-block;
+  margin-right: 20px;
+}
+.resume-info-box > .location-info-box {
+  display: flex;
+}
+.resume-info-box > div > .location-title {
+  line-height: 32px;
+  margin-right: 20px;
+}
+.resume-info-box .sub-title {
+  font-size: 20px;
+  font-weight: bold;
+}
 </style>
