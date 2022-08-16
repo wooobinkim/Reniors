@@ -12,10 +12,10 @@
         <img class="person" :src="this.currentUser.baseURL + this.currentUser.userProfile" alt="person">
       </div>
       <br>
-      <br>
       <div class="myinfo">
         <div class="name">{{this.currentUser.name}}</div>
-        <button><router-link :to="{ name: 'MyinfoEdit' }" style="text-decoration:none; color: #37BF99;">내 정보 수정</router-link></button>
+        <router-link :to="{ name: 'MyinfoEdit' }" style="text-align: left; text-decoration:none; color: #6D6D6D; font-weight: 700; font-size:13px; "><i class="bi bi-gear-fill" style="color: #37BF99"></i>&nbsp;내정보 수정</router-link>
+        <!-- <button><router-link :to="{ name: 'MyinfoEdit' }" style="text-decoration:none; color: #37BF99;">내정보 수정</router-link></button> -->
       </div>
 
       <button class="resume"><router-link :to="{ name: 'ResumeDetail' }" style="text-decoration:none; color: white; font-weight: 700; font-size: 18px;"><img style="align: absmiddle; filter: drop-shadow(0px 0.5px 0.5px rgba(0, 0, 0, 0.25)); margin-right: 10px;" src="@/assets/note.svg" alt="note">내 이력서</router-link></button>
@@ -29,11 +29,11 @@
           </div>
         </div>
         <div class="rechoice">
-          <router-link :to="{ name: 'UpdateSetting' }" style="text-decoration:none; color: #6D6D6D; font-weight:800; font-size: 13px">관심 다시 설정하기  <i class="bi bi-reply-all-fill" style="color: #FF843E;"></i></router-link>
+          <router-link :to="{ name: 'UpdateSetting' }" style="text-decoration:none; color: #6D6D6D; font-weight:800; font-size: 13px">관심 다시 설정하기  <i class="bi bi-reply-all-fill" style="color: #37BF99;"></i></router-link>
         </div>
       </div>
       <div v-else>
-        <router-link :to="{ name: 'CreateSetting' }" style="text-decoration:none; color: #6D6D6D; font-weight:600; font-size: 14px; color: #FF843E;">관심 설정하기</router-link>
+        <router-link :to="{ name: 'CreateSetting' }" style="text-decoration:none; color: #6D6D6D; font-weight:600; font-size: 14px; color: #37BF99;">관심 설정하기</router-link>
       </div>
 
     </div>
@@ -42,11 +42,28 @@
 
     <div style="width: 312px; margin: auto;" class="ing">
       <div style="display: flex; justify-content: flex-end;">
-        <router-link :to="{ name: 'MyCalendarView' }" class ="calendar"><img style="width: 23px; height: 23px; align: absmiddle; filter: drop-shadow(0px 0.5px 0.5px rgba(0, 0, 0, 0.25));" src="@/assets/calendar.svg" alt="calendar">      나의 <span>일정</span> 보기!</router-link>
+        <router-link :to="{ name: 'MyCalendarView' }" class ="calendar"><img style="width: 23px; height: 23px; align: absmiddle; filter: drop-shadow(0px 0.5px 0.5px rgba(0, 0, 0, 0.25));" src="@/assets/calendar.svg" alt="calendar">      나의 <span>일정</span> 한눈에 보기!</router-link>
       </div>
       <br>
-      <button @click="toApplied"><span style="color: #37BF99; font-size: 20px;">{{ applyNumber }}</span> <br><br> 지원 현황</button>
-      <button @click="toBookmark"><span style="color: #ffb252; font-size: 20px;">{{ bookmarkNumber }}</span> <br><br> 관심 공고</button>
+      <div style="float: left; margin-left:5px; font-size: 14px;">
+        <button @click="applyshow" v-if="showleft" class="show" style="margin-right: 7px; ">지원 이력</button>
+        <button @click="applyshow" v-else class="nonshow" style="margin-right: 7px; ">지원 이력</button>
+        <button @click="bookmarkshow" v-if="showleft" class="nonshow">관심 공고</button>
+        <button @click="bookmarkshow" class="show" v-else >관심 공고</button>
+      </div>
+      <br>
+      <br>
+      <apply-history-view v-show="showleft">
+      </apply-history-view>
+      <bookmark-history-view v-show="showleft == false">
+      </bookmark-history-view>
+
+
+
+
+      <!-- <button><router-link :to="{ name: 'ApplyHistoryView' }" style='text-decoration: none; color: black;'><span style="color: #37BF99; font-size: 20px;">{{ applyNumber }}</span> <br><br> 지원 현황</router-link></button> -->
+      <!-- <button @click="toApplied"><span style="color: #37BF99; font-size: 20px;">{{ applyNumber }}</span> <br><br> 지원 현황</button> -->
+      <!-- <button @click="toBookmark"><span style="color: #ffb252; font-size: 20px;">{{ bookmarkNumber }}</span> <br><br> 관심 공고</button> -->
     </div>
 
     <br>
@@ -55,51 +72,64 @@
   </div>
 </template>
 <script>
-import { computed } from 'vue'
-import { mapActions, mapGetters, useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import ApplyHistoryView from '@/views/user/ApplyHistoryView.vue'
+import BookmarkHistoryView from '@/views/user/BookmarkHistoryView.vue'
+import { mapActions, mapGetters } from 'vuex'
+// import { computed } from 'vue'
+
+// import { useRouter } from 'vue-router'
 export default {
   name: "MyPageView",
-  components: { },
+  components: { ApplyHistoryView, BookmarkHistoryView },
   data() {
+    return {
+      showleft : true,
+    }
   },
   computed: {
-    ...mapGetters(['currentUser', 'prefer'])
+    ...mapGetters(['currentUser', 'prefer']),
   },
-  setup() {
-    const store = useStore()
-    const router = useRouter()
+  // setup() {
+  //   const store = useStore()
+  //   const router = useRouter()
 
-    const fetchApply = () => store.dispatch('jobopening/fetchApply')
-    const fetchBookmark = () => store.dispatch('jobopening/fetchBookmark')
-    fetchApply()
-    fetchBookmark()
+  //   const fetchApply = () => store.dispatch('jobopening/fetchApply')
+  //   const fetchBookmark = () => store.dispatch('jobopening/fetchBookmark')
+  //   fetchApply()
+  //   fetchBookmark()
 
-    const applyNumber = computed(() => store.getters['jobopening/applies'].length)
-    const bookmarkNumber = computed(() => store.getters['jobopening/bookmarks'].length)
+  //   const applyNumber = computed(() => store.getters['jobopening/applies'].length)
+  //   const bookmarkNumber = computed(() => store.getters['jobopening/bookmarks'].length)
 
-    const toApplied = () => {
-      router.push({ name: 'Jobopening' })
-      return store.dispatch('jobopening/fetchApplied')
-    }
+  //   const toApplied = () => {
+  //     router.push({ name: 'Jobopening' })
+  //     return store.dispatch('jobopening/fetchApplied')
+  //   }
 
-    const toBookmark = () => {
-      router.push({ name: 'Jobopening' })
-      return store.dispatch('jobopening/fetchBookmarked')
-    }
+  //   const toBookmark = () => {
+  //     router.push({ name: 'Jobopening' })
+  //     return store.dispatch('jobopening/fetchBookmarked')
+  //   }
 
-    return {
-      toApplied, toBookmark, applyNumber, bookmarkNumber,
-    }
-  },
+  //   return {
+  //     toApplied, toBookmark, applyNumber, bookmarkNumber,
+  //   }
+  // },
   mounted() {},
   unmounted() {},
   methods: {
     ...mapActions(['fetchCurrentUser', 'fetchPrefer']),
+    applyshow(){
+      this.showleft = true
+    },
+    bookmarkshow(){
+      this.showleft = false
+    }
   },
   created() {
     this.fetchCurrentUser()
     this.fetchPrefer()
+
   },  
 }
 </script>
@@ -112,10 +142,11 @@ export default {
     font-weight: 900;
   }
   .person {
-    width: 120px;
-    height: 160px;
+    width: 60px;
+    height: 80px;
     border-radius: 500px;
     float: left;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   }
 
   .myinfo {
@@ -131,9 +162,9 @@ export default {
   }
 
   .myinfo > button {
-    width: 96px;
+    width: 108px;
     height: 32px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     border-style: solid;
     border-color: #37BF99;
@@ -142,17 +173,17 @@ export default {
 
   .name {
     text-align: left;
-    margin-bottom: 5px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
+    color: #ffb252;
   }
 
   .resume {
     width: 312px;
-    height: 54px;
-    margin-top: 40px;
+    height: 48px;
+    margin-top: 20px;
     background-color: #ffb252;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
 
   .interest {
@@ -189,15 +220,19 @@ export default {
 
 
 
-  .ing > button {
-    width: 150px;
-    height: 150px;
-    border-radius: 0px;
-    font-size: 13px;
-    font-weight: 700;
-    background-color: #f9f9f9;
-  }
+ .show {
+  background-color: #FF843E; 
+  color: white; 
+  padding: 5px; 
+  font-weight: 700;
+ }
 
+ .nonshow {
+  background-color: #f9f9f9; 
+  padding: 5px;
+  color: #6d6d6d;
+  font-weight: 500;
+ }
 
 </style>
 

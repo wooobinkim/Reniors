@@ -27,7 +27,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 /* same as DetailCondition.vue */
 .jobopening-box img{
   width: 100%;

@@ -23,6 +23,7 @@ import PreferSetting from "../components/user/PreferSetting";
 import PreferSettingComplete from "../views/user/PreferSettingCompleteView.vue";
 import MyCalendarView from "../views/user/MyCalendarView.vue";
 
+
 import CreateSetting from "../views/user/CreateSetting.vue";
 import UpdateSetting from "../views/user/UpdateSetting.vue";
 
@@ -98,6 +99,7 @@ const routes = [
   },
 
   //user
+
   {
     path: "/mypage/calendar",
     name: "MyCalendarView",
