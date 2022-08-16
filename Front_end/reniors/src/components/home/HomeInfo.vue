@@ -1,7 +1,6 @@
 <template>
     <router-link class="home-info" :to="{ name: 'Jobopening' }">
       <p>시니어를 위한 공고 보러가기 <i class="bi bi-arrow-right-square-fill"></i></p>
-      
     </router-link>
 </template>
 
@@ -20,12 +19,12 @@ export default {
     var(--color-orange-1) 72%,
     var(--color-orange-2) 110%
   );
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-content: center;
   text-decoration: none;
-  margin-bottom: 240px;
+  margin-bottom: 3rem;
 }
 p{
   margin: 0;

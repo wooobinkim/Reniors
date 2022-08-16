@@ -13,6 +13,7 @@
     </span>
 
     <span v-if="isEditing" class="commentForm">
+        
         <img class="person" :src="comment.baseURL + comment.userProfile" alt="person">
         <input type="text" v-model="contents" style="">
         <p @click="onUpdate" class="btn-open my-0" style="font-size:14px; color:#37BF99">수정</p>
@@ -41,11 +42,11 @@ export default{
             contents: this.comment.contents,
             categoryId: this.$route.params.category_id,
             boardId: this.$route.params.board_id,
-
         };
     },
     computed: {
-        ...mapGetters(['currentUser', 'isAuthor']),     
+        ...mapGetters(['currentUser', 'isAuthor']),
+
     },
     watch:{
         comment: function(){
@@ -139,8 +140,8 @@ input{
     margin: 2px 8px;
 }
 .person{
-    width: 50px;
-    height: 50px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     
 }
