@@ -3,7 +3,7 @@ import drf from '@/api/drf'
 import _ from 'lodash'
 import http from '@/api/http'
 import router from '@/router'
-import dayjs from 'dayjs'
+
 
 
 export default {
@@ -14,7 +14,8 @@ export default {
     selectedJobopening: {},
     bookmarks: [],
     applies: [],
-    interview: []
+    interview: [],
+    bookmarksdate: []
   },
   getters: {
     tags: state => state.tags,
@@ -28,7 +29,8 @@ export default {
       if (state.applies.find(apply => apply.jobOpeningId === state.selectedJobopening.id) === undefined) return false
       else return true
     },
-    interview: state => state.interview
+    interview: state => state.interview,
+    bookmarksdate: state => state.bookmarksdate
   },
   mutations: {
     TAGS: (state, tags) => state.tags = tags,
@@ -39,14 +41,23 @@ export default {
     INTERVIEW: (state, applies) => {
       state.interview = []
       applies.forEach((apply) => {
-        const object = { title: apply.jobOpeningTitle, date: dayjs(apply.interviewDate).format("YYYY-MM-DD") }
+
+        const object = { title: apply.jobOpeningTitle, date: apply.interviewDate, child: apply.jobChildCategoryName }
         // object.replace (/"/g,'')
-        console.log(object)
+
         // const json = JSON.stringify(object)
         // const unquoted = object.replace(/"([^"]+)":/g, '$1:')
         state.interview.push(object)
-        
+      })
+    },
+    BOOKMARKSDATE: (state, bookmarks) => {
+      state.bookmarksdate = []
+      bookmarks.forEach((bookmark) => {
+        console.log(bookmark)
+        const object1 = { title: bookmark.jobOpeningResponse.title, date: bookmark.jobOpeningResponse.finishedDate, company: bookmark.jobOpeningResponse.companyName, link: "https://i7b307.p.ssafy.io/jobopening/" + bookmark.jobOpeningResponse.id}
+        console.log(object1)
 
+        state.bookmarksdate.push(object1)
       })
     }
   },
@@ -94,7 +105,10 @@ export default {
     },
     async fetchBookmark({ commit }) {
       const response = await http.get('/jobopening/bookmark')
+      console.log(response)
       commit('BOOKMARKS', response.data)
+      commit('BOOKMARKSDATE', response.data)
+      
     },
     async addBookmark({ dispatch }, id) {
       const response = await http.post(`/jobopening/bookmark/${id}`)

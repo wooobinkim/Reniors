@@ -1,8 +1,7 @@
-
-import drf from '@/api/drf'
-import multipart from '@/api/multipart'
-import router from '@/router'
-import axios from 'axios'
+import drf from "@/api/drf";
+import multipart from "@/api/multipart";
+import router from "@/router";
+import axios from "axios";
 // import jwt_decode from 'jwt-decode'
 // import { login, findById } from '@/api/user.js'
 
@@ -73,7 +72,6 @@ export const user = {
     removeToken({ commit }) {
       commit("SET_TOKEN", "");
       localStorage.setItem("token", "");
-      router.push({ name: "home" });
     },
 
     // error 커밋 추가
@@ -129,22 +127,21 @@ export const user = {
           });
       }
     },
-    kakaoRegist({ dispatch }, formData){
+    kakaoRegist({ dispatch }, formData) {
       multipart
         .post(`/users/kakao/regist`, formData)
         .then((res) => {
-          console.log('성공')
-          const token = res.headers["authorization"]
-          dispatch("saveToken", token)
-          dispatch("fetchCurrentUser")
-          console.log(res)
-          router.push({ name: "home" })
+          console.log("성공");
+          const token = res.headers["authorization"];
+          dispatch("saveToken", token);
+          dispatch("fetchCurrentUser");
+          console.log(res);
+          router.push({ name: "home" });
         })
         .catch((err) => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     },
-
 
     registUser({ commit }, formData) {
       console.log(formData);
@@ -250,47 +247,48 @@ export const user = {
     changePassword({ getters }, data) {
       axios({
         url: drf.user.changePwd(data),
-        method: 'put',
+        method: "put",
         headers: getters.authHeader,
       })
-      .then((res) => {
-        alert('변경되었습니다!')
-        console.log(res)
-      })
-      .catch((err) => console.log(err))
+        .then((res) => {
+          alert("변경되었습니다!");
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
     },
 
     fetchRooms({ getters, commit }) {
       axios({
-        url: "https://i7b307.p.ssafy.io/api" + "/room/user",
+        url: "https://i7b307.p.ssafy.io/api" + "/jobopening/apply/dateAsc",
         method: "get",
         headers: getters.authHeader,
       })
         .then((res) => {
+          console.log('요ㅕ기',res);
           commit("SET_ROOMS", res.data);
         })
         .catch((err) => console.error(err.response));
     },
 
-    kakaologin({ dispatch }, forms){
+    kakaologin({ dispatch }, forms) {
       axios({
         url: "https://i7b307.p.ssafy.io/api/users/kakao/login",
-        method: 'post',
-        data: JSON.stringify(forms)        
+        method: "post",
+        data: JSON.stringify(forms),
       })
-      .then((res) => {
-        console.log(forms)
-        const token = res.headers["authorization"]
-        dispatch("saveToken", token)
-        dispatch("fetchCurrentUser")
-        console.log(res)
-        router.push({ name: "home" })
-      })
-      .catch((err) => {
-        console.log(forms)
-        console.log(err)
-      })
-    }
+        .then((res) => {
+          console.log(forms);
+          const token = res.headers["authorization"];
+          dispatch("saveToken", token);
+          dispatch("fetchCurrentUser");
+          console.log(res);
+          router.push({ name: "home" });
+        })
+        .catch((err) => {
+          console.log(forms);
+          console.log(err);
+        });
+    },
   },
 
   modules: {},

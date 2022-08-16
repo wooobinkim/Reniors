@@ -228,23 +228,18 @@ public class JobOpeningService {
             jobChildCategoryList.add(jobChildCategory);
         }
 
+        if(searchCondition.getMinCareer() != 0) booleanBuilder.and(j.minCareer.goe(searchCondition.getMinCareer()));
+        if(searchCondition.getMinSalary() != 0)booleanBuilder.and(j.minSalary.goe(searchCondition.getMinSalary()));
+        if(searchCondition.getWorkingDay() != 0)booleanBuilder.and(j.workingDay.loe(searchCondition.getWorkingDay()));
         if (searchCondition.getLastEdu() != null) booleanBuilder.and(j.lastEdu.eq(searchCondition.getLastEdu()));
         if (searchCondition.getTypeEmployment() != null) booleanBuilder.and(j.typeEmployment.eq(searchCondition.getTypeEmployment()));
         if(searchCondition.getJobParentCategoryId() != null) booleanBuilder.and (j.jobChildCategory.parent.id.eq(searchCondition.getJobParentCategoryId()));
+        if(gugunList.size() != 0) booleanBuilder.and(j.gugun.in(gugunList));
+        if(jobChildCategoryList.size() != 0) booleanBuilder.and(j.jobChildCategory.in(jobChildCategoryList));
 
         List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
                 .where(
-//                        (j.contents.contains(jobOpeningSearchDto.getContents())),
-//                        (j.minSalary.goe(jobOpeningSearchDto.getMinSalary())),
-//                        booleanBuilder
-                        (j.minCareer.goe(searchCondition.getMinCareer())),
-                        (j.minSalary.goe(searchCondition.getMinSalary())),
-                        (j.workingDay.loe(searchCondition.getWorkingDay())),
-                        booleanBuilder,
-//                        (j.typeEmployment.eq(searchCondition.getTypeEmployment())),
-//                        (j.lastEdu.eq(searchCondition.getLastEdu())),
-                        (j.gugun.in(gugunList)),
-                        (j.jobChildCategory.in(jobChildCategoryList))
+                        booleanBuilder
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -275,15 +270,18 @@ public class JobOpeningService {
         //조건검색을 위한 쿼리DSL 실행
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
         QJobOpening j = new QJobOpening("j");
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         RecommendCondition rc = recommendConditionRepository.findById(recommendConditionId).orElseThrow(() -> new NotFoundException("not found rc"));
 
+        if(rc.getMinSalary() != 0) booleanBuilder.and(j.minCareer.goe(rc.getMinSalary()));
+        if(rc.getWorkingDay() != 0)booleanBuilder.and(j.workingDay.loe(rc.getWorkingDay()));
+        if(rc.getGugun() != null) booleanBuilder.and(j.gugun.eq(rc.getGugun()));
+        if(rc.getJobParentCategory() != null) booleanBuilder.and(j.jobChildCategory.parent.eq(rc.getJobParentCategory()));
+
         List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
                 .where(
-                        (j.minSalary.goe(rc.getMinSalary())),
-                        (j.workingDay.loe(rc.getWorkingDay())),
-                        (j.jobChildCategory.parent.eq(rc.getJobParentCategory())),
-                        (j.gugun.eq(rc.getGugun()))
+                        booleanBuilder
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -313,15 +311,18 @@ public class JobOpeningService {
         //조건검색을 위한 쿼리DSL 실행
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
         QJobOpening j = new QJobOpening("j");
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         RecommendCondition rc = recommendConditionRepository.findById(recommendConditionId).orElseThrow(() -> new NotFoundException("not found rc"));
 
+        if(rc.getMinSalary() != 0) booleanBuilder.and(j.minCareer.goe(rc.getMinSalary()));
+        if(rc.getWorkingDay() != 0)booleanBuilder.and(j.workingDay.loe(rc.getWorkingDay()));
+        if(rc.getGugun() != null) booleanBuilder.and(j.gugun.eq(rc.getGugun()));
+        if(rc.getJobParentCategory() != null) booleanBuilder.and(j.jobChildCategory.parent.eq(rc.getJobParentCategory()));
+
         List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
                 .where(
-                        (j.minSalary.goe(rc.getMinSalary())),
-                        (j.workingDay.loe(rc.getWorkingDay())),
-                        (j.jobChildCategory.parent.eq(rc.getJobParentCategory())),
-                        (j.gugun.eq(rc.getGugun()))
+                        booleanBuilder
                 )
                 .offset(0)
                 .limit(10)
@@ -382,7 +383,7 @@ public class JobOpeningService {
         QApply a = new QApply("a");
 
         List<Apply> applyList = jpaQueryFactory.selectFrom(a)
-                .where(a.interviewDate.isNotNull())
+                .where(a.interviewDate.isNotNull().and(a.user.eq(user)))
                 .orderBy(a.interviewDate.asc()).fetch();
 
         List<ApplyResponse> applyResponseList = applyList.stream().map(res->ApplyResponse.response(

@@ -4,9 +4,7 @@
     <div>채용현황 : {{ apply.jobOpeningProcess }}</div>
     <div class="apply-pass-btn-box">
       <button @click="resumeview()">이력서보기</button>
-      <router-link
-        :to="{ name: 'usereval', params: { no: apply.userId } }"
-      >
+      <router-link :to="{ name: 'usereval', params: { no: apply.userId } }">
         <button>면접평가보기</button></router-link
       >
     </div>
@@ -58,12 +56,14 @@ export default {
 }
 .apply-pass-item-info-box button {
   border: none;
-  background-color: var(--color-green-2);
+  background-color: var(--color-green-1);
   padding: 6px 20px;
-  color: black;
+  color: white;
   border-radius: 5px;
   font-weight: bold;
   font-size: 14px;
   margin: 0;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 </style>
