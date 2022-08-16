@@ -76,24 +76,27 @@ export const user = {
 
     // error 커밋 추가
     login({ dispatch }, credentials) {
-      console.log(credentials);
       axios({
         // url 수정
         url: "https://i7b307.p.ssafy.io/api/users/login",
         method: "post",
         data: credentials,
-      }).then((res) => {
-        const token = res.headers["authorization"];
-        dispatch("saveToken", token);
-        dispatch("fetchCurrentUser");
-        // router 수정
-        router.push({ name: "home" });
-      });
-      // error 부분 추가
+      })
+        .then((res) => {
+          const token = res.headers["authorization"];
+          dispatch("saveToken", token);
+          dispatch("fetchCurrentUser");
+          // router 수정
+          router.push({ name: "home" });
+        })
+        .catch(() => {
+          alert(
+            "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n입력하신 내용을 다시 확인해주세요.",
+          );
+        });
     },
 
     updateUser({ dispatch }, formData) {
-      console.log(formData);
       multipart
         .put(`/users`, formData)
         .then(() => {
@@ -107,7 +110,6 @@ export const user = {
 
     fetchCurrentUser({ commit, getters, dispatch }) {
       if (getters.isLogginedIn) {
-        console.log(getters.authHeader);
         axios({
           // url 수정
           url: "https://i7b307.p.ssafy.io/api/users/",
@@ -116,7 +118,6 @@ export const user = {
         })
           .then((res) => {
             commit("SET_CURRENT_USER", res.data);
-            console.log(getters.currentUser);
             // dispatch('fetchMypage', res.data.user_id)
           })
           .catch((err) => {
@@ -131,11 +132,9 @@ export const user = {
       multipart
         .post(`/users/kakao/regist`, formData)
         .then((res) => {
-          console.log("성공");
           const token = res.headers["authorization"];
           dispatch("saveToken", token);
           dispatch("fetchCurrentUser");
-          console.log(res);
           router.push({ name: "home" });
         })
         .catch((err) => {
@@ -144,12 +143,10 @@ export const user = {
     },
 
     registUser({ commit }, formData) {
-      console.log(formData);
       console.log(commit);
       multipart
         .post(`/users/regist`, formData)
         .then(() => {
-          console.log("성공");
           router.push({ name: "Login" });
         })
         .catch((err) => {
@@ -165,8 +162,6 @@ export const user = {
       })
         .then((res) => {
           commit("SET_PREFER", res.data);
-          console.log("성공!");
-          console.log(res);
         })
         .catch((err) => {
           commit("SET_PREFER", {
@@ -220,12 +215,13 @@ export const user = {
         method: "get",
       })
         .then((res) => {
-          console.log(res.data);
           commit("SET_ID", res.data);
           router.push({ name: "FindUsernameResult" });
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          alert(
+            "이름 또는 전화번호를 잘못 입력하셨습니다.\n입력하신 내용을 다시 확인해주세요.",
+          );
         });
     },
 
@@ -239,8 +235,10 @@ export const user = {
           console.log(commit);
           router.push({ name: "FindPasswordResult" });
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          alert(
+            "이름 또는 이메일을 잘못 입력하셨습니다.\n입력하신 내용을 다시 확인해주세요.",
+          );
         });
     },
 
@@ -277,15 +275,12 @@ export const user = {
         data: JSON.stringify(forms),
       })
         .then((res) => {
-          console.log(forms);
           const token = res.headers["authorization"];
           dispatch("saveToken", token);
           dispatch("fetchCurrentUser");
-          console.log(res);
           router.push({ name: "home" });
         })
         .catch((err) => {
-          console.log(forms);
           console.log(err);
         });
     },
