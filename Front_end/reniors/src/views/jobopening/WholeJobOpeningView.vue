@@ -2,31 +2,31 @@
   <div>
     <!-- header -->
     <div class="header container-fluid">
-        <router-link class="header-logo" :to="{ name: 'home' }">
-            <img src="@/assets/logo_cut.png" alt="logo">
-        </router-link>
+      <router-link class="header-logo" :to="{ name: 'home' }">
+        <img src="@/assets/logo_cut.png" alt="logo" />
+      </router-link>
     </div>
 
-    <!-- searchbar -->
     <search-bar></search-bar>
 
     <!-- content -->
     <div class="jobopening-container">
       <RecommendTagList />
     </div>
+
     <JobopeningList />
   </div>
 </template>
 
 <script>
-import RecommendTagList from '@/components/jobopening/RecommendTagList.vue'
-import JobopeningList from '@/components/jobopening/JobopeningList.vue'
-import SearchBar from '@/components/SearchBar.vue';
+import RecommendTagList from "@/components/jobopening/RecommendTagList.vue";
+import JobopeningList from "@/components/jobopening/JobopeningList.vue";
+import SearchBar from "@/components/SearchBar.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "JobopeningView",
   components: {
-    RecommendTagList, 
+    RecommendTagList,
     JobopeningList,
     SearchBar,
   },
@@ -47,20 +47,20 @@ export default {
 :root {
   --recommend-height: ;
 }
-.header{
-    height: 48px;
-    background-color: white;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px -2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
+.header {
+  height: 48px;
+  background-color: white;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px -2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
 }
-.header img{
-    height: 38px;
-    margin: auto;
-    width: auto;
+.header img {
+  height: 38px;
+  margin: auto;
+  width: auto;
 }
 .jobopening-container {
   background-color: var(--color-red-3);
