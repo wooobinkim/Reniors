@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SearchBar />
+    <header-component></header-component>
     <div class="jobopening-container">
       <RecommendTagList />
     </div>
@@ -9,16 +9,16 @@
 </template>
 
 <script>
-import SearchBar from "@/components/SearchBar.vue";
-import RecommendTagList from "@/components/jobopening/RecommendTagList.vue";
-import JobopeningList from "@/components/jobopening/JobopeningList.vue";
+import RecommendTagList from '@/components/jobopening/RecommendTagList.vue'
+import JobopeningList from '@/components/jobopening/JobopeningList.vue'
+import HeaderComponent from '@/components/HeaderComponent.vue'
 import { mapGetters } from "vuex";
 export default {
   name: "JobopeningView",
   components: {
-    SearchBar,
-    RecommendTagList,
+    RecommendTagList, 
     JobopeningList,
+    HeaderComponent
   },
   computed: {
     ...mapGetters("jobopening", ["isrecommend"]),
