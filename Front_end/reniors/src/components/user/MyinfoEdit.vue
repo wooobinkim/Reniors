@@ -4,10 +4,15 @@
       <div style="margin-top: 16px; padding: 10px; background-color: #f9f9f9">
         <span class="title">내 정보 수정</span>
       </div>
+      
     </header>
-    <br />
+    <br/>
+    
 
     <div style="width: 312px; margin: auto">
+      <button @click="deleteNow" class="delete">회원 탈퇴하기</button>
+      <br>
+      <br>
       <p class="forminfo">이메일<span class="required">&nbsp;&nbsp;*</span></p>
       <b-form-input
         class="mb-3"
@@ -27,7 +32,7 @@
             v-model="password"
             placeholder="새 비밀번호를 입력해주세요."
           ></b-form-input>
-          <button style="">변경</button>
+          <button class="change">변경</button>
         </div>
       </form>
       <b-form-input
@@ -42,10 +47,9 @@
         action="info"
       ></resume-basic-form>
 
-      <div>
-        <button>회원 탈퇴하기</button>
-      </div>
+      
     </div>
+  
   </div>
 </template>
 <script>
@@ -72,7 +76,7 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
-    ...mapActions(["fetchCurrentUser", "changePassword"]),
+    ...mapActions(["fetchCurrentUser", "changePassword", "deleteUser"]),
     changeTest(data) {
       if (this.password != this.password2) {
         alert("변경하실 비밀번호를 다시 확인해주세요.");
@@ -80,6 +84,12 @@ export default {
         this.changePassword(data);
       }
     },
+    deleteNow(){
+      var result= confirm("정말 리니어즈를 떠나실 건가요?")
+      if(result){
+        this.deleteUser()
+      } 
+    }
   },
 };
 </script>
@@ -108,7 +118,7 @@ p {
   margin-bottom: 5px;
 }
 
-button {
+.change {
   background-color: #8cd6c1;
   height: 38px;
   border-radius: 10px;
@@ -123,5 +133,13 @@ button {
 .user-form-control:focus {
   border-color: var(--color-red-2) !important;
   box-shadow: inset 0 1px 1px var(--color-red-1), 0 0 8px var(--color-red-2) !important;
+}
+
+.delete {
+  background-color:transparent; 
+  border-style:none; 
+  color: #37bf99; 
+  float: right;
+  font-size: 14px;
 }
 </style>
