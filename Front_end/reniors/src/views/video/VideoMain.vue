@@ -61,7 +61,7 @@
     </div>
 
     <!-- not loggedin -->
-    <div>
+    <div v-if="!isLogginedIn">
         <div class="notlog">
         <div class="notlogBox">
             <p class="notlogp">화상면접과 면접 연습 서비스는</p>
@@ -70,7 +70,7 @@
                 <button class="notlogBtn"> 로그인 하러 가기   <i class="bi bi-arrow-right-square-fill"></i></button>
             </router-link>
         </div>
-    </div>
+        </div>
     </div>
   </div>
 </template>

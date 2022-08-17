@@ -5,14 +5,14 @@
         </router-link>
     </div>
  <!-- Login -->
-  <div class="condition-container" v-if="isLogginedIn">
+  <div class="condition-container" v-if="isLoggedin">
     <HeaderComponent />
     <ConditionList />
     <router-view></router-view>
   </div>
 
   <!-- notLogin -->
-  <div class="notlogTotal">
+  <div class="notlogTotal" v-if="!isLoggedin" >
         <div class="notlog">
         <div class="notlogBox">
             <p class="notlogp">맞춤공고 서비스는</p>
