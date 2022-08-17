@@ -61,9 +61,12 @@
             <!-- 상대방 -->
             <div>
                 <user-video
-                :stream-manager="subscribers[subscribers.length -1]"
-                @click="updateMainVideoStreamManager(subscribers[subscribers.length -1])"
-                class="myvideo"
+                  v-for="(sub,index) in subscribers"
+                  :index="index"
+                  :key="sub.stream.connection.connectionId"
+                  :stream-manager="sub"
+                  @click="updateMainVideoStreamManager(sub)"
+                  class="myvideo"
                 />
             </div>
             <!-- 본인 -->
@@ -189,14 +192,11 @@ export default {
           name = name.substr(15);
           name = name.substring(0,name.length-2);
         this.receivemsg.push({name:name, data: event.data});
+        if(!this.chatopenclose){
+        this.alram = true}
         });
       }
     },
-    receivemsg: function(){
-      if(!this.chatopenclose){
-        this.alram = true
-      }
-    }
   },
   created() {
         this.fetchCurrentUser(),
@@ -534,14 +534,14 @@ export default {
 }
 .chatlist{
     width: 85vw;
-    height: 29vh;
+    height: 28vh;
     border: none;
     padding: 4px;
     overflow-y: scroll;
 }
 .chatform{
     width: 83vw;
-    height: 4vh;
+    height: 5vh;
     border: none;
     border-radius: 30px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -551,8 +551,8 @@ export default {
     align-items: center;
 }
 .chatinput{
-    width: 72vw;
-    height: 3vh;
+    width: 70vw;
+    height: 4vh;
     border: none;
     margin: 0 2px 0 0;
     background-color: #EAEAEA;
@@ -562,8 +562,8 @@ export default {
     border: none;
 }
 .chatsubmit{
-    width: 2vw;
-    height: 2vw;
+    width: 3vw;
+    height: 3vw;
     border: none;
     border-radius: 20px;
     margin: 2px 2px 0 2px;
@@ -645,7 +645,7 @@ export default {
     border-radius: 100%;
     border: none;
     background-color: white;
-    box-shadow: #fecc4e 0px 2px 8px 0px;
+    box-shadow: #fecc4e 0px 3px 8px 0px;
     margin: 4px;
 }
 .chatbtn1 i{

@@ -1,4 +1,5 @@
 <template>
+    <real-header></real-header>
   <div class="total">
     <div class="head2">
         <router-link  class="mx-3 rl" :to="{name: 'QuestionList'}">답변 작성</router-link>
@@ -27,10 +28,10 @@
 
 import QuestionItem from '@/components/practice/QuestionItem.vue';
 import { mapActions, mapGetters } from 'vuex';
-
+import RealHeader from '@/components/RealHeader.vue';
 export default{ 
     name:'QuestionList',
-    components:{QuestionItem},
+    components:{QuestionItem, RealHeader},
     data(){
         return{
             sampleData:''
@@ -75,6 +76,7 @@ export default{
     display: flex;
     align-items: center;
     justify-content: space-around;
+    margin-top: 48px;
 }
 
 .head2 a.router-link-exact-active{
