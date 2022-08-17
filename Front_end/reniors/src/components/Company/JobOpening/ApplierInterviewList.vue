@@ -41,7 +41,7 @@ export default {
   },
   data() {
     return {
-      passUser: [""],
+      passUser: [{}],
     };
   },
   watch: {},
