@@ -369,7 +369,7 @@ export default {
           this.$router.push({ name: "Login" });
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err)
         });
       // error 부분 추가
     },
@@ -544,7 +544,7 @@ input[type="date"]::-webkit-datetime-edit-year-field {
   color: #8a8a8a;
 }
 
-.user-form-control{
+/* .user-form-control{
   color: #8a8a8a;
-}
+} */
 </style>
