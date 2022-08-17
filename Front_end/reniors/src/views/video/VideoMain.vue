@@ -18,7 +18,7 @@
         <div class="one">
             <router-link :to="{ name:'userInterview' }" >
                 <button class="btn11" v-if="this.title">
-                    <div class="btn112">
+                    <div class="btn112 have-interview-btn">
                         <i class="bi bi-chat-square-quote-fill " style="font-size:48px; color:white;"></i>
                         <div style="margin: 4px 4px;">
                             <p style="color:white; font-size: 22px; font-weight: bold; margin: 0; ">면접 보러 가기</p>
@@ -128,7 +128,9 @@ export default{
     background-color: rgba(256,256,256,0.6);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     padding: 8px;
-    width: 100%;
+    width: 90%;
+    height: 33%;
+    margin-top: 200px;
 }
 .subBox{
     text-align: left;
@@ -170,6 +172,9 @@ export default{
     box-shadow: 1px 1px 1px gray;
     
 }
+.have-interview-btn{
+
+}
 .btn2 {
     width: 75%;
     height: 100px;
@@ -197,18 +202,32 @@ export default{
 .video-main-info-box{
     width: 100%;
 }
-/* @media(max-width:760px){
-    .btn1{
-        width: 80
+.btn11 {
+    width: 90%;
+    height: 160px;
+    border: none;
+    background-color: #FF843E;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px gray;
+    
+}
+.btn112{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn112 > i {
+    margin-right: 10px;
+}
+@media(max-width:760px){
+    .sub{
+        margin-top: 100px
     }
-    .two{
-        width: 700px;
+    .btn112{
+        justify-content: space-evenly;
     }
-    .btn2{
-        width: 500px;
+    .btn112 > i {
+    margin-right: 0;
     }
-    .btn3{
-        width: 180px;
-    }
-} */
+}
 </style>

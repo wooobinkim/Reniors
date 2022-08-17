@@ -207,8 +207,9 @@ export default {
       commit("APPLIES", response.data);
       commit("INTERVIEW", response.data);
     },
-    async apply(_, jobopeningId) {
+    async apply({getters}, jobopeningId) {
       const response = await http.post(`/jobopening/${jobopeningId}/apply`);
+      console.log(getters.authHeader);
       console.log(response);
       alert("지원 성공!");
       router.go(0);

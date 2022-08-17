@@ -77,7 +77,7 @@ export default {
     justify-content: center;
     align-items: center;
     margin: 16px auto 40px;
-    width: 88%;
+    width: 90%;
     height: 30%;
     border-radius: 16px;
     background-color: rgba(256,256,256,0.6);
@@ -103,5 +103,6 @@ export default {
 .jobopening-container {
   padding: 10px;
   margin-bottom: 48px;
+  width: 100%;
 }
 </style>
