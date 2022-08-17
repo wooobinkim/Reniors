@@ -119,6 +119,8 @@ input{
     border-bottom: solid 1px #FFD39B;
     display: flex;
     justify-content: space-between;
+    height: 80px;
+    align-items: center;
 }
 .content{
     height: 64px;
