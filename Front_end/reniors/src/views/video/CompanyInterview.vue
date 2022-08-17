@@ -55,8 +55,11 @@
             class="myvideo"
           />
           <user-video
-            :stream-manager="subscribers[subscribers.length - 1]"
-            @click="updateMainVideoStreamManager(subscribers.length - 1)"
+            v-for="(sub, index) in subscribers"
+            :index = "index"
+            :key="sub.stream.connection.connectionId"
+            :stream-manager="sub"
+            @click="updateMainVideoStreamManager(sub)"
             class="myvideo"
           />
         </div>
@@ -107,7 +110,7 @@
       </div>
 
       <div class="rightbtn">
-        <button @click="chatopen" class="chatbtn"><i class="bi bi-chat-dots-fill"></i></button>
+        <button @click="chatopen" :class="{'chatbtn':!alram, 'chatbtn1':alram}"><i class="bi bi-chat-dots-fill"></i></button>
         <template v-if="audioflag">
           <button @click="audioonoff()"  class="videobtn"><i class="bi bi-mic"></i></button>
         </template>
@@ -181,6 +184,7 @@ export default {
       chatopenclose: false,
       applyinfo:null,
       sessionleave:false,
+      alram: false
     };
   },
   computed: {
@@ -198,12 +202,17 @@ export default {
           name = name.substr(15);
           name = name.substring(0,name.length-2);
         this.receivemsg.push({name:name, data: event.data});
+        if(!this.chatopenclose){
+        this.alram = true}
         });
       }
     },
     apply:function (data) {
       this.applyinfo = {...data};
     },
+    subscribers:function(data){
+      console.log(data);
+    }
   },
   created() {
     this.getCompany();
@@ -214,6 +223,10 @@ export default {
     ...mapActions("company", ["getCompany","getapply"]),
     changeresume() {
       this.tab = true;
+    },
+    chatopen() {
+      this.chatopenclose = !this.chatopenclose;
+      this.alram = false
     },
     changeeval() {
       if(!this.tab){
@@ -240,9 +253,6 @@ export default {
           console.log(error);
         });
         
-    },
-    chatopen() {
-      this.chatopenclose = !this.chatopenclose
     },
     audioonoff() {
       this.audioflag = !this.audioflag;
@@ -707,19 +717,32 @@ export default {
     width: 35vw
 }
 .chatbtn{
-    width: 4vw;
-    height: 4vw;
+    width: 16vw;
+    height: 16vw;
     border-radius: 100%;
     border: none;
     background-color: white;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 6px;
+    margin: 4px;
 }
 .chatbtn i{
-    font-size: 32px;
+    font-size: 24px;
     color: #8CD6C1;
-    font-weight: bold;
-    
+    font-weight: bold;  
+}
+.chatbtn1{
+    width: 16vw;
+    height: 16vw;
+    border-radius: 100%;
+    border: none;
+    background-color: white;
+    box-shadow: #fecc4e 0px 3px 8px 0px;
+    margin: 4px;
+}
+.chatbtn1 i{
+    font-size: 24px;
+    color: #8CD6C1;
+    font-weight: bold;  
 }
 .videobtn{
     width: 4vw;

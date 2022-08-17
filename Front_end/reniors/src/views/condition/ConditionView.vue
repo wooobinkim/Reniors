@@ -6,7 +6,6 @@
     </div>
  <!-- Login -->
   <div class="condition-container" v-if="isLoggedin">
-    <HeaderComponent />
     <ConditionList />
     <router-view></router-view>
   </div>
@@ -29,13 +28,11 @@
 <script>
 import { useStore } from "vuex";
 import { computed } from "vue";
-import HeaderComponent from "@/components/HeaderComponent.vue";
 import ConditionList from "@/components/condition/ConditionList.vue";
 
 export default {
   name: "ConditionView",
   components: {
-    HeaderComponent,
     ConditionList,
   },
   setup() {
@@ -69,6 +66,7 @@ export default {
 
 .condition-container {
   height: 1500px;
+  margin-top: 48px;
 }
 .notlogTotal{
   display: flex;

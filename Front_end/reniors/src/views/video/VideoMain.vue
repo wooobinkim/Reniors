@@ -112,7 +112,7 @@ export default{
 <style scoped>
 .list{
   display: flex;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   flex-direction: column;
   justify-content: center;
