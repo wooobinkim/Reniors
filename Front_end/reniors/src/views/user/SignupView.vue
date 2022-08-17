@@ -58,7 +58,7 @@
               ></b-form-input>
               <button
                 class="check"
-                style="float: right"
+                :style="user.userAppId ? 'background-color: var(--color-green-1);' : 'background-color: var(--color-green-3);'"
                 @click="idcheck(user.userAppId)"
               >
                 중복확인
@@ -206,7 +206,7 @@
             >
           </button>
           <button
-            style="background-color: var(--color-red-3)"
+            style="background-color: var(--color-red-1)"
             type="button"
             v-show="page !== 1"
             @click="decreasePage"
@@ -224,6 +224,7 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
+import { useToast } from 'bootstrap-vue-3'
 // import { register } from "@/api/user.js"
 import axios from "axios";
 import drf from "@/api/drf";
@@ -266,7 +267,13 @@ export default {
       idconfirm: false,
     };
   },
-  setup() {},
+  setup() {
+    const toast = useToast()
+
+    return {
+      toast,
+    }
+  },
   created() {},
   mounted() {},
   unmounted() {},
@@ -289,21 +296,21 @@ export default {
     },
     regist() {
       if (this.user.userAppId == "") {
-        alert("사용하실 이메일을 입력해주세요.");
+        this.toast.show({body: '사용하실 이메일을 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.user.userAppPwd == "") {
-        alert("사용하실 패스워드를 입력해주세요.");
+        this.toast.show({body: '사용하실 패스워드를 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.user.userAppPwd != this.password) {
-        alert("비밀번호를 다시 확인해주세요.");
+        this.toast.show({body: '비밀번호를 다시 확인해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.user.name == "") {
-        alert("이름을 입력해주세요.");
+        this.toast.show({body: '이름을 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.user.phone == "") {
-        alert("전화번호를 입력해주세요.");
+        this.toast.show({body: '전화번호를 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.user.address == "") {
-        alert("주소를 입력해주세요.");
+        this.toast.show({body: '주소를 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.user.gender == "") {
-        alert("성별을 선택해주세요.");
+        this.toast.show({body: '성별을 선택해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.idconfirm == false) {
-        alert("아이디를 확인해주세요.");
+        this.toast.show({body: '아이디를 확인해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else {
         const formData = new FormData();
         formData.append("img", this.userImg[0]);
@@ -322,10 +329,10 @@ export default {
         .then((res) => {
           console.log(res);
           if (res.data.res) {
-            alert("이미 사용중인 아이디 입니다.");
+            this.toast.show({body: '이미 사용중인 아이디입니다.'}, {variant: 'danger', pos: 'middle-center', delay: 1000})
             this.idconfirm = false;
           } else {
-            alert("사용가능한 아이디 입니다.");
+            this.toast.show({body: '사용 가능한 아이디입니다.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
             this.idconfirm = true;
           }
         })
@@ -343,7 +350,6 @@ export default {
       })
         // .then(res) < 수정
         .then(() => {
-          console.log("성공!");
           this.$router.push({ name: "Login" });
         })
         .catch((err) => {
@@ -401,7 +407,7 @@ export default {
 
 <style scoped>
 .check {
-  background-color: #8cd6c1;
+  background-color: var(--color-green-3);
   width: 90px;
   height: 38px;
   border-radius: 10px;
@@ -412,6 +418,7 @@ export default {
   border-style: none;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  float: right;
 }
 
 header {
