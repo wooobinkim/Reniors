@@ -7,26 +7,29 @@
 </template>
 <script>
 import ApplyHistoryCard from '@/components/user/ApplyHistoryCard.vue'
-import { mapActions, mapGetters } from 'vuex'
+// import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'ApplyHistoryView',
   components: { ApplyHistoryCard },
+  props: {
+    applies: Array
+  },
   data() {
     return {
       example: '',
     }
   },
   computed: {
-  ...mapGetters('jobopening', ['applies'])
+  // ...mapGetters('jobopening', ['applies'])
   },
   setup() {},
   created() {
-    this.fetchApply()
+    // this.fetchApply()
   },
   mounted() {},
   unmounted() {},
   methods: {
-    ...mapActions('jobopening', ['fetchApply']),
+    // ...mapActions('jobopening', ['fetchApply']),
   }
 }
 </script>
