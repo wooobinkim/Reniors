@@ -1,0 +1,112 @@
+<template>
+  <div class="header container-fluid">
+        <router-link class="header-logo" :to="{ name: 'home' }">
+            <img src="@/assets/logo_cut.png" alt="logo">
+        </router-link>
+    </div>
+ <!-- Login -->
+  <div class="condition-container" v-if="isLoggedin">
+    <ConditionList />
+    <router-view></router-view>
+  </div>
+
+  <!-- notLogin -->
+  <div class="notlogTotal" v-if="!isLoggedin" >
+        <div class="notlog">
+        <div class="notlogBox">
+            <p class="notlogp">맞춤공고 서비스는</p>
+            <p class="notlogp"><router-link :to="{name: Login}" style="text-decoration: none;"><span style="color:#37BF99;"> 로그인</span></router-link> 후 이용해주세요🙂</p>
+            <router-link :to="{name: Login}">
+                <button class="notlogBtn"> 로그인 하러 가기   <i class="bi bi-arrow-right-square-fill"></i></button>
+            </router-link>
+        </div>
+        </div>
+  </div>
+
+</template>
+
+<script>
+import { useStore } from "vuex";
+import { computed } from "vue";
+import ConditionList from "@/components/condition/ConditionList.vue";
+
+export default {
+  name: "ConditionView",
+  components: {
+    ConditionList,
+  },
+  setup() {
+    const store = useStore();
+    const isLoggedin = computed(()=>store.getters['isLogginedIn'])
+    const fetchParents = () => store.dispatch("category/getJobParent");
+    const fetchSido = () => store.dispatch("category/getSido");
+    fetchParents();
+    fetchSido();
+    return{isLoggedin}
+  },
+};
+</script>
+
+<style scoped>
+.header{
+    height: 48px;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px -2px;
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important; 
+}
+.header img{
+    height: 38px;
+    margin: auto;
+}
+
+.condition-container {
+  height: 1500px;
+  margin-top: 48px;
+}
+.notlogTotal{
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #FFF5F0;
+
+}
+.noglog{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.notlogBox{
+    background-color: rgba(256,256,256,0.5);
+    border: none;
+    border-radius: 10px;
+    margin: 8px;
+    padding: 32px 8px;
+}
+.notlogp{
+    font-size: 24px;
+    font-weight: bold;
+    color: #FF843E;
+}
+.notlogBtn{
+    background-color: #FF843E;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    width: 72%;
+    padding:8px;
+    margin: 8px;
+}
+.notlogBtn i{
+    font-size: 24px;
+    margin: auto 8px;
+}
+</style>
