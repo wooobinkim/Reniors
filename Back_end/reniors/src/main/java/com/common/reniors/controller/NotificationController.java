@@ -43,12 +43,13 @@ public class NotificationController {
     }
 
     @GetMapping("/{notificationId}")
-    @ApiOperation(value = "알림 상세 조회", notes = "알림을 상세 조회합니다.")
-    public ResponseEntity<?> readList(
+    @ApiOperation(value = "알림 읽음 상태 변경", notes = "알림을 읽은 상태로 변경합니다.")
+    public ResponseEntity<Map<String, Long>> readList(
             @ApiIgnore @LoginUser User user,
             @PathVariable Long notificationId
     ) {
-        return ResponseEntity.ok(notificationService.read(notificationId));
+        notificationService.read(notificationId);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/{notificationId}")
