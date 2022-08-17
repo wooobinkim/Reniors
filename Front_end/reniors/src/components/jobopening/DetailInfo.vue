@@ -51,6 +51,11 @@ export default {
 
 <style scoped>
 /* same as DetailCondition.vue */
+.jobopening-box img{
+/* width: 180px; */
+height: 180px;
+margin-bottom: 20px;
+}
 .jobopening-box h5 {
   font-weight: bold;
   margin: 0;
