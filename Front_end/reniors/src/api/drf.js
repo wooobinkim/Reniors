@@ -16,6 +16,7 @@ export default {
   user: {
     signup: () => HOST + USER,
     login: () => HOST + USER,
+    delete: () => HOST + USER,
     kakaoSignup: () => HOST + USER + "/kakao",
     kakaoLogin: () => HOST + USER + "/kakao",
     userid: (name, phone) => HOST + USER + `/${name}` + '/findid' + `/${phone}`,
