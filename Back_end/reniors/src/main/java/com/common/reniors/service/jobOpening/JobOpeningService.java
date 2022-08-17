@@ -173,13 +173,13 @@ public class JobOpeningService {
     @Transactional
     //공고 전체조회
     public Page<JobOpeningResponse> getJobOpening(Pageable pageable){
-        List<JobOpening> jobOpeningList = jobOpeningRepository.findAll();
+        Page<JobOpening> jobOpeningList = jobOpeningRepository.findAll(pageable);
 
         List<JobOpeningResponse> jobOpeningResponses = jobOpeningList.stream().map(j->JobOpeningResponse.response(
                 j
         )).collect(Collectors.toList());
 
-        long total = jobOpeningResponses.size();
+        long total = jobOpeningRepository.findAll().size();
 
         Page jobOpeningDtoPage = new PageImpl<>(jobOpeningResponses,pageable,total);
 

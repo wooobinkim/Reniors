@@ -60,7 +60,7 @@ export default {
         }),
         params: {
           page: request.page,
-          size: 2,
+          size: 10,
         },
         headers: getters.authHeader,
       })
@@ -73,7 +73,6 @@ export default {
         });
     },
     async clearArticles({ commit }) {
-      console.log("Clear");
       await commit("CLEAR_ARTICLES");
     },
     setCurrPage({ commit }, page) {

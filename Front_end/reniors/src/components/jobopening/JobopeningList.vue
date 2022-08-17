@@ -8,6 +8,9 @@
         :key="index"
         :jobopening="jobopening"
       />
+      <button v-show="!isLast" class="more-btn" @click="pageUp()">
+        더보기
+      </button>
     </div>
     <div v-else>아직 채용공고가 없어요!</div>
   </div>
@@ -15,7 +18,7 @@
 
 <script>
 import { computed } from "vue";
-import { mapActions, useStore } from "vuex";
+import { mapActions, mapGetters, useStore } from "vuex";
 import JobopeningItem from "./JobopeningItem.vue";
 
 export default {
@@ -37,16 +40,40 @@ export default {
     };
   },
   methods: {
-    ...mapActions("jobopening",["fetchJobopenings"]),
+    ...mapActions("jobopening", [
+      "fetchJobopenings",
+      "clearJobopenings",
+      "setCurrPage",
+    ]),
+    async pageUp() {
+      await this.setCurrPage(this.currPage + 1);
+    },
   },
-  created() {
-    this.fetchJobopenings();
+  async created() {
+    await this.setCurrPage(0);
+    await this.clearJobopenings();
+    await this.fetchJobopenings({
+      page: 0,
+    });
+    console.log(this.jobopenings);
+  },
+  computed: {
+    ...mapGetters("jobopening", ["jobopenings", "isLast", "currPage"]),
+  },
+  watch: {
+    async currPage() {
+      if (this.currPage != 0) {
+        await this.fetchJobopenings({
+          page: this.currPage,
+        });
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-.jobopening-msg{
+.jobopening-msg {
   display: flex;
   margin-top: 10px;
   margin-left: 12px;
@@ -62,4 +89,14 @@ export default {
     grid-template-columns: 20vh 20vh 20vh;
   }
 } */
+.more-btn {
+  margin-top: 30px;
+  margin-bottom: 200px;
+  border-radius: 5px;
+  border: none;
+  padding: 8px 40px;
+  background-color: var(--color-red-2);
+  color: white;
+  font-weight: bold;
+}
 </style>

@@ -19,6 +19,8 @@ export default {
     applies: [],
     interview: [],
     bookmarksdate: [],
+    isLast: false,
+    currPage: 0,
   },
   getters: {
     tags: (state) => state.tags,
@@ -51,10 +53,15 @@ export default {
     },
     interview: (state) => state.interview,
     bookmarksdate: (state) => state.bookmarksdate,
+    isLast: (state) => state.isLast,
+    currPage: (state) => state.currPage,
   },
   mutations: {
     TAGS: (state, tags) => (state.tags = tags),
-    JOBOPENINGS: (state, jobopenings) => (state.jobopenings = jobopenings),
+    JOBOPENINGS: (state, jobopenings) =>
+      jobopenings.forEach((element) => {
+        state.jobopenings.push(element);
+      }),
     RECOMMENDCLEAR: (state) => {
       (state.isrecommend = null), (state.isrecommendheight = null);
       state.recommendJobopenings = [];
@@ -71,6 +78,7 @@ export default {
         state.isrecommendheight = 380;
       }
     },
+    CLEAR_JOBOPENINGS: (state) => (state.jobopenings = []),
     CONDITIONJOBOPENINGS: (state, conditionJobopenings) =>
       (state.conditionJobopenings = conditionJobopenings),
     SELECTJOB: (state, jobopening) => (state.selectedJobopening = jobopening),
@@ -109,13 +117,31 @@ export default {
         state.bookmarksdate.push(object1);
       });
     },
+    SET_IS_LAST: (state, isLast) => (state.isLast = isLast),
+    SET_CURR_PAGE: (state, currPage) => (state.currPage = currPage),
   },
   actions: {
     // all jobopenings
-    async fetchJobopenings({ commit }) {
-      const response = await axios.get(drf.jobopening.get());
-      const data = response.data.content;
-      commit("JOBOPENINGS", data);
+    async clearJobopenings({ commit }) {
+      await commit("CLEAR_JOBOPENINGS");
+    },
+    setCurrPage({ commit }, page) {
+      commit("SET_CURR_PAGE", page);
+    },
+    async fetchJobopenings({ commit }, request) {
+      console.log(request.page);
+      await axios({
+        url: drf.jobopening.get(),
+        method: "get",
+        params: {
+          page: request.page,
+          size: 2,
+        },
+      }).then((res) => {
+        console.log(res);
+        commit("SET_IS_LAST", res.data.last);
+        commit("JOBOPENINGS", res.data.content);
+      });
     },
     async fetchJobopeningsName({ commit, getters }, data) {
       await axios({
@@ -207,7 +233,7 @@ export default {
       commit("APPLIES", response.data);
       commit("INTERVIEW", response.data);
     },
-    async apply({getters}, jobopeningId) {
+    async apply({ getters }, jobopeningId) {
       const response = await http.post(`/jobopening/${jobopeningId}/apply`);
       console.log(getters.authHeader);
       console.log(response);

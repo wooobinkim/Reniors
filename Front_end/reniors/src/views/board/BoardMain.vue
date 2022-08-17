@@ -82,7 +82,6 @@ export default {
     ]),
     async pageUp() {
       await this.setCurrPage(this.currPage + 1);
-      console.log("CurrPage : ", this.currPage);
     },
   },
   async created() {
