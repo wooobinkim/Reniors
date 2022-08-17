@@ -15,6 +15,7 @@
       <div class="myinfo">
         <div class="name">{{this.currentUser.name}}</div>
         <router-link :to="{ name: 'MyinfoEdit' }" style="text-align: left; text-decoration:none; color: #6D6D6D; font-weight: 700; font-size:13px; "><i class="bi bi-gear-fill" style="color: #37BF99"></i>&nbsp;내정보 수정</router-link>
+
         <!-- <button><router-link :to="{ name: 'MyinfoEdit' }" style="text-decoration:none; color: #37BF99;">내정보 수정</router-link></button> -->
       </div>
 
@@ -53,7 +54,7 @@
       </div>
       <br>
       <br>
-      <apply-history-view v-show="showleft">
+      <apply-history-view v-show="showleft" :applies="applies">
       </apply-history-view>
       <bookmark-history-view v-show="showleft == false">
       </bookmark-history-view>
@@ -88,6 +89,7 @@ export default {
   },
   computed: {
     ...mapGetters(['currentUser', 'prefer']),
+    ...mapGetters('jobopening', ['bookmarks', 'applies'])
   },
   // setup() {
   //   const store = useStore()
@@ -117,20 +119,24 @@ export default {
   // },
   mounted() {},
   unmounted() {},
-  methods: {
-    ...mapActions(['fetchCurrentUser', 'fetchPrefer']),
-    applyshow(){
-      this.showleft = true
-    },
-    bookmarkshow(){
-      this.showleft = false
-    }
-  },
   created() {
     this.fetchCurrentUser()
     this.fetchPrefer()
+    this.fetchBookmark()
+    this.fetchApply()
+
 
   },  
+    methods: {
+      ...mapActions(['fetchCurrentUser', 'fetchPrefer', 'fetchBookmark', 'fetchApply']),
+      ...mapActions('jobopening', ['fetchBookmark', 'fetchApply']),
+      applyshow(){
+        this.showleft = true
+      },
+      bookmarkshow(){
+        this.showleft = false
+      }
+    },
 }
 </script>
 

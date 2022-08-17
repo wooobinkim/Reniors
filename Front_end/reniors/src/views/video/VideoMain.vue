@@ -5,7 +5,9 @@
         </router-link>
     </div>
   <div class="list">
-    <div class="video-main-info-box">
+
+    <!-- loggedin -->
+    <div class="video-main-info-box" v-if="isLogginedIn">
     <div class="sub">
         <div class="subBox">
             <p class="sub-title"><span style="color:#FF843E">리니어즈</span>와 함께하는 면접 페이지입니다🙂</p>
@@ -57,6 +59,19 @@
         </div>
     </div>
     </div>
+
+    <!-- not loggedin -->
+    <div v-if="!isLogginedIn">
+        <div class="notlog">
+        <div class="notlogBox">
+            <p class="notlogp">화상면접과 면접 연습 서비스는</p>
+            <p class="notlogp"><router-link :to="{name: Login}" style="text-decoration: none;"><span style="color:#37BF99;"> 로그인</span></router-link> 후 이용해주세요🙂</p>
+            <router-link :to="{name: Login}">
+                <button class="notlogBtn"> 로그인 하러 가기   <i class="bi bi-arrow-right-square-fill"></i></button>
+            </router-link>
+        </div>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -89,7 +104,7 @@ export default{
         ...mapActions(['fetchRooms'])
     },
     computed:{
-        ...mapGetters(['rooms'])
+        ...mapGetters(['rooms', 'isLogginedIn'])
     }
 }
 </script>
@@ -97,7 +112,8 @@ export default{
 <style scoped>
 .list{
   display: flex;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   flex-direction: column;
   justify-content: center;
   background-color: #FFF5F0;
@@ -118,19 +134,50 @@ export default{
     height: 38px;
     margin: auto;
 }
+.noglog{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.notlogBox{
+    background-color: rgba(256,256,256,0.5);
+    border: none;
+    border-radius: 10px;
+    margin: 8px;
+    padding: 32px 8px;
+}
+.notlogp{
+    font-size: 24px;
+    font-weight: bold;
+    color: #FF843E;
+}
+.notlogBtn{
+    background-color: #FF843E;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    width: 72%;
+    padding:8px;
+    margin: 8px;
+}
+.notlogBtn i{
+    font-size: 24px;
+    margin: auto 8px;
+}
 .sub{
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 16px auto 40px;
-    height: 300px;
     border-radius: 16px;
     background-color: rgba(256,256,256,0.6);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     padding: 8px;
-    width: 90%;
-    height: 33%;
-    margin-top: 200px;
+    width: 92%;
+    height: 24%;
+    margin-top: 40px;
 }
 .subBox{
     text-align: left;
@@ -171,9 +218,6 @@ export default{
     background-color: white;
     box-shadow: 1px 1px 1px gray;
     
-}
-.have-interview-btn{
-
 }
 .btn2 {
     width: 75%;
@@ -221,7 +265,7 @@ export default{
 }
 @media(max-width:760px){
     .sub{
-        margin-top: 100px
+        margin-top: 40px
     }
     .btn112{
         justify-content: space-evenly;

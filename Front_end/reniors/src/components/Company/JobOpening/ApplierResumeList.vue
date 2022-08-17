@@ -67,6 +67,7 @@ export default {
             },
           });
           this.createNotice({
+            jobOpeningProcess: "면접",
             userId: data.userId,
             applyId: data.id,
           });
@@ -75,7 +76,7 @@ export default {
         let tmparr = [];
         this.applylist.forEach((apply) => {
           if (apply.jobOpeningProcess == "서류심사중") {
-            tmparr.push(apply.id);
+            tmparr.push(apply);
           }
         });
         let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
@@ -88,6 +89,7 @@ export default {
             },
           });
           this.createNotice({
+            jobOpeningProcess: "서류불합격",
             userId: data.userId,
             applyId: data.id,
           });

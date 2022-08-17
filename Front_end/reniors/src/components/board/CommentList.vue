@@ -29,10 +29,7 @@ export default{
     props:{
       comments: Array,
     },
-    setup(){},
     
-    mounted(){},
-    unmounted(){},
  
 }
 </script>

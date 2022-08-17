@@ -38,158 +38,161 @@
       <br />
       <!-- <form @submit.prevent="signup(user)" class="signupform"> -->
       <div class="signupform">
-        <div v-show="page === 1">
-          <p style="font-size: 14px">간단한 회원가입을 진행하려고 해요.</p>
-          <p>
-            먼저, 로그인 시 사용하실 <span>이메일</span>과
-            <span>비밀번호</span>를 입력해주세요!
-          </p>
-          <br />
-          <div>
-            <p class="forminfo">
-              이메일<span class="required">&nbsp;&nbsp;*</span>
+        <transition name="slide-fade">
+          <div v-show="page === 1">
+            <p style="font-size: 14px">간단한 회원가입을 진행하려고 해요.</p>
+            <p>
+              먼저, 로그인 시 사용하실 <span>이메일</span>과
+              <span>비밀번호</span>를 입력해주세요!
             </p>
-            <b-form-input
-              class="mb-3 user-form-control"
-              v-model="user.userAppId"
-              type="email"
-              placeholder="사용하실 이메일을 입력해주세요."
-            ></b-form-input>
-            <button
-              class="check"
-              style="float: right"
-              @click="idcheck(user.userAppId)"
-            >
-              중복확인
-            </button>
+            <br />
+            <div>
+              <p class="forminfo">
+                이메일<span class="required">&nbsp;&nbsp;*</span>
+              </p>
+              <b-form-input
+                class="mb-3 user-form-control"
+                v-model="user.userAppId"
+                type="email"
+                placeholder="사용하실 이메일을 입력해주세요."
+              ></b-form-input>
+              <button
+                class="check"
+                :style="user.userAppId ? 'background-color: var(--color-green-1);' : 'background-color: var(--color-green-3);'"
+                @click="idcheck(user.userAppId)"
+              >
+                중복확인
+              </button>
+            </div>
+            <br />
+            <br />
+            <div>
+              <p class="forminfo">
+                비밀번호<span class="required">&nbsp;&nbsp;*</span>
+              </p>
+              <b-form-input
+                class="mb-3 user-form-control"
+                v-model="user.userAppPwd"
+                type="password"
+                placeholder="비밀번호를 입력해주세요."
+              ></b-form-input>
+              <p class="forminfo">
+                비밀번호 확인<span class="required">&nbsp;&nbsp;*</span>
+              </p>
+              <b-form-input
+                class="mb-3 user-form-control"
+                v-model="password"
+                type="password"
+                placeholder="비밀번호를 한번 더 입력해주세요."
+              ></b-form-input>
+            </div>
           </div>
-          <br />
-          <br />
-          <div>
+        </transition>
+        <transition name="slide-fade">
+          <div v-show="page === 2">
+            <p>
+              회원님의 <span>이름</span>과 <span>전화번호</span>,
+              <span>주소</span>를 알려주실 수 있나요?
+            </p>
+            <br />
             <p class="forminfo">
-              비밀번호<span class="required">&nbsp;&nbsp;*</span>
+              이름<span class="required">&nbsp;&nbsp;*</span>
             </p>
             <b-form-input
               class="mb-3 user-form-control"
-              v-model="user.userAppPwd"
-              type="password"
-              placeholder="비밀번호를 입력해주세요."
-            ></b-form-input>
-            <p class="forminfo">
-              비밀번호 확인<span class="required">&nbsp;&nbsp;*</span>
-            </p>
-            <b-form-input
-              class="mb-3 user-form-control"
-              v-model="password"
-              type="password"
-              placeholder="비밀번호를 한번 더 입력해주세요."
-            ></b-form-input>
-          </div>
-        </div>
-
-        <div v-show="page === 2">
-          <p>
-            회원님의 <span>이름</span>과 <span>전화번호</span>,
-            <span>주소</span>를 알려주실 수 있나요?
-          </p>
-          <br />
-          <p class="forminfo">
-            이름<span class="required">&nbsp;&nbsp;*</span>
-          </p>
-          <b-form-input
-            class="mb-3 user-form-control"
-            v-model="user.name"
-            type="text"
-            placeholder="이름을 입력해주세요."
-          ></b-form-input>
-          <p class="forminfo">
-            휴대전화<span class="required">&nbsp;&nbsp;*</span>
-          </p>
-          <b-form-input
-            class="mb-3 user-form-control"
-            v-model="user.phone"
-            type="text"
-            placeholder="예시) 01012345678"
-          ></b-form-input>
-          <p class="forminfo">
-            주소<span class="required">&nbsp;&nbsp;*</span>
-          </p>
-          <div class="address">
-            <b-form-input
-              class="mb-3 user-form-control"
-              style="width: 90%"
-              v-model="user.address"
+              v-model="user.name"
               type="text"
-              placeholder="주소 검색"
+              placeholder="이름을 입력해주세요."
             ></b-form-input>
-            <button
-              class="search"
-              style="margin-bottom: 16px"
-              @click="execDaumPostcode()"
-              type="button"
-              value="우편번호 찾기"
-            >
-              <img src="@/assets/searching.png" alt="search" />
-            </button>
+            <p class="forminfo">
+              휴대전화<span class="required">&nbsp;&nbsp;*</span>
+            </p>
+            <b-form-input
+              class="mb-3 user-form-control"
+              v-model="user.phone"
+              type="text"
+              placeholder="예시) 01012345678"
+            ></b-form-input>
+            <p class="forminfo">
+              주소<span class="required">&nbsp;&nbsp;*</span>
+            </p>
+            <div class="address">
+              <b-form-input
+                class="mb-3 user-form-control"
+                style="width: 90%"
+                v-model="user.address"
+                type="text"
+                placeholder="주소 검색"
+              ></b-form-input>
+              <button
+                class="search"
+                style="margin-bottom: 16px"
+                @click="execDaumPostcode()"
+                type="button"
+                value="우편번호 찾기"
+              >
+                <img src="@/assets/searching.png" alt="search" />
+              </button>
+            </div>
+            <b-form-input
+              class="mb-3 user-form-control"
+              v-model="user.extraAddress"
+              type="text"
+              placeholder="상세주소를 입력해주세요"
+            ></b-form-input>
+            <!-- <b-form-input class="mb-3" v-model="credentials.address" type="text" placeholder="" ></b-form-input> -->
           </div>
-          <b-form-input
-            class="mb-3 user-form-control"
-            v-model="user.extraAddress"
-            type="text"
-            placeholder="상세주소를 입력해주세요"
-          ></b-form-input>
-          <!-- <b-form-input class="mb-3" v-model="credentials.address" type="text" placeholder="" ></b-form-input> -->
-        </div>
+        </transition>
+        <transition name="slide-fade">
+          <div v-show="page === 3">
+            <p style="font-size: 14px">마지막 단계입니다!</p>
+            <p>
+              <span>최종학력</span>, <span>생년월일</span>, <span>성별</span>을
+              입력해주세요! <br /><span>프로필 사진</span>도 넣어주시면 좋구요 :)
+            </p>
 
-        <div v-show="page === 3">
-          <p style="font-size: 14px">마지막 단계입니다!</p>
-          <p>
-            <span>최종학력</span>, <span>생년월일</span>, <span>성별</span>을
-            입력해주세요! <br /><span>프로필 사진</span>도 넣어주시면 좋구요 :)
-          </p>
-
-          <br />
-          <!-- <p class="forminfo">최종학력</p>
-          <b-form-select class="mb-3" v-model="user.lastEdu" :options="lastEdu" ></b-form-select> -->
-          <p class="forminfo">
-            최종학력<span class="required">&nbsp;&nbsp;*</span>
-          </p>
-          <b-form-select class="mb-3 user-form-control" v-model="user.lastEdu">
-            <option
-              v-for="lastedu in lastedus"
-              :value="lastedu.value"
-              :key="lastedu"
+            <br />
+            <!-- <p class="forminfo">최종학력</p>
+            <b-form-select class="mb-3" v-model="user.lastEdu" :options="lastEdu" ></b-form-select> -->
+            <p class="forminfo">
+              최종학력<span class="required">&nbsp;&nbsp;*</span>
+            </p>
+            <b-form-select class="mb-3 user-form-control" v-model="user.lastEdu">
+              <option
+                v-for="lastedu in lastedus"
+                :value="lastedu.value"
+                :key="lastedu"
+              >
+                {{ lastedu.text }}
+              </option></b-form-select
             >
-              {{ lastedu.text }}
-            </option></b-form-select
-          >
-          <p class="forminfo">생년월일</p>
-          <b-form-input
-            class="mb-3 user-form-control"
-            v-model="user.birth"
-            type="date"
-            placeholder="생년-월-일"
-          ></b-form-input>
-          <p class="forminfo">
-            성별<span class="required">&nbsp;&nbsp;*</span>
-          </p>
-          <b-form-select
-            class="mb-3 user-form-control"
-            v-model="user.gender"
-            :options="gender"
-          ></b-form-select>
-          <div class="mb-3 mt-3">
-            <p class="forminfo">프로필 사진</p>
-            <input
-              type="file"
-              class="form-control user-form-control"
-              placeholder="이미지를 선택해주세요"
-              ref="img"
-              @change="changeImg()"
-            />
+            <p class="forminfo">생년월일</p>
+            <b-form-input
+              class="mb-3 user-form-control"
+              v-model="user.birth"
+              type="date"
+              placeholder="생년-월-일"
+            ></b-form-input>
+            <p class="forminfo">
+              성별<span class="required">&nbsp;&nbsp;*</span>
+            </p>
+            <b-form-select
+              class="mb-3 user-form-control"
+              v-model="user.gender"
+              :options="gender"
+            ></b-form-select>
+            <div class="mb-3 mt-3">
+              <p class="forminfo">프로필 사진</p>
+              <input
+                type="file"
+                class="form-control user-form-control"
+                placeholder="이미지를 선택해주세요"
+                ref="img"
+                @change="changeImg()"
+              />
+            </div>
           </div>
-        </div>
-
+        </transition>
         <footer style="width: 312px">
           <button
             style="background-color: var(--color-red-3)"
@@ -203,7 +206,7 @@
             >
           </button>
           <button
-            style="background-color: var(--color-red-3)"
+            style="background-color: var(--color-red-1)"
             type="button"
             v-show="page !== 1"
             @click="decreasePage"
@@ -221,6 +224,7 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
+import { useToast } from 'bootstrap-vue-3'
 // import { register } from "@/api/user.js"
 import axios from "axios";
 import drf from "@/api/drf";
@@ -263,7 +267,13 @@ export default {
       idconfirm: false,
     };
   },
-  setup() {},
+  setup() {
+    const toast = useToast()
+
+    return {
+      toast,
+    }
+  },
   created() {},
   mounted() {},
   unmounted() {},
@@ -286,21 +296,21 @@ export default {
     },
     regist() {
       if (this.user.userAppId == "") {
-        alert("사용하실 이메일을 입력해주세요.");
+        this.toast.show({body: '사용하실 이메일을 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.user.userAppPwd == "") {
-        alert("사용하실 패스워드를 입력해주세요.");
+        this.toast.show({body: '사용하실 패스워드를 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.user.userAppPwd != this.password) {
-        alert("비밀번호를 다시 확인해주세요.");
+        this.toast.show({body: '비밀번호를 다시 확인해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.user.name == "") {
-        alert("이름을 입력해주세요.");
+        this.toast.show({body: '이름을 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.user.phone == "") {
-        alert("전화번호를 입력해주세요.");
+        this.toast.show({body: '전화번호를 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.user.address == "") {
-        alert("주소를 입력해주세요.");
+        this.toast.show({body: '주소를 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.user.gender == "") {
-        alert("성별을 선택해주세요.");
+        this.toast.show({body: '성별을 선택해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.idconfirm == false) {
-        alert("아이디를 확인해주세요.");
+        this.toast.show({body: '아이디를 확인해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else {
         const formData = new FormData();
         formData.append("img", this.userImg[0]);
@@ -319,10 +329,10 @@ export default {
         .then((res) => {
           console.log(res);
           if (res.data.res) {
-            alert("이미 사용중인 아이디 입니다.");
+            this.toast.show({body: '이미 사용중인 아이디입니다.'}, {variant: 'danger', pos: 'middle-center', delay: 1000})
             this.idconfirm = false;
           } else {
-            alert("사용가능한 아이디 입니다.");
+            this.toast.show({body: '사용 가능한 아이디입니다.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
             this.idconfirm = true;
           }
         })
@@ -340,7 +350,6 @@ export default {
       })
         // .then(res) < 수정
         .then(() => {
-          console.log("성공!");
           this.$router.push({ name: "Login" });
         })
         .catch((err) => {
@@ -398,7 +407,7 @@ export default {
 
 <style scoped>
 .check {
-  background-color: #8cd6c1;
+  background-color: var(--color-green-3);
   width: 90px;
   height: 38px;
   border-radius: 10px;
@@ -409,6 +418,7 @@ export default {
   border-style: none;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  float: right;
 }
 
 header {
@@ -493,5 +503,21 @@ footer {
 .user-form-control:focus {
   border-color: var(--color-red-2) !important;
   box-shadow: inset 0 1px 1px var(--color-red-1), 0 0 8px var(--color-red-2) !important;
+}
+
+.slide-fade-enter-active {
+  position: absolute;
+  transition: all 0.3s ease-in;
+}
+
+.slide-fade-leave-active {
+  position: absolute;
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
 }
 </style>

@@ -14,54 +14,51 @@
       지금 <router-link to="/login" class="now-login-btn">로그인</router-link>을
       하고<br />더 정확한 추천공고와 관리를 받아보세요!
     </p>
-    <b-modal id="noticeModal" v-model="show" title="🔔 알림" hide-footer>
-      <div class="notice-list d-block">
-        <a
-          v-for="(notice, index) in notices"
-          :key="index"
-          :href="
-            'https://i7b307.p.ssafy.io/jobopening/' +
-            notice.applyResponse.jobOpeningId
-          "
-        >
-          <div
-            v-if="notice.isRead === 'READ'"
-            class="notice-item-read"
-            @click="readNotification(notice.id)"
-          >
+    <b-modal
+      id="noticeModal"
+      v-if="login"
+      v-model="show"
+      title="🔔 알림"
+      hide-footer
+    >
+      <div v-if="notices.length != 0" class="notice-list d-block">
+        <a v-for="(notice, index) in notices" :key="index">
+          <div v-if="notice.isRead === 'READ'" class="notice-item-read">
             <p class="notice-item-company">
-              {{ notice.jobOpeningResponse.companyName }}
+              <span @click="readNotification(notice)"
+                >[{{ notice.jobOpeningResponse.companyName }}]</span
+              >
+              <i @click="deleteNotification(notice.id)" class="bi bi-trash"></i>
             </p>
-            <p class="notice-item-title">
-              {{ notice.jobOpeningResponse.title }}
+            <p class="notice-item-title" @click="readNotification(notice)">
+              공고 : <span>{{ notice.jobOpeningResponse.title }}</span>
             </p>
-            <p class="notice-item-result">
-              {{ notice.applyResponse.jobOpeningProcess }}
+            <p class="notice-item-result" @click="readNotification(notice)">
+              지원 현황 :
+              <span>{{ notice.applyResponse.jobOpeningProcess }}</span
+              >으로 변경되었습니다.
             </p>
           </div>
-          <div
-            v-else
-            class="notice-item-not-read"
-            @click="readNotification(notice.id)"
-          >
+          <div v-else class="notice-item-not-read">
             <p class="notice-item-company">
-              {{ notice.jobOpeningResponse.companyName }}
+              <span @click="readNotification(notice)"
+                >[{{ notice.jobOpeningResponse.companyName }}]</span
+              >
+              <i @click="deleteNotification(notice.id)" class="bi bi-trash"></i>
             </p>
-            <p class="notice-item-title">
-              {{ notice.jobOpeningResponse.title }}
+            <p class="notice-item-title" @click="readNotification(notice)">
+              공고 : <span>{{ notice.jobOpeningResponse.title }}</span>
             </p>
-            <p class="notice-item-result">
-              {{ notice.applyResponse.jobOpeningProcess }}
+            <p class="notice-item-result" @click="readNotification(notice)">
+              지원 현황 :
+              <span>{{ notice.applyResponse.jobOpeningProcess }}</span
+              >으로 변경되었습니다.
             </p>
           </div>
-
-          <!-- { "id": 2, "jobOpeningProcess": "서류불합격", "isRead": "NOT_READ", "createdAt": "2022-08-15T08:46:41", 
-          "applyResponse": { "id": 20, "jobOpeningProcess": "서류불합격", "interviewDate": null, "jobOpeningId": 3, 
-          "jobOpeningTitle": "공고3", "jobChildCategoryName": "내방객응대", "sessionId": null, "userId": 17, "name": "아니요", 
-          "gender": "M", "birth": "2022-08-12T00:00:00.000+00:00", "phone": "01010101010" },
-          "jobOpeningResponse": { "id": 3, "createdDate": "2022-08-12T00:00:00.000+00:00", "finishedDate": "2022-08-25T00:00:00.000+00:00", 
-          "title": "공고3", "isFinish": "F", "companyName": "company" } } } -->
         </a>
+      </div>
+      <div v-else class="notice-list d-block">
+        <p>새로운 알림이 없습니다.</p>
       </div>
     </b-modal>
   </div>
@@ -94,9 +91,17 @@ export default {
     };
   },
   methods: {
-    ...mapActions("home", ["readNotice"]),
-    readNotification(notificationId) {
-      this.readNotice(notificationId);
+    ...mapActions("home", ["readNotice", "deleteNotice"]),
+    readNotification(notice) {
+      this.readNotice(notice.id);
+      window.location.href =
+        "https://i7b307.p.ssafy.io/jobopening/" +
+        notice.applyResponse.jobOpeningId;
+    },
+    deleteNotification(notificationId) {
+      if (confirm("삭제하시겠습니까?")) {
+        this.deleteNotice(notificationId);
+      }
     },
   },
 };
@@ -149,6 +154,10 @@ export default {
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
+.notice-item-read > p {
+  margin: 0;
+}
+
 .notice-item-not-read {
   background-color: var(--color-red-3);
   border-radius: 0.5rem;
@@ -158,14 +167,33 @@ export default {
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
+.notice-item-not-read > p {
+  margin: 0;
+}
+
+.notice-item-company {
+  display: flex;
+  justify-content: space-between;
+  line-height: 24px;
+}
+
+.notice-item-company > .bi-trash {
+  width: 30px;
+  margin-right: 5px;
+  font-size: 20px;
+  text-align: right;
+}
+
 .notice-item p {
   margin: 0;
 }
+
 .now-login-btn {
   color: var(--color-green-1);
   font-weight: bold;
   font-size: 18px;
 }
+
 .now-login-btn:hover {
   color: var(--color-green-1);
 }

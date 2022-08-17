@@ -1,10 +1,17 @@
 <template>
-  <form @submit.prevent="onSubmit" class="commentForm">
+  <form @submit.prevent="onSubmit" class="commentForm" v-if="isLogginedIn">
     <img class="person" :src="currentUser.baseURL+currentUser.userProfile" alt="person">
     <label for="comment"></label>
     <input type="text" id="content" placeholder="내용을 입력해주세요." v-model="content">
     <button type="submit">등록</button>
   </form>
+  <form class="commentForm" v-else>
+    <img src="@/assets/basicperson2.png" alt="logo" class="person">
+    <label for="comment"></label>
+    <input type="text" id="content" placeholder="댓글작성은 로그인 후 이용해주세요." readonly>
+    <button>등록</button>
+  </form>
+
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
@@ -18,7 +25,7 @@ export default{
         }
     },
     computed: {
-        ...mapGetters(['article','currentUser'])
+        ...mapGetters(['article','currentUser', 'isLogginedIn'])
     },
     setup(){},
     created(){

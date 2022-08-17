@@ -1,8 +1,7 @@
-import router from '@/router'
-import axios from "axios"
-import _ from 'lodash'
-import drf from '@/api/drf'
-
+import router from "@/router";
+import axios from "axios";
+import _ from "lodash";
+import drf from "@/api/drf";
 
 export default {
   state: {
@@ -13,6 +12,8 @@ export default {
     interest: {},
     parents: [],
     parent: {},
+    isLast: false,
+    currPage: 0,
   },
 
   getters: {
@@ -27,51 +28,64 @@ export default {
     interest: (state) => state.interest,
     parents: (state) => state.parents,
     parent: (state) => state.parent,
+    isLast: (state) => state.isLast,
+    currPage: (state) => state.currPage,
   },
 
   mutations: {
     SET_TOKEN: (state, token) => (state.token = token),
     SET_CURRENT_USER: (state, user) => (state.currentUser = user),
     SET_ARTICLE: (state, article) => (state.article = article),
-    SET_ARTICLES: (state, articles) => (state.articles = articles),
+    SET_ARTICLES: (state, articles) =>
+      articles.forEach((element) => {
+        state.articles.push(element);
+      }),
+    CLEAR_ARTICLES: (state) => (state.articles = []),
     SET_COMMENT: (state, comment) => (state.comment = comment),
     SET_COMMENTS: (state, comments) => (state.comments = comments),
     SET_INTEREST: (state, interest) => (state.interest = interest),
     SET_PARENTS: (state, parents) => (state.parents = parents),
     SET_PARENT: (state, parent) => (state.parent = parent),
+    SET_IS_LAST: (state, isLast) => (state.isLast = isLast),
+    SET_CURR_PAGE: (state, currPage) => (state.currPage = currPage),
   },
 
   actions: {
-    fetchArticles({ commit, getters }, {categoryId}) {
+    fetchArticles({ commit, getters }, request) {
       axios({
         url: drf.board.get(),
         method: "post",
         data: JSON.stringify({
-          categoryId: categoryId,
-          boardId: "",
-          name: "",
-          title: "",
+          categoryId: request.categoryId,
         }),
-        params:{
-          page: 0,
-          size: 2,
+        params: {
+          page: request.page,
+          size: 10,
         },
         headers: getters.authHeader,
-      }).then((res) => {
-        commit("SET_ARTICLES", res.data);
-      }).catch((err)=>{
-        console.log(err);
-      });
+      })
+        .then((res) => {
+          commit("SET_IS_LAST", res.data.last);
+          commit("SET_ARTICLES", res.data.content);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    async clearArticles({ commit }) {
+      await commit("CLEAR_ARTICLES");
+    },
+    setCurrPage({ commit }, page) {
+      commit("SET_CURR_PAGE", page);
     },
     fetchArticle({ commit, getters }, article_pk) {
       axios({
-        url: drf.board.detail(article_pk)+"page=1&size=2",
+        url: drf.board.detail(article_pk),
         method: "get",
         headers: getters.authHeader,
-
       })
-        .then((res) => {
-          commit("SET_ARTICLE", res.data);
+        .then(async (res) => {
+          await commit("SET_ARTICLE", res.data);
         })
         .catch((err) => console.error(err.response));
     },
@@ -91,7 +105,6 @@ export default {
         headers: getters.authHeader,
       }).then((res) => {
         dispatch("fetchArticle", res.data.boardId);
-
         router.push({
           name: "boardDetail",
           params: {
@@ -120,8 +133,8 @@ export default {
           router.push({
             name: "boardDetail",
             params: {
-              'category_id': categoryId,
-              'board_id': article_pk,
+              category_id: categoryId,
+              board_id: article_pk,
             },
           });
         });

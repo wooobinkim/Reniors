@@ -88,11 +88,15 @@ export default {
 
   setup() {},
   created() {
+    this.fetchCareer()
+    this.fetchLicense()
+    this.fetchAward()
+    
   },
   mounted() {},
   unmounted() {},
   methods: {
-    ...mapActions(['fetchCareer'])
+    ...mapActions(['fetchCareer', 'fetchLicense', 'fetchAward'])
   }
 }
 </script>

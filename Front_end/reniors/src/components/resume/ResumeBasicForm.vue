@@ -210,7 +210,7 @@ p {
 
 .basic {
   margin: 0px;
-  height: 700px;
+  height: 650px;
 }
 
 input[type="date"]::-webkit-datetime-edit-text,

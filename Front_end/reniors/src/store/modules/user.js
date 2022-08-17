@@ -74,6 +74,7 @@ export const user = {
       await commit("SET_CURRENT_USER",{});
       console.log("currentUser", getters.currentUser);
       localStorage.setItem("token", "");
+
     },
 
     // error 커밋 추가
@@ -286,6 +287,21 @@ export const user = {
           console.log(err);
         });
     },
+
+    deleteUser({ dispatch, getters }) {
+      axios({
+        url: drf.user.delete(),
+        method: "delete",
+        headers: getters.authHeader,
+      })
+      .then(() => {
+        dispatch("removeToken")
+        router.push({ name: "home" })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
   },
 
   modules: {},

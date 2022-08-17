@@ -4,8 +4,11 @@
       <i class="bi bi-house"></i>
       <p>홈</p>
     </router-link>
-    <router-link class="footroute" :to="{ name: 'Jobopening' }">
-      <i class="bi bi-file-earmark-text"></i>
+    <router-link 
+      class="footroute" 
+      :class="{ 'now-link': this.$route.path.startsWith('/jobopening') }" 
+      :to="{ name: 'Jobopening' }"
+    ><i class="bi bi-file-earmark-text"></i>
       <p>채용공고</p>
     </router-link>
     <div v-if="isLogginedIn" class="footer-profile" @click="dropdown">
@@ -13,7 +16,7 @@
         :src="this.currentUser.baseURL + this.currentUser.userProfile"
         alt=""
       />
-      <div class="footer-profile-dropdown" id="footerDropdown">
+      <div class="footer-profile-dropdown" id="footerDropdown" @click="mypage">
         <router-link to="/mypage" class="footer-profile-dropdown-item"
           >마이페이지</router-link
         >
@@ -33,8 +36,11 @@
       <i class="bi bi-chat-left-quote"></i>
       <p>커뮤니티</p>
     </router-link>
-    <router-link class="footroute" :to="{ name: 'VideoMain' }">
-      <i class="bi bi-camera-video"></i>
+    <router-link 
+      class="footroute" 
+      :class="{ 'now-link': this.$route.path.startsWith('/video') || this.$route.path.startsWith('/practice') }"
+      :to="{ name: 'VideoMain' }"
+      ><i class="bi bi-camera-video"></i>
       <p>면접/연습</p>
     </router-link>
   </div>
@@ -62,6 +68,10 @@ export default {
       await this.removeToken();
       this.$router.push({ name: "home" });
     },
+    mypage(){
+      this.$router.push({ name: "MyPage" })
+      window.location.reload()
+    }
   },
   computed: {
     ...mapGetters(["currentUser", "isLogginedIn"]),
