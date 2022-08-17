@@ -39,7 +39,7 @@ export default {
   },
   data() {
     return {
-      passUser: [],
+      passUser: [{}],
     };
   },
   watch: {},
@@ -76,7 +76,7 @@ export default {
         let tmparr = [];
         this.applylist.forEach((apply) => {
           if (apply.jobOpeningProcess == "서류심사중") {
-            tmparr.push(apply.id);
+            tmparr.push(apply);
           }
         });
         let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));

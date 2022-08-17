@@ -54,7 +54,7 @@
       </div>
       <br>
       <br>
-      <apply-history-view v-show="showleft">
+      <apply-history-view v-show="showleft" :applies="applies">
       </apply-history-view>
       <bookmark-history-view v-show="showleft == false">
       </bookmark-history-view>
@@ -124,7 +124,8 @@ export default {
     this.fetchPrefer()
     this.fetchBookmark()
     this.fetchApply()
-    
+
+
   },  
     methods: {
       ...mapActions(['fetchCurrentUser', 'fetchPrefer', 'fetchBookmark', 'fetchApply']),
