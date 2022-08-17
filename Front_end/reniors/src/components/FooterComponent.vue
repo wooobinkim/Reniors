@@ -13,7 +13,7 @@
         :src="this.currentUser.baseURL + this.currentUser.userProfile"
         alt=""
       />
-      <div class="footer-profile-dropdown" id="footerDropdown">
+      <div class="footer-profile-dropdown" id="footerDropdown" @click="mypage">
         <router-link to="/mypage" class="footer-profile-dropdown-item"
           >마이페이지</router-link
         >
@@ -62,6 +62,10 @@ export default {
       await this.removeToken();
       this.$router.push({ name: "home" });
     },
+    mypage(){
+      this.$router.push({ name: "MyPage" })
+      window.location.reload()
+    }
   },
   computed: {
     ...mapGetters(["currentUser", "isLogginedIn"]),
