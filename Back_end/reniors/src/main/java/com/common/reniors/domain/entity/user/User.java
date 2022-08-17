@@ -1,13 +1,10 @@
 package com.common.reniors.domain.entity.user;
 
-import com.common.reniors.domain.entity.Apply;
-import com.common.reniors.domain.entity.Room;
-import com.common.reniors.domain.entity.SearchCondition;
+import com.common.reniors.domain.entity.*;
 import com.common.reniors.domain.entity.Type.Gender;
 import com.common.reniors.domain.entity.Type.IsOpen;
 import com.common.reniors.domain.entity.Type.LastEdu;
 import com.common.reniors.domain.entity.Type.Role;
-import com.common.reniors.domain.entity.UserEval;
 import com.common.reniors.domain.entity.board.Board;
 import com.common.reniors.domain.entity.board.Comment;
 import com.common.reniors.domain.entity.interviewQuestion.Answer;
@@ -131,6 +128,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recording> recordings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bookmark> bookmarks = new ArrayList<>();
 
     // 회원 - 알림 연관관계
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
