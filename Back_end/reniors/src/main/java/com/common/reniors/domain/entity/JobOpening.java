@@ -102,6 +102,9 @@ public class JobOpening{
     @OneToMany(mappedBy = "jobOpening", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EvalQuestion> evalQuestions = new ArrayList<>();
 
+    @OneToMany(mappedBy = "jobOpening", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bookmark> bookmarks = new ArrayList<>();
+
     //공고 - 고용형태 연관관계
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "type_employment_id")
