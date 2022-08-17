@@ -259,17 +259,17 @@ export default {
           console.log(error);
         });
     },
-    updateJobOpening: ({ commit, getters }, formData) => {
+    updateJobOpening: ({ commit, getters }, data) => {
       // http
       //   .put(`/company/jobopening/${data.no}`, data.jobopening)
       axios({
-        url: `https://i7b307.p.ssafy.io/api/company/jobopening`,
+        url: `https://i7b307.p.ssafy.io/api/company/jobopening/${data.no}`,
         method: "put",
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: getters.authHeader,
+          Authorization: `Bearer ${getters.token}`,
         },
-        data: formData,
+        data: data.formData,
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
