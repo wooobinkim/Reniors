@@ -88,6 +88,7 @@ export default {
   },
   computed: {
     ...mapGetters(['currentUser', 'prefer']),
+    ...mapGetters('jobopening', ['bookmarks', 'applies'])
   },
   // setup() {
   //   const store = useStore()
@@ -117,20 +118,23 @@ export default {
   // },
   mounted() {},
   unmounted() {},
-  methods: {
-    ...mapActions(['fetchCurrentUser', 'fetchPrefer']),
-    applyshow(){
-      this.showleft = true
-    },
-    bookmarkshow(){
-      this.showleft = false
-    }
-  },
   created() {
     this.fetchCurrentUser()
     this.fetchPrefer()
-
+    this.fetchBookmark()
+    this.fetchApply()
+    
   },  
+    methods: {
+      ...mapActions(['fetchCurrentUser', 'fetchPrefer', 'fetchBookmark', 'fetchApply']),
+      ...mapActions('jobopening', ['fetchBookmark', 'fetchApply']),
+      applyshow(){
+        this.showleft = true
+      },
+      bookmarkshow(){
+        this.showleft = false
+      }
+    },
 }
 </script>
 

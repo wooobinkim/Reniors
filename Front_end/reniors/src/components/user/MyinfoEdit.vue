@@ -41,6 +41,10 @@
         :currentUser="currentUser"
         action="info"
       ></resume-basic-form>
+
+      <div>
+        <button>회원 탈퇴하기</button>
+      </div>
     </div>
   </div>
 </template>

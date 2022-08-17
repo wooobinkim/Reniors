@@ -1,8 +1,7 @@
-import router from '@/router'
-import axios from "axios"
-import _ from 'lodash'
-import drf from '@/api/drf'
-
+import router from "@/router";
+import axios from "axios";
+import _ from "lodash";
+import drf from "@/api/drf";
 
 export default {
   state: {
@@ -42,33 +41,35 @@ export default {
   },
 
   actions: {
-    fetchArticles({ commit, getters }, {categoryId}) {
+    fetchArticles({ commit, getters }, request) {
       axios({
         url: drf.board.get(),
         method: "post",
         data: JSON.stringify({
-          categoryId: categoryId,
-          boardId: "",
-          name: "",
-          title: "",
+          categoryId: request.categoryId,
+          boardId: null,
+          name: null,
+          title: null,
         }),
-        params:{
-          page: 0,
-          size: 2,
+        params: {
+          page: request.page,
+          size: 10,
         },
         headers: getters.authHeader,
-      }).then((res) => {
-        commit("SET_ARTICLES", res.data);
-      }).catch((err)=>{
-        console.log(err);
-      });
+      })
+        .then((res) => {
+          console.log(res);
+          commit("SET_ARTICLES", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     fetchArticle({ commit, getters }, article_pk) {
       axios({
-        url: drf.board.detail(article_pk)+"page=1&size=2",
+        url: drf.board.detail(article_pk) + "page=1&size=2",
         method: "get",
         headers: getters.authHeader,
-
       })
         .then((res) => {
           commit("SET_ARTICLE", res.data);
@@ -120,8 +121,8 @@ export default {
           router.push({
             name: "boardDetail",
             params: {
-              'category_id': categoryId,
-              'board_id': article_pk,
+              category_id: categoryId,
+              board_id: article_pk,
             },
           });
         });

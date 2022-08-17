@@ -14,7 +14,7 @@ import condition from './modules/condition'
 
 export default createStore({
   modules: { home, user, board, jobopening, category, practice, company, resume, condition },
-  plugins:[
-    createPersistedState()
-],
+  plugins:[createPersistedState({
+
+})],
 })
