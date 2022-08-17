@@ -71,6 +71,7 @@ export default {
             },
           });
           this.createNotice({
+            jobOpeningProcess: "최종합격",
             userId: data.userId,
             applyId: data.id,
           });
@@ -95,6 +96,7 @@ export default {
             },
           });
           this.createNotice({
+            jobOpeningProcess: "면접불합격",
             userId: data.userId,
             applyId: data.id,
           });
