@@ -35,7 +35,7 @@
             </p>
             <p class="notice-item-result" @click="readNotification(notice)">
               지원 현황 :
-              <span>{{ notice.applyResponse.jobOpeningProcess }}</span
+              <span>{{ notice.jobOpeningProcess }}</span
               >으로 변경되었습니다.
             </p>
           </div>
@@ -51,7 +51,7 @@
             </p>
             <p class="notice-item-result" @click="readNotification(notice)">
               지원 현황 :
-              <span>{{ notice.applyResponse.jobOpeningProcess }}</span
+              <span>{{ notice.jobOpeningProcess }}</span
               >으로 변경되었습니다.
             </p>
           </div>
@@ -93,10 +93,11 @@ export default {
   methods: {
     ...mapActions("home", ["readNotice", "deleteNotice"]),
     readNotification(notice) {
+      console.log(notice);
       this.readNotice(notice.id);
-      window.location.href =
-        "https://i7b307.p.ssafy.io/jobopening/" +
-        notice.applyResponse.jobOpeningId;
+      // window.location.href =
+      //   "https://i7b307.p.ssafy.io/jobopening/" +
+      //   notice.applyResponse.jobOpeningId;
     },
     deleteNotification(notificationId) {
       if (confirm("삭제하시겠습니까?")) {
