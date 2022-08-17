@@ -61,7 +61,6 @@ export default {
     ...mapActions("home", ["createNotice"]),
     interviewpass() {
       if (confirm("선택된 지원자의 상태를 최종 합격으로 변경하시겠습니까?")) {
-        console.log("면접합격자");
         this.passUser.forEach((data) => {
           this.updateApply({
             jobOpeningId: this.jobopeningdetail.id,
@@ -77,14 +76,13 @@ export default {
           });
         });
 
-        console.log("면접탈락자");
         let tmparr = [];
         this.applylist.forEach((apply) => {
           if (
             apply.jobOpeningProcess == "면접" ||
             apply.jobOpeningProcess == "면접심사중"
           )
-            tmparr.push(apply.id);
+            tmparr.push(apply);
         });
         let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
         unpassUser.forEach((data) => {
