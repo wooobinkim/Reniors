@@ -15,6 +15,7 @@
       <div class="myinfo">
         <div class="name">{{this.currentUser.name}}</div>
         <router-link :to="{ name: 'MyinfoEdit' }" style="text-align: left; text-decoration:none; color: #6D6D6D; font-weight: 700; font-size:13px; "><i class="bi bi-gear-fill" style="color: #37BF99"></i>&nbsp;내정보 수정</router-link>
+
         <!-- <button><router-link :to="{ name: 'MyinfoEdit' }" style="text-decoration:none; color: #37BF99;">내정보 수정</router-link></button> -->
       </div>
 
