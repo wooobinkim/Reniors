@@ -287,6 +287,21 @@ export const user = {
           console.log(err);
         });
     },
+
+    deleteUser({ dispatch, getters }) {
+      axios({
+        url: drf.user.delete(),
+        method: "delete",
+        headers: getters.authHeader,
+      })
+      .then(() => {
+        dispatch("removeToken")
+        router.push({ name: "home" })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
   },
 
   modules: {},

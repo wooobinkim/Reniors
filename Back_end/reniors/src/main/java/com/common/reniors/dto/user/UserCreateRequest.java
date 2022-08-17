@@ -26,7 +26,6 @@ public class UserCreateRequest {
     @NotBlank
     private String name;
 
-    @NotNull
     private Date birth;
 
     @NotNull

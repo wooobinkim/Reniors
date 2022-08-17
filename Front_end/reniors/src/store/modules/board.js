@@ -12,6 +12,8 @@ export default {
     interest: {},
     parents: [],
     parent: {},
+    isLast: false,
+    currPage: 0,
   },
 
   getters: {
@@ -26,18 +28,26 @@ export default {
     interest: (state) => state.interest,
     parents: (state) => state.parents,
     parent: (state) => state.parent,
+    isLast: (state) => state.isLast,
+    currPage: (state) => state.currPage,
   },
 
   mutations: {
     SET_TOKEN: (state, token) => (state.token = token),
     SET_CURRENT_USER: (state, user) => (state.currentUser = user),
     SET_ARTICLE: (state, article) => (state.article = article),
-    SET_ARTICLES: (state, articles) => (state.articles = articles),
+    SET_ARTICLES: (state, articles) =>
+      articles.forEach((element) => {
+        state.articles.push(element);
+      }),
+    CLEAR_ARTICLES: (state) => (state.articles = []),
     SET_COMMENT: (state, comment) => (state.comment = comment),
     SET_COMMENTS: (state, comments) => (state.comments = comments),
     SET_INTEREST: (state, interest) => (state.interest = interest),
     SET_PARENTS: (state, parents) => (state.parents = parents),
     SET_PARENT: (state, parent) => (state.parent = parent),
+    SET_IS_LAST: (state, isLast) => (state.isLast = isLast),
+    SET_CURR_PAGE: (state, currPage) => (state.currPage = currPage),
   },
 
   actions: {
@@ -47,9 +57,6 @@ export default {
         method: "post",
         data: JSON.stringify({
           categoryId: request.categoryId,
-          boardId: null,
-          name: null,
-          title: null,
         }),
         params: {
           page: request.page,
@@ -58,21 +65,27 @@ export default {
         headers: getters.authHeader,
       })
         .then((res) => {
-          console.log(res);
-          commit("SET_ARTICLES", res.data);
+          commit("SET_IS_LAST", res.data.last);
+          commit("SET_ARTICLES", res.data.content);
         })
         .catch((err) => {
           console.log(err);
         });
     },
+    async clearArticles({ commit }) {
+      await commit("CLEAR_ARTICLES");
+    },
+    setCurrPage({ commit }, page) {
+      commit("SET_CURR_PAGE", page);
+    },
     fetchArticle({ commit, getters }, article_pk) {
       axios({
-        url: drf.board.detail(article_pk) + "page=1&size=2",
+        url: drf.board.detail(article_pk),
         method: "get",
         headers: getters.authHeader,
       })
-        .then((res) => {
-          commit("SET_ARTICLE", res.data);
+        .then(async (res) => {
+          await commit("SET_ARTICLE", res.data);
         })
         .catch((err) => console.error(err.response));
     },
@@ -92,7 +105,6 @@ export default {
         headers: getters.authHeader,
       }).then((res) => {
         dispatch("fetchArticle", res.data.boardId);
-
         router.push({
           name: "boardDetail",
           params: {
