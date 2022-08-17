@@ -44,6 +44,7 @@ public class BoardController {
             @RequestBody BoardSearchRequest request,
             Pageable pageable
             ){
+        Map<String, Object> response = new HashMap<>();
         return ResponseEntity.ok(boardService.getBoardList(request, pageable));
     }
 
@@ -51,6 +52,7 @@ public class BoardController {
     @ApiOperation(value = "게시글 상세조회", notes = "게시글을 상세조회한다.")
     public ResponseEntity<?> getBoardInfo(
             @PathVariable Long boardId
+
     ){
         return ResponseEntity.ok(boardService.getBoardInfo(boardId));
     }
