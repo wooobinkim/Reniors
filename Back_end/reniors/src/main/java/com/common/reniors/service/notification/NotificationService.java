@@ -32,7 +32,7 @@ public class NotificationService {
                 .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
         Apply apply = applyRepository.findById(request.getApplyId())
                 .orElseThrow(()->new NotFoundException(JOB_OPENING_NOT_FOUND));
-        Notification notification = Notification.create(apply.getJobOpeningProcess(), user, apply);
+        Notification notification = Notification.create(request.getJobOpeningProcess(), user, apply);
         return notificationRepository.save(notification).getId();
     }
 

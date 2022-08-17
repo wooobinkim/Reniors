@@ -38,11 +38,13 @@ export default {
       const response = await http.post("/notification", notice);
       commit("NOTICES", response.data);
     },
-    async readNotice(notificationId) {
+    async readNotice({ dispatch }, notificationId) {
       await http.get(`/notification/${notificationId}`);
+      dispatch("fetchNotices");
     },
-    async deleteNotice(notificationId) {
+    async deleteNotice({ dispatch }, notificationId) {
       await http.delete(`/notification/${notificationId}`);
+      dispatch("fetchNotices");
     },
     async fetchYoutubes({ commit }, keyword) {
       commit("YOUTUBES", []);
