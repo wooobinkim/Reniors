@@ -8,7 +8,7 @@
   <form class="commentForm" v-else>
     <img src="@/assets/basicperson2.png" alt="logo" class="person">
     <label for="comment"></label>
-    <input type="text" id="content" placeholder="댓글작성은 로그인 후 이용해주세요." >
+    <input type="text" id="content" placeholder="댓글작성은 로그인 후 이용해주세요." readonly>
     <button>등록</button>
   </form>
 
