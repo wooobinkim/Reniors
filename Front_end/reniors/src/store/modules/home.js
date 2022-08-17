@@ -72,7 +72,6 @@ export default {
     },
     async fetchNotices({ commit }) {
       const response = await http.get("/notification");
-      console.log(response);
       commit("NOTICES", response.data);
       let notReadNotices = 0;
       response.data.forEach((notice) => {
