@@ -2,9 +2,10 @@
   <div class="container">
     <header>
       <div>
+        <br>
         <img
-          style="width: 128px; max-height: 170px; margin: 10px"
-          src="@/assets/logo.png"
+          style="width: 60%; max-height: 90px; margin: 10px"
+          src="@/assets/logo_cut.png"
           alt="logo"
         />
         <br />
@@ -39,7 +40,7 @@
       <!-- <form @submit.prevent="signup(user)" class="signupform"> -->
       <div class="signupform">
         <transition name="slide-fade">
-          <div v-show="page === 1">
+          <div v-show="page === 1" style="max-width: 351px">
             <p style="font-size: 14px">간단한 회원가입을 진행하려고 해요.</p>
             <p>
               먼저, 로그인 시 사용하실 <span>이메일</span>과
@@ -89,9 +90,9 @@
           </div>
         </transition>
         <transition name="slide-fade">
-          <div v-show="page === 2">
+          <div v-show="page === 2" style="max-width: 351px">
             <p>
-              회원님의 <span>이름</span>과 <span>전화번호</span>,
+              회원님의 <span>이름</span>과 <span>전화번호</span>, <span>생년월일</span>,
               <span>주소</span>를 알려주실 수 있나요?
             </p>
             <br />
@@ -112,6 +113,13 @@
               v-model="user.phone"
               type="text"
               placeholder="예시) 01012345678"
+            ></b-form-input>
+            <p class="forminfo">생년월일</p>
+            <b-form-input
+              class="mb-3 user-form-control"
+              v-model="user.birth"
+              type="date"
+              placeholder="생년-월-일"
             ></b-form-input>
             <p class="forminfo">
               주소<span class="required">&nbsp;&nbsp;*</span>
@@ -147,7 +155,7 @@
           <div v-show="page === 3">
             <p style="font-size: 14px">마지막 단계입니다!</p>
             <p>
-              <span>최종학력</span>, <span>생년월일</span>, <span>성별</span>을
+              <span>최종학력</span>, <span>경력년수</span>, <span>성별</span>을
               입력해주세요! <br /><span>프로필 사진</span>도 넣어주시면 좋구요 :)
             </p>
 
@@ -166,13 +174,15 @@
                 {{ lastedu.text }}
               </option></b-form-select
             >
-            <p class="forminfo">생년월일</p>
-            <b-form-input
-              class="mb-3 user-form-control"
-              v-model="user.birth"
-              type="date"
-              placeholder="생년-월-일"
-            ></b-form-input>
+              <p class="forminfo">
+                경력년수<span class="required">&nbsp;&nbsp;*</span>
+              </p>
+              <b-form-input
+                class="mb-3 user-form-control"
+                v-model="user.totalCareer"
+                type="number"
+                placeholder="경력년수를 입력해주세요."
+              ></b-form-input>
             <p class="forminfo">
               성별<span class="required">&nbsp;&nbsp;*</span>
             </p>
@@ -309,6 +319,8 @@ export default {
         this.toast.show({body: '주소를 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.user.gender == "") {
         this.toast.show({body: '성별을 선택해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
+      } else if (this.user.totalCareer == null) {
+        this.toast.show({body: '경력년수를 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else if (this.idconfirm == false) {
         this.toast.show({body: '아이디를 확인해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
       } else {
@@ -322,23 +334,27 @@ export default {
       }
     },
     idcheck(id) {
-      axios({
-        url: drf.user.idcheck(id),
-        method: "get",
-      })
-        .then((res) => {
-          console.log(res);
-          if (res.data.res) {
-            this.toast.show({body: '이미 사용중인 아이디입니다.'}, {variant: 'danger', pos: 'middle-center', delay: 1000})
-            this.idconfirm = false;
-          } else {
-            this.toast.show({body: '사용 가능한 아이디입니다.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
-            this.idconfirm = true;
-          }
+      if (this.user.userAppId.includes('@')) {
+        axios({
+          url: drf.user.idcheck(id),
+          method: "get",
         })
-        .catch((err) => {
-          console.log(err);
-        });
+          .then((res) => {
+            console.log(res);
+            if (res.data.res) {
+              this.toast.show({body: '이미 사용중인 아이디입니다.'}, {variant: 'danger', pos: 'middle-center', delay: 1000})
+              this.idconfirm = false;
+            } else {
+              this.toast.show({body: '사용 가능한 아이디입니다.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
+              this.idconfirm = true;
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        this.toast.show({body: '올바른 이메일 형식이 아닙니다.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
+      }
     },
 
     signup() {
@@ -353,7 +369,7 @@ export default {
           this.$router.push({ name: "Login" });
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err)
         });
       // error 부분 추가
     },
@@ -422,7 +438,7 @@ export default {
 }
 
 header {
-  height: 120px;
+  height: 130px;
   border-style: none none solid none;
   border-width: 0.5px;
   border-color: #eaeaea;
@@ -520,4 +536,15 @@ footer {
   transform: translateX(20px);
   opacity: 0;
 }
+
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+  color: #8a8a8a;
+}
+
+/* .user-form-control{
+  color: #8a8a8a;
+} */
 </style>
