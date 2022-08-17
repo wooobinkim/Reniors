@@ -134,7 +134,7 @@ export default {
         method: "get",
         params: {
           page: request.page,
-          size: 2,
+          size: 10,
         },
       }).then((res) => {
         commit("SET_IS_LAST", res.data.last);
@@ -149,6 +149,8 @@ export default {
         data: data,
       })
         .then(({ data }) => {
+          commit("CLEAR_JOBOPENINGS");
+          commit("SET_IS_LAST", true);
           commit("JOBOPENINGS", data.content);
         })
         .catch((error) => {
