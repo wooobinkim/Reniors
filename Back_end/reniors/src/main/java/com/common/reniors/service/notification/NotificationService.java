@@ -47,11 +47,10 @@ public class NotificationService {
     }
 
     @Transactional
-    public NotificationResponse read(Long notificationId) {
+    public void read(Long notificationId) {
         Notification notification = notificationRepository.findById(notificationId)
                 .orElseThrow(()->new NotFoundException(NOTIFICATION_NOT_FOUND));
         notification.readNotification();
-        return NotificationResponse.response(notification);
     }
 
     @Transactional

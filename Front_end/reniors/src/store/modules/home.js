@@ -13,7 +13,6 @@ export default {
     youtubes: [],
     isYoutube: false,
     notices: [],
-    notice: null,
     noticeNotReaded: null,
   },
   getters: {
@@ -23,7 +22,6 @@ export default {
     youtubes: (state) => state.youtubes,
     isYoutube: (state) => !_.isEmpty(state.youtubes),
     notices: (state) => state.notices,
-    notice: (state) => state.notice,
     noticeNotReaded: (state) => state.noticeNotReaded,
   },
   mutations: {
@@ -31,7 +29,6 @@ export default {
     YOUTUBES: (state, youtubes) => (state.youtubes = youtubes),
     HOTJOBOPENINGS: (state, hots) => (state.hotJobopenings = hots),
     NOTICES: (state, notices) => (state.notices = notices),
-    NOTICE: (state, notice) => (state.notice = notice),
     noticeNotReaded: (state, noticeNotReaded) =>
       (state.noticeNotReaded = noticeNotReaded),
     DUMMY: () => 0,
@@ -41,9 +38,11 @@ export default {
       const response = await http.post("/notification", notice);
       commit("NOTICES", response.data);
     },
-    async readNotice({ commit }, notice) {
-      const response = await http.get(`/notification/${notice}`);
-      commit("NOTICE", response.data);
+    async readNotice(notificationId) {
+      await http.get(`/notification/${notificationId}`);
+    },
+    async deleteNotice(notificationId) {
+      await http.delete(`/notification/${notificationId}`);
     },
     async fetchYoutubes({ commit }, keyword) {
       commit("YOUTUBES", []);
