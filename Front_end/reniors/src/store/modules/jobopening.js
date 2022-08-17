@@ -129,7 +129,6 @@ export default {
       commit("SET_CURR_PAGE", page);
     },
     async fetchJobopenings({ commit }, request) {
-      console.log(request.page);
       await axios({
         url: drf.jobopening.get(),
         method: "get",
@@ -138,7 +137,6 @@ export default {
           size: 10,
         },
       }).then((res) => {
-        console.log(res);
         commit("SET_IS_LAST", res.data.last);
         commit("JOBOPENINGS", res.data.content);
       });
@@ -151,7 +149,6 @@ export default {
         data: data,
       })
         .then(({ data }) => {
-          console.log(data);
           commit("CLEAR_JOBOPENINGS");
           commit("SET_IS_LAST", true);
           commit("JOBOPENINGS", data.content);
@@ -212,7 +209,6 @@ export default {
     async fetchApplied({ commit }) {
       commit("JOBOPENINGS", []);
       const response = await http.get("/jobopening/apply");
-      console.log(response);
       commit("JOBOPENINGS", response.data);
     },
 
