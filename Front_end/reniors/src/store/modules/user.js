@@ -74,6 +74,7 @@ export const user = {
       await commit("SET_CURRENT_USER",{});
       console.log("currentUser", getters.currentUser);
       localStorage.setItem("token", "");
+
     },
 
     // error 커밋 추가
