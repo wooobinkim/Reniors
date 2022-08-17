@@ -305,7 +305,7 @@ export default {
     decreasePage() {
       this.pagenum -= 1;
     },
-    geImg() {
+    changeImg() {
       this.companyImg = this.$refs.img.files;
       // console.log(this.companyImg);
     },
