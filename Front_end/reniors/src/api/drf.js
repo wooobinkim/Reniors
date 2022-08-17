@@ -18,9 +18,10 @@ export default {
     login: () => HOST + USER,
     kakaoSignup: () => HOST + USER + "/kakao",
     kakaoLogin: () => HOST + USER + "/kakao",
-    userid: (name, phone) => HOST + USER + `/${name}` + '/findid' + `/${phone}`,
-    idcheck: (userAppId) => HOST + USER + '/idCheck' + `/${userAppId}`,
-    userpwd: (name, userAppId) => HOST + USER + `/${name}` + '/findpwd' + `/${userAppId}`,
+    userid: (name, phone) => HOST + USER + `/${name}` + "/findid" + `/${phone}`,
+    idcheck: (userAppId) => HOST + USER + "/idCheck" + `/${userAppId}`,
+    userpwd: (name, userAppId) =>
+      HOST + USER + `/${name}` + "/findpwd" + `/${userAppId}`,
     changePwd: (userAppPwd) => HOST + USER + `/${userAppPwd}`,
     userList: () => HOST + USER + "/list",
     bookmark: (userId) => HOST + USER + `/${userId}` + "/bookmark",
@@ -36,18 +37,21 @@ export default {
   },
 
   recommendcondition: {
-    recommend: () => HOST + RECOMMEND
+    recommend: () => HOST + RECOMMEND,
   },
 
   resume: {
-    get: userId => HOST + RESUME + `/${userId}`,
-    edit: userId => HOST + RESUME + `/${userId}`,
-    career: () => HOST + RESUME + '/career',
-    careerEdit: (careerDetailId) => HOST + RESUME + '/career' + `/${careerDetailId}`,
-    awards: () => HOST + RESUME + '/awards',
-    awardsEdit: (awardDetailId) => HOST + RESUME + '/awards' + `/${awardDetailId}`,
-    license: () => HOST + RESUME + '/license',
-    licenseEdit: (licenseDetailId) => HOST + RESUME + '/license' + `/${licenseDetailId}`,
+    get: (userId) => HOST + RESUME + `/${userId}`,
+    edit: (userId) => HOST + RESUME + `/${userId}`,
+    career: () => HOST + RESUME + "/career",
+    careerEdit: (careerDetailId) =>
+      HOST + RESUME + "/career" + `/${careerDetailId}`,
+    awards: () => HOST + RESUME + "/awards",
+    awardsEdit: (awardDetailId) =>
+      HOST + RESUME + "/awards" + `/${awardDetailId}`,
+    license: () => HOST + RESUME + "/license",
+    licenseEdit: (licenseDetailId) =>
+      HOST + RESUME + "/license" + `/${licenseDetailId}`,
     // portfolios: resumeId => HOST + RESUME + `/${resumeId}` + 'portfolio',
     // portfolio: (resumeId, portfolioName) => HOST + RESUME + `/${resumeId}` + 'portfolio' + `/${portfolioName}`,
   },
@@ -89,9 +93,10 @@ export default {
   jobopening: {
     get: () => HOST + JOB + "/search",
     detail: (jobOpeningId) => HOST + JOB + `/${jobOpeningId}`,
-    apply: (jobopeningId) => HOST + JOB + `/${jobopeningId}` + '/apply',
-    getBookmark: () => HOST + JOB + '/bookmark',
-    addBookmark: (jobOpeningId) => HOST + JOB + '/bookmark' + `/${jobOpeningId}`,
+    apply: (jobopeningId) => HOST + JOB + `/${jobopeningId}` + "/apply",
+    getBookmark: () => HOST + JOB + "/bookmark",
+    addBookmark: (jobOpeningId) =>
+      HOST + JOB + "/bookmark" + `/${jobOpeningId}`,
     applicant: (jobOpeningId) => HOST + JOB + `/${jobOpeningId}` + "/applicant",
   },
   condition: {

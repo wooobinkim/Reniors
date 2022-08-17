@@ -1,39 +1,51 @@
 <template>
   <div class="footer">
-
     <router-link class="footroute" :to="{ name: 'company' }">
       <i class="bi bi-house"></i>
       <p>홈</p>
     </router-link>
 
-    <router-link @click="this.setheader('채용관리')" class="footroute" :to="{ name: 'companyjobopening' }">
+    <router-link
+      @click="this.setheader('채용관리')"
+      class="footroute"
+      :to="{ name: 'companyjobopening' }"
+    >
       <i class="bi bi-file-earmark-text"></i>
       <p>채용공고</p>
     </router-link>
 
-    <router-link @click="this.setheader('면접')" class="footroute" :to="{ name: 'companyinterview' }">
+    <router-link
+      @click="this.setheader('면접')"
+      class="footroute"
+      :to="{ name: 'companyinterview' }"
+    >
       <i class="bi bi-camera-video"></i>
       <p>면접</p>
     </router-link>
 
     <div v-if="isLogginedIn" class="footer-profile" @click="dropdown">
-      <img
-        :src="this.companyimg"
-        alt=""
-      />
+      <img :src="this.companyimg" alt="" />
       <div class="footer-profile-dropdown" id="footerDropdown">
-        <router-link @click="this.setheader('마이페이지')" :to="{name : 'companymypage'}" class="footer-profile-dropdown-item"
+        <router-link
+          @click="this.setheader('마이페이지')"
+          :to="{ name: 'companymypage' }"
+          class="footer-profile-dropdown-item"
           >마이페이지</router-link
         >
         <br />
-        <router-link class="footer-profile-dropdown-item" @click="this.companylogout()" :to="{name:'Login'}">로그아웃</router-link>
+        <router-link
+          class="footer-profile-dropdown-item"
+          @click="this.companylogout()"
+          :to="{ name: 'Login' }"
+          >로그아웃</router-link
+        >
       </div>
     </div>
     <router-link v-else class="footroute" to="/login">
       <i class="bi bi-person"></i>
       <p>로그인</p>
     </router-link>
-<!-- 
+    <!-- 
     <router-link
       class="footroute"
       :class="{ 'now-link': this.$route.path.startsWith('/boards') }"
@@ -42,9 +54,6 @@
       <i class="bi bi-chat-left-quote"></i>
       <p>커뮤니티</p>
     </router-link> -->
-
-    
-
   </div>
 </template>
 
@@ -60,14 +69,17 @@ export default {
   },
   methods: {
     ...mapActions(["removeToken"]),
-    ...mapActions("company",["companylogout","setheader"]),
+    ...mapActions("company", ["companylogout", "setheader"]),
     dropdown() {
-      document.querySelector("#footerDropdown").classList.toggle("active");
+      let loginCompany = document.querySelector("#footerDropdown");
+      if (loginCompany) {
+        loginCompany.classList.toggle("active");
+      }
     },
   },
   computed: {
     ...mapGetters(["currentUser", "isLogginedIn"]),
-    ...mapGetters("company",["companyinfo","companyimg"])
+    ...mapGetters("company", ["companyinfo", "companyimg"]),
   },
 };
 </script>

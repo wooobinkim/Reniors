@@ -11,8 +11,11 @@ import com.common.reniors.domain.repository.category.JobParentCategoryRepository
 import com.common.reniors.domain.repository.user.UserRepository;
 import com.common.reniors.dto.board.*;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.QueryResults;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +31,7 @@ import static com.common.reniors.common.exception.NotFoundException.*;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class BoardService {
+public class BoardService{
 
     private final BoardRepository boardRepository;
     private final JobParentCategoryRepository jobParentCategoryRepository;
@@ -69,32 +72,17 @@ public class BoardService {
     }
 
     @Transactional
-    public List<BoardResponse> getBoardList(BoardSearchRequest boardSearchRequest, Pageable pageable) {
+    public Page<BoardResponse> getBoardList(BoardSearchRequest boardSearchRequest, Pageable pageable) {
 
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
-        QBoard b = new QBoard("b");
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
         JobParentCategory jpc = jobParentCategoryRepository.findById(boardSearchRequest.getCategoryId())
                 .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
 
-        if(boardSearchRequest.getName() != null) booleanBuilder.and(b.user.name.contains(boardSearchRequest.getName()));
-        if(boardSearchRequest.getTitle() != null) booleanBuilder.and(b.title.contains(boardSearchRequest.getTitle()));
-        if(boardSearchRequest.getBoardId() != null) booleanBuilder.and(b.id.eq(boardSearchRequest.getBoardId()));
+        Page<BoardResponse> boardList = boardRepository.findByCategory(jpc, pageable)
+                .map(BoardResponse::response);
 
-        List<Board> boardList = jpaQueryFactory.selectFrom(b)
-                .where(
-                        booleanBuilder,
-                        b.category.id.eq(boardSearchRequest.getCategoryId())
-                )
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-
-        if(boardList.size() != 0){
-            List<BoardResponse> boards = boardList.stream()
-                    .map(BoardResponse::response)
-                    .collect(Collectors.toList());
-            return boards;
+        if(boardList.getContent().size() != 0){
+            return boardList;
         }
         return null;
     }
