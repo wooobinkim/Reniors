@@ -14,8 +14,14 @@
       지금 <router-link to="/login" class="now-login-btn">로그인</router-link>을
       하고<br />더 정확한 추천공고와 관리를 받아보세요!
     </p>
-    <b-modal id="noticeModal" v-model="show" title="🔔 알림" hide-footer>
-      <div class="notice-list d-block">
+    <b-modal
+      id="noticeModal"
+      v-if="login"
+      v-model="show"
+      title="🔔 알림"
+      hide-footer
+    >
+      <div v-if="notices.length != 0" class="notice-list d-block">
         <a v-for="(notice, index) in notices" :key="index">
           <div v-if="notice.isRead === 'READ'" class="notice-item-read">
             <p class="notice-item-company">
@@ -49,14 +55,10 @@
               >으로 변경되었습니다.
             </p>
           </div>
-
-          <!-- { "id": 2, "jobOpeningProcess": "서류불합격", "isRead": "NOT_READ", "createdAt": "2022-08-15T08:46:41", 
-          "applyResponse": { "id": 20, "jobOpeningProcess": "서류불합격", "interviewDate": null, "jobOpeningId": 3, 
-          "jobOpeningTitle": "공고3", "jobChildCategoryName": "내방객응대", "sessionId": null, "userId": 17, "name": "아니요", 
-          "gender": "M", "birth": "2022-08-12T00:00:00.000+00:00", "phone": "01010101010" },
-          "jobOpeningResponse": { "id": 3, "createdDate": "2022-08-12T00:00:00.000+00:00", "finishedDate": "2022-08-25T00:00:00.000+00:00", 
-          "title": "공고3", "isFinish": "F", "companyName": "company" } } } -->
         </a>
+      </div>
+      <div v-else class="notice-list d-block">
+        <p>새로운 알림이 없습니다.</p>
       </div>
     </b-modal>
   </div>
@@ -185,11 +187,13 @@ export default {
 .notice-item p {
   margin: 0;
 }
+
 .now-login-btn {
   color: var(--color-green-1);
   font-weight: bold;
   font-size: 18px;
 }
+
 .now-login-btn:hover {
   color: var(--color-green-1);
 }
