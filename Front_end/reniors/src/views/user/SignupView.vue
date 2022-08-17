@@ -499,10 +499,12 @@ footer {
 }
 
 .slide-fade-enter-active {
-  transition: all 0.3s ease-out;
+  position: absolute;
+  transition: all 0.3s ease-in;
 }
 
 .slide-fade-leave-active {
+  position: absolute;
   transition: all 0.3s ease-out;
 }
 
