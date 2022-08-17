@@ -1,11 +1,12 @@
 <template>
-  <div>
-    <!-- header -->
     <div class="header container-fluid">
       <router-link class="header-logo" :to="{ name: 'home' }">
         <img src="@/assets/logo_cut.png" alt="logo" />
       </router-link>
     </div>
+  <div>
+    <!-- header -->
+
 
     <search-bar></search-bar>
 

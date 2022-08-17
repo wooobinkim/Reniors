@@ -53,10 +53,13 @@ export default {
   methods: {
     ...mapActions(["removeToken"]),
     dropdown() {
-      document.querySelector("#footerDropdown").classList.toggle("active");
+      let footerMenu = document.querySelector("#footerDropdown")
+      if(footerMenu){
+        footerMenu.classList.toggle("active");
+      }
     },
-    logout() {
-      this.removeToken();
+    async logout() {
+      await this.removeToken();
       this.$router.push({ name: "home" });
     },
   },

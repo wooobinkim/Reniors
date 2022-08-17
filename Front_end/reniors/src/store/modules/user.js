@@ -69,8 +69,10 @@ export const user = {
       localStorage.setItem("token", token);
     },
 
-    removeToken({ commit }) {
-      commit("SET_TOKEN", "");
+    async removeToken({ commit, getters }) {
+      await commit("SET_TOKEN", "");
+      await commit("SET_CURRENT_USER",{});
+      console.log("currentUser", getters.currentUser);
       localStorage.setItem("token", "");
     },
 
