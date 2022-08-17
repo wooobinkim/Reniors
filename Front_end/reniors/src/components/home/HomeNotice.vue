@@ -79,9 +79,12 @@ export default {
   },
   setup() {
     const store = useStore();
-
-    const fetchNotices = () => store.dispatch("home/fetchNotices");
-    fetchNotices();
+    const isLogginedIn = computed(() => store.getters["isLogginedIn"]);
+    console.log(isLogginedIn.value);
+    if (isLogginedIn.value) {
+      const fetchNotices = () => store.dispatch("home/fetchNotices");
+      fetchNotices();
+    }
     const noticeCount = computed(() => store.getters["home/noticeNotReaded"]);
     const notices = computed(() => store.getters["home/notices"]);
 

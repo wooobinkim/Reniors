@@ -2,18 +2,25 @@
   <div>
     <div class="jobopening-box">
       <h3>기업정보</h3>
-      <hr>
-      <img :src="company.baseURL + company.companyProfile" alt="">
+      <hr />
+      <img :src="company.baseURL + company.companyProfile" alt="" />
       <h5>{{ jobopening.companyName }}</h5>
       <ConditionItem left="설립연도" :right="company.establishedAt" />
       <ConditionItem left="기업주소" :right="company.address" />
       <ConditionItem left="홈페이지" :right="company.companyUrl" />
       <h4>이 기업의 다른 채용 공고</h4>
-      <hr class="small">
+      <hr class="small" />
       <div class="jobopening-detail-list">
-        <div class="jobopening-detail-content" v-for="(jobopening, index) in jobopening.companyJobOpening" :key="index" @click="movejobopening(jobopening.id)">
+        <div
+          class="jobopening-detail-content"
+          v-for="(jobopening, index) in jobopening.companyJobOpening"
+          :key="index"
+          @click="movejobopening(jobopening.id)"
+        >
           <p class="jobopening-detail-content-title">{{ jobopening.title }}</p>
-          <p class="jobopening-detail-content-period">~ {{ jobopening.finishedDate?.split('T')[0] }}</p>
+          <p class="jobopening-detail-content-period">
+            ~ {{ jobopening.finishedDate?.split("T")[0] }}
+          </p>
         </div>
       </div>
     </div>
@@ -21,40 +28,51 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
-import ConditionItem from './ConditionItem.vue'
+import { computed } from "vue";
+import { useStore } from "vuex";
+import ConditionItem from "./ConditionItem.vue";
 
 export default {
-  name: 'DetailInfo',
+  name: "DetailInfo",
   components: {
     ConditionItem,
   },
   setup() {
-    const store = useStore()
+    const store = useStore();
 
-    const jobopening = computed(() => store.getters['jobopening/selectedJobopening'])
-    const company = computed(() => jobopening.value?.companyResponse)
+    const jobopening = computed(
+      () => store.getters["jobopening/selectedJobopening"]
+    );
+    const company = computed(() => jobopening.value?.companyResponse);
 
     return {
-      jobopening, company
-    }
+      jobopening,
+      company,
+    };
   },
-  methods:{
-    movejobopening(data){
+  watch: {
+    $route: function () {
+      this.$router.go();
+    },
+  },
+  methods: {
+    movejobopening(data) {
       // console.log(data);
-      this.$router.push({ name: 'JobopeningDetail', params: { jobopeningId: data} });
-    }
-  }
-}
+      this.$router.push({
+        name: "JobopeningDetail",
+        params: { jobopeningId: data },
+      });
+    },
+  },
+};
 </script>
 
 <style scoped>
 /* same as DetailCondition.vue */
-.jobopening-box img{
-/* width: 180px; */
-height: 180px;
-margin-bottom: 20px;
+.jobopening-box img {
+  /* width: 180px; */
+  height: 180px;
+  margin-bottom: 20px;
 }
 .jobopening-box h5 {
   font-weight: bold;
