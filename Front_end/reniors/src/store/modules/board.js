@@ -42,26 +42,33 @@ export default {
   },
 
   actions: {
-    fetchArticles({ commit, getters }, categoryId) {
+    fetchArticles({ commit, getters }, {categoryId}) {
       axios({
         url: drf.board.get(),
         method: "post",
         data: JSON.stringify({
           categoryId: categoryId,
-          boardId: null,
-          name: null,
-          title: null,
+          boardId: "",
+          name: "",
+          title: "",
         }),
+        params:{
+          page: 0,
+          size: 2,
+        },
         headers: getters.authHeader,
       }).then((res) => {
         commit("SET_ARTICLES", res.data);
+      }).catch((err)=>{
+        console.log(err);
       });
     },
     fetchArticle({ commit, getters }, article_pk) {
       axios({
-        url: drf.board.detail(article_pk),
+        url: drf.board.detail(article_pk)+"page=1&size=2",
         method: "get",
         headers: getters.authHeader,
+
       })
         .then((res) => {
           commit("SET_ARTICLE", res.data);
