@@ -16,42 +16,37 @@
     </p>
     <b-modal id="noticeModal" v-model="show" title="🔔 알림" hide-footer>
       <div class="notice-list d-block">
-        <a
-          v-for="(notice, index) in notices"
-          :key="index"
-          :href="
-            'https://i7b307.p.ssafy.io/jobopening/' +
-            notice.applyResponse.jobOpeningId
-          "
-        >
-          <div
-            v-if="notice.isRead === 'READ'"
-            class="notice-item-read"
-            @click="readNotification(notice.id)"
-          >
+        <a v-for="(notice, index) in notices" :key="index">
+          <div v-if="notice.isRead === 'READ'" class="notice-item-read">
             <p class="notice-item-company">
-              {{ notice.jobOpeningResponse.companyName }}
+              <span @click="readNotification(notice)"
+                >[{{ notice.jobOpeningResponse.companyName }}]</span
+              >
+              <i @click="deleteNotification(notice.id)" class="bi bi-trash"></i>
             </p>
-            <p class="notice-item-title">
-              {{ notice.jobOpeningResponse.title }}
+            <p class="notice-item-title" @click="readNotification(notice)">
+              공고 : <span>{{ notice.jobOpeningResponse.title }}</span>
             </p>
-            <p class="notice-item-result">
-              {{ notice.applyResponse.jobOpeningProcess }}
+            <p class="notice-item-result" @click="readNotification(notice)">
+              지원 현황 :
+              <span>{{ notice.applyResponse.jobOpeningProcess }}</span
+              >으로 변경되었습니다.
             </p>
           </div>
-          <div
-            v-else
-            class="notice-item-not-read"
-            @click="readNotification(notice.id)"
-          >
+          <div v-else class="notice-item-not-read">
             <p class="notice-item-company">
-              {{ notice.jobOpeningResponse.companyName }}
+              <span @click="readNotification(notice)"
+                >[{{ notice.jobOpeningResponse.companyName }}]</span
+              >
+              <i @click="deleteNotification(notice.id)" class="bi bi-trash"></i>
             </p>
-            <p class="notice-item-title">
-              {{ notice.jobOpeningResponse.title }}
+            <p class="notice-item-title" @click="readNotification(notice)">
+              공고 : <span>{{ notice.jobOpeningResponse.title }}</span>
             </p>
-            <p class="notice-item-result">
-              {{ notice.applyResponse.jobOpeningProcess }}
+            <p class="notice-item-result" @click="readNotification(notice)">
+              지원 현황 :
+              <span>{{ notice.applyResponse.jobOpeningProcess }}</span
+              >으로 변경되었습니다.
             </p>
           </div>
 
@@ -94,9 +89,17 @@ export default {
     };
   },
   methods: {
-    ...mapActions("home", ["readNotice"]),
-    readNotification(notificationId) {
-      this.readNotice(notificationId);
+    ...mapActions("home", ["readNotice", "deleteNotice"]),
+    readNotification(notice) {
+      this.readNotice(notice.id);
+      window.location.href =
+        "https://i7b307.p.ssafy.io/jobopening/" +
+        notice.applyResponse.jobOpeningId;
+    },
+    deleteNotification(notificationId) {
+      if (confirm("삭제하시겠습니까?")) {
+        this.deleteNotice(notificationId);
+      }
     },
   },
 };
@@ -149,6 +152,10 @@ export default {
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
+.notice-item-read > p {
+  margin: 0;
+}
+
 .notice-item-not-read {
   background-color: var(--color-red-3);
   border-radius: 0.5rem;
@@ -156,6 +163,23 @@ export default {
   margin-bottom: 10px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.notice-item-not-read > p {
+  margin: 0;
+}
+
+.notice-item-company {
+  display: flex;
+  justify-content: space-between;
+  line-height: 24px;
+}
+
+.notice-item-company > .bi-trash {
+  width: 30px;
+  margin-right: 5px;
+  font-size: 20px;
+  text-align: right;
 }
 
 .notice-item p {
