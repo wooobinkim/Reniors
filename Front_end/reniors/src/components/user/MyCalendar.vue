@@ -14,7 +14,11 @@
         <p v-if="this.category" style="font-size: 16px; text-align: left; font-weight: 700; color: #37bf99; margin-bottom: 7px">{{ this.title }}</p>
         <p v-if="this.company" style="font-size: 16px; text-align: left; font-weight: 700; color: #ffb252; margin-bottom: 7px">{{ this.title }}</p>
         <p v-if="this.category" style="font-size: 14px; text-align: left; color: #121212; margin-bottom: 2px"><span style="color: #9b9b9b">지원 직무&nbsp;&nbsp;&nbsp;</span>{{this.category}}</p>
-        <p v-if="this.category" style="font-size: 14px; text-align: left; color: #121212; margin-bottom: 2px"><span style="color: #9b9b9b">면접 시간&nbsp;&nbsp;&nbsp;</span>{{(Number(this.date.slice(11,13))- 9)%24}} : {{ this.date.slice(14,16) }}</p>
+        <p v-if="this.category" style="font-size: 14px; text-align: left; color: #121212; margin-bottom: 2px"><span style="color: #9b9b9b">면접 시간&nbsp;&nbsp;&nbsp;</span>{{
+        (Number(this.date.slice(11,13))- 9)>=0?
+        (Number(this.date.slice(11,13))- 9):
+        (Number(this.date.slice(11,13))- 9+24)
+        %24}} : {{ this.date.slice(14,16) }}</p>
         <p v-if="this.company" style="font-size: 14px; text-align: left; color: #121212; margin-bottom: 2px"><span style="color: #9b9b9b">회사명&nbsp;&nbsp;&nbsp;</span>{{this.company}}</p>
         <br v-if="this.company">
         <a v-if="this.company" :href="link" style="font-size: 12px; float: right; color: #86C4F1; text-decoration: none;">공고 바로가기 <i class="bi bi-link-45deg"></i></a>
@@ -70,8 +74,8 @@ export default {
         eventClick: (event) => {
           this.showModal = true
           this.title = event.event._def.title
-          this.date = dayjs(event.event._instance.range.start).locale('ko').format("YYYY-MM-DD HH:mm:ss")
-
+          this.date = dayjs(event.event._instance.range.start).format("YYYY-MM-DD HH:mm:ss")
+          console.log(this.date);
           console.log(event.event)
           if (event.event.extendedProps.child){
             this.category = event.event.extendedProps.child
