@@ -1,8 +1,5 @@
 pipeline{
     agent any
-    options {
-        timeout(time: 5, unit: 'SECONDS') 
-    }
     environment {
        BACK_CONTAINER_NAME="reniors_back_container"
        BACK_NAME = "reniors_back"
