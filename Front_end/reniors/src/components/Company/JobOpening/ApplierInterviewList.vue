@@ -44,7 +44,11 @@ export default {
       passUser: [],
     };
   },
-  watch: {},
+  watch: {
+    passUser(){
+      console.log(this.passUser);
+    }
+  },
   async created() {
     await this.getapplylist(this.$route.params.no);
   },

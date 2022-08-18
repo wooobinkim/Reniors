@@ -44,6 +44,7 @@ pipeline{
                 sh "docker run -d --name=${FRONT_CONTAINER_NAME} -p 8081:80 ${FRONT_NAME}"
 
                 sh "docker image prune"
+                sh "y"
             }
         }
     }
