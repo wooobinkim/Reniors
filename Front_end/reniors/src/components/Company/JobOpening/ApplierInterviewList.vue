@@ -12,7 +12,7 @@
           <input
             :value="apply"
             type="checkbox"
-            v-model= "passUser"
+            v-model= "passUserInterview"
             class="apply-interview-list-checkbox"
           />
           <applier-interview-list-item :apply="apply">
@@ -41,17 +41,17 @@ export default {
   },
   data() {
     return {
-      passUser: [],
+      passUserInterview: [],
     };
   },
   watch: {
-    passUser(){
-      console.log(this.passUser);
+    passUserInterview(){
+      console.log(this.passUserInterview);
     }
   },
   async created() {
     await this.getapplylist(this.$route.params.no);
-    console.log(this.passUser);
+    console.log(this.passUserInterview);
   },
   computed: {
     ...mapGetters("company", ["jobopening", "applylist"]),
@@ -65,7 +65,7 @@ export default {
     ...mapActions("home", ["createNotice"]),
     interviewpass() {
       if (confirm("선택된 지원자의 상태를 최종 합격으로 변경하시겠습니까?")) {
-        this.passUser.forEach((data) => {
+        this.passUserInterview.forEach((data) => {
           this.updateApply({
             jobOpeningId: this.jobopeningdetail.id,
             applyId: data.id,
@@ -88,7 +88,7 @@ export default {
           )
             tmparr.push(apply);
         });
-        let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
+        let unpassUser = tmparr.filter((x) => !this.passUserInterview.includes(x));
         unpassUser.forEach((data) => {
           this.updateApply({
             jobOpeningId: this.jobopeningdetail.id,
