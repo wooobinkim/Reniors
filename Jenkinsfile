@@ -26,8 +26,8 @@ pipeline{
         stage('Build') {
             steps {
                 
-                // sh "docker rmi ${BACK_NAME}"
-                // sh "docker rmi ${FRONT_NAME}"
+                sh "docker rmi ${BACK_NAME}"
+                sh "docker rmi ${FRONT_NAME}"
 
                 sh "docker build -t ${BACK_NAME} ./Back_end/reniors/."
                 sh "docker build -t ${FRONT_NAME} ./Front_end/reniors/."
