@@ -11,7 +11,7 @@
           <input
             :value="apply"
             type="checkbox"
-            v-model="passUser"
+            v-model="pu.passUser"
             class="apply-resume-list-checkbox"
           />
           <applier-resume-list-item :apply="apply"> </applier-resume-list-item>
@@ -39,13 +39,12 @@ export default {
   },
   data() {
     return {
+      pu:{
       passUser: [],
+      }
     };
   },
   watch: {
-    passUser(){
-      console.log(this.passUser);
-    }
   },
   async created() {
     await this.getapplylist(this.$route.params.no);
@@ -62,7 +61,7 @@ export default {
     ...mapActions("home", ["createNotice"]),
     resumepass() {
       if (confirm("선택된 지원자의 상태를 서류 합격으로 변경하시겠습니까?")) {
-        this.passUser.forEach((data) => {
+        this.pu.passUser.forEach((data) => {
           this.updateApply({
             jobOpeningId: this.jobopeningdetail.id,
             applyId: data.id,
@@ -83,7 +82,7 @@ export default {
             tmparr.push(apply);
           }
         });
-        let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
+        let unpassUser = tmparr.filter((x) => !this.pu.passUser.includes(x));
         unpassUser.forEach((data) => {
           this.updateApply({
             jobOpeningId: this.jobopeningdetail.id,
