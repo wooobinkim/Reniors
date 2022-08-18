@@ -2,9 +2,9 @@
   <div>
     <NavBar :jobopeningId="jobopeningId" />
     <b-tabs
-      pills
+      content-class="mt-3" fill
       class="jobopening-detail-tab"
-      active-nav-item-class="bg-transparent"
+      active-nav-item-class="bg-transparent font-weight-bold"
     >
       <b-tab title="모집조건"><DetailCondition /></b-tab>
       <b-tab title="상세모집내용"><DetailContent /></b-tab>
@@ -52,13 +52,10 @@ export default {
 .jobopening-detail-tab {
   background-color: var(--color-red-4);
   padding-bottom: 5px;
+  margin-bottom: 104px;
 }
 
-.jobopening-detail-tab .nav {
-  display: flex;
-  justify-content: space-evenly;
-  background-color: var(--color-red-1);
-}
+
 
 .jobopening-detail-tab button {
   color: white;
@@ -70,5 +67,33 @@ export default {
 
 .jobopening-detail-tab button.active {
   font-weight: bold;
+}
+.jobopening-detail-tab .nav-tabs {
+    --bs-nav-tabs-border-width: 1px;
+    --bs-nav-tabs-border-color: #dee2e6;
+    --bs-nav-tabs-border-radius: 0.375rem;
+    --bs-nav-tabs-link-hover-border-color: #e9ecef #e9ecef #dee2e6;
+    --bs-nav-tabs-link-active-color: #FF843E;
+    --bs-nav-tabs-link-active-bg: #fff;
+    --bs-nav-tabs-link-active-border-color: #dee2e6 #dee2e6 #fff;
+    border-bottom: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
+}
+.jobopening-detail-tab .nav {
+    --bs-nav-link-padding-x: 1rem;
+    --bs-nav-link-padding-y: 0.5rem;
+    --bs-nav-link-font-weight: bold;
+    --bs-nav-link-color: black;
+    --bs-nav-link-hover-color: black;
+    --bs-nav-link-disabled-color: red;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+  justify-content: space-evenly;
+  background-color: var(--color-red-1);
+}
+.jobopening-detail-tab .nav-link {
+  color:#FF843E
 }
 </style>

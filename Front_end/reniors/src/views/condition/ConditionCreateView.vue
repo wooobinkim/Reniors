@@ -309,7 +309,7 @@ export default {
   justify-content: center;
   background-color: white;
   padding: 20px;
-  width: 100%;
+  width: 90%;
 }
 
 .condition-create-submit > button {
@@ -346,7 +346,7 @@ export default {
 
 .condition-create-type-employment {
   display: grid;
-  grid-template-columns: 120px 120px 120px;
+  grid-template-columns: 110px 110px 110px;
 }
 
 .condition-create-type-employment div {
@@ -393,7 +393,7 @@ export default {
 
 .condition-create-view .select-region-list {
   display: grid;
-  grid-template-columns: 120px 120px 120px;
+  grid-template-columns: 110px 110px 110px;
 }
 
 .condition-create-view .select-region-list > .region-item {

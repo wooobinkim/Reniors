@@ -20,7 +20,9 @@
         <p style="font-weight: 700">{{ currentUser.name }}</p>
         <p style="font-size: 13px; color: #636363">
           {{ currentUser.gender == "M" ? "남자" : "여자" }} |
-          {{ currentUser.birth.slice(0, 10) }}
+          <span v-if="currentUser.birth">{{
+            currentUser.birth.slice(0, 10)
+          }}</span>
         </p>
         <p style="font-size: 13px; color: #636363">
           {{ currentUser.lastEdu.replace("_", " ") }}

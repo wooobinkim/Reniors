@@ -69,11 +69,9 @@ export default {
     RECOMMENDJOBOPENINGS: (state, recommendJobopenings) => {
       state.recommendJobopenings = recommendJobopenings;
       if (!recommendJobopenings) {
-        console.log("폴스");
         state.isrecommend = false;
         state.isrecommendheight = 76;
       } else {
-        console.log("트루");
         state.isrecommend = true;
         state.isrecommendheight = 380;
       }
@@ -92,18 +90,12 @@ export default {
           date: apply.interviewDate,
           child: apply.jobChildCategoryName,
         };
-
-        // object.replace (/"/g,'')
-
-        // const json = JSON.stringify(object)
-        // const unquoted = object.replace(/"([^"]+)":/g, '$1:')
         state.interview.push(object);
       });
     },
     BOOKMARKSDATE: (state, bookmarks) => {
       state.bookmarksdate = [];
       bookmarks.forEach((bookmark) => {
-        console.log(bookmark);
         const object1 = {
           title: bookmark.jobOpeningResponse.title,
           date: bookmark.jobOpeningResponse.finishedDate,
@@ -112,7 +104,6 @@ export default {
             "https://i7b307.p.ssafy.io/jobopening/" +
             bookmark.jobOpeningResponse.id,
         };
-        console.log(object1);
 
         state.bookmarksdate.push(object1);
       });
@@ -121,7 +112,6 @@ export default {
     SET_CURR_PAGE: (state, currPage) => (state.currPage = currPage),
   },
   actions: {
-    // all jobopenings
     async clearJobopenings({ commit }) {
       await commit("CLEAR_JOBOPENINGS");
     },
@@ -134,7 +124,7 @@ export default {
         method: "get",
         params: {
           page: request.page,
-          size: 2,
+          size: 10,
         },
       }).then((res) => {
         commit("SET_IS_LAST", res.data.last);
@@ -149,6 +139,8 @@ export default {
         data: data,
       })
         .then(({ data }) => {
+          commit("CLEAR_JOBOPENINGS");
+          commit("SET_IS_LAST", true);
           commit("JOBOPENINGS", data.content);
         })
         .catch((error) => {
@@ -156,7 +148,6 @@ export default {
         });
     },
 
-    //추천조건으로 공고 가져오기
     async clearRecommend({ commit }) {
       commit("RECOMMENDCLEAR");
     },
@@ -188,7 +179,6 @@ export default {
         });
     },
 
-    //검색조건으로 공고 가져오기
     async fetchJobOpeningCondition({ commit, getters }, data) {
       await axios({
         url: `https://i7b307.p.ssafy.io/api/jobopening/search/${data}`,
@@ -203,14 +193,12 @@ export default {
         });
     },
 
-    // applied jobopenings
     async fetchApplied({ commit }) {
       commit("JOBOPENINGS", []);
       const response = await http.get("/jobopening/apply");
       commit("JOBOPENINGS", response.data);
     },
 
-    // bookmarked jobopenings
     async fetchBookmarked({ commit }) {
       commit("JOBOPENINGS", []);
       const response = await http.get("/jobopening/bookmark");

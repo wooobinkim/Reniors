@@ -2,6 +2,7 @@ package com.common.reniors.service.jobOpening;
 
 import com.common.reniors.common.exception.NotFoundException;
 import com.common.reniors.domain.entity.*;
+import com.common.reniors.domain.entity.Type.IsFinish;
 import com.common.reniors.domain.entity.category.Gugun;
 import com.common.reniors.domain.entity.category.JobChildCategory;
 import com.common.reniors.domain.entity.category.JobParentCategory;
@@ -174,10 +175,16 @@ public class JobOpeningService {
     //공고 전체조회
     public Page<JobOpeningResponse> getJobOpening(Pageable pageable){
         Page<JobOpening> jobOpeningList = jobOpeningRepository.findAll(pageable);
+        List<JobOpeningResponse> jobOpeningResponses = new ArrayList<>();
 
-        List<JobOpeningResponse> jobOpeningResponses = jobOpeningList.stream().map(j->JobOpeningResponse.response(
-                j
-        )).collect(Collectors.toList());
+        for (JobOpening jobOpening : jobOpeningList) {
+            if(jobOpening.getIsFinish().equals(IsFinish.F)){
+                jobOpeningResponses.add(JobOpeningResponse.response(jobOpening));
+            }
+        }
+//        List<JobOpeningResponse> jobOpeningResponses = jobOpeningList.stream().map(j->JobOpeningResponse.response(
+//                j
+//        )).collect(Collectors.toList());
 
         long total = jobOpeningRepository.findAll().size();
 
@@ -197,6 +204,7 @@ public class JobOpeningService {
                         nameSearchConditionRequest.getKey().equals("company")?
                                 j.company.name.contains(nameSearchConditionRequest.getWord()):
                                 j.title.contains(nameSearchConditionRequest.getWord())
+                                        .and(j.isFinish.eq(IsFinish.F))
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -217,15 +225,17 @@ public class JobOpeningService {
     //공고 전체조회(조회수 탑10)
     public List<JobOpeningResponse> getJobOpeningViewDesc(){
         List<JobOpening> jobOpeningList = jobOpeningRepository.findTop10ByOrderByViewsDesc();
+        List<JobOpeningResponse> jobOpeningResponses = new ArrayList<>();
 
+        for (JobOpening jobOpening : jobOpeningList) {
+            if(jobOpening.getIsFinish().equals(IsFinish.F)){
+                jobOpeningResponses.add(JobOpeningResponse.response(jobOpening));
+            }
+        }
 
-        List<JobOpeningResponse> jobOpeningResponses = jobOpeningList.stream().map(j->JobOpeningResponse.response(
-                j
-        )).collect(Collectors.toList());
-
-//        long total = jobOpeningResponses.size();
-
-//        Page jobOpeningDtoPage = new PageImpl<>(jobOpeningResponses,pageable,total);
+//        List<JobOpeningResponse> jobOpeningResponses = jobOpeningList.stream().map(j->JobOpeningResponse.response(
+//                j
+//        )).collect(Collectors.toList());
 
         return jobOpeningResponses;
     }
@@ -266,7 +276,7 @@ public class JobOpeningService {
 
         List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
                 .where(
-                        booleanBuilder
+                        j.isFinish.eq(IsFinish.F).and(booleanBuilder)
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -313,7 +323,7 @@ public class JobOpeningService {
 
         List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
                 .where(
-                        booleanBuilder
+                        j.isFinish.eq(IsFinish.F).and(booleanBuilder)
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -354,7 +364,7 @@ public class JobOpeningService {
 
         List<JobOpening> jobOpeningList = jpaQueryFactory.selectFrom(j)
                 .where(
-                        booleanBuilder
+                        j.isFinish.eq(IsFinish.F).and(booleanBuilder)
                 )
                 .offset(0)
                 .limit(10)

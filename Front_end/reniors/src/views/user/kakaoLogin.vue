@@ -1,19 +1,19 @@
 <template>
   <div class="container">
     <div class="kakaoform">
+      <br>
       <img
-        style="width: 128px; max-height: 170px"
+        style="width: 60%; max-height: 90px; margin: 10px"
         alt="logo"
-        src="@/assets/logo.png"
+        src="@/assets/logo_cut.png"
       />
-      <br />
       <br />
       <hr />
       <div>
         <p style="font-size: 14px">
           리니어즈 이용을 위한 추가정보를 입력해주세요!
         </p>
-        <br />
+
         <p class="forminfo">이름<span class="required">&nbsp;&nbsp;*</span></p>
         <b-form-input
           class="mb-3 user-form-control"
@@ -66,8 +66,14 @@
             :key="lastedu"
           >
             {{ lastedu.text }}
-          </option></b-form-select
-        >
+          </option></b-form-select>
+        <p class="forminfo">경력년수<span class="required">&nbsp;&nbsp;*</span></p>
+        <b-form-input
+          class="mb-3 user-form-control"
+          v-model="forms.totalCareer"
+          type="number"
+          placeholder="경력년수를 입력해주세요."
+        ></b-form-input>
         <p class="forminfo">생년월일</p>
         <b-form-input
           class="mb-3 user-form-control"
@@ -280,5 +286,9 @@ p {
 .user-form-control:focus {
   border-color: var(--color-red-2) !important;
   box-shadow: inset 0 1px 1px var(--color-red-1), 0 0 8px var(--color-red-2) !important;
+}
+
+.user-form-control{
+  color: #443731;
 }
 </style>

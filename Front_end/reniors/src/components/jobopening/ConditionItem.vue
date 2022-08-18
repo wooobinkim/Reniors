@@ -18,15 +18,16 @@ export default {
 <style scoped>
 .condition-item {
   display: grid;
-  grid-template-columns: 120px 200px;
+  grid-template-columns: 30% 70%;
   text-align: start;
 }
 
 .condition-item-left {
-  color: var(--color-black-2)
+  color: var(--color-black-2);
+  margin-bottom: 8px;
 }
 
-.condition-item-right {
-  font-weight: bold;
+.condition-item-value {
+  margin-bottom: 8px;
 }
 </style>

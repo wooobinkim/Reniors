@@ -23,13 +23,13 @@
         <div class="condition-item-preview">
           <div class="condition-item-region">
             <font-awesome-icon icon="fa-solid fa-location-dot" />
-            <template v-if="condition.hopeAreaResponseList?.length == 0">
+            <template v-if="condition.hopeAreaResponseList.length == 0">
               <p>맞춤지역을 설정해보세요.</p>
             </template>
             <template v-else>
               <p>
-                {{ condition.hopeAreaResponseList[0]?.gugun }} 등
-                {{ condition.hopeAreaResponseList?.length }}지역
+                {{ condition.hopeAreaResponseList[0].gugun }} 등
+                {{ condition.hopeAreaResponseList.length }}지역
               </p>
             </template>
           </div>

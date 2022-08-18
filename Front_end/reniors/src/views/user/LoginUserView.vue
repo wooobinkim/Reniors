@@ -37,7 +37,7 @@
       <p class="line">또는</p>
       <div style="margin-top: 10px; margin-bottom: 25px">
         <img
-          src="@/assets/kakaologin.png"
+          src="@/assets/kakaologin.svg"
           style="width: 80%"
           alt="kakao"
           @click="kakaologin()"
