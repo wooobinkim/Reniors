@@ -99,6 +99,7 @@ export default {
           commit("SET_ANSWER", res.data);
         })
         .catch((err) => {
+          commit("SET_ANSWER", "");
           console.log(err);
         });
     },

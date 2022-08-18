@@ -78,6 +78,9 @@ export default {
   margin-top: 10px;
   margin-left: 12px;
 }
+.jobopening-list{
+  padding-bottom: 200px;
+}
 /* .jobopening-list > div {
   display: grid;
   grid-template-columns: 170px 170px;
@@ -91,12 +94,16 @@ export default {
 } */
 .more-btn {
   margin-top: 30px;
-  margin-bottom: 200px;
   border-radius: 5px;
   border: none;
   padding: 8px 40px;
   background-color: var(--color-red-2);
   color: white;
   font-weight: bold;
+}
+@media(max-width:760px){
+  .jobopening-list{
+    padding-bottom: 100px;
+  }
 }
 </style>

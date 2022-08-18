@@ -8,7 +8,7 @@
           class="form-control content"
           id="answer"
           placeholder="내용을 입력해주세요."
-          v-model="this.answer.answer"
+          v-model="answer.answer"
         ></textarea>
       </div>
       <div class="submit">
@@ -34,6 +34,7 @@ export default {
   setup() {},
   async created() {
     await this.fetchAnswer(this.$route.params.question_id);
+    console.log(this.answer);
   },
   mounted() {},
   unmounted() {},

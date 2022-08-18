@@ -30,12 +30,9 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
                                   ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest,
                                   WebDataBinderFactory binderFactory) throws Exception {
-        System.out.println("LoginUserArgumentResolver - resolveArgument");
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            System.out.println("authentication.getPrincipal() = " + authentication.getPrincipal());
             if(Company.class.equals(parameter.getParameterType())){
-                System.out.println("company");
                 return (Company) authentication.getPrincipal();
             }
             return (User) authentication.getPrincipal();

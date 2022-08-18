@@ -120,9 +120,17 @@ export const user = {
         });
     },
 
-    registUser(formData) {
-      multipart
-        .post(`/users/regist`, formData)
+    registUser({getters}, formData) {
+      console.log(formData);
+        axios({
+          url: `https://i7b307.p.ssafy.io/api/users/regist`,
+          method: "post",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: getters.authHeader,
+          },
+          data: formData,
+        })
         .then(() => {
           router.push({ name: "Login" });
         })

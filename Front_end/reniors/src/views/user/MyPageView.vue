@@ -118,7 +118,7 @@ export default {
     font-weight: 900;
   }
   .person {
-    width: 60px;
+    width: 80px;
     height: 80px;
     border-radius: 500px;
     float: left;

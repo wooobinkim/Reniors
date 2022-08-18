@@ -56,6 +56,9 @@ export default {
   font-weight: bold;
   margin: 20px;
 }
+.search-bar{
+  width: 100vw;
+}
 
 .home-search {
   display: flex;
@@ -103,6 +106,9 @@ select option[value=""][disabled] {
   }
   .home-search-text {
     width: 40vh;
+  }
+  .search-bar{
+    width: 700px;
   }
 }
 
