@@ -29,9 +29,7 @@ export default {
   },
   async created() {
     if (this.checklist.includes(this.selectedQ[this.idx])) {
-      console.log("selectedQ : " + this.selectedQ[this.idx]);
       await this.fetchAnswer(this.selectedQ[this.idx]);
-      console.log(this.answer);
     }
   },
 

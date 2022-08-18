@@ -1,7 +1,7 @@
 <template>
   <div style="width: 360px" class="prefer-setting-box">
     <header style="margin-bottom: 10px">
-      <br>
+      <br />
       <img
         style="width: 60%; max-height: 90px; margin: 10px"
         src="@/assets/logo_cut.png"
@@ -39,14 +39,13 @@
           alt="order"
         />
       </div>
-    </header >
+    </header>
 
     <div style="width: 312px; margin: auto">
       <div v-show="page === 1">
         <img class="num" src="@/assets/bigone.svg" alt="one" />
         <p class="text1">전문분야 및 세부업무 선택</p>
         <p class="text2">전문분야를 선택해주세요!</p>
-        <!-- <p class="text3">세부업무는 꼭 선택 안 해주셔도 됩니다:)</p> -->
         <br />
         <div class="prefer-setting-select">
           <select

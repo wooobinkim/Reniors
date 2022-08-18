@@ -1,5 +1,5 @@
 <template>
-  <video :class="{ smallVideo: isAnswer }" autoplay />
+  <video :class="{ smallVideo: isAnswer }" autoplay></video>
 </template>
 
 <script>
@@ -10,11 +10,7 @@ export default {
     streamManager: Object,
     isAnswer: Boolean,
   },
-  watch: {
-    isAnswer: function (data) {
-      console.log(data);
-    },
-  },
+  watch: {},
   mounted() {
     this.streamManager.addVideoElement(this.$el);
   },

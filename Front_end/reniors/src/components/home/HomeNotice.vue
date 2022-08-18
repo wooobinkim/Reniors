@@ -8,7 +8,7 @@
         >
         있어요!
       </p>
-      <HomeCalendarList :login="login"/>
+      <HomeCalendarList :login="login" />
     </div>
     <p v-else>
       지금 <router-link to="/login" class="now-login-btn">로그인</router-link>을
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import HomeCalendarList from "./HomeCalendarList.vue";
 
 export default {
@@ -80,15 +80,15 @@ export default {
   props: {
     login: Boolean,
   },
-  watch:{
-    async login(){
-      if(this.login){
-        await this.fetchNotices()
+  watch: {
+    async login() {
+      if (this.login) {
+        await this.fetchNotices();
       }
     },
   },
-  computed:{
-    ...mapGetters("home", ["noticeNotReaded","notices"]),
+  computed: {
+    ...mapGetters("home", ["noticeNotReaded", "notices"]),
   },
   methods: {
     ...mapActions("home", ["readNotice", "deleteNotice", "fetchNotices"]),
@@ -104,12 +104,11 @@ export default {
       }
     },
   },
-  async created(){
-    if(this.login){
-      console.log("login true");
-      await this.fetchNotices()
+  async created() {
+    if (this.login) {
+      await this.fetchNotices();
     }
-  }
+  },
 };
 </script>
 

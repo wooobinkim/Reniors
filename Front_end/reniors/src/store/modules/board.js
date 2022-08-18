@@ -92,7 +92,7 @@ export default {
 
     async createArticle(
       { getters, dispatch },
-      { categoryId, contents, title }
+      { categoryId, contents, title },
     ) {
       await axios({
         url: drf.board.new(),
@@ -116,7 +116,7 @@ export default {
     },
     updateArticle(
       { getters, dispatch, commit },
-      { categoryId, article_pk, title, contents }
+      { categoryId, article_pk, title, contents },
     ) {
       axios({
         url: drf.board.detail(article_pk),
@@ -169,7 +169,7 @@ export default {
 
     createComment(
       { getters, commit, dispatch },
-      { categoryId, boardId, content }
+      { categoryId, boardId, content },
     ) {
       axios({
         url: drf.board.comment(boardId),
@@ -190,7 +190,7 @@ export default {
     },
     updateComment(
       { getters, dispatch },
-      { categoryId, boardId, commentId, contents }
+      { categoryId, boardId, commentId, contents },
     ) {
       axios({
         url: drf.board.commentEdit(boardId, commentId),
@@ -209,7 +209,7 @@ export default {
     },
     deleteComment(
       { commit, getters, dispatch },
-      { categoryId, boardId, commentId }
+      { categoryId, boardId, commentId },
     ) {
       if (confirm("정말 삭제하시겠습니까?")) {
         axios({
@@ -228,8 +228,6 @@ export default {
       }
     },
 
-    // category 분류할 때 관심직무 불러오려고
-    // recommendcondition에서 만들면 지울거 ㅇㅇ
     fetchInterest({ commit, getters }) {
       axios({
         url: "https://i7b307.p.ssafy.io/api/recommendcondition",

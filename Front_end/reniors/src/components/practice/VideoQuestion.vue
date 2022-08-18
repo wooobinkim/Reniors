@@ -22,7 +22,6 @@
             {{ selected.indexOf(id) + 1 }}
           </p>
         </div>
-        <!-- <i  class="bi bi-check-circle-fill" ></i> -->
       </div>
     </div>
   </div>
@@ -45,7 +44,6 @@ export default {
     ...mapActions(["pushSelected"]),
     onCheck(id) {
       this.pushSelected(id);
-      console.log(this.selected);
     },
   },
   computed: {

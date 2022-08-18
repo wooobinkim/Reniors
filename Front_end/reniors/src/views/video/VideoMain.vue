@@ -155,8 +155,6 @@ export default {
   created() {
     this.fetchRooms();
     if (this.rooms.length >= 1) {
-      console.log("ifif");
-      console.log(this.rooms);
       this.title = this.rooms[0].companyName;
       this.sub = this.rooms[0].jobOpeningName;
       this.interviewId = this.rooms[0].sessionId;

@@ -36,28 +36,27 @@ import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "HomeCalendarList",
-  props:{
+  props: {
     login: Boolean,
   },
-  async created(){
-    if(this.login){
+  async created() {
+    if (this.login) {
       await this.fetchBookmark();
     }
-    console.log(this.bookmarks);
   },
-  watch:{
-    async login(){
-      if(this.login){
-        await this.fetchBookmark()
+  watch: {
+    async login() {
+      if (this.login) {
+        await this.fetchBookmark();
       }
     },
   },
-  computed:{
-    ...mapGetters("jobopening",["bookmarks"])
+  computed: {
+    ...mapGetters("jobopening", ["bookmarks"]),
   },
-  methods:{
-    ...mapActions("jobopening",["fetchBookmark"])
-  }
+  methods: {
+    ...mapActions("jobopening", ["fetchBookmark"]),
+  },
 };
 </script>
 
