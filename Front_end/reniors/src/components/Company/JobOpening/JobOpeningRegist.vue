@@ -64,7 +64,7 @@
     <p class="sub-title">상세 채용 조건을 등록해주세요.</p>
     <div>
       <label class="company-form-label ">직무대분류</label>
-      <select required v-model="jobparent" class="mb-3 company-form-control">
+      <select required v-model="category.jobparent" class="mb-3 company-form-control">
         <option
           v-for="jobparent in jobparents"
           :value="jobparent.id"
@@ -123,7 +123,7 @@
 
     <div>
       <label class="company-form-label">시도</label>
-      <select v-model="sido" class="mb-3 company-form-control">
+      <select v-model="category.sido" class="mb-3 company-form-control">
         <option v-for="sido in sidos" :value="sido.id" :key="sido">
           {{ sido.name }}
         </option>
@@ -194,8 +194,10 @@ export default {
   },
   data() {
     return {
+      category: {
       sido: null,
       jobparent: null,
+      },
       jobopening: {
         contents: null,
         contentsImgName: null,
@@ -217,10 +219,10 @@ export default {
     };
   },
   watch: {
-    sido: function (data) {
+    'category.sido': function (data) {
       this.getGugun(data);
     },
-    jobparent: function (data) {
+    'category.jobparent': function (data) {
       this.getJobChild(data);
     },
   },
