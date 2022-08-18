@@ -43,7 +43,8 @@ export default {
     SET_CHECKLIST: (state, checklist) => (state.checklist = checklist),
     SET_RECORDS: (state, records) => (state.records = records),
     CLEAR_SELECTED: (state, data) => {
-      state.selected = data},
+      state.selected = data;
+    },
     SET_SELECTED: (state, selected) => {
       state.selected = selected;
     },
@@ -54,8 +55,8 @@ export default {
   },
 
   actions: {
-    clearSelected({commit}){
-      commit("CLEAR_SELECTED", [])
+    clearSelected({ commit }) {
+      commit("CLEAR_SELECTED", []);
     },
     fetchQuestions({ getters, commit }) {
       axios({
@@ -139,9 +140,8 @@ export default {
       }
     },
 
-    async saveRecording({ getters, dispatch}, { fileName, URL }) {
-      console.log("1.비디오를 서버에 저장하는 요청");
-      let reId = ''
+    async saveRecording({ getters, dispatch }, { fileName, URL }) {
+      let reId = "";
       axios({
         url: "https://i7b307.p.ssafy.io/api/recording",
         method: "post",
@@ -151,18 +151,14 @@ export default {
         }),
         headers: getters.authHeader,
       })
-      .then((res)=>{
-        reId = res.data.recordingId
-        return reId
-      })
+        .then((res) => {
+          reId = res.data.recordingId;
+          return reId;
+        })
         .then(async (res) => {
-          await dispatch("fetchvitoId", { videoUrl: URL, recordingId:res });
+          await dispatch("fetchvitoId", { videoUrl: URL, recordingId: res });
           return res;
         })
-        // .then((res) =>{
-        //   dispatch("putVitoId", res)
-
-        // }
         .then(async (res) => {
           await dispatch("putVitoId", res);
         })
@@ -187,8 +183,8 @@ export default {
         url: "https://openapi.vito.ai/v1/authenticate",
         method: "post",
         data: qs.stringify({
-          client_id: "3-_Raz62TK8EPV5A6-u2",
-          client_secret: "aKaPD8V9F2TS3rCghHQgDodSsqVgWbWxPREBvd1R",
+          client_id: process.env.VUE_APP_VITO_CLIENT_ID,
+          client_secret: process.env.VUE_APP_VITO_CLIENT_SECRET,
         }),
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -200,7 +196,7 @@ export default {
         .catch((err) => console.error(err.response));
     },
 
-    async fetchvitoId({ commit, state, getters}, {videoUrl}) {
+    async fetchvitoId({ commit, state, getters }, { videoUrl }) {
       await axios({
         url: "https://i7b307.p.ssafy.io/api/vito/videoId",
         method: "post",
@@ -210,7 +206,6 @@ export default {
         .then(async (res) => {
           await commit("SET_VITOID", res.data);
         })
-        // .then(await dispatch("putVitoId", recordingId))
         .catch((err) => console.error(err));
     },
 
@@ -241,7 +236,7 @@ export default {
       });
     },
 
-    async putVitoId({ getters, state}, recordingId) {
+    async putVitoId({ getters, state }, recordingId) {
       await axios({
         url:
           "https://i7b307.p.ssafy.io/api/recording/" +
@@ -250,11 +245,9 @@ export default {
         method: "put",
         headers: getters.authHeader,
         data: JSON.stringify({
-          videoId:state.vitoId.id,
+          videoId: state.vitoId.id,
         }),
-      }).then(
-        // console.log("put", state.vitoId)
-        );
+      }).then();
     },
   },
 };
