@@ -13,22 +13,27 @@
         v-model="jobopeningdetail.title"
       />
     </div>
-    <div class="mb-3 jobOpening-datepicker ">
+    <div class="mb-3 jobOpening-datepicker">
       <label class="company-form-label">채용 종료일시</label>
-      <datepicker 
-      style="
-      width: 100%; 
-      border-radius: 5px;
-      border: 1px solid black;
-      border-color: var(--color-black-3);
-      padding: 5px;
-      padding-left: 10px;
-      box-shadow: none;"
-      v-model="jobopeningdetail.finishedDate" format="YYYY-MM-DD" />
+      <datepicker
+        style="
+          width: 100%;
+          border-radius: 5px;
+          border: 1px solid black;
+          border-color: var(--color-black-3);
+          padding: 5px;
+          padding-left: 10px;
+          box-shadow: none;
+        "
+        v-model="jobopeningdetail.finishedDate"
+        format="YYYY-MM-DD"
+      />
     </div>
 
     <div class="mb-3 mt-3">
-      <label for="numberPeople" class="form-label company-form-label">채용 인원</label>
+      <label for="numberPeople" class="form-label company-form-label"
+        >채용 인원</label
+      >
       <input
         type="number"
         class="form-control company-form-control"
@@ -60,11 +65,15 @@
         @change="changeImg()"
       />
     </div>
-    <hr>
+    <hr />
     <p class="sub-title">상세 채용 조건을 등록해주세요.</p>
     <div>
-      <label class="company-form-label ">직무대분류</label>
-      <select required v-model="category.jobparent" class="mb-3 company-form-control">
+      <label class="company-form-label">직무대분류</label>
+      <select
+        required
+        v-model="category.jobparent"
+        class="mb-3 company-form-control"
+      >
         <option
           v-for="jobparent in jobparents"
           :value="jobparent.id"
@@ -74,8 +83,12 @@
         </option>
       </select>
 
-      <label class="company-form-label">직무소분류</label> 
-      <select required v-model="jobopeningdetail.jobChildCategoryId" class="company-form-control">
+      <label class="company-form-label">직무소분류</label>
+      <select
+        required
+        v-model="jobopeningdetail.jobChildCategoryId"
+        class="company-form-control"
+      >
         <option
           v-for="jobchild in jobchilds"
           :value="jobchild.id"
@@ -86,7 +99,9 @@
       </select>
     </div>
     <div class="mb-3 mt-3">
-      <label for="jobPosition" class="form-label company-form-label">직책</label>
+      <label for="jobPosition" class="form-label company-form-label"
+        >직책</label
+      >
       <input
         type="text"
         class="form-control company-form-control"
@@ -110,7 +125,9 @@
     </div>
 
     <div class="mb-3 mt-3">
-      <label for="workingDay" class="form-label company-form-label">근무횟수</label>
+      <label for="workingDay" class="form-label company-form-label"
+        >근무횟수</label
+      >
       <input
         type="text"
         class="form-control company-form-control"
@@ -130,7 +147,10 @@
       </select>
 
       <label class="company-form-label">구군</label>
-      <select v-model="jobopeningdetail.gugunId" class="mb-3 company-form-control">
+      <select
+        v-model="jobopeningdetail.gugunId"
+        class="mb-3 company-form-control"
+      >
         <option v-for="gugun in guguns" :value="gugun.id" :key="gugun">
           {{ gugun.name }}
         </option>
@@ -162,8 +182,11 @@
     </div>
 
     <div class="mb-3 mt-3">
-      <label class="company-form-label ">근무형태</label>
-      <select v-model="jobopeningdetail.typeEmployment" class="company-form-control">
+      <label class="company-form-label">근무형태</label>
+      <select
+        v-model="jobopeningdetail.typeEmployment"
+        class="company-form-control"
+      >
         <option
           v-for="typeemployment in typeemployments"
           :value="typeemployment.value"
@@ -174,17 +197,16 @@
       </select>
     </div>
 
-    <button color="blue" class="ml-3" @click="update">채용 공고 수정하기</button>
+    <button color="blue" class="ml-3" @click="update">
+      채용 공고 수정하기
+    </button>
     <!-- </form> -->
   </div>
 </template>
 
 <script setup>
 import Datepicker from "vue3-datepicker";
-// import { ref } from "vue";
 import { mapActions, mapGetters } from "vuex";
-// import moment from "moment";
-// const picked = ref(new Date())
 </script>
 
 <script>
@@ -213,7 +235,7 @@ export default {
         typeEmployment: null,
         workingDay: 0,
       },
-      companyImg:"",
+      companyImg: "",
     };
   },
   computed: {
@@ -231,16 +253,14 @@ export default {
     selectedJobopening: function (data) {
       data.createdDate = new Date(data.createdDate);
       data.finishedDate = new Date(data.finishedDate);
-      console.log(data);
       this.jobopeningdetail = data;
-      console.log(this.jobopeningdetail);
       this.sido = data.sidoId;
       this.jobparent = data.jobParentCategory;
     },
-    'category.sido': function (data) {
+    "category.sido": function (data) {
       this.getGugun(data);
     },
-    'category.jobparent': function (data) {
+    "category.jobparent": function (data) {
       this.getJobChild(data);
     },
   },
@@ -257,23 +277,22 @@ export default {
       "getJobChild",
     ]),
     ...mapActions("company", ["updateJobOpening"]),
-    ...mapActions("jobopening",["selectJobopening"]),
+    ...mapActions("jobopening", ["selectJobopening"]),
     changeImg() {
       this.companyImg = this.$refs.img.files;
-      // console.log(this.companyImg);
     },
     update() {
       const formData = new FormData();
 
-       formData.append("img", this.companyImg[0]);
-        formData.append(
-          "data",
-          new Blob([JSON.stringify(this.jobopeningdetail)], {
-            type: "application/json",
-          }),
-        );
+      formData.append("img", this.companyImg[0]);
+      formData.append(
+        "data",
+        new Blob([JSON.stringify(this.jobopeningdetail)], {
+          type: "application/json",
+        }),
+      );
 
-    let data = {
+      let data = {
         no: this.$route.params.no,
         formData: formData,
       };
@@ -293,27 +312,27 @@ export default {
   width: 100%;
   text-align: left;
 }
-.company-form-control{
-  width: 100% ;
+.company-form-control {
+  width: 100%;
   border-radius: 5px;
   border-color: var(--color-black-3);
 }
-select{
+select {
   padding: 10px;
 }
 .company-form-control:focus {
   border-color: var(--color-green-2) !important;
   box-shadow: inset 0 1px 1px var(--color-green-1), 0 0 8px var(--color-green-2) !important;
 }
-.company-jobOpening-regist-box{
+.company-jobOpening-regist-box {
   margin-bottom: 150px;
   padding: 10px;
   width: 100%;
 }
-textarea{
+textarea {
   resize: none;
 }
-.sub-title{
+.sub-title {
   width: 100%;
   text-align: left;
   font-weight: bold;
