@@ -502,9 +502,9 @@ export default {
   display: flex;
   align-content: center;
   position: fixed;
-  top: 400px;
+  top: 380px;
   width: 328px;
-  height: 35px;
+  height: 70px;
   margin: auto auto;
   background-color: white;
   opacity: 0.8;
@@ -524,9 +524,9 @@ export default {
   display: flex;
   align-content: center;
   position: fixed;
-  bottom: 210px;
+  bottom: 180px;
   width: 328px;
-  height: 35px;
+  height: 70px;
   margin: auto auto;
   background-color: white;
   opacity: 0.8;
