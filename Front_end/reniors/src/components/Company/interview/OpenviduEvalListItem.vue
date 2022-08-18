@@ -81,6 +81,7 @@ label {
   height: 15vh;
   padding: 8px 10px 8px 10px;
   margin: 0 0 4px 0;
+  resize: none;
 }
 .formGroup {
   margin: 8px 4px 0 4px;

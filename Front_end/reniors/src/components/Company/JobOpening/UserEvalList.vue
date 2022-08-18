@@ -35,5 +35,6 @@ export default {
 <style scoped>
 .total{
   margin-top: 64px;
+  margin-bottom: 56px;
 }
 </style>
