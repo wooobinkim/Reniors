@@ -39,13 +39,13 @@ export default {
     bookmarkId: (state) =>
       state.bookmarks.find(
         (bookmark) =>
-          bookmark.jobOpeningResponse.id === state.selectedJobopening.id
+          bookmark.jobOpeningResponse.id === state.selectedJobopening.id,
       )?.id,
     applies: (state) => state.applies,
     isApply: (state) => {
       if (
         state.applies.find(
-          (apply) => apply.jobOpeningId === state.selectedJobopening.id
+          (apply) => apply.jobOpeningId === state.selectedJobopening.id,
         ) === undefined
       )
         return false;
@@ -129,7 +129,6 @@ export default {
       commit("SET_CURR_PAGE", page);
     },
     async fetchJobopenings({ commit }, request) {
-      console.log(request.page);
       await axios({
         url: drf.jobopening.get(),
         method: "get",
@@ -138,7 +137,6 @@ export default {
           size: 2,
         },
       }).then((res) => {
-        console.log(res);
         commit("SET_IS_LAST", res.data.last);
         commit("JOBOPENINGS", res.data.content);
       });
@@ -151,7 +149,6 @@ export default {
         data: data,
       })
         .then(({ data }) => {
-          console.log(data);
           commit("JOBOPENINGS", data.content);
         })
         .catch((error) => {
@@ -210,7 +207,6 @@ export default {
     async fetchApplied({ commit }) {
       commit("JOBOPENINGS", []);
       const response = await http.get("/jobopening/apply");
-      console.log(response);
       commit("JOBOPENINGS", response.data);
     },
 
@@ -221,39 +217,32 @@ export default {
       commit("JOBOPENINGS", response.data);
     },
     async selectJobopening({ commit }, id) {
-      console.log("select jobopening");
       const response = await axios.get(drf.jobopening.detail(id));
       const data = response.data;
-      console.log(data);
       commit("SELECTJOB", data);
     },
     async fetchApply({ commit }) {
       const response = await http.get("/jobopening/apply");
-      console.log(response);
       commit("APPLIES", response.data);
       commit("INTERVIEW", response.data);
     },
     async apply({ getters }, jobopeningId) {
-      const response = await http.post(`/jobopening/${jobopeningId}/apply`);
+      await http.post(`/jobopening/${jobopeningId}/apply`);
       console.log(getters.authHeader);
-      console.log(response);
       alert("지원 성공!");
       router.go(0);
     },
     async fetchBookmark({ commit }) {
       const response = await http.get("/jobopening/bookmark");
-      console.log(response);
       commit("BOOKMARKS", response.data);
       commit("BOOKMARKSDATE", response.data);
     },
     async addBookmark({ dispatch }, id) {
-      const response = await http.post(`/jobopening/bookmark/${id}`);
-      console.log(response);
+      await http.post(`/jobopening/bookmark/${id}`);
       dispatch("fetchBookmark");
     },
     async deleteBookmark({ dispatch }, id) {
-      const response = await http.delete(`/jobopening/bookmark/${id}`);
-      console.log(response);
+      await http.delete(`/jobopening/bookmark/${id}`);
       dispatch("fetchBookmark");
     },
   },

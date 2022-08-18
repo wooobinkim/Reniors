@@ -69,21 +69,21 @@ export default {
   methods: {
     ...mapActions("company", ["updateApply", "registRoom"]),
     updateapply() {
-      this.applyinfo.jobOpeningProcess = "면접";
-      this.applyinfo.sessionId = "InterviewSession" + this.jobopening.id;
-      let data = {
-        jobOpeningId: this.jobopening.id,
-        applyId: this.apply.id,
-        apply: this.applyinfo,
-      };
-      console.log(data);
-      this.updateApply(data);
+      if (confirm("면접 일정을 수정하시겠습니까?")) {
+        this.applyinfo.jobOpeningProcess = "면접";
+        this.applyinfo.sessionId = "InterviewSession" + this.jobopening.id;
+        let data = {
+          jobOpeningId: this.jobopening.id,
+          applyId: this.apply.id,
+          apply: this.applyinfo,
+        };
+        this.updateApply(data);
+      }
     },
     interviewflag() {
       this.flag = !this.flag;
     },
     resumeview() {
-      console.log(this.apply.userId);
       this.$router.push({
         name: "resumeview",
         params: { no: this.apply.userId },

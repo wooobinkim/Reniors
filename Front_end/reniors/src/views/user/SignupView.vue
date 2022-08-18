@@ -36,7 +36,6 @@
 
     <div>
       <br />
-      <!-- <form @submit.prevent="signup(user)" class="signupform"> -->
       <div class="signupform">
         <transition name="slide-fade">
           <div v-show="page === 1">
@@ -58,7 +57,11 @@
               ></b-form-input>
               <button
                 class="check"
-                :style="user.userAppId ? 'background-color: var(--color-green-1);' : 'background-color: var(--color-green-3);'"
+                :style="
+                  user.userAppId
+                    ? 'background-color: var(--color-green-1);'
+                    : 'background-color: var(--color-green-3);'
+                "
                 @click="idcheck(user.userAppId)"
               >
                 중복확인
@@ -140,7 +143,6 @@
               type="text"
               placeholder="상세주소를 입력해주세요"
             ></b-form-input>
-            <!-- <b-form-input class="mb-3" v-model="credentials.address" type="text" placeholder="" ></b-form-input> -->
           </div>
         </transition>
         <transition name="slide-fade">
@@ -148,16 +150,18 @@
             <p style="font-size: 14px">마지막 단계입니다!</p>
             <p>
               <span>최종학력</span>, <span>생년월일</span>, <span>성별</span>을
-              입력해주세요! <br /><span>프로필 사진</span>도 넣어주시면 좋구요 :)
+              입력해주세요! <br /><span>프로필 사진</span>도 넣어주시면 좋구요
+              :)
             </p>
 
             <br />
-            <!-- <p class="forminfo">최종학력</p>
-            <b-form-select class="mb-3" v-model="user.lastEdu" :options="lastEdu" ></b-form-select> -->
             <p class="forminfo">
               최종학력<span class="required">&nbsp;&nbsp;*</span>
             </p>
-            <b-form-select class="mb-3 user-form-control" v-model="user.lastEdu">
+            <b-form-select
+              class="mb-3 user-form-control"
+              v-model="user.lastEdu"
+            >
               <option
                 v-for="lastedu in lastedus"
                 :value="lastedu.value"
@@ -224,8 +228,7 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import { useToast } from 'bootstrap-vue-3'
-// import { register } from "@/api/user.js"
+import { useToast } from "bootstrap-vue-3";
 import axios from "axios";
 import drf from "@/api/drf";
 
@@ -235,14 +238,12 @@ export default {
   data() {
     return {
       user: {
-        // 변수 이름 설정
         userAppId: "",
         userAppPwd: "",
         name: "",
         phone: "",
         address: "",
         extraAddress: "",
-        // extraAddress: '',
         lastEdu: null,
         birth: "",
         gender: "",
@@ -253,7 +254,6 @@ export default {
         profileImgName: "",
         profileImgPath: "",
         totalCareer: 0,
-        // 이력서 공개 여부
       },
       gender: [
         { value: null, text: "성별을 선택해주세요." },
@@ -268,11 +268,11 @@ export default {
     };
   },
   setup() {
-    const toast = useToast()
+    const toast = useToast();
 
     return {
       toast,
-    }
+    };
   },
   created() {},
   mounted() {},
@@ -282,35 +282,50 @@ export default {
   },
   methods: {
     ...mapActions(["registUser"]),
-    // ...mapActions(['signup']),
-    // confirm(){
-    //   register(this.credentials, (response) => {
-    //     if (response.data.data === "회원 가입 성공"){
-    //       this.$router.push({ name: "login" })
-    //     }}
-    //   )
-    // },
     changeImg() {
       this.userImg = this.$refs.img.files;
-      console.log(this.userImg);
     },
     regist() {
       if (this.user.userAppId == "") {
-        this.toast.show({body: '사용하실 이메일을 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
+        this.toast.show(
+          { body: "사용하실 이메일을 입력해주세요." },
+          { variant: "success", pos: "middle-center", delay: 1000 },
+        );
       } else if (this.user.userAppPwd == "") {
-        this.toast.show({body: '사용하실 패스워드를 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
+        this.toast.show(
+          { body: "사용하실 패스워드를 입력해주세요." },
+          { variant: "success", pos: "middle-center", delay: 1000 },
+        );
       } else if (this.user.userAppPwd != this.password) {
-        this.toast.show({body: '비밀번호를 다시 확인해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
+        this.toast.show(
+          { body: "비밀번호를 다시 확인해주세요." },
+          { variant: "success", pos: "middle-center", delay: 1000 },
+        );
       } else if (this.user.name == "") {
-        this.toast.show({body: '이름을 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
+        this.toast.show(
+          { body: "이름을 입력해주세요." },
+          { variant: "success", pos: "middle-center", delay: 1000 },
+        );
       } else if (this.user.phone == "") {
-        this.toast.show({body: '전화번호를 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
+        this.toast.show(
+          { body: "전화번호를 입력해주세요." },
+          { variant: "success", pos: "middle-center", delay: 1000 },
+        );
       } else if (this.user.address == "") {
-        this.toast.show({body: '주소를 입력해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
+        this.toast.show(
+          { body: "주소를 입력해주세요." },
+          { variant: "success", pos: "middle-center", delay: 1000 },
+        );
       } else if (this.user.gender == "") {
-        this.toast.show({body: '성별을 선택해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
+        this.toast.show(
+          { body: "성별을 선택해주세요." },
+          { variant: "success", pos: "middle-center", delay: 1000 },
+        );
       } else if (this.idconfirm == false) {
-        this.toast.show({body: '아이디를 확인해주세요.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
+        this.toast.show(
+          { body: "아이디를 확인해주세요." },
+          { variant: "success", pos: "middle-center", delay: 1000 },
+        );
       } else {
         const formData = new FormData();
         formData.append("img", this.userImg[0]);
@@ -327,12 +342,17 @@ export default {
         method: "get",
       })
         .then((res) => {
-          console.log(res);
           if (res.data.res) {
-            this.toast.show({body: '이미 사용중인 아이디입니다.'}, {variant: 'danger', pos: 'middle-center', delay: 1000})
+            this.toast.show(
+              { body: "이미 사용중인 아이디입니다." },
+              { variant: "danger", pos: "middle-center", delay: 1000 },
+            );
             this.idconfirm = false;
           } else {
-            this.toast.show({body: '사용 가능한 아이디입니다.'}, {variant: 'success', pos: 'middle-center', delay: 1000})
+            this.toast.show(
+              { body: "사용 가능한 아이디입니다." },
+              { variant: "success", pos: "middle-center", delay: 1000 },
+            );
             this.idconfirm = true;
           }
         })
@@ -343,19 +363,16 @@ export default {
 
     signup() {
       axios({
-        // url 수정
         url: "https://i7b307.p.ssafy.io/api/users/regist",
         method: "post",
         data: this.user,
       })
-        // .then(res) < 수정
         .then(() => {
           this.$router.push({ name: "Login" });
         })
         .catch((err) => {
           console.log(err);
         });
-      // error 부분 추가
     },
     increasePage() {
       this.page += 1;
@@ -411,7 +428,6 @@ export default {
   width: 90px;
   height: 38px;
   border-radius: 10px;
-  /* border-color: var(--color-red-2); */
   color: white;
   font-weight: 600;
   font-size: 14px;
@@ -459,10 +475,8 @@ p {
 .signupform {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   height: 600px;
-  /* min-height: 100vh; */
 }
 
 .address {
@@ -479,13 +493,11 @@ footer > button {
   background-color: var(--color-red-1);
   width: 45%;
   height: 80%;
-  /* height: 40px; */
   border-radius: 10px;
   border: none;
   color: white;
   font-weight: bold;
   font-size: 18px;
-  /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
   cursor: pointer;
 }
 

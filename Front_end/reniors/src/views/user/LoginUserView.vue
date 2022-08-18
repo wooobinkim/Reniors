@@ -1,10 +1,13 @@
 <template>
   <div class="container">
     <div class="loginform">
-      <img style="width: 80%; max-height: 170px;" alt="logo" src="@/assets/logo.png" />
+      <img
+        style="width: 80%; max-height: 170px"
+        alt="logo"
+        src="@/assets/logo.png"
+      />
       <br />
       <form style="width: 312px" @submit.prevent="login(credentials)">
-        <!-- <form style="width: 312px;"> -->
         <b-form-input
           style="width: 100%; height: 48px"
           class="mb-2 user-form-control"
@@ -33,7 +36,12 @@
       <br />
       <p class="line">또는</p>
       <div style="margin-top: 10px; margin-bottom: 25px">
-        <img src="@/assets/kakaologin.png" style="width: 80%" alt="kakao" @click="kakaologin()" />
+        <img
+          src="@/assets/kakaologin.png"
+          style="width: 80%"
+          alt="kakao"
+          @click="kakaologin()"
+        />
       </div>
       <div style="margin: 10px">
         <router-link class="link" :to="{ name: 'FindUsername' }"
@@ -47,7 +55,6 @@
   </div>
 </template>
 <script>
-// import { mapState, mapActions } from 'vuex'
 import { mapActions } from "vuex";
 
 export default {
@@ -65,26 +72,13 @@ export default {
   created() {},
   mounted() {},
   unmounted() {},
-  // // 추가
-  // computed: {
-  //   ...mapState(['isLogin'])
-  // },
   methods: {
     ...mapActions(["login"]),
-    //   ...mapActions(['userConfirm', 'getUserInfo']),
-    //   // 코드추가
-    //   async confirm(){
-    //     await this.userConfirm(this.credentials)
-    //     let token = sessionStorage.getItem("access-token")
-    //     console.log(token)
-    //     if (this.isLogin){
-    //       await this.getUserInfo(token)
-    //       this.$router.push({ name: 'home' })
-    //     }
-    //   }
-    kakaologin(){
-      window.location.replace("https://kauth.kakao.com/oauth/authorize?client_id=4e4c47797fd9117b5651478290547b4f&redirect_uri=https://i7b307.p.ssafy.io/kakaologin&response_type=code")
-    }
+    kakaologin() {
+      window.location.replace(
+        "https://kauth.kakao.com/oauth/authorize?client_id=4e4c47797fd9117b5651478290547b4f&redirect_uri=https://i7b307.p.ssafy.io/kakaologin&response_type=code",
+      );
+    },
   },
 };
 </script>
@@ -107,7 +101,6 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 18px;
-  /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
   cursor: pointer;
 }
 
@@ -120,7 +113,6 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 18px;
-  /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
   cursor: pointer;
 }
 
@@ -149,9 +141,7 @@ export default {
 .link {
   display: inline;
   margin: 8px;
-  /* font-family: 'Inter'; */
   font-style: normal;
-  /* font-weight: 600; */
   font-size: 14px;
   line-height: 17px;
   color: #6d6d6d;

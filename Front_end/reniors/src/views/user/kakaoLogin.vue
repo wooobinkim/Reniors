@@ -133,7 +133,6 @@ export default {
     ...mapActions(["kakaologin", "kakaoRegist"]),
     changeImg() {
       this.userImg = this.$refs.img.files;
-      console.log(this.userImg);
     },
     create() {
       this.codes = this.$route.query.code;
@@ -146,7 +145,6 @@ export default {
             this.codes,
         )
         .then((res) => {
-          console.log(res);
           this.forms.kakaoId = res.data.kakaoUserInfo.email;
           this.forms.gender = res.data.kakaoUserInfo.gender;
           this.info.email = res.data.kakaoUserInfo.email;
@@ -164,7 +162,6 @@ export default {
         data: JSON.stringify(info),
       })
         .then((res) => {
-          console.log(res);
           if (res.data.res) {
             this.kakaologin(this.info);
           }
@@ -173,21 +170,6 @@ export default {
           console.log(err);
         });
     },
-
-    // klogin(info){
-    //   axios({
-    //     url: "https://i7b307.p.ssafy.io/api/users/kakao/login",
-    //     method: "post",
-    //     data: JSON.stringify(info)
-    //   })
-    //   .then((res) => {
-    //     console.log(res)
-    //     this.$router.push({ name: 'home' })
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
-    // },
 
     kregist() {
       const formData = new FormData();
@@ -238,20 +220,6 @@ export default {
         },
       }).open();
     },
-    // submit(){
-    //   axios({
-    //     url: "https://i7b307.p.ssafy.io/api/users/kakao/login",
-    //     method: 'post',
-    //     data: JSON.stringify(this.forms)
-    //   })
-    //   .then((res) => {
-
-    //     console.log(res)
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
-    // }
   },
 };
 </script>
@@ -306,7 +274,6 @@ p {
   color: white;
   font-weight: bold;
   font-size: 18px;
-  /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
   cursor: pointer;
 }
 

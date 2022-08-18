@@ -37,12 +37,16 @@ export default {
       "finishJobOpening",
     ]),
     deletejobopening() {
-      this.deleteJobOpening(this.$route.params.no);
-      this.$router.push({ name: "companyjobopeninglist" });
+      if (confirm("공고를 삭제하시겠습니까?")) {
+        this.deleteJobOpening(this.$route.params.no);
+        this.$router.push({ name: "companyjobopeninglist" });
+      }
     },
     finish() {
-      this.finishJobOpening(this.jobopening.id);
-      this.$router.push({ name: "companyjobopeninglist" });
+      if (confirm("채용을 종료하시겠습니까?")) {
+        this.finishJobOpening(this.jobopening.id);
+        this.$router.push({ name: "companyjobopeninglist" });
+      }
     },
   },
 };
