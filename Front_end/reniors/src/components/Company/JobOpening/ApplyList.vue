@@ -39,12 +39,14 @@
     <template v-if="this.progress == '서류심사중'">
       <applier-resume-list
         :jobopeningdetail="jobopeningdetail"
+
       ></applier-resume-list>
     </template>
 
     <template v-if="this.progress == '면접심사중'">
       <applier-interview-list
         :jobopeningdetail="jobopeningdetail"
+        :passUser=[]
       ></applier-interview-list>
     </template>
 

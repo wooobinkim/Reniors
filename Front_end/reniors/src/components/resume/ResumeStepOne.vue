@@ -1,11 +1,15 @@
 <template>
-  <div>
-    <header>
-      <div style="margin-top: 16px; padding: 10px; background-color: #F9F9F9;">
-        <span class="title">이력서 작성</span>
-      </div>
+  <div style="width: 360px">
+    <header style="margin-bottom: 10px">
+      <br>
+      <img
+        style="width: 60%; max-height: 90px; margin: 10px"
+        src="@/assets/logo_cut.png"
+        alt="logo"
+      />
+      <br />
     
-      <div style="float: right; margin-top: 5px">
+      <div style="float: right; margin-top: 5px; padding-right: 10px;">
         <img class="order" src="@/assets/one_active.svg" alt="order">
         <img class="order" src="@/assets/two.svg" alt="order">
         <img class="order" src="@/assets/three.svg" alt="order">
@@ -13,13 +17,15 @@
       </div>
     </header>
 
-    <div class="content">
+    <div class="content" style="padding: 0px 8px 8px 8px;">
       <img class="one" src="@/assets/bigone.svg" alt="one">
       <p class="text1">기본정보 입력</p>
       <p class="text2">기본정보에서 수정할 사항이 있을 시 수정해주세요.</p>
       <div style="width:312px; margin:0 auto; ">
         <div class="basic">
           <resume-basic-form :currentUser="currentUser"></resume-basic-form>
+          <br>
+          <br>
         </div>
       </div>
     </div>
@@ -76,7 +82,7 @@ export default {
 
 <style scoped>
   header{
-    height: 84px;
+    height: 136px;
     border-style: none none solid none;
     border-width: 0.5px;
     border-color: #EAEAEA;

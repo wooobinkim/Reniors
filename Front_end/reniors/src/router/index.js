@@ -82,7 +82,14 @@ import OpenVidu from "@/views/openvidu/OpenVidu.vue";
 import WholeJobOpeningView from "@/views/jobopening/WholeJobOpeningView.vue";
 // import ConditionJobOpeningView from "@/views/jobopening/ConditionJobOpeningView.vue";
 
+import IntroView from "@/views/home/IntroView.vue"
+
 const routes = [
+  {
+    path: "/intro",
+    name: "intro",
+    component: IntroView,
+  },
   {
     path: "/",
     name: "home",

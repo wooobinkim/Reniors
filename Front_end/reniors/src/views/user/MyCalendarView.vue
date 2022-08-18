@@ -1,10 +1,11 @@
 <template>
   <div>
     <header>
-      <div style="margin-top: 16px; padding: 10px; background-color: #F9F9F9;">
-        <span class="title">나의 일정</span>
-      </div>
+        <router-link class="header-logo" :to="{ name: 'home' }">
+          <img src="@/assets/logo_cut.png" alt="logo">
+        </router-link>
     </header>
+    <br>
     <br>
     <my-calendar :interview="interview" :bookmarksdate="bookmarksdate"></my-calendar>
 
@@ -40,11 +41,20 @@ export default {
 
 <style scoped>
 
-  .title {
-    font-size:22px;
-    margin-top: 4px;
-    color: #FFB400;
-    font-weight: 900;
+  header {
+    width: 100%;
+    height: 48px;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px -2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  header img{
+    height: 38px;
+    margin: auto;
+    width: auto;
   }
 
 

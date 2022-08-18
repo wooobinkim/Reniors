@@ -1,9 +1,13 @@
 <template>
   <div style="width: 360px" class="prefer-setting-box">
-    <header>
-      <div style="margin-top: 16px; padding: 10px; background-color: #f9f9f9">
-        <span class="title">관심 설정</span>
-      </div>
+    <header style="margin-bottom: 10px">
+      <br>
+      <img
+        style="width: 60%; max-height: 90px; margin: 10px"
+        src="@/assets/logo_cut.png"
+        alt="logo"
+      />
+      <br />
 
       <div style="float: right; margin-top: 5px">
         <img
@@ -35,7 +39,7 @@
           alt="order"
         />
       </div>
-    </header>
+    </header >
 
     <div style="width: 312px; margin: auto">
       <div v-show="page === 1">
@@ -220,9 +224,6 @@ export default {
       this.getJobChild(data);
     },
 
-    // jobparents(data){
-    //   this.getJobChild(data)
-    // },
     area(data) {
       this.getGugun(data);
     },
@@ -283,7 +284,7 @@ label {
 }
 
 header {
-  height: 84px;
+  height: 136px;
   border-style: none none solid none;
   border-width: 0.5px;
   border-color: #eaeaea;
@@ -332,13 +333,11 @@ footer > button {
   background-color: var(--color-red-2);
   width: 45%;
   height: 80%;
-  /* height: 40px; */
   border-radius: 10px;
   border: none;
   color: white;
   font-weight: bold;
   font-size: 18px;
-  /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
   cursor: pointer;
 }
 
