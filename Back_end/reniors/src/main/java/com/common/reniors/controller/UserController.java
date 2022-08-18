@@ -176,7 +176,9 @@ public class UserController {
     public ResponseEntity<Map<String, Long>> deleteUser(
             @ApiIgnore @LoginUser User user
     ) {
-        awsS3Service.deleteFile(user.getUserProfile());
+        if(!"user/userBaseURL.png".equals(user.getUserProfile())) {
+            awsS3Service.deleteFile(user.getUserProfile());
+        }
         userService.deleteUser(user.getId());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
