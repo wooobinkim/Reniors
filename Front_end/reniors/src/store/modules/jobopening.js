@@ -221,9 +221,21 @@ export default {
       router.go(0);
     },
     async fetchBookmark({ commit }) {
-      const response = await http.get("/jobopening/bookmark");
-      commit("BOOKMARKS", response.data);
-      commit("BOOKMARKSDATE", response.data);
+      axios({
+        url: "https://i7b307.p.ssafy.io/api/jobopening/bookmark",
+        method: "get",
+        headers: {
+          "Content-Type" : "application/json",
+          Authorization : "Bearer "+localStorage.getItem("token"),
+        }
+      })
+      .then(async (response) => {
+        await commit("BOOKMARKS", response.data);
+        await commit("BOOKMARKSDATE", response.data);
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
     },
     async addBookmark({ dispatch }, id) {
       await http.post(`/jobopening/bookmark/${id}`);

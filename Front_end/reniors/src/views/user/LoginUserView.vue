@@ -7,7 +7,7 @@
         src="@/assets/logo.png"
       />
       <br />
-      <form style="width: 312px" @submit.prevent="login(credentials)">
+      <form style="width: 312px">
         <b-form-input
           style="width: 100%; height: 48px"
           class="mb-2 user-form-control"
@@ -29,6 +29,7 @@
           v-bind:disabled="
             credentials.userAppId && credentials.userAppPwd == ''
           "
+          @click="loginUser()"
         >
           로그인
         </button>
@@ -82,6 +83,10 @@ export default {
           process.env.VUE_APP_KAKAO_REDIRECT_URI +
           "&response_type=code",
       );
+    },
+    async loginUser(){
+      await this.login(this.credentials);
+      this.$router.push("/");
     },
   },
 };

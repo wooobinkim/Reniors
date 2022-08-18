@@ -32,22 +32,32 @@
 </template>
 
 <script>
-import { computed } from "vue";
-import { useStore } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "HomeCalendarList",
-  setup() {
-    const store = useStore();
-
-    const fetchBookmark = () => store.dispatch("jobopening/fetchBookmark");
-    fetchBookmark();
-
-    const bookmarks = computed(() => store.getters["jobopening/bookmarks"]);
-    return {
-      bookmarks,
-    };
+  props:{
+    login: Boolean,
   },
+  async created(){
+    if(this.login){
+      await this.fetchBookmark();
+    }
+    console.log(this.bookmarks);
+  },
+  watch:{
+    async login(){
+      if(this.login){
+        await this.fetchBookmark()
+      }
+    },
+  },
+  computed:{
+    ...mapGetters("jobopening",["bookmarks"])
+  },
+  methods:{
+    ...mapActions("jobopening",["fetchBookmark"])
+  }
 };
 </script>
 

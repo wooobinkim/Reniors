@@ -69,15 +69,27 @@ export default {
       commit("DUMMY");
     },
     async fetchNotices({ commit }) {
-      const response = await http.get("/notification");
-      commit("NOTICES", response.data);
-      let notReadNotices = 0;
-      response.data.forEach((notice) => {
-        if (notice.isRead === "NOT_READ") {
-          notReadNotices += 1;
-        }
-      });
-      commit("NOTICE_NOT_READED", notReadNotices);
+          axios({
+            url: "https://i7b307.p.ssafy.io/api/notification",
+            method: "get",
+            headers: {
+              "Content-Type" : "application/json",
+              Authorization : "Bearer "+localStorage.getItem("token"),
+            }
+          })
+          .then(async (response) => {
+            await commit("NOTICES", response.data);
+            let notReadNotices = 0;
+            await response.data.forEach((notice) => {
+              if (notice.isRead === "NOT_READ") {
+                notReadNotices += 1;
+              }
+            });
+            await commit("NOTICE_NOT_READED", notReadNotices);
+          })
+          .catch((err)=>{
+            console.log(err);
+          })
     },
   },
 };

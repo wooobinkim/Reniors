@@ -4,11 +4,11 @@
       <p>
         🔔 오늘 확인하셔야 할 알림이
         <span class="home-notice-count" v-b-modal.noticeModal
-          >{{ noticeCount }}개</span
+          >{{ noticeNotReaded }}개</span
         >
         있어요!
       </p>
-      <HomeCalendarList />
+      <HomeCalendarList :login="login"/>
     </div>
     <p v-else>
       지금 <router-link to="/login" class="now-login-btn">로그인</router-link>을
@@ -69,8 +69,7 @@
 </template>
 
 <script>
-import { computed } from "vue";
-import { mapActions, useStore } from "vuex";
+import { mapGetters, mapActions} from "vuex";
 import HomeCalendarList from "./HomeCalendarList.vue";
 
 export default {
@@ -81,23 +80,18 @@ export default {
   props: {
     login: Boolean,
   },
-  setup() {
-    const store = useStore();
-    const isLogginedIn = computed(() => store.getters["isLogginedIn"]);
-    if (isLogginedIn.value) {
-      const fetchNotices = () => store.dispatch("home/fetchNotices");
-      fetchNotices();
-    }
-    const noticeCount = computed(() => store.getters["home/noticeNotReaded"]);
-    const notices = computed(() => store.getters["home/notices"]);
-
-    return {
-      noticeCount,
-      notices,
-    };
+  watch:{
+    async login(){
+      if(this.login){
+        await this.fetchNotices()
+      }
+    },
+  },
+  computed:{
+    ...mapGetters("home", ["noticeNotReaded","notices"]),
   },
   methods: {
-    ...mapActions("home", ["readNotice", "deleteNotice"]),
+    ...mapActions("home", ["readNotice", "deleteNotice", "fetchNotices"]),
     readNotification(notice) {
       this.readNotice(notice.id);
       window.location.href =
@@ -110,6 +104,12 @@ export default {
       }
     },
   },
+  async created(){
+    if(this.login){
+      console.log("login true");
+      await this.fetchNotices()
+    }
+  }
 };
 </script>
 
