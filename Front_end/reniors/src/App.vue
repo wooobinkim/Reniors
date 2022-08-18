@@ -1,4 +1,5 @@
 <template>
+  <intro-view class="intro"></intro-view>
   <div class="container">
     <b-container
       :toast="{ root: true }"
@@ -20,12 +21,13 @@
 import { mapGetters } from "vuex";
 import FooterComponent from "./components/FooterComponent.vue";
 import CompanyFooterComponent from "./components/CompanyFooterComponent.vue";
-
+import IntroView from "@/views/home/IntroView.vue";
 export default {
   name: "App",
   components: {
     FooterComponent,
     CompanyFooterComponent,
+    IntroView,
   },
   computed: {
     ...mapGetters("company", ["isCompanyLogin"]),
@@ -120,4 +122,25 @@ export default {
 nav {
   padding: 30px;
 }
+
+.intro{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  animation-duration: 2.2s;
+  animation-name: slidein;
+  visibility: hidden;
+  z-index: -10;
+}
+
+@keyframes slidein {
+  from {
+    visibility: visible;
+    z-index: 1000;
+  }
+
+  to {
+  }
+}
+
 </style>
