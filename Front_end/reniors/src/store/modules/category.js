@@ -1,22 +1,15 @@
-// import axios from "axios"
-// import drf from '@/api/drf'
-// import { apiInstance } from "./index.js";
-import http from "@/api/http"
-
-// const api = apiInstance();
+import http from "@/api/http";
 
 export default {
   namespaced: true,
   state: {
     token: localStorage.getItem("jwt") || "",
     jobparents: [{ value: null, text: "선택하세요" }],
-    // jobchilds: [{ value: null, text: "선택하세요" }],
     jobchilds: [{ value: null, text: "선택하세요" }],
-    // sidos: [{ value: null, text: "선택하세요" }],
     sidos: [{ value: null, text: "선택하세요" }],
     guguns: [{ value: null, text: "선택하세요" }],
     lastedus: [
-      { value: null, text: "최종학력을 선택해주세요" },
+      { value: "학력무관", text: "최종학력을 선택해주세요" },
       { value: "고교졸업이하", text: "고교졸업 이하" },
       { value: "고등학교졸업", text: "고등학교졸업" },
       { value: "대학교졸업_4년제", text: "대학교졸업(4년)" },
@@ -47,39 +40,21 @@ export default {
   },
 
   getters: {
-    jobparents:state=>state.jobparents,
-    jobchilds: state => state.jobchilds,
-    sidos: state => state.sidos,
-    guguns: state => state.guguns,
-    lastedus: state => state.lastedus,
-    typeemployments: state => state.typeemployments,
-    typecompanies: state => state.typecompanies
+    jobparents: (state) => state.jobparents,
+    jobchilds: (state) => state.jobchilds,
+    sidos: (state) => state.sidos,
+    guguns: (state) => state.guguns,
+    lastedus: (state) => state.lastedus,
+    typeemployments: (state) => state.typeemployments,
+    typecompanies: (state) => state.typecompanies,
   },
 
   mutations: {
     SET_JOBPARENT_LIST: (state, jobparents) => {
-      // jobparents.forEach((jobparent) => {
-      //   state.jobparents.push({ value: jobparent.id, text: jobparent.name });
-      // });
       state.jobparents = jobparents;
     },
-    // SET_JOBCHILD_LIST: (state, jobchilds) => {
-    //   jobchilds.forEach((jobchild) => {
-    //     state.jobchilds.push({ value: jobchild.id, text: jobchild.name });
-    //   });
-    // },
     SET_JOBCHILD_LIST: (state, jobchilds) => (state.jobchilds = jobchilds),
     SET_SIDO_LIST: (state, sidos) => (state.sidos = sidos),
-    // SET_SIDO_LIST: (state, sidos) => {
-    //   sidos.forEach((sido) => {
-    //     state.sidos.push({ value: sido.id, text: sido.name });
-    //   });
-    // },
-    // SET_GUGUN_LIST: (state, guguns) => {
-    //   guguns.forEach((gugun) => {
-    //     state.guguns.push({ value: gugun.id, text: gugun.name });
-    //   });
-    // },
     SET_GUGUN_LIST: (state, guguns) => (state.guguns = guguns),
   },
 
@@ -98,7 +73,7 @@ export default {
       http
         .get(`/categories/parent/${no}/child`)
         .then(({ data }) => {
-          commit("SET_JOBCHILD_LIST", data)
+          commit("SET_JOBCHILD_LIST", data);
         })
         .catch((error) => {
           console.log(error);
@@ -118,8 +93,7 @@ export default {
       http
         .get(`/categories/sido/${no}/gugun`)
         .then(({ data }) => {
-          commit("SET_GUGUN_LIST", data)
-          console.log(data)
+          commit("SET_GUGUN_LIST", data);
         })
         .catch((error) => {
           console.log(error);
