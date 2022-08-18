@@ -103,6 +103,7 @@ export default {
   border-color: var(--color-black-2);
   box-shadow: inset 0 0 1px 1px var(--color-black-3),
     0 0 5px var(--color-black-3);
+  margin-top: 56px;
 }
 .company-jobOpening-info-box > div > .title {
   font-size: 16px;

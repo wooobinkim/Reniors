@@ -53,7 +53,8 @@ export default {
 .company-header {
   display: flex;
   justify-content: space-between;
-  width: 100%
+  width: 100vw;
+  z-index: 1;
 }
 .company-header > div > .bi {
   width: 25px;

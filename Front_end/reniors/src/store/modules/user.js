@@ -63,16 +63,17 @@ export const user = {
         method: "post",
         data: credentials,
       })
-        .then((res) => {
+        .then(async (res) => {
           const token = res.headers["authorization"];
-          dispatch("saveToken", token);
-          dispatch("fetchCurrentUser");
+          await dispatch("saveToken", token);
+          await dispatch("fetchCurrentUser");
           router.push({ name: "home" });
         })
-        .catch(() => {
+        .catch((e) => {
           alert(
             "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n입력하신 내용을 다시 확인해주세요.",
           );
+          console.log(e);
         });
     },
 

@@ -9,7 +9,7 @@
         />
       </div>
     </header>
-    <div v-if="pagenum == 1">
+    <div v-if="pagenum == 1" class="contentBox">
       <div class="regist-process-box">
         <!-- <p class="now">1</p><p>2</p><p>3</p> -->
         <img
@@ -87,7 +87,7 @@
         />
       </div>
     </div>
-    <div v-if="pagenum == 2">
+    <div v-if="pagenum == 2" class="contentBox">
       <div class="regist-process-box">
         <!-- <p class="now">1</p><p>2</p><p>3</p> -->
         <img
@@ -182,7 +182,7 @@
         </select>
       </div>
     </div>
-    <div v-if="pagenum == 3">
+    <div v-if="pagenum == 3" class="contentBox">
       <div class="regist-process-box">
         <!-- <p class="now">1</p><p>2</p><p>3</p> -->
         <img
@@ -375,5 +375,8 @@ footer > button {
   font-weight: bold;
   font-size: 18px;
   cursor: pointer;
+}
+.contentBox{
+  padding: 0 8px;
 }
 </style>

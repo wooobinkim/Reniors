@@ -69,14 +69,15 @@
       <!-- right -->
       <div class="col-6" style="margin: 0; padding: 0">
         <div class="tabs" v-if="!chatopenclose">
+          <!-- <div>지원자 : {{ interviewer }}</div> -->
           <!-- resume -->
-          <div v-if="tab && !chatopenclose">
+          <div v-if="tab && !chatopenclose" class="interview-info-box">
             <div>
               <resume-view :applyinfo="this.applyinfo"></resume-view>
             </div>
           </div>
           <!-- evaluation -->
-          <div v-if="!tab && !chatopenclose">
+          <div v-if="!tab && !chatopenclose" class="interview-info-box">
             <div>
               <openvidu-eval-list
                 :applyinfo="this.applyinfo"
@@ -612,7 +613,7 @@ export default {
 
 .tabBtn {
   width: 35vw;
-  height: 8vh;
+  height: 10%;
   background-color: #eeeeee;
   display: flex;
   align-items: center;
@@ -692,6 +693,20 @@ export default {
   overflow-y: auto;
 }
 
+.chatlist::-webkit-scrollbar {
+  width: 5px;
+}
+
+.chatlist::-webkit-scrollbar-thumb {
+  background-color: var(--color-green-1);
+  border-radius: 10px;
+}
+
+.chatlist::-webkit-scrollbar-track {
+  background-color: var(--color-green-3);
+  border-radius: 10px;
+}
+
 .chatform {
   width: 35vw - 48px;
   height: 5vh;
@@ -721,7 +736,7 @@ export default {
   border: none;
   border-radius: 20px;
   margin: 2px 8px 0 2px;
-  background-color: #eaeaea;
+  background-color: none;
   display: flex;
   align-items: center;
 }
@@ -730,6 +745,7 @@ export default {
   font-size: 28px;
   transform: rotate(45deg);
   margin: 0;
+  background-color: none;
 }
 
 .chatitem {
@@ -781,8 +797,8 @@ export default {
 }
 
 .chatbtn {
-  width: 16vw;
-  height: 16vw;
+  width: 4vw;
+  height: 4vw;
   border-radius: 100%;
   border: none;
   background-color: white;
@@ -791,7 +807,7 @@ export default {
 }
 
 .chatbtn i {
-  font-size: 24px;
+  font-size: 32px;
   color: #8cd6c1;
   font-weight: bold;
 }
@@ -847,5 +863,24 @@ export default {
 .leavebtn span {
   font-size: 24px;
   color: white;
+}
+
+.interview-info-box {
+  height: 90%;
+  overflow-y: scroll;
+}
+
+.interview-info-box::-webkit-scrollbar {
+  width: 5px;
+}
+
+.interview-info-box::-webkit-scrollbar-thumb {
+  background-color: var(--color-green-1);
+  border-radius: 10px;
+}
+
+.interview-info-box::-webkit-scrollbar-track {
+  background-color: var(--color-green-3);
+  border-radius: 10px;
 }
 </style>

@@ -537,14 +537,14 @@ export default {
 
 .insession {
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
 }
 
 .sessionvideo {
   width: 90vw;
   height: 75vh;
-  margin: 0 auto;
-  padding: 16px 0 0 0;
+  margin: 48px auto;
+  padding: 8px 0 0 0 0;
 }
 
 .myvideo {

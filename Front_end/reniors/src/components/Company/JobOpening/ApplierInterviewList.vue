@@ -20,10 +20,12 @@
         </div>
       </template>
     </template>
-    <button @click="interviewpass()" class="apply-interview-pass-btn">
-      최종합격
-    </button>
   </div>
+    <div class="apply-interview-pass-btn-box">
+      <button @click="interviewpass()" class="apply-interview-pass-btn">
+        최종합격
+      </button>
+    </div>
 </template>
 
 <script setup>
@@ -146,12 +148,18 @@ export default {
   line-height: 24px;
   color: var(--color-yellow-1);
 }
+.apply-interview-pass-btn-box{
+  width: 100vw;
+  position: fixed;
+  bottom: 50px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
 .apply-interview-pass-btn {
   width: 328px;
-  position: fixed;
-  bottom: 55px;
-  left: 50%;
-  transform: translate(-50%, 0);
+  height: 48px;
   border: none;
   padding: 6px 40px;
   font-size: 20px;

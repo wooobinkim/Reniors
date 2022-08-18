@@ -55,9 +55,12 @@ export default {
     fetchYoutube()
     fetchHot()
 
+    let recommendJobopenings=null;
     const isLogin = computed(() => store.getters['isLogginedIn'])
-    const hotJobopenings = computed(() => store.getters['home/hotJobopenings'])
-    const recommendJobopenings = computed(() => store.state.home.recommendJobopenings)
+    if(isLogin.value){
+      recommendJobopenings = computed(() => store.state.home.recommendJobopenings)
+    }
+    const hotJobopenings=computed(() => store.getters['home/hotJobopenings']);
     const youtubes = computed(() => store.getters['home/youtubes'])
     const isYoutube = computed(() => store.getters['home/isYoutube'])
 
@@ -130,5 +133,24 @@ export default {
   }
 }
 
+.intro{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  animation-duration: 2.2s;
+  animation-name: slidein;
+  visibility: hidden;
+  z-index: -10;
+}
+
+@keyframes slidein {
+  from {
+    visibility: visible;
+    z-index: 1000;
+  }
+
+  to {
+  }
+}
 
 </style>
