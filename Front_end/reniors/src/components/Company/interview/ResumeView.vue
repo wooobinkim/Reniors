@@ -123,11 +123,10 @@ export default {
 }
 .resume-info-box {
   width: 35vw - 48px;
-  height: 56vh;
   border: none;
   background-color: white;
   padding: 24px;
-  margin: 64px 8px 0 8px;
+  margin: 64px 8px 56px 8px;
   border-radius: 5px 5px 0 0;
 }
 .resume-info-box > img {
