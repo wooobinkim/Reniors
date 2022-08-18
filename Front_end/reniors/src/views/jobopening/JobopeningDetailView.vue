@@ -4,11 +4,11 @@
     <b-tabs
       content-class="mt-3" fill
       class="jobopening-detail-tab"
-      active-nav-item-class="bg-transparent font-weight-bold"
+      active-nav-item-class="bg-transparent font-weight-bold text-dark"
     >
-      <b-tab title="모집조건"><DetailCondition /></b-tab>
-      <b-tab title="상세모집내용"><DetailContent /></b-tab>
-      <b-tab title="기업정보"><DetailInfo /></b-tab>
+      <b-tab title="모집조건" title-link-class="text-secondary" ><DetailCondition /></b-tab>
+      <b-tab title="상세모집내용" title-link-class="text-secondary"><DetailContent /></b-tab>
+      <b-tab title="기업정보" title-link-class="text-secondary"><DetailInfo /></b-tab>
     </b-tabs>
     <DetailApplyButton :jobopeningId="jobopeningId" />
   </div>
@@ -54,11 +54,17 @@ export default {
   padding-bottom: 5px;
   margin-bottom: 104px;
 }
-
-
-
+.tab-title-class{
+  color: black !important;
+}
+.tab-title-class:hover{
+  color: black !important;
+}
+.tab-title-class:visited{
+  color: black !important;
+}
 .jobopening-detail-tab button {
-  color: white;
+  color: white !important;
 }
 
 .jobopening-detail-tab button:hover {
