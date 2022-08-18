@@ -1,24 +1,25 @@
 <template>
   <div>
     <template v-for="apply in applylist" :key="apply.id">
-      <!-- <template
+      <template
         v-if="
           apply.jobOpeningProcess == '면접' ||
           apply.jobOpeningProcess == '면접심사중' ||
           apply.jobOpeningProcess == '면접불합격'
         "
-      > -->
+      >
         <div>
           <input
             :value="apply"
             type="checkbox"
+            v-model= "passUser"
             class="apply-interview-list-checkbox"
           />
           <applier-interview-list-item :apply="apply">
           </applier-interview-list-item>
         </div>
       </template>
-    <!-- </template> -->
+    </template>
     <button @click="interviewpass()" class="apply-interview-pass-btn">
       최종합격
     </button>
