@@ -39,13 +39,13 @@ export default {
     bookmarkId: (state) =>
       state.bookmarks.find(
         (bookmark) =>
-          bookmark.jobOpeningResponse.id === state.selectedJobopening.id
+          bookmark.jobOpeningResponse.id === state.selectedJobopening.id,
       )?.id,
     applies: (state) => state.applies,
     isApply: (state) => {
       if (
         state.applies.find(
-          (apply) => apply.jobOpeningId === state.selectedJobopening.id
+          (apply) => apply.jobOpeningId === state.selectedJobopening.id,
         ) === undefined
       )
         return false;
@@ -69,11 +69,9 @@ export default {
     RECOMMENDJOBOPENINGS: (state, recommendJobopenings) => {
       state.recommendJobopenings = recommendJobopenings;
       if (!recommendJobopenings) {
-        console.log("폴스");
         state.isrecommend = false;
         state.isrecommendheight = 76;
       } else {
-        console.log("트루");
         state.isrecommend = true;
         state.isrecommendheight = 380;
       }
@@ -92,18 +90,12 @@ export default {
           date: apply.interviewDate,
           child: apply.jobChildCategoryName,
         };
-
-        // object.replace (/"/g,'')
-
-        // const json = JSON.stringify(object)
-        // const unquoted = object.replace(/"([^"]+)":/g, '$1:')
         state.interview.push(object);
       });
     },
     BOOKMARKSDATE: (state, bookmarks) => {
       state.bookmarksdate = [];
       bookmarks.forEach((bookmark) => {
-        console.log(bookmark);
         const object1 = {
           title: bookmark.jobOpeningResponse.title,
           date: bookmark.jobOpeningResponse.finishedDate,
@@ -112,7 +104,6 @@ export default {
             "https://i7b307.p.ssafy.io/jobopening/" +
             bookmark.jobOpeningResponse.id,
         };
-        console.log(object1);
 
         state.bookmarksdate.push(object1);
       });
@@ -121,7 +112,6 @@ export default {
     SET_CURR_PAGE: (state, currPage) => (state.currPage = currPage),
   },
   actions: {
-    // all jobopenings
     async clearJobopenings({ commit }) {
       await commit("CLEAR_JOBOPENINGS");
     },
@@ -158,7 +148,6 @@ export default {
         });
     },
 
-    //추천조건으로 공고 가져오기
     async clearRecommend({ commit }) {
       commit("RECOMMENDCLEAR");
     },
@@ -190,7 +179,6 @@ export default {
         });
     },
 
-    //검색조건으로 공고 가져오기
     async fetchJobOpeningCondition({ commit, getters }, data) {
       await axios({
         url: `https://i7b307.p.ssafy.io/api/jobopening/search/${data}`,
@@ -205,53 +193,44 @@ export default {
         });
     },
 
-    // applied jobopenings
     async fetchApplied({ commit }) {
       commit("JOBOPENINGS", []);
       const response = await http.get("/jobopening/apply");
       commit("JOBOPENINGS", response.data);
     },
 
-    // bookmarked jobopenings
     async fetchBookmarked({ commit }) {
       commit("JOBOPENINGS", []);
       const response = await http.get("/jobopening/bookmark");
       commit("JOBOPENINGS", response.data);
     },
     async selectJobopening({ commit }, id) {
-      console.log("select jobopening");
       const response = await axios.get(drf.jobopening.detail(id));
       const data = response.data;
-      console.log(data);
       commit("SELECTJOB", data);
     },
     async fetchApply({ commit }) {
       const response = await http.get("/jobopening/apply");
-      console.log(response);
       commit("APPLIES", response.data);
       commit("INTERVIEW", response.data);
     },
     async apply({ getters }, jobopeningId) {
-      const response = await http.post(`/jobopening/${jobopeningId}/apply`);
+      await http.post(`/jobopening/${jobopeningId}/apply`);
       console.log(getters.authHeader);
-      console.log(response);
       alert("지원 성공!");
       router.go(0);
     },
     async fetchBookmark({ commit }) {
       const response = await http.get("/jobopening/bookmark");
-      console.log(response);
       commit("BOOKMARKS", response.data);
       commit("BOOKMARKSDATE", response.data);
     },
     async addBookmark({ dispatch }, id) {
-      const response = await http.post(`/jobopening/bookmark/${id}`);
-      console.log(response);
+      await http.post(`/jobopening/bookmark/${id}`);
       dispatch("fetchBookmark");
     },
     async deleteBookmark({ dispatch }, id) {
-      const response = await http.delete(`/jobopening/bookmark/${id}`);
-      console.log(response);
+      await http.delete(`/jobopening/bookmark/${id}`);
       dispatch("fetchBookmark");
     },
   },

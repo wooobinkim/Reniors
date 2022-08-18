@@ -25,7 +25,9 @@
         <a v-for="(notice, index) in notices" :key="index">
           <div v-if="notice.isRead === 'READ'" class="notice-item-read">
             <p class="notice-item-company">
-              <span @click="readNotification(notice)"
+              <span
+                @click="readNotification(notice)"
+                class="notice-item-company-title"
                 >[{{ notice.jobOpeningResponse.companyName }}]</span
               >
               <i @click="deleteNotification(notice.id)" class="bi bi-trash"></i>
@@ -41,7 +43,9 @@
           </div>
           <div v-else class="notice-item-not-read">
             <p class="notice-item-company">
-              <span @click="readNotification(notice)"
+              <span
+                @click="readNotification(notice)"
+                class="notice-item-company-title"
                 >[{{ notice.jobOpeningResponse.companyName }}]</span
               >
               <i @click="deleteNotification(notice.id)" class="bi bi-trash"></i>
@@ -96,11 +100,7 @@ export default {
   methods: {
     ...mapActions("home", ["readNotice", "deleteNotice"]),
     readNotification(notice) {
-      console.log(notice);
       this.readNotice(notice.id);
-      // window.location.href =
-      //   "https://i7b307.p.ssafy.io/jobopening/" +
-      //   notice.applyResponse.jobOpeningId;
     },
     deleteNotification(notificationId) {
       if (confirm("삭제하시겠습니까?")) {
@@ -152,7 +152,7 @@ export default {
 .notice-item-read {
   background-color: var(--color-black-4);
   border-radius: 0.5rem;
-  padding: 5px;
+  padding: 10px;
   margin-bottom: 10px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
@@ -165,7 +165,7 @@ export default {
 .notice-item-not-read {
   background-color: var(--color-red-3);
   border-radius: 0.5rem;
-  padding: 5px;
+  padding: 10px;
   margin-bottom: 10px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
@@ -178,7 +178,12 @@ export default {
 .notice-item-company {
   display: flex;
   justify-content: space-between;
-  line-height: 24px;
+}
+
+.notice-item-company-title {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 5px;
 }
 
 .notice-item-company > .bi-trash {
