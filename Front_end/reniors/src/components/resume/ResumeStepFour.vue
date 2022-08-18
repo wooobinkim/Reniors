@@ -5,7 +5,7 @@
         <span class="title">이력서 작성</span>
       </div>
     
-      <div style="float: right; margin-top: 5px">
+      <div style="float: right; margin-top: 5px; padding-right: 10px;" >
         <img class="order" src="@/assets/one.svg" alt="order">
         <img class="order" src="@/assets/two.svg" alt="order">
         <img class="order" src="@/assets/three.svg" alt="order">
@@ -13,7 +13,7 @@
       </div>
     </header>
 
-    <div class="content">
+    <div class="content" style="padding: 0px 8px 8px 8px;">
       <img class="four" src="@/assets/bigfour.svg" alt="four">
       <p class="text1">수상경력</p>
       <p class="text2">수상경력을 입력해주세요.</p>

@@ -2,31 +2,40 @@
   <div>
     <h2 class="home-jobopening-type">{{ type }}</h2>
     <ul class="home-jobopening-list">
-      <router-link class="home-jobopening-item" :to="{ name: 'JobopeningDetail', params: { jobopeningId: jobopening.id } }" v-for="jobopening in jobopenings" :key="jobopening.id">
-        <img class="company-image mb-2" :src="jobopening.baseURL + jobopening.companyProfile">
+      <router-link
+        class="home-jobopening-item"
+        :to="{
+          name: 'JobopeningDetail',
+          params: { jobopeningId: jobopening.id },
+        }"
+        v-for="jobopening in jobopenings"
+        :key="jobopening.id"
+      >
+        <img
+          class="company-image mb-2"
+          :src="jobopening.baseURL + jobopening.companyProfile"
+        />
         <h4 class="mb-2">{{ jobopening.companyName }}</h4>
         <div class="home-jobopening-info">
           <p class="mb-1">{{ jobopening.title }}</p>
-          <p style="font-size: 14px; color: #FF843E;">{{ jobopening.finishedDate.split('T')[0] }}</p>
+          <p style="font-size: 14px; color: #ff843e">
+            {{ jobopening.finishedDate.split("T")[0] }}
+          </p>
         </div>
-
       </router-link>
     </ul>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'HomeJobopeningList',
+  name: "HomeJobopeningList",
   props: {
     type: String,
     jobopenings: Array,
   },
-  created(){
-    console.log(this.jobopenings);
-  }
-}
+  created() {},
+};
 </script>
 
 <style scoped>
@@ -37,7 +46,7 @@ export default {
   font-weight: bold;
   font-size: 20px;
 }
-.company-image{
+.company-image {
   width: 100%;
   border: 3px solid var(--color-red-4);
   border-radius: 5px;
@@ -51,14 +60,14 @@ export default {
   overflow-y: hidden;
   text-align: start;
 }
-.home-jobopening-list::-webkit-scrollbar{
+.home-jobopening-list::-webkit-scrollbar {
   height: 5px;
 }
-.home-jobopening-list::-webkit-scrollbar-thumb{
+.home-jobopening-list::-webkit-scrollbar-thumb {
   background-color: var(--color-green-1);
   border-radius: 10px;
 }
-.home-jobopening-list::-webkit-scrollbar-track{
+.home-jobopening-list::-webkit-scrollbar-track {
   background-color: var(--color-green-3);
   border-radius: 10px;
 }
@@ -75,7 +84,8 @@ export default {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-.home-jobopening-item p, .home-jobopening-item h4 {
+.home-jobopening-item p,
+.home-jobopening-item h4 {
   margin: 0;
   text-align: start;
   color: black;
@@ -85,7 +95,7 @@ export default {
   font-weight: bold;
   font-size: 16px;
 }
-.home-jobopening-info{
+.home-jobopening-info {
   background-color: var(--color-black-4);
   padding: 8px;
   border-radius: 5px;

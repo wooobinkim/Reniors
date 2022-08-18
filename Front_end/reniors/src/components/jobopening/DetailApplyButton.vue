@@ -44,11 +44,12 @@ export default {
 
 <style scoped>
 .detail-apply-button {
-  position: sticky;
+  position: fixed;
+  bottom: 50px;
   border: 1px solid var(--color-yellow-3);
   background-color: white;
-  bottom: 0px;
-  width: 360px;
+  width: 100%;
+  height: 64px;
   padding: 10px;
   align-content: center;
 }
@@ -60,7 +61,8 @@ export default {
 }
 
 .detail-apply-button > button {
-  height: 30px;
+  height: 48px;
+  width: 90%;
   width: 100%;
   border: none;
   border-radius: 0.5rem;

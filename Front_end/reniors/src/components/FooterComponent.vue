@@ -17,7 +17,7 @@
         alt=""
       />
       <div class="footer-profile-dropdown" id="footerDropdown" @click="mypage">
-        <router-link to="/mypage" class="footer-profile-dropdown-item"
+        <router-link to="/mypage" class="footer-profile-dropdown-item" 
           >마이페이지</router-link
         >
         <br />

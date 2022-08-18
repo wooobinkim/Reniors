@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="jobopening-box">
-      <h4>{{ jobopening.title }}</h4>
-      <h5>{{ jobopening.companyResponse.name }}</h5>
+      <p style="font-size:20px; margin-bottom: 4px; font-weight: bold;">{{ jobopening.title }}</p>
+      <p style="font-size:16px; margin-bottom:4px">{{ jobopening.companyResponse.name }}</p>
       <div class="jobopening-box-date">
-        <div class="start-badge">시작</div>
+        <div class="start-badge" style="font-size:14px">시작</div>
         <p>{{ jobopening.createdDate?.split('T')[0] }}</p>
       </div>
       <div class="jobopening-box-date">
-        <div class="end-badge">종료</div>
+        <div class="end-badge" style="font-size:14px">종료</div>
         <p class="end-date">{{ jobopening.finishedDate?.split('T')[0] }}</p>
       </div>
     </div>
@@ -75,12 +75,14 @@ export default {
 </script>
 
 <style scoped>
+
 .jobopening-box {
   background-color: white;
   border-radius: 1rem;
   margin: 10px;
-  padding: 10px;
+  padding: 8px 16px;
   text-align: start;
+  
 }
 
 .jobopening-box p, .jobopening-box h3 {
@@ -132,4 +134,5 @@ export default {
   border: 1px solid var(--color-red-3);
   margin: 5px 0px;
 }
+
 </style>

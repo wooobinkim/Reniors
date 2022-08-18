@@ -237,9 +237,11 @@ footer {
   left: 50%;
   transform: translate(-50%, 0);
   bottom: 60px;
+  background-color: white;
 }
 
 footer > button {
+  
   margin: 0 auto;
   background-color: var(--color-red-2);
   width: 100%;

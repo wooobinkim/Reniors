@@ -2,8 +2,6 @@ import drf from "@/api/drf";
 import multipart from "@/api/multipart";
 import router from "@/router";
 import axios from "axios";
-// import jwt_decode from 'jwt-decode'
-// import { login, findById } from '@/api/user.js'
 
 export const user = {
   state: {
@@ -16,11 +14,6 @@ export const user = {
     id: "",
 
     rooms: [],
-
-    // 코드추가
-    // isLogin: false,
-    // isLoginError: false,
-    // userInfo: null,
   },
 
   getters: {
@@ -28,7 +21,6 @@ export const user = {
       !!state.token || !!rootState.company.token,
     currentUser: (state) => state.currentUser,
     authError: (state) => state.authError,
-    // Authorization: `Token ${state.token}`
     authHeader: (state) => ({
       Authorization: `Bearer ${state.token}`,
       "Content-type": "Application/JSON",
@@ -51,16 +43,6 @@ export const user = {
     SET_ID: (state, id) => (state.id = id),
 
     SET_ROOMS: (state, rooms) => (state.rooms = rooms),
-
-    // 추가
-    // SET_IS_LOGIN: (state, isLogin) => state.isLogin = isLogin,
-    // SET_IS_LOGIN_ERROR: (state, isLoginError) => {
-    //   state.isLoginError = isLoginError
-    // },
-    // SET_USER_INFO: (state, userInfo) => {
-    //   state.isLogin = true;
-    //   state.userInfo = userInfo;
-    // }
   },
 
   actions: {
@@ -69,18 +51,14 @@ export const user = {
       localStorage.setItem("token", token);
     },
 
-    async removeToken({ commit, getters }) {
+    async removeToken({ commit }) {
       await commit("SET_TOKEN", "");
-      await commit("SET_CURRENT_USER",{});
-      console.log("currentUser", getters.currentUser);
+      await commit("SET_CURRENT_USER", {});
       localStorage.setItem("token", "");
-
     },
 
-    // error 커밋 추가
     login({ dispatch }, credentials) {
       axios({
-        // url 수정
         url: "https://i7b307.p.ssafy.io/api/users/login",
         method: "post",
         data: credentials,
@@ -89,7 +67,6 @@ export const user = {
           const token = res.headers["authorization"];
           dispatch("saveToken", token);
           dispatch("fetchCurrentUser");
-          // router 수정
           router.push({ name: "home" });
         })
         .catch(() => {
@@ -114,14 +91,12 @@ export const user = {
     fetchCurrentUser({ commit, getters, dispatch }) {
       if (getters.isLogginedIn) {
         axios({
-          // url 수정
           url: "https://i7b307.p.ssafy.io/api/users/",
           method: "get",
           headers: getters.authHeader,
         })
           .then((res) => {
             commit("SET_CURRENT_USER", res.data);
-            // dispatch('fetchMypage', res.data.user_id)
           })
           .catch((err) => {
             if (err.response.status === 401) {
@@ -145,8 +120,7 @@ export const user = {
         });
     },
 
-    registUser({ commit }, formData) {
-      console.log(commit);
+    registUser(formData) {
       multipart
         .post(`/users/regist`, formData)
         .then(() => {
@@ -185,10 +159,9 @@ export const user = {
         data: JSON.stringify(data),
         headers: getters.authHeader,
       })
-        .then((res) => {
+        .then(() => {
           dispatch("fetchPrefer");
           router.push({ name: "MyPage" });
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -202,10 +175,9 @@ export const user = {
         data: JSON.stringify(data),
         headers: getters.authHeader,
       })
-        .then((res) => {
+        .then(() => {
           dispatch("fetchPrefer");
           router.push({ name: "MyPage" });
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -228,14 +200,12 @@ export const user = {
         });
     },
 
-    findPwd({ commit }, credentials) {
+    findPwd(credentials) {
       axios({
         url: drf.user.userpwd(credentials.name, credentials.userAppId),
         method: "get",
       })
-        .then((res) => {
-          console.log(res.data);
-          console.log(commit);
+        .then(() => {
           router.push({ name: "FindPasswordResult" });
         })
         .catch(() => {
@@ -251,9 +221,8 @@ export const user = {
         method: "put",
         headers: getters.authHeader,
       })
-        .then((res) => {
+        .then(() => {
           alert("변경되었습니다!");
-          console.log(res);
         })
         .catch((err) => console.log(err));
     },
@@ -265,7 +234,6 @@ export const user = {
         headers: getters.authHeader,
       })
         .then((res) => {
-          console.log('요ㅕ기',res);
           commit("SET_ROOMS", res.data);
         })
         .catch((err) => console.error(err.response));
@@ -294,14 +262,14 @@ export const user = {
         method: "delete",
         headers: getters.authHeader,
       })
-      .then(() => {
-        dispatch("removeToken")
-        router.push({ name: "home" })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    }
+        .then(() => {
+          dispatch("removeToken");
+          router.push({ name: "home" });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 
   modules: {},

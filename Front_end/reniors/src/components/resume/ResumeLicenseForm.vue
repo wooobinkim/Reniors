@@ -12,11 +12,12 @@
           placeholder="자격증명을 입력해주세요."
         ></b-form-input>
         <p class="forminfo">등급<span class="required">&nbsp;&nbsp;*</span></p>
-        <b-form-select
+        <b-form-input
           class="mb-3"
-          :options="grade"
+          type="text"
           v-model="newLicense.grade"
-        ></b-form-select>
+          placeholder="자격증 등급을 입력해주세요."
+        ></b-form-input>
         <p class="forminfo">
           취득일자<span class="required">&nbsp;&nbsp;*</span>
         </p>
@@ -46,12 +47,6 @@ export default {
         name: this.license.name,
         passedAt: this.license.passedAt,
       },
-      grade: [
-        // value 수정
-        { value: null, text: "등급을 선택해주세요." },
-        { value: "A", text: "A" },
-        { value: "B", text: "B" },
-      ],
     };
   },
   setup() {},
