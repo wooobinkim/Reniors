@@ -12,7 +12,7 @@
           <input
             :value="apply"
             type="checkbox"
-            v-model="passUser"
+            v-model="this.passUser"
             class="apply-interview-list-checkbox"
           />
           <applier-interview-list-item :apply="apply">
@@ -51,6 +51,7 @@ export default {
   },
   async created() {
     await this.getapplylist(this.$route.params.no);
+    console.log(this.passUser);
   },
   computed: {
     ...mapGetters("company", ["jobopening", "applylist"]),
