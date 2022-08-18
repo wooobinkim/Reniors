@@ -57,5 +57,6 @@ export default {
 }
 .eval-list-item-box {
   margin-bottom: 6vh;
+  margin-top: 64px;
 }
 </style>

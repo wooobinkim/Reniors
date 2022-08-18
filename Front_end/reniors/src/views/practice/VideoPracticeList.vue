@@ -12,11 +12,11 @@
     <div class="headsub">
       <p
         class="my-0"
-        style="text-align: start; font-size: 14px; font-weight: bold"
+        style="text-align: start; font-size: 16px"
       >
         연습하고 싶은 질문을 선택하고
       </p>
-      <p style="text-align: start; font-size: 14px; font-weight: bold">
+      <p style="text-align: start; font-size: 16px">
         화상면접을 경험해보세요!
       </p>
     </div>
