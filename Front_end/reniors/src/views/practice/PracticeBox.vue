@@ -125,6 +125,8 @@ export default {
   border: solid #ff843e 1px;
   background-color: white;
   margin: 8px auto;
+  color: black;
+  text-decoration: none;
 }
 video {
   width: 280px;
