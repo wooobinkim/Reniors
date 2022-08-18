@@ -22,7 +22,6 @@ export default {
       for (let index = 0; index < state.checklist.length; index++) {
         list.push(state.checklist[index].questionId);
       }
-      console.log(list.sort());
       return list.sort();
     },
     records: (state) => state.records,
@@ -44,7 +43,6 @@ export default {
     SET_CHECKLIST: (state, checklist) => (state.checklist = checklist),
     SET_RECORDS: (state, records) => (state.records = records),
     CLEAR_SELECTED: (state, data) => {
-      console.log('??');
       state.selected = data},
     SET_SELECTED: (state, selected) => {
       state.selected = selected;

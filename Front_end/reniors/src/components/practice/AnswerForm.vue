@@ -8,7 +8,7 @@
           class="form-control content"
           id="answer"
           placeholder="내용을 입력해주세요."
-          v-model="answer.answer"
+          v-model="req.writeAns"
         ></textarea>
       </div>
       <div class="submit">
@@ -29,12 +29,18 @@ export default {
   data() {
     return {
       questionId: this.$route.params.question_id,
+      req:{
+        writeAns: "",
+      }
     };
   },
   setup() {},
   async created() {
-    await this.fetchAnswer(this.$route.params.question_id);
-    console.log(this.answer);
+    if(this.action==="update"){
+      await this.fetchAnswer(this.$route.params.question_id);
+      this.req.writeAns = this.answer.answer;
+    }
+
   },
   mounted() {},
   unmounted() {},
@@ -44,22 +50,22 @@ export default {
   },
   methods: {
     ...mapActions(["createAnswer", "updateAnswer", "fetchAnswer"]),
-    onSubmit() {
-      if (!this.answer) {
+    async onSubmit() {
+      if (!this.req.writeAns) {
         alert("내용을 작성해주세요!");
       }
-      if (this.action === "create" && this.answer) {
-        this.createAnswer({
+      if (this.action === "create") {
+        await this.createAnswer({
           questionId: this.questionId,
-          content: this.answer.answer,
+          content: this.req.writeAns,
         });
       } else if (this.action === "update") {
-        this.updateAnswer({
+        await this.updateAnswer({
           questionId: this.questionId,
-          content: this.answer.answer,
+          content: this.req.writeAns,
         });
       }
-      this.fetchAnswer(this.questionId);
+      await this.$router.go(-1);
     },
   },
 };
