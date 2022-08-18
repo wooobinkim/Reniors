@@ -1,10 +1,8 @@
 <template>
+  <real-header></real-header>
+  <br>
+  <br>
   <div>
-    <header>
-      <div style="margin-top: 16px; padding: 10px; background-color: #F9F9F9;">
-        <span class="title">마이 페이지</span>
-      </div>
-    </header>
     <br>
     <br>
     <div style="width: 312px; margin: auto;">
@@ -16,7 +14,6 @@
         <div class="name">{{this.currentUser.name}}</div>
         <router-link :to="{ name: 'MyinfoEdit' }" style="text-align: left; text-decoration:none; color: #6D6D6D; font-weight: 700; font-size:13px; "><i class="bi bi-gear-fill" style="color: #37BF99"></i>&nbsp;내정보 수정</router-link>
 
-        <!-- <button><router-link :to="{ name: 'MyinfoEdit' }" style="text-decoration:none; color: #37BF99;">내정보 수정</router-link></button> -->
       </div>
 
       <button class="resume"><router-link :to="{ name: 'ResumeDetail' }" style="text-decoration:none; color: white; font-weight: 700; font-size: 18px;"><img style="align: absmiddle; filter: drop-shadow(0px 0.5px 0.5px rgba(0, 0, 0, 0.25)); margin-right: 10px;" src="@/assets/note.svg" alt="note">내 이력서</router-link></button>
@@ -73,15 +70,14 @@
   </div>
 </template>
 <script>
+import RealHeader from "@/components/RealHeader.vue";
 import ApplyHistoryView from '@/views/user/ApplyHistoryView.vue'
 import BookmarkHistoryView from '@/views/user/BookmarkHistoryView.vue'
 import { mapActions, mapGetters } from 'vuex'
-// import { computed } from 'vue'
 
-// import { useRouter } from 'vue-router'
 export default {
   name: "MyPageView",
-  components: { ApplyHistoryView, BookmarkHistoryView },
+  components: { ApplyHistoryView, BookmarkHistoryView, RealHeader },
   data() {
     return {
       showleft : true,
@@ -91,32 +87,6 @@ export default {
     ...mapGetters(['currentUser', 'prefer']),
     ...mapGetters('jobopening', ['bookmarks', 'applies'])
   },
-  // setup() {
-  //   const store = useStore()
-  //   const router = useRouter()
-
-  //   const fetchApply = () => store.dispatch('jobopening/fetchApply')
-  //   const fetchBookmark = () => store.dispatch('jobopening/fetchBookmark')
-  //   fetchApply()
-  //   fetchBookmark()
-
-  //   const applyNumber = computed(() => store.getters['jobopening/applies'].length)
-  //   const bookmarkNumber = computed(() => store.getters['jobopening/bookmarks'].length)
-
-  //   const toApplied = () => {
-  //     router.push({ name: 'Jobopening' })
-  //     return store.dispatch('jobopening/fetchApplied')
-  //   }
-
-  //   const toBookmark = () => {
-  //     router.push({ name: 'Jobopening' })
-  //     return store.dispatch('jobopening/fetchBookmarked')
-  //   }
-
-  //   return {
-  //     toApplied, toBookmark, applyNumber, bookmarkNumber,
-  //   }
-  // },
   mounted() {},
   unmounted() {},
   created() {

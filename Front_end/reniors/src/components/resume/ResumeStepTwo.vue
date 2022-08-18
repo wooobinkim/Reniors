@@ -1,18 +1,22 @@
 <template>
-  <div>
-    <header>
-      <div style="margin-top: 16px; padding: 10px; background-color: #F9F9F9;">
-        <span class="title">이력서 작성</span>
-      </div>
+  <div style="width: 360px">
+    <header style="margin-bottom: 10px">
+      <br>
+      <img
+        style="width: 60%; max-height: 90px; margin: 10px"
+        src="@/assets/logo_cut.png"
+        alt="logo"
+      />
+      <br />
 
-      <div style="float: right; margin-top: 5px">
+      <div style="float: right; margin-top: 5px; padding-right: 10px">
         <img class="order" src="@/assets/one.svg" alt="order">
         <img class="order" src="@/assets/two_active.svg" alt="order">
         <img class="order" src="@/assets/three.svg" alt="order">
         <img class="order" src="@/assets/four.svg" alt="order">      
       </div>
     </header>
-    <div class="content">
+    <div class="content" style="padding: 0px 8px 8px 8px;">
       <img class="two" src="@/assets/bigtwo.svg" alt="two">
       <p class="text1">경력사항</p>
       <p class="text2">경력사항을 입력해주세요.</p>
@@ -76,7 +80,7 @@ export default {
 
 <style scoped>
   header{
-    height: 84px;
+    height: 136px;
     border-style: none none solid none;
     border-width: 0.5px;
     border-color: #EAEAEA;
@@ -126,6 +130,7 @@ export default {
     bottom: 30px;
     display: flex;
     justify-content: space-between;
+    background-color: white;
   }
 
   footer > button{    

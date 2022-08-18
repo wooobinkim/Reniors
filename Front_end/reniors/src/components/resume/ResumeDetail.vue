@@ -1,10 +1,8 @@
 <template>
+  <real-header></real-header>
   <div>
-    <header style="width: 360px;">
-      <div style="margin-top: 16px; padding: 10px; background-color: #F9F9F9;">
-        <span class="title">나의 이력서</span>
-      </div>
-    </header>
+    <br>
+    <br>
     <div style="width: 312px; margin: auto;">
       <br>
       <div>
@@ -58,26 +56,30 @@
         ><span style="color: #8A8A8A">수상명</span><span>&emsp;{{ award.name }}<br></span>
         <span style="color: #8A8A8A">수상일</span><span>&emsp;{{ award.awardedAt.slice(0,10) }}<br></span>
         </p>
-
-
       </div>
 
       
-
+    <br>
+    <br>
     <button><router-link style="text-decoration:none; color: white;" :to="{ name: 'ResumeStepOne' }">수정</router-link></button>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     </div>
 
 
   </div>
 </template>
 <script>
-// import ResumeCareerDetail from '@/components/resume/ResumeCareerDetail.vue'
+import RealHeader from "@/components/RealHeader.vue";
 import { mapGetters, mapActions } from 'vuex'
 
 
 export default {
   name: "ResumeDetail",
-  components: {  },
+  components: { RealHeader },
   computed: {
     ...mapGetters(["currentUser", "careers", "licenses", "awards"])
     
