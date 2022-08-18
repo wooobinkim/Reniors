@@ -36,10 +36,6 @@
           </router-link>
         </button>
       </div>
-      <!-- <button class="to-apply-list-btn" @click="interview()">
-        면접일정 관리
-      </button>
-      <button class="to-apply-list-btn" @click="eval()">면접평가 관리</button> -->
     </div>
   </div>
 </template>
