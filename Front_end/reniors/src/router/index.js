@@ -86,12 +86,12 @@ import IntroView from "@/views/home/IntroView.vue"
 
 const routes = [
   {
-    path: "/intro",
+    path: "/",
     name: "intro",
     component: IntroView,
   },
   {
-    path: "/",
+    path: "/home",
     name: "home",
     component: HomeView,
   },
