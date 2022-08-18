@@ -161,11 +161,8 @@ export default {
       localStorage.setItem("token", "");
     },
 
-    // error 커밋 추가
     companylogin({ dispatch }, credentials) {
       axios({
-        // url 수정
-
         url: "https://i7b307.p.ssafy.io/api/company/login",
         method: "post",
         data: credentials,
@@ -173,13 +170,11 @@ export default {
         .then((res) => {
           const token = res.headers["authorization"];
           dispatch("saveToken", token);
-          // dispatch("fetchCurrentUser");
-          // router 수정
           router.push({ name: "company" });
         })
         .catch(() => {
           alert(
-            "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n입력하신 내용을 다시 확인해주세요."
+            "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n입력하신 내용을 다시 확인해주세요.",
           );
         });
     },
@@ -189,8 +184,6 @@ export default {
     },
 
     registCompany: ({ commit, getters }, formData) => {
-      // multipart
-      //   .post(`/company`, formData)
       axios({
         url: `https://i7b307.p.ssafy.io/api/company`,
         method: "post",
@@ -208,8 +201,6 @@ export default {
         });
     },
     getCompany: ({ commit, getters }) => {
-      // http
-      //   .get(`/company`)
       axios({
         url: "https://i7b307.p.ssafy.io/api/company",
         method: "get",
@@ -223,8 +214,6 @@ export default {
         });
     },
     updateCompany: ({ commit, getters }, formData) => {
-      // multipart
-      //   .put(`/company`, JSON.stringify(formData))
       axios({
         url: `https://i7b307.p.ssafy.io/api/company`,
         method: "put",
@@ -260,8 +249,6 @@ export default {
         });
     },
     updateJobOpening: ({ commit, getters }, data) => {
-      // http
-      //   .put(`/company/jobopening/${data.no}`, data.jobopening)
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${data.no}`,
         method: "put",
@@ -279,8 +266,6 @@ export default {
         });
     },
     getJobOpeningList: ({ commit, getters }) => {
-      // http
-      //   .get(`/company/jobopening`)
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening`,
         method: "get",
@@ -294,8 +279,6 @@ export default {
         });
     },
     getJobOpening: ({ commit, getters }, no) => {
-      // http
-      //   .get(`/company/jobopening/${no}`)
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}`,
         method: "get",
@@ -310,8 +293,6 @@ export default {
         });
     },
     deleteJobOpening: ({ commit, getters }, no) => {
-      // http
-      //   .delete(`/company/jobopening/${no}`)
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}`,
         method: "delete",
@@ -325,8 +306,6 @@ export default {
         });
     },
     finishJobOpening: ({ commit, getters }, no) => {
-      // http
-      //   .put(`/company/jobopening/${no}/finish`)
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}/finish`,
         method: "put",
@@ -340,8 +319,6 @@ export default {
         });
     },
     progressJobOpening: ({ commit, getters }, data) => {
-      // http
-      //   .put(`/company/progress/${data.no}`, data.progress)
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/progress/${data.no}`,
         method: "put",
@@ -356,8 +333,6 @@ export default {
         });
     },
     getapplylist: ({ commit, getters }, no) => {
-      // http
-      //   .get(`/company/jobopening/${no}/apply`)
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}/apply`,
         method: "get",
@@ -371,8 +346,6 @@ export default {
         });
     },
     getapply: ({ commit, getters }, data) => {
-      // http
-      //   .get(`/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`)
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
         method: "get",
@@ -386,13 +359,10 @@ export default {
         });
     },
     getinterviewapplylist: ({ commit, getters }, no) => {
-      // http
-      //   .get(`/company/jobopening/${no}/apply`)
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}/apply`,
         method: "get",
         headers: getters.authHeader,
-        // data:data.jobopening,
       })
         .then(({ data }) => {
           commit("SET_INTERVIEW_APPLY_LIST", data);
@@ -402,13 +372,10 @@ export default {
         });
     },
     getinterviewapplylistasc: ({ commit, getters }, no) => {
-      // http
-      //   .get(`/company/jobopening/${no}/apply/dateAsc`)
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}/apply/dateAsc`,
         method: "get",
         headers: getters.authHeader,
-        // data:data.jobopening,
       })
         .then(({ data }) => {
           commit("SET_INTERVIEW_APPLY_LIST_ASC", data);
@@ -418,11 +385,6 @@ export default {
         });
     },
     updateApply: ({ commit, getters }, data) => {
-      // http
-      //   .put(
-      //     `/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
-      //     data.apply
-      //   )
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
         method: "put",
@@ -441,7 +403,6 @@ export default {
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}/finishInterview`,
         method: "put",
         headers: getters.authHeader,
-        // data:data.apply,
       })
         .then(({ data }) => {
           commit("SET_DATASTATE", data);
@@ -451,8 +412,6 @@ export default {
         });
     },
     getResume: ({ commit, getters }, no) => {
-      // http
-      //   .get(`/company/userdetail/${no}`)
       axios({
         url: `https://i7b307.p.ssafy.io/api/company/userdetail/${no}`,
         method: "get",
@@ -466,8 +425,6 @@ export default {
         });
     },
     registRoom: ({ commit, getters }, data) => {
-      // http
-      //   .post(`/room/company`, JSON.stringify(data))
       axios({
         url: `https://i7b307.p.ssafy.io/api/room/company`,
         method: "post",
@@ -482,8 +439,6 @@ export default {
         });
     },
     registEvalQuestion: ({ commit, getters }, evalquestion) => {
-      // http
-      //   .post(`/eval`, JSON.stringify(evalquestion))
       axios({
         url: `https://i7b307.p.ssafy.io/api/eval`,
         method: "post",
@@ -499,8 +454,6 @@ export default {
         });
     },
     getEvalQuestionList: ({ commit, getters }, no) => {
-      // http
-      //   .get(`/eval/search/${no}`)
       axios({
         url: `https://i7b307.p.ssafy.io/api/eval/search/${no}`,
         method: "get",
@@ -514,8 +467,6 @@ export default {
         });
     },
     updateEvalQuestion: ({ commit, getters }, data) => {
-      // http
-      //   .put(`/eval/${data.no}`, JSON.stringify(data.evalquestion))
       axios({
         url: `https://i7b307.p.ssafy.io/api/eval/${data.no}`,
         method: "put",
@@ -531,8 +482,6 @@ export default {
         });
     },
     deleteEvalQuestion: ({ commit, getters }, no) => {
-      // http
-      //   .delete(`/eval/${no}`)
       axios({
         url: `https://i7b307.p.ssafy.io/api/eval/${no}`,
         method: "delete",
@@ -547,11 +496,6 @@ export default {
         });
     },
     registUserEval: ({ commit, getters }, data) => {
-      // http
-      //   .post(
-      //     `/eval/${data.jobOpeningId}/usereval/${data.userId}`,
-      //     JSON.stringify(data.usereval)
-      //   )
       axios({
         url: `https://i7b307.p.ssafy.io/api/eval/${data.jobOpeningId}/usereval/${data.userId}`,
         method: "post",
@@ -566,8 +510,6 @@ export default {
         });
     },
     getUserEvalList: ({ commit, getters }, data) => {
-      // http
-      //   .get(`/eval/${data.jobOpeningId}/usereval/${data.userId}`)
       axios({
         url: `https://i7b307.p.ssafy.io/api/eval/${data.jobOpeningId}/usereval/${data.userId}`,
         method: "get",
@@ -581,8 +523,6 @@ export default {
         });
     },
     deleteUserEvalList: ({ commit, getters }, data) => {
-      // http
-      //   .delete(`/eval/${data.jobOpeningId}/usereval/${data.userId}`)
       axios({
         url: `https://i7b307.p.ssafy.io/api/eval/${data.jobOpeningId}/usereval/${data.userId}`,
         method: "delete",

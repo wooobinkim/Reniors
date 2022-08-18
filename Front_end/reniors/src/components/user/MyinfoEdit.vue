@@ -4,20 +4,26 @@
       <div style="margin-top: 16px; padding: 10px; background-color: #f9f9f9">
         <span class="title">내 정보 수정</span>
       </div>
-      
     </header>
-    <br/>
-    
+    <br />
 
     <div style="width: 312px; margin: auto">
       <button @click="deleteNow" class="delete">회원 탈퇴하기</button>
-      <br>
-      <br>
+      <br />
+      <br />
       <p class="forminfo">이메일<span class="required">&nbsp;&nbsp;*</span></p>
       <b-form-input
+        v-if="currentUser.kakaoId === null"
         class="mb-3"
         type="email"
         v-model="currentUser.userAppId"
+        disabled
+      ></b-form-input>
+      <b-form-input
+        v-else
+        class="mb-3"
+        type="email"
+        v-model="currentUser.kakaoId"
         disabled
       ></b-form-input>
       <p class="forminfo">
@@ -46,10 +52,7 @@
         :currentUser="currentUser"
         action="info"
       ></resume-basic-form>
-
-      
     </div>
-  
   </div>
 </template>
 <script>
@@ -84,12 +87,12 @@ export default {
         this.changePassword(data);
       }
     },
-    deleteNow(){
-      var result= confirm("정말 리니어즈를 떠나실 건가요?")
-      if(result){
-        this.deleteUser()
-      } 
-    }
+    deleteNow() {
+      var result = confirm("정말 리니어즈를 떠나실 건가요?");
+      if (result) {
+        this.deleteUser();
+      }
+    },
   },
 };
 </script>
@@ -136,9 +139,9 @@ p {
 }
 
 .delete {
-  background-color:transparent; 
-  border-style:none; 
-  color: #37bf99; 
+  background-color: transparent;
+  border-style: none;
+  color: #37bf99;
   float: right;
   font-size: 14px;
 }

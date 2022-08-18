@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <div class="loginform">
-      <img style="width: 80%; max-height: 170px;" alt="logo" src="@/assets/logo.png" />
+      <img
+        style="width: 80%; max-height: 170px"
+        alt="logo"
+        src="@/assets/logo.png"
+      />
       <br />
       <form style="width: 312px" @submit.prevent="companylogin(companyinfo)">
         <!-- <form style="width: 312px;"> -->
@@ -43,7 +47,6 @@
   </div>
 </template>
 <script>
-// import { mapState, mapActions } from 'vuex'
 import { mapActions } from "vuex";
 
 export default {
@@ -61,23 +64,8 @@ export default {
   created() {},
   mounted() {},
   unmounted() {},
-  // // 추가
-  // computed: {
-  //   ...mapState(['isLogin'])
-  // },
   methods: {
     ...mapActions("company", ["companylogin"]),
-    //   ...mapActions(['userConfirm', 'getUserInfo']),
-    //   // 코드추가
-    //   async confirm(){
-    //     await this.userConfirm(this.credentials)
-    //     let token = sessionStorage.getItem("access-token")
-    //     console.log(token)
-    //     if (this.isLogin){
-    //       await this.getUserInfo(token)
-    //       this.$router.push({ name: 'home' })
-    //     }
-    //   }
   },
 };
 </script>
@@ -100,7 +88,6 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 18px;
-  /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
   cursor: pointer;
 }
 
@@ -113,7 +100,6 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 18px;
-  /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
   cursor: pointer;
 }
 
@@ -126,16 +112,13 @@ export default {
   color: white;
   font-weight: bold;
   font-size: 18px;
-  /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
   cursor: pointer;
 }
 
 .link {
   display: inline;
   margin: 8px;
-  /* font-family: 'Inter'; */
   font-style: normal;
-  /* font-weight: 600; */
   font-size: 14px;
   line-height: 17px;
   color: #6d6d6d;
