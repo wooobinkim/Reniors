@@ -1,11 +1,10 @@
 pipeline{
     agent any
-
     environment {
-       BACK_CONTAINER_NAME="reniors_back"
+       BACK_CONTAINER_NAME="reniors_back_container"
        BACK_NAME = "reniors_back"
 
-       FRONT_CONTAINER_NAME="reniors_front"
+       FRONT_CONTAINER_NAME="reniors_front_container"
        FRONT_NAME = "reniors_front"
     }
     stages {
@@ -26,6 +25,10 @@ pipeline{
         }
         stage('Build') {
             steps {
+                
+                sh "docker rmi ${BACK_NAME}"
+                sh "docker rmi ${FRONT_NAME}"
+
                 sh "docker build -t ${BACK_NAME} ./Back_end/reniors/."
                 sh "docker build -t ${FRONT_NAME} ./Front_end/reniors/."
             }

@@ -33,7 +33,7 @@
       <br />
       <p class="line">또는</p>
       <div style="margin-top: 10px; margin-bottom: 25px">
-        <img src="@/assets/kakaologin.png" style="width: 80%" alt="kakao" @click="kakaologin()" />
+        <img src="@/assets/kakaologin.svg" style="width: 80%" alt="kakao" @click="kakaologin()" />
       </div>
       <div style="margin: 10px">
         <router-link class="link" :to="{ name: 'FindUsername' }"
