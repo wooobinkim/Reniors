@@ -1,4 +1,5 @@
 <template>
+<div class="total">
   <img
     :src="companyimg"
     alt="test"
@@ -28,6 +29,7 @@
   <router-link :to="{ name: 'companyupdate' }" class="company-to-update-btn"
     >기업 정보 수정</router-link
   >
+  </div>
 </template>
 
 <script>
@@ -54,7 +56,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.total{
+  margin-top: 64px;
+}
 .logo-img {
   width: 120px;
   height: 120px;

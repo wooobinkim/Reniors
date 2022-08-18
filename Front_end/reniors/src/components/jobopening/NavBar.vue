@@ -7,9 +7,7 @@
     <div class="jobopening-navbar-right">
       <font-awesome-icon class="bookmark-icon" v-if="isBookmarked" icon="fa-solid fa-bookmark" @click="deleteBookmark(bookmarkId)" />
       <font-awesome-icon class="bookmark-icon" v-else icon="fa-regular fa-bookmark" @click="addBookmark(jobopeningId)" />
-      <router-link :to="{ name: 'MyPage' }" class="navbar-profile">
-        <img :src="this.currentUser.baseURL + this.currentUser.userProfile" alt="">
-      </router-link>
+
     </div>
   </div>
 </template>
@@ -70,6 +68,7 @@ export default {
   justify-content: space-between;
   background-color: white;
   padding: 12px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px -4px;
 }
 
 .jobopening-navbar-left, .jobopening-navbar-right {

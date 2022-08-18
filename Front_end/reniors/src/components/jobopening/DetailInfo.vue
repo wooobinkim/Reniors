@@ -1,15 +1,20 @@
 <template>
   <div>
     <div class="jobopening-box">
-      <h3>기업정보</h3>
-      <hr />
-      <img :src="company.baseURL + company.companyProfile" alt="" />
-      <h5>{{ jobopening.companyName }}</h5>
-      <ConditionItem left="설립연도" :right="company.establishedAt" />
-      <ConditionItem left="기업주소" :right="company.address" />
-      <ConditionItem left="홈페이지" :right="company.companyUrl" />
-      <h4>이 기업의 다른 채용 공고</h4>
-      <hr class="small" />
+      <div class="company-info">
+        <p style="font-weight:bold; font-size:20px; margin:2px 4px;">기업정보</p>
+        <hr>
+        <div style="width: 100%; display: flex; justify-content: center;">
+          <img  :src="company.baseURL + company.companyProfile" alt="">
+        </div>
+        <h5>{{ jobopening.companyName }}</h5>
+        <ConditionItem left="설립연도" :right="company.establishedAt" />
+        <ConditionItem left="기업주소" :right="company.address" />
+        <ConditionItem left="홈페이지" :right="company.companyUrl" />
+      </div>
+      <p style="margin: 2px 4px; font-weight: bold; font-size:20px;">이 기업의 다른 채용 공고</p>
+      <hr class="small">
+
       <div class="jobopening-detail-list">
         <div
           class="jobopening-detail-content"
@@ -68,6 +73,15 @@ export default {
 </script>
 
 <style scoped>
+.jobopening-box {
+  background-color: white;
+  border-radius: 1rem;
+  margin: 10px;
+  padding: 8px 8px;
+  text-align: start;
+  
+}
+
 /* same as DetailCondition.vue */
 .jobopening-box img {
   /* width: 180px; */
@@ -86,12 +100,14 @@ export default {
 }
 
 .jobopening-box > hr.small {
-  width: 260px;
+  width: 70%;
   transform: translateX(0px);
   border: 1px solid var(--color-red-1);
-  margin: 0 0 5px 0;
+  margin: 0 2px 5px 2px;
 }
-
+.company-info{
+  margin: 4px 8px 16px;
+}
 .jobopening-detail-content {
   box-sizing: border-box;
   background-color: white;
@@ -99,6 +115,7 @@ export default {
   border-radius: 0.5rem;
   padding: 10px 15px;
   margin: 5px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 1px 3px 0px;
 }
 
 .jobopening-detail-content-title {
