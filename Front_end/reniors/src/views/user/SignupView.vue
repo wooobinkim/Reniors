@@ -266,7 +266,7 @@ export default {
         totalCareer: 0,
       },
       gender: [
-        { value: null, text: "성별을 선택해주세요." },
+        { value: "공개안함", text: "성별을 선택해주세요." },
         { value: "M", text: "남자" },
         { value: "F", text: "여자" },
         { value: "공개안함", text: "공개안함" },

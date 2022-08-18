@@ -31,7 +31,7 @@
           <span style="color: #8a8a8a"><i class="bi bi-telephone"></i></span
           >&emsp;{{ currentUser.phone }}
         </p>
-        <p v-if="currentUser.kakaoId === null">
+        <p v-if="currentUser.kakaoId === ''">
           <span style="color: #8a8a8a"><i class="bi bi-envelope"></i></span
           >&emsp;{{ currentUser.userAppId }}
         </p>

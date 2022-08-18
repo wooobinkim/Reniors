@@ -18,9 +18,9 @@ import OpenviduEvalListItem from "./OpenviduEvalListItem.vue";
 export default {
   components: {
     OpenviduEvalListItem,
-  }, 
-  props:{
-    applyinfo : Object,
+  },
+  props: {
+    applyinfo: Object,
   },
   created() {
     this.getEvalQuestionList(this.applyinfo.jobOpeningId);
@@ -29,26 +29,36 @@ export default {
     ...mapGetters("company", ["evalquestionlist"]),
   },
   methods: {
-    ...mapActions("company", ["getEvalQuestionList", "finishInterview","updateApply"]),
+    ...mapActions("company", [
+      "getEvalQuestionList",
+      "finishInterview",
+      "updateApply",
+    ]),
+    ...mapActions("home", ["createNotice"]),
     finish() {
       let apply = {
         jobOpeningProcess: "면접심사중",
-        interviewDate:null,
+        interviewDate: null,
         sessionId: null,
-      }
+      };
       this.updateApply({
-        jobOpeningId : this.applyinfo.jobOpeningId,
-        applyId : this.applyinfo.id,
+        jobOpeningId: this.applyinfo.jobOpeningId,
+        applyId: this.applyinfo.id,
         apply: apply,
       });
-      alert('평가가 완료되었습니다.')
+      this.createNotice({
+        jobOpeningProcess: "면접심사중",
+        userId: this.applyinfo.userId,
+        applyId: this.applyinfo.id,
+      });
+      alert("평가가 완료되었습니다.");
     },
   },
 };
 </script>
 
 <style>
-.eval-total{
+.eval-total {
   width: 35vw - 48px;
   height: 56vh;
   border: none;
@@ -57,7 +67,7 @@ export default {
   margin: 0 8px;
   border-radius: 5px 5px 0 0;
 }
-.finishBtn{
+.finishBtn {
   width: 10vw;
   height: 6vh;
   border: none;
@@ -67,5 +77,4 @@ export default {
   font-size: 20px;
   text-align: center;
 }
-
 </style>
