@@ -141,6 +141,7 @@ export default {
     },
 
     async saveRecording({ getters, dispatch}, { fileName, URL }) {
+      console.log("1.비디오를 서버에 저장하는 요청");
       let reId = ''
       axios({
         url: "https://i7b307.p.ssafy.io/api/recording",
@@ -152,22 +153,25 @@ export default {
         headers: getters.authHeader,
       })
       .then((res)=>{
-        console.log('여기여기', res);
         reId = res.data.recordingId
-        console.log(reId)
         return reId
       })
-        .then((res) => {dispatch("fetchvitoId", { videoUrl: URL, recordingId:res });})
+        .then(async (res) => {
+          await dispatch("fetchvitoId", { videoUrl: URL, recordingId:res });
+          return res;
+        })
         // .then((res) =>{
         //   dispatch("putVitoId", res)
 
         // }
-        .then(dispatch("fetchSubtitles"))
-        .then(dispatch("fetchRecording"))
+        .then(async (res) => {
+          await dispatch("putVitoId", res);
+        })
+        .then(await dispatch("fetchSubtitles"))
+        .then(await dispatch("fetchRecording"))
         .then(router.push({ name: "PracticeBox" }));
     },
     async fetchRecording({ getters, commit }) {
-      console.log('4.fetchRecordinglist');
       await axios({
         url: "https://i7b307.p.ssafy.io/api/recording/list",
         method: "get",
@@ -192,30 +196,26 @@ export default {
         },
       })
         .then((res) => {
-          console.log(res.data.access_token);
           commit("SET_VITOTOKEN", res.data.access_token);
         })
         .catch((err) => console.error(err.response));
     },
 
-    async fetchvitoId({ commit, state, getters, dispatch }, {videoUrl, recordingId}) {
-      console.log('1fetchvitoId', videoUrl);
+    async fetchvitoId({ commit, state, getters}, {videoUrl}) {
       await axios({
         url: "https://i7b307.p.ssafy.io/api/vito/videoId",
         method: "post",
         data: JSON.stringify({ token: state.vitotoken, videoUrl: videoUrl }),
         headers: getters.authHeader,
       })
-        .then((res) => {
-          console.log("vitoid", res.data);
-          commit("SET_VITOID", res.data);
+        .then(async (res) => {
+          await commit("SET_VITOID", res.data);
         })
-        .then(dispatch("putVitoId", recordingId))
+        // .then(await dispatch("putVitoId", recordingId))
         .catch((err) => console.error(err));
     },
 
     async fetchSubtitles({ commit, getters, state }) {
-      console.log('3.fetchSub');
       await axios({
         url: "https://i7b307.p.ssafy.io/api/vito/audioMsg",
         method: "post",
@@ -225,7 +225,6 @@ export default {
         }),
         headers: getters.authHeader,
       }).then((res) => {
-        console.log(res.data);
         commit("SET_SUBTITLES", res.data);
       });
     },
@@ -239,13 +238,11 @@ export default {
         }),
         headers: getters.authHeader,
       }).then((res) => {
-        console.log(res.data);
-        console.log(res.data.results.utterances);
         commit("SET_SUBTITLES", res.data.results.utterances);
       });
     },
 
-    async putVitoId({ getters, state }, recordingId) {
+    async putVitoId({ getters, state}, recordingId) {
       await axios({
         url:
           "https://i7b307.p.ssafy.io/api/recording/" +
@@ -254,9 +251,11 @@ export default {
         method: "put",
         headers: getters.authHeader,
         data: JSON.stringify({
-          videoId: {...state.vitoId}.id,
+          videoId:state.vitoId.id,
         }),
-      }).then(console.log("put", state.vitoId));
+      }).then(
+        // console.log("put", state.vitoId)
+        );
     },
   },
 };

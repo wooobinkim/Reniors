@@ -73,6 +73,7 @@ export default {
       this.issueToken();
     },
     vitotoken: function(){
+      console.log(this.records);
       this.fetchSubtitles2(this.record.videoId)
     }
   },
