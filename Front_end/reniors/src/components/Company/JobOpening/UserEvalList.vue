@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="total">
     <user-eval-list-item
       v-for="(usereval, idx) in userevallist"
       :key="usereval"
@@ -32,4 +32,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.total{
+  margin-top: 64px;
+}
+</style>

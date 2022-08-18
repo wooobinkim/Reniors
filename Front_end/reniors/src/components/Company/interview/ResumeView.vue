@@ -70,7 +70,7 @@
       <hr />
       <p class="subtitle mb-3 sub-title">수상 내역</p>
       <p v-for="award in resume.awards" :key="award">
-        <span style="color: #8a8a8a">수상명</span
+        <span style="color: #8a8a8a;">수상명</span
         ><span>&emsp;{{ award.name }}<br /></span>
         <span style="color: #8a8a8a">수상일</span
         ><span>&emsp;{{ award.awardedAt.slice(0, 10) }}<br /></span>
@@ -127,7 +127,7 @@ export default {
   border: none;
   background-color: white;
   padding: 24px;
-  margin: 0 8px;
+  margin: 64px 8px 0 8px;
   border-radius: 5px 5px 0 0;
 }
 .resume-info-box > img {
@@ -149,12 +149,13 @@ export default {
   font-size: 20px;
   margin-right: 20px;
 }
-.resume-base-info-box {
-  display: flex;
-}
+/* .resume-base-info-box {
+  
+} */
 .resume-base-info-box > div {
   display: inline-block;
   margin-right: 20px;
+  margin-top: 4px;
 }
 .resume-info-box > .location-info-box {
   display: flex;
