@@ -27,9 +27,6 @@
 
 <script>
 import JobOpeningMainPage from "@/components/jobopening/JobOpeningMainPage.vue";
-
-// import RecommendTagList from '@/components/jobopening/RecommendTagList.vue'
-// import JobopeningList from '@/components/jobopening/JobopeningList.vue'
 import { mapActions, mapGetters, useStore } from "vuex";
 import { computed } from "@vue/runtime-core";
 export default {
@@ -60,12 +57,12 @@ export default {
 .total {
   display: flex;
   flex-direction: column;
-
   justify-content: center;
   min-height: 100vh;
   min-width: 100vw;
   background-color: #fff5f0;
 }
+
 .header {
   min-width: 100vw;
   height: 48px;
@@ -77,11 +74,13 @@ export default {
   position: fixed;
   top: 0;
 }
+
 .header img {
   height: 38px;
   margin: auto;
   width: auto;
 }
+
 .sub {
   display: flex;
   justify-content: center;
@@ -94,22 +93,27 @@ export default {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   padding: 16px 8px;
 }
+
 .subBox {
   text-align: left;
 }
+
 .sub-title {
   font-size: 16px;
   font-weight: bold;
 }
+
 .subBox p {
   font-size: 14px;
   margin: 0;
 }
+
 .contentBox {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .jobopening-container {
   padding: 10px;
   margin-bottom: 48px;
