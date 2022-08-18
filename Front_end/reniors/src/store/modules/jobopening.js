@@ -86,7 +86,7 @@ export default {
       state.interview = [];
       applies.forEach((apply) => {
         const object = {
-          title: apply.jobOpeningTitle,
+          title: apply.jobOpeningName,
           date: apply.interviewDate,
           child: apply.jobChildCategoryName,
         };
