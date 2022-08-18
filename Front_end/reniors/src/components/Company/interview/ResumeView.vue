@@ -126,7 +126,7 @@ export default {
   border: none;
   background-color: white;
   padding: 24px;
-  margin: 64px 8px 56px 8px;
+  margin: 24px 8px 24px 8px;
   border-radius: 5px 5px 0 0;
 }
 .resume-info-box > img {
