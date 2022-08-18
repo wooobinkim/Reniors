@@ -345,7 +345,7 @@ export default {
         formData.append(
           "data",
           new Blob([JSON.stringify(this.user)], {
-            type: "application/json" 
+            type: "application/json",
           }),
         );
         this.registUser(formData);
@@ -358,7 +358,6 @@ export default {
           method: "get",
         })
           .then((res) => {
-            console.log(res);
             if (res.data.res) {
               this.toast.show(
                 { body: "이미 사용중인 아이디입니다." },

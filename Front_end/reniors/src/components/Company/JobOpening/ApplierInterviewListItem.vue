@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     ...mapActions("company", ["updateApply", "registRoom"]),
-    updateapply() {
+    async updateapply() {
       if (confirm("면접 일정을 수정하시겠습니까?")) {
         this.applyinfo.jobOpeningProcess = "면접";
         this.applyinfo.sessionId = "InterviewSession" + this.jobopening.id;
@@ -77,7 +77,7 @@ export default {
           applyId: this.apply.id,
           apply: this.applyinfo,
         };
-        this.updateApply(data);
+        await this.updateApply(data);
         window.location.reload();
       }
     },

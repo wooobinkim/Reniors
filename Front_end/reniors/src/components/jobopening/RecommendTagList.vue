@@ -7,7 +7,7 @@
       </div>
     </template>
     <template v-else-if="isLoggedin && !isrecommend">
-      <div class="recommend-tag-title">
+      <div class="not-recommend-tag-title">
         <h2>관심 조건을 설정하고 <span>추천 공고</span>를 받아보세요!</h2>
       </div>
     </template>
@@ -121,6 +121,24 @@ export default {
   border-radius: 0.4rem;
   padding: 0px 15px;
   color: white;
+}
+
+.not-recommend-tag-title {
+  display: flex;
+  justify-content: center;
+  margin: 15px 15px 10px 15px;
+  height: 30px;
+}
+
+.not-recommend-tag-title > h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.not-recommend-tag-title > h2 > span {
+  color: var(--color-red-1);
+  font-size: 18px;
 }
 
 .jobopening-list > div {

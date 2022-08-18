@@ -1,130 +1,158 @@
 <template>
-  <div id="main-container" >
+  <div id="main-container">
     <div class="topheader">
-        <router-link :to="{ name: 'home' }">
-            <img src="@/assets/logo_cut.png" alt="logo">
-        </router-link>
+      <router-link :to="{ name: 'home' }">
+        <img src="@/assets/logo_cut.png" alt="logo" />
+      </router-link>
     </div>
     <div id="join" v-if="!session" class="join">
       <!-- top -->
-        <div class="row-6 lefttop">
-            <div class="left">
-              <div class="backBtnBox">
-                <router-link :to="{name: 'VideoMain'}">
-                    <i class="bi bi-arrow-left-circle-fill" style="color:#9B9B9B; font-size: 32px; margin:0 16px"></i>
-                </router-link>
-              </div>
-              <div class="header-logo">
-                <img src="@/assets/logo.png" />
-                <p><span style="color:#37BF99">{{companyName}}</span>의 </p>
-                <p>면접입니다.</p>
-              </div>
-            </div>
+      <div class="row-6 lefttop">
+        <div class="left">
+          <div class="backBtnBox">
+            <router-link :to="{ name: 'VideoMain' }">
+              <i
+                class="bi bi-arrow-left-circle-fill"
+                style="color: #9b9b9b; font-size: 32px; margin: 0 16px"
+              ></i>
+            </router-link>
+          </div>
+          <div class="header-logo">
+            <img src="@/assets/logo.png" />
+            <p>
+              <span style="color: #37bf99">{{ companyName }}</span
+              >의
+            </p>
+            <p>면접입니다.</p>
+          </div>
         </div>
+      </div>
 
-    <!-- bottom -->
-        <div class="righttop">
-            <div class="right">
-                <div class="fomrs">
-                    <div style="margin: 16px 0;">
-                        <p class="label">지원자명</p>
-                        <input
-                            v-model="myUserName"
-                            class="rightinput"
-                            type="text"
-                            required
-                            readonly
-                        />
-                    </div>
-                    <div style="margin: 16px 0; ">
-                        <p class="label">면접방 번호</p>
-                        <input
-                            v-model="mySessionId"
-                            class="rightinput"
-                            type="text"
-                            required
-                            readonly
-                        />
-                    </div>
-                    <div class="submitBtn">
-                        <button @click="joinSession()">면접방 들어가기</button>
-                    </div>
-                </div>
+      <!-- bottom -->
+      <div class="righttop">
+        <div class="right">
+          <div class="fomrs">
+            <div style="margin: 16px 0">
+              <p class="label">지원자명</p>
+              <input
+                v-model="myUserName"
+                class="rightinput"
+                type="text"
+                required
+                readonly
+              />
             </div>
+            <div style="margin: 16px 0">
+              <p class="label">면접방 번호</p>
+              <input
+                v-model="mySessionId"
+                class="rightinput"
+                type="text"
+                required
+                readonly
+              />
+            </div>
+            <div class="submitBtn">
+              <button @click="joinSession()">면접방 들어가기</button>
+            </div>
+          </div>
         </div>
-      
+      </div>
     </div>
 
     <div id="session" v-if="session" class="insession">
-        <!-- left -->
-        <div class="sessionvideo">
-            <!-- 상대방 -->
-            <div>
-                <user-video
-                  v-for="(sub,index) in subscribers"
-                  :index="index"
-                  :key="sub.stream.connection.connectionId"
-                  :stream-manager="sub"
-                  @click="updateMainVideoStreamManager(sub)"
-                  class="myvideo"
-                />
-            </div>
-            <!-- 본인 -->
-            <div id="video-container" v-if="!chatopenclose">
-                <user-video
-                :stream-manager="publisher"
-                @click="updateMainVideoStreamManager(publisher)"
-                class="myvideo"
-                />
-            </div>
+      <!-- left -->
+      <div class="sessionvideo">
+        <!-- 상대방 -->
+        <div>
+          <user-video
+            v-for="(sub, index) in subscribers"
+            :index="index"
+            :key="sub.stream.connection.connectionId"
+            :stream-manager="sub"
+            @click="updateMainVideoStreamManager(sub)"
+            class="myvideo"
+          />
+        </div>
+        <!-- 본인 -->
+        <div id="video-container" v-if="!chatopenclose">
+          <user-video
+            :stream-manager="publisher"
+            @click="updateMainVideoStreamManager(publisher)"
+            class="myvideo"
+          />
+        </div>
 
-            <!-- 채팅 -->
-            <div class="chatbox" v-if="chatopenclose">
-              <div class="chatlist">
-                <div v-for="msg in receivemsg" :key="msg" >
-                  <div v-if="msg.name == this.myUserName" class="chatitem">
-                    <div class="mename"><p style="margin:0;">{{myUserName.slice(0,1)}}</p></div>
-                    <div class="datadata"><p style="margin:0;">{{msg.data}}</p></div>
-                  </div>
-                  <div v-if="msg.name !== this.myUserName" class="chatitem">
-                    <div class="youname"><p style="margin:0;">{{companyName.slice(0,1)}}</p></div>
-                    <div class="datadata"><p style="margin:0;">{{msg.data}}</p></div>
-                  </div>
+        <!-- 채팅 -->
+        <div class="chatbox" v-if="chatopenclose">
+          <div class="chatlist">
+            <div v-for="msg in receivemsg" :key="msg">
+              <div v-if="msg.name == this.myUserName" class="chatitem">
+                <div class="mename">
+                  <p style="margin: 0">{{ myUserName.slice(0, 1) }}</p>
+                </div>
+                <div class="datadata">
+                  <p style="margin: 0">{{ msg.data }}</p>
                 </div>
               </div>
-              <div class="chatform">
-                <p style="width: 1vw">  </p>
-                <input class="chatinput" @keyup.enter="sendchat()" type="text" v-model="sendmsg" />
-                <button class="chatsubmit" @click="sendchat()"><i class="bi bi-send"></i></button>
+              <div v-if="msg.name !== this.myUserName" class="chatitem">
+                <div class="youname">
+                  <p style="margin: 0">{{ companyName.slice(0, 1) }}</p>
+                </div>
+                <div class="datadata">
+                  <p style="margin: 0">{{ msg.data }}</p>
+                </div>
               </div>
             </div>
-
+          </div>
+          <div class="chatform">
+            <p style="width: 1vw"></p>
+            <input
+              class="chatinput"
+              @keyup.enter="sendchat()"
+              type="text"
+              v-model="sendmsg"
+            />
+            <button class="chatsubmit" @click="sendchat()">
+              <i class="bi bi-send"></i>
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- right -->
-      <div style="margin:0; padding:0;">
-        
-
+      <div style="margin: 0; padding: 0">
         <div class="rightbtn">
-            <button @click="chatopen()" :class="{'chatbtn':!alram, 'chatbtn1':alram}"><i class="bi bi-chat-dots-fill"></i></button>
-            <template v-if="audioflag">
-                <button @click="audioonoff()" class="videobtn"><i class="bi bi-mic"></i></button>
-            </template>
-            <template v-if="!audioflag">
-                <button @click="audioonoff()" class="videobtn"><i class="bi bi-mic-mute"></i></button>
-            </template>
-            <template v-if="videoflag">
-                <button @click="videoonoff()" class="videobtn"><i class="bi bi-camera-video"></i></button>
-            </template>
-            <template v-if="!videoflag">
-                <button @click="videoonoff()" class="videobtn"><i class="bi bi-camera-video-off"></i></button>
-            </template>
-            
-            
-            
-            <button @click="leaveSession" class="leavebtn">
-                <span><i class="bi bi-box-arrow-right"></i> 퇴장</span>
+          <button
+            @click="chatopen()"
+            :class="{ chatbtn: !alram, chatbtn1: alram }"
+          >
+            <i class="bi bi-chat-dots-fill"></i>
+          </button>
+          <template v-if="audioflag">
+            <button @click="audioonoff()" class="videobtn">
+              <i class="bi bi-mic"></i>
             </button>
+          </template>
+          <template v-if="!audioflag">
+            <button @click="audioonoff()" class="videobtn">
+              <i class="bi bi-mic-mute"></i>
+            </button>
+          </template>
+          <template v-if="videoflag">
+            <button @click="videoonoff()" class="videobtn">
+              <i class="bi bi-camera-video"></i>
+            </button>
+          </template>
+          <template v-if="!videoflag">
+            <button @click="videoonoff()" class="videobtn">
+              <i class="bi bi-camera-video-off"></i>
+            </button>
+          </template>
+
+          <button @click="leaveSession" class="leavebtn">
+            <span><i class="bi bi-box-arrow-right"></i> 퇴장</span>
+          </button>
         </div>
       </div>
     </div>
@@ -135,13 +163,11 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "@/components/openvidu/UserVideo.vue";
-import { mapActions, mapGetters} from "vuex";
-// import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const OPENVIDU_SERVER_URL = "https://" + "i7b307openvidu.ssafy.io" + ":4443";
-// const OPENVIDU_SERVER_URL2 = "https://" + location.hostname + ":4443";
 const OPENVIDU_SERVER_SECRET = "reniors";
 
 export default {
@@ -163,7 +189,7 @@ export default {
       publisher: undefined,
       subscribers: [],
 
-      mySessionId: '',
+      mySessionId: "",
       myUserName: "",
       videoflag: true,
       audioflag: false,
@@ -171,50 +197,43 @@ export default {
       receivemsg: [],
       msgflag: true,
       chatopenclose: false,
-      companyName: '',
-      sessionleave:false,
+      companyName: "",
+      sessionleave: false,
       alram: false,
-    
     };
   },
   computed: {
-    ...mapGetters(['currentUser', 'rooms'])
-    // ...mapState("company", ["companyinfo", "interviewer"]),
+    ...mapGetters(["currentUser", "rooms"]),
   },
   watch: {
     companyinfo: function (data) {
       this.myUserName = data.name;
     },
     session: function () {
-      if(!this.sessionleave){
-      this.session.on("signal", (event) => {
+      if (!this.sessionleave) {
+        this.session.on("signal", (event) => {
           let name = event.from.data;
           name = name.substr(15);
-          name = name.substring(0,name.length-2);
-        this.receivemsg.push({name:name, data: event.data});
-        if(!this.chatopenclose){
-        this.alram = true}
+          name = name.substring(0, name.length - 2);
+          this.receivemsg.push({ name: name, data: event.data });
+          if (!this.chatopenclose) {
+            this.alram = true;
+          }
         });
       }
     },
   },
   created() {
-        this.fetchCurrentUser(),
-        this.myUserName = this.currentUser.name
-        this.fetchRooms(),
-        this.mySessionId = this.rooms[0].sessionId
-        this.companyName = this.rooms[0].companyName
-
+    this.fetchCurrentUser(), (this.myUserName = this.currentUser.name);
+    this.fetchRooms(), (this.mySessionId = this.rooms[0].sessionId);
+    this.companyName = this.rooms[0].companyName;
   },
   methods: {
-    ...mapActions(['fetchCurrentUser', 'fetchRooms']),
-    getTip(){
-        
-    },
+    ...mapActions(["fetchCurrentUser", "fetchRooms"]),
+    getTip() {},
     videoonoff() {
       this.videoflag = !this.videoflag;
       this.publisher.publishVideo(this.videoflag);
-
     },
     sendchat() {
       this.session
@@ -224,7 +243,7 @@ export default {
           type: "my-chat",
         })
         .then(() => {
-           this.msgflag = !this.msgflag;
+          this.msgflag = !this.msgflag;
           this.sendmsg = "";
         })
         .catch((error) => {
@@ -233,7 +252,7 @@ export default {
     },
     chatopen() {
       this.chatopenclose = !this.chatopenclose;
-      this.alram = false
+      this.alram = false;
     },
     audioonoff() {
       this.audioflag = !this.audioflag;
@@ -241,7 +260,6 @@ export default {
     },
     joinSession() {
       this.OV = new OpenVidu();
-
 
       this.session = this.OV.initSession();
 
@@ -281,14 +299,13 @@ export default {
             this.mainStreamManager = publisher;
             this.publisher = publisher;
 
-
             this.session.publish(this.publisher);
           })
           .catch((error) => {
             console.log(
               "There was an error connecting to the session:",
               error.code,
-              error.message
+              error.message,
             );
           });
       });
@@ -297,16 +314,22 @@ export default {
     },
 
     leaveSession() {
-      this.sessionleave = true;
-      if (this.session) this.session.disconnect();
+      if (confirm("퇴장하시겠습니까?")) {
+        this.sessionleave = true;
+        if (this.session) this.session.disconnect();
 
-      this.session = undefined;
-      this.mainStreamManager = undefined;
-      this.publisher = undefined;
-      this.subscribers = [];
-      this.OV = undefined;
+        this.session = undefined;
+        this.mainStreamManager = undefined;
+        this.publisher = undefined;
+        this.subscribers = [];
+        this.OV = undefined;
 
-      window.removeEventListener("beforeunload", this.leaveSession);
+        window.removeEventListener("beforeunload", this.leaveSession);
+
+        this.$router.push({
+          name: "VideoMain",
+        });
+      }
     },
 
     updateMainVideoStreamManager(stream) {
@@ -314,10 +337,9 @@ export default {
       this.mainStreamManager = stream;
     },
 
-
     getToken(mySessionId) {
       return this.createSession(mySessionId).then((sessionId) =>
-        this.createToken(sessionId)
+        this.createToken(sessionId),
       );
     },
 
@@ -334,7 +356,7 @@ export default {
                 username: "OPENVIDUAPP",
                 password: OPENVIDU_SERVER_SECRET,
               },
-            }
+            },
           )
           .then((response) => response.data)
           .then((data) => resolve(data.id))
@@ -343,11 +365,11 @@ export default {
               resolve(sessionId);
             } else {
               console.warn(
-                `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}`
+                `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}`,
               );
               if (
                 window.confirm(
-                  `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}\n\nClick OK to navigate and accept it. If no certificate warning is shown, then check that your OpenVidu Server is up and running at "${OPENVIDU_SERVER_URL}"`
+                  `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}\n\nClick OK to navigate and accept it. If no certificate warning is shown, then check that your OpenVidu Server is up and running at "${OPENVIDU_SERVER_URL}"`,
                 )
               ) {
                 location.assign(`${OPENVIDU_SERVER_URL}/accept-certificate`);
@@ -370,7 +392,7 @@ export default {
                 username: "OPENVIDUAPP",
                 password: OPENVIDU_SERVER_SECRET,
               },
-            }
+            },
           )
           .then((response) => response.data)
           .then((data) => resolve(data.token))
@@ -381,115 +403,127 @@ export default {
 };
 </script>
 <style scoped>
-#main-container{
-    min-height: 100vh;
-    min-width: 100vw;
-    background-color: #FFF5F0;
-    display: flex;
-    align-items: center;
+#main-container {
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: #fff5f0;
+  display: flex;
+  align-items: center;
 }
-.topheader{
-    min-width: 100vw;
-    height: 48px;
-    background-color: white;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px -2px;
-    position: fixed;
-    top: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+.topheader {
+  min-width: 100vw;
+  height: 48px;
+  background-color: white;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px -2px;
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.topheader img{
-    height: 38px;
-    margin: auto;
-    width: auto;
+
+.topheader img {
+  height: 38px;
+  margin: auto;
+  width: auto;
 }
-.join{
-    width: 90vw;
-    height: 80vh;
-    border-radius: 20px;
-    border: none;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    background: linear-gradient(white 45%, #FF843E 0%);
-    margin: auto;
+
+.join {
+  width: 90vw;
+  height: 80vh;
+  border-radius: 20px;
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background: linear-gradient(white 45%, #ff843e 0%);
+  margin: auto;
 }
+
 .header-logo {
   height: 40vh;
   height: auto;
 }
-.header-logo p{
-    font-weight: bold;
-    font-size: 24px;
-    
-    margin: 0;
-    
+
+.header-logo p {
+  font-weight: bold;
+  font-size: 24px;
+
+  margin: 0;
 }
-.lefttop{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 40vh;
+
+.lefttop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40vh;
 }
-.left{
+
+.left {
   height: 40vh;
   width: 90vw;
 }
-.backBtnBox{
+
+.backBtnBox {
   display: flex;
   justify-content: start;
-  align-content:flex-end;
+  align-content: flex-end;
   height: 6vh;
 }
-.righttop{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.right{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.rightinput{
-    margin: auto;
-    display: block;
-    width: 80vw;
-    height: 6vh;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border-radius: 0.375rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-.label{
-    text-align: left;
-    font-size: 16px;
-    color:white;
-    margin: 0 12px;
-    font-weight: bold;
 
+.righttop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.submitBtn{
-    margin: 8px;
+
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.submitBtn button{
-    width: 80vw;
-    height: 6vh;
-    background-color: #FFB400;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    margin: 8px 0;
+
+.rightinput {
+  margin: auto;
+  display: block;
+  width: 80vw;
+  height: 6vh;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0.375rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.label {
+  text-align: left;
+  font-size: 16px;
+  color: white;
+  margin: 0 12px;
+  font-weight: bold;
+}
+
+.submitBtn {
+  margin: 8px;
+}
+
+.submitBtn button {
+  width: 80vw;
+  height: 6vh;
+  background-color: #ffb400;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  margin: 8px 0;
 }
 
 .header-logo > img {
@@ -501,96 +535,104 @@ export default {
 
 /* IN session */
 
-.insession{
-    width: 100vw;
-    height: 90vh;
+.insession {
+  width: 100vw;
+  height: 90vh;
 }
-.sessionvideo{
+
+.sessionvideo {
   width: 90vw;
   height: 75vh;
   margin: 0 auto;
   padding: 16px 0 0 0;
 }
-.myvideo{
-    width: 85vw;
-    height: 35vh;
-    background-color: rgba(100, 100, 111, 0.2);
-    border-radius: 5px;
-    border: none;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    margin: 16px auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.myvideo {
+  width: 85vw;
+  height: 35vh;
+  background-color: rgba(100, 100, 111, 0.2);
+  border-radius: 5px;
+  border: none;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin: 16px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.chatbox{
-    width: 85vw;
-    height: 35vh;
-    border-radius: 10px;
-    background-color: white;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 16px auto;
-}
-.chatlist{
-    width: 85vw;
-    height: 28vh;
-    border: none;
-    padding: 4px;
-    overflow-y: scroll;
-}
-.chatform{
-    width: 83vw;
-    height: 5vh;
-    border: none;
-    border-radius: 30px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    background-color: #EAEAEA;
-    margin: 4px;
-    display: flex;
-    align-items: center;
-}
-.chatinput{
-    width: 70vw;
-    height: 4vh;
-    border: none;
-    margin: 0 2px 0 0;
-    background-color: #EAEAEA;
-    border-radius: 20px;
-}
-.chatinput:hover{
-    border: none;
-}
-.chatsubmit{
-    width: 3vw;
-    height: 3vw;
-    border: none;
-    border-radius: 20px;
-    margin: 2px 2px 0 2px;
-    background-color: #EAEAEA;
-    display: flex;
-    align-items: center;
-}
-.chatsubmit > i{
-    font-size: 16px;
-    transform: rotate(45deg);
-    margin: 0;
+.chatbox {
+  width: 85vw;
+  height: 35vh;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  margin: 16px auto;
 }
 
-.chatitem{
+.chatlist {
+  width: 85vw;
+  height: 28vh;
+  border: none;
+  padding: 4px;
+  overflow-y: scroll;
+}
+
+.chatform {
+  width: 83vw;
+  height: 5vh;
+  border: none;
+  border-radius: 30px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  background-color: #eaeaea;
+  margin: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.chatinput {
+  width: 70vw;
+  height: 4vh;
+  border: none;
+  margin: 0 2px 0 0;
+  background-color: #eaeaea;
+  border-radius: 20px;
+}
+
+.chatinput:hover {
+  border: none;
+}
+
+.chatsubmit {
+  width: 3vw;
+  height: 3vw;
+  border: none;
+  border-radius: 20px;
+  margin: 2px 2px 0 2px;
+  background-color: #eaeaea;
+  display: flex;
+  align-items: center;
+}
+
+.chatsubmit > i {
+  font-size: 16px;
+  transform: rotate(45deg);
+  margin: 0;
+}
+
+.chatitem {
   width: 78vw;
   height: 4vh;
   padding: 2px;
   display: flex;
   align-items: center;
-
 }
-.mename{
+
+.mename {
   width: 3vh;
   height: 3vh;
   border: none;
   border-radius: 100px;
-  background-color: #FFB400;
+  background-color: #ffb400;
   color: white;
   font-weight: bold;
   font-size: 16px;
@@ -599,12 +641,13 @@ export default {
   justify-content: center;
   margin: auto 4px;
 }
-.youname{
+
+.youname {
   width: 3vh;
   height: 3vh;
   border: none;
   border-radius: 100px;
-  background-color: #37BF99;
+  background-color: #37bf99;
   color: white;
   font-weight: bold;
   font-size: 14px;
@@ -613,79 +656,86 @@ export default {
   justify-content: center;
   margin: auto 8px auto 4px;
 }
-.datadata{
+
+.datadata {
   text-align: center;
   font-size: 12px;
   margin: auto 4px;
 }
 
-.rightbtn{
-    width: 100vw;
-    height: 10vh;
-    position: fixed;
-    bottom: 50px;
-}
-.chatbtn{
-    width: 16vw;
-    height: 16vw;
-    border-radius: 100%;
-    border: none;
-    background-color: white;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 4px;
-}
-.chatbtn i{
-    font-size: 24px;
-    color: #8CD6C1;
-    font-weight: bold;  
-}
-.chatbtn1{
-    width: 16vw;
-    height: 16vw;
-    border-radius: 100%;
-    border: none;
-    background-color: white;
-    box-shadow: #fecc4e 0px 3px 8px 0px;
-    margin: 4px;
-}
-.chatbtn1 i{
-    font-size: 24px;
-    color: #8CD6C1;
-    font-weight: bold;  
-}
-.videobtn{
-    width: 16vw;
-    height: 16vw;
-    border-radius: 100%;
-    border: none;
-    background-color: #8CD6C1;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 4px;
-}
-.videobtn i{
-    font-size: 24px;
-    color: white;
-    font-weight: bold;
-    
-}
-.leavebtn{
-    width: 26vw;
-    height: 16vw;
-    border-radius: 30px;
-    border: none;
-    background-color: #F3620F;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin: 4px;
-    
-}
-.leavebtn i{
-    font-size: 24px;
-    color: white;
-    font-weight: bold; 
-}
-.leavebtn span{
-    font-size: 16px;
-    color: white;
+.rightbtn {
+  width: 100vw;
+  height: 10vh;
+  position: fixed;
+  bottom: 50px;
 }
 
+.chatbtn {
+  width: 16vw;
+  height: 16vw;
+  border-radius: 100%;
+  border: none;
+  background-color: white;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  margin: 4px;
+}
+
+.chatbtn i {
+  font-size: 24px;
+  color: #8cd6c1;
+  font-weight: bold;
+}
+
+.chatbtn1 {
+  width: 16vw;
+  height: 16vw;
+  border-radius: 100%;
+  border: none;
+  background-color: white;
+  box-shadow: #fecc4e 0px 3px 8px 0px;
+  margin: 4px;
+}
+
+.chatbtn1 i {
+  font-size: 24px;
+  color: #8cd6c1;
+  font-weight: bold;
+}
+
+.videobtn {
+  width: 16vw;
+  height: 16vw;
+  border-radius: 100%;
+  border: none;
+  background-color: #8cd6c1;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  margin: 4px;
+}
+
+.videobtn i {
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+}
+
+.leavebtn {
+  width: 26vw;
+  height: 16vw;
+  border-radius: 30px;
+  border: none;
+  background-color: #f3620f;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  margin: 4px;
+}
+
+.leavebtn i {
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+}
+
+.leavebtn span {
+  font-size: 16px;
+  color: white;
+}
 </style>
