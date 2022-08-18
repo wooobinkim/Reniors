@@ -5,7 +5,8 @@
     alt="test"
     class="logo-img"
   />
-
+  <div style="display:flex; justify-content:center;">
+  <div>
   <div class="company-info-box">
     <div>{{ companyinfo.name }}</div>
     <div>{{ companyinfo.companyAppId }}</div>
@@ -26,6 +27,9 @@
       <div>채용완료</div>
     </div>
   </div>
+  </div>
+  </div>
+ 
   <router-link :to="{ name: 'companyupdate' }" class="company-to-update-btn"
     >기업 정보 수정</router-link
   >
@@ -59,6 +63,7 @@ export default {
 <style scoped>
 .total{
   margin-top: 64px;
+  width: 100vw;
 }
 .logo-img {
   width: 120px;
@@ -69,7 +74,7 @@ export default {
 }
 
 .company-info-box {
-  width: 400px;
+  width: 360px;
 }
 .company-info-box > div:first-child {
   font-weight: bold;
@@ -77,7 +82,7 @@ export default {
   margin-bottom: 10px;
 }
 .process-box {
-  width: 400px;
+  width: 360px;
   display: flex;
   justify-content: space-around;
   margin-top: 10px;

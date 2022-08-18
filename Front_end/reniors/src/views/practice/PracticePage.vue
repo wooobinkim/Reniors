@@ -70,7 +70,7 @@
 
     <!-- go practice -->
     <div id="session" v-if="session">
-      <div style="background-color: #fff5f0; height: 600px">
+      <div style="background-color: #fff5f0; height: 100vh;">
         <div id="video-container">
           <div class="videoclass">
             <user-video
@@ -142,7 +142,7 @@
               type="button"
               id="buttonRecording"
               @click="startRecording(session)"
-              value="Recording"
+              value="녹화시작"
               style="background-color: var(--color-red-2)"
             />
             <input
@@ -151,7 +151,7 @@
               type="button"
               id="buttonRecording"
               @click="[stopRecording(nowRecordingId), reactModal()]"
-              value="Stop"
+              value="녹화중지"
               style="background-color: var(--color-red-2)"
             />
           </div>
@@ -454,7 +454,7 @@ export default {
 
 <style scoped>
 .pratice-page-box {
-  width: 100%;
+  width: 100vw;
 }
 .video-container {
   position: absolute;
@@ -574,16 +574,17 @@ export default {
 }
 .submit {
   position: fixed;
-  bottom: 60px;
-  width: 700px;
+  bottom: 50px;
+  width: 100vw;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color:white;
   margin: auto;
   margin-bottom: 0;
   border-top: solid 0.5px #ffedbf;
-  display: flex;
-  justify-content: space-around;
   padding: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
 }
 .submit > div {
   width: 48%;
@@ -592,14 +593,14 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80%;
-  width: 100%;
-  margin: 8px 0;
+  height: 48px;
+  width: 90%;
+  margin: 8px auto;
   border-radius: 10px;
   border: none;
   color: white;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 20px;
   padding: 10px;
 
   /* box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1), 0 2px 2px -1px rgba(0, 0, 0, 0.06); */
@@ -607,12 +608,13 @@ export default {
 }
 @media (max-width: 760px) {
   .submit {
-    width: 300px;
+    width: 100vw;
+    height: 64px;
   }
   .Btn3 {
-    font-size: 16px;
+    font-size: 20px;
     padding: 0;
-    height: 100%;
+    height: 48px;
   }
   .preBtn {
     font-size: 32px;
