@@ -132,13 +132,13 @@ export default {
 
 .not-recommend-tag-title > h2 {
   margin: 0;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
 }
 
 .not-recommend-tag-title > h2 > span {
   color: var(--color-red-1);
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .jobopening-list > div {

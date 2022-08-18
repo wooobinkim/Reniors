@@ -28,7 +28,6 @@
       </div>
     </div>
 
-    <!-- <img src="https://i7b307.p.ssafy.io/images/user/{{resume.id}}" /> -->
     <div v-if="resume.careerDetails.length != 0">
       <hr />
       <p class="subtitle mb-3 sub-title">경력 사항</p>
@@ -81,7 +80,6 @@
 
 <script>
 import { mapActions, mapMutations, mapGetters } from "vuex";
-// import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -96,7 +94,6 @@ export default {
     resume: function (data) {
       this.birth = new Date(data.birth);
       this.resumeinfo = data;
-      console.log(this.resumeinfo);
     },
   },
   computed: {
