@@ -1,6 +1,5 @@
 <template>
   <div class="jobopening-list">
-    <!-- {{ jobopenings }} -->
     <div v-if="isJobopenings">
       <div class="jobopening-msg">검색 결과</div>
       <JobopeningItem
@@ -12,7 +11,10 @@
         더보기
       </button>
     </div>
-    <div v-else>아직 채용공고가 없어요!</div>
+    <div v-else-if="isJobopenings.length === 0">
+      등록된 채용 공고가 없습니다!
+    </div>
+    <div v-else>검색 결과가 없습니다.</div>
   </div>
 </template>
 
@@ -31,7 +33,7 @@ export default {
 
     const jobopenings = computed(() => store.getters["jobopening/jobopenings"]);
     const isJobopenings = computed(
-      () => store.getters["jobopening/isJobopenings"]
+      () => store.getters["jobopening/isJobopenings"],
     );
 
     return {
@@ -55,7 +57,6 @@ export default {
     await this.fetchJobopenings({
       page: 0,
     });
-    console.log(this.jobopenings);
   },
   computed: {
     ...mapGetters("jobopening", ["jobopenings", "isLast", "currPage"]),
@@ -78,20 +79,9 @@ export default {
   margin-top: 10px;
   margin-left: 12px;
 }
-.jobopening-list{
+.jobopening-list {
   padding-bottom: 200px;
 }
-/* .jobopening-list > div {
-  display: grid;
-  grid-template-columns: 170px 170px;
-  margin-top: 10px;
-}
-
-@media screen and (min-width: 720px) {
-  .jobopening-list > div {
-    grid-template-columns: 20vh 20vh 20vh;
-  }
-} */
 .more-btn {
   margin-top: 30px;
   border-radius: 5px;
@@ -101,8 +91,8 @@ export default {
   color: white;
   font-weight: bold;
 }
-@media(max-width:760px){
-  .jobopening-list{
+@media (max-width: 760px) {
+  .jobopening-list {
     padding-bottom: 100px;
   }
 }
