@@ -1,5 +1,4 @@
 <template>
-<div>
     <div class="header">
       <i @click="prevpage()" class="bi bi-arrow-left-circle-fill"></i>
       <router-link class="header-logo" :to="{ name: 'home' }">
@@ -7,8 +6,8 @@
       </router-link>
       <div></div>
     </div>
-    
-        <search-bar></search-bar>
+  <div>
+    <search-bar></search-bar>
 
     <!-- content -->
     <div class="jobopening-container">
@@ -83,5 +82,10 @@ export default {
 }
 .header > div {
   width: 30px;
+}
+@media(max-width: 760px){
+  .jobopening-container {
+    width: 100vw;
+}
 }
 </style>
