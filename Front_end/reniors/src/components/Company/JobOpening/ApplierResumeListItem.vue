@@ -1,8 +1,8 @@
 <template>
   <div class="apply-resume-item-info-box">
     <div>이름 : {{ apply.name }}</div>
-    <div>채용현황 : {{ apply.jobOpeningProcess }}</div>
-    <button @click="resumeview()">이력서보기</button>
+    <div>채용 현황 : {{ apply.jobOpeningProcess }}</div>
+    <button @click="resumeview()">이력서 보기</button>
   </div>
 </template>
 
