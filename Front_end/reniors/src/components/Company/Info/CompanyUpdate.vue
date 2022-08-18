@@ -3,7 +3,7 @@
     <header>
       <div>
         <img
-          style="width: 128px; max-height: 170px; margin: 10px"
+          style="width: 128px; max-height: 170px; margin: 48px auto"
           src="@/assets/logo.png"
           alt="logo"
         />
@@ -223,7 +223,7 @@
           <img
             :src="companyinfo.baseURL + companyinfo.companyProfile"
             alt="test"
-            class="logo-img"
+            style="width:240px; height:auto; margin:8px auto"
           />
         </div>
 

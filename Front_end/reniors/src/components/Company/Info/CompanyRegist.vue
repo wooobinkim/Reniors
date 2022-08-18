@@ -379,4 +379,5 @@ footer > button {
 .contentBox{
   padding: 0 8px;
 }
+
 </style>
