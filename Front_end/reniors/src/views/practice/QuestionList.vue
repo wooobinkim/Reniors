@@ -12,11 +12,11 @@
     <div class="headsub">
       <p
         class="my-0"
-        style="text-align: start; font-size: 14px font-weight: bold;"
+        style="text-align: start; font-size: 16px"
       >
         질문에 대한 답변을 미리 작성해보세요!
       </p>
-      <p style="text-align: start; font-size: 14px font-weight:bold;">
+      <p style="text-align: start; font-size: 16px">
         화상면접 연습 시 참고할 수 있습니다.
       </p>
     </div>

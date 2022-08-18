@@ -1,5 +1,6 @@
 <template>
-  <div class="pratice-page-box">
+
+  <div >
     <!-- header -->
     <div class="head2">
       <router-link class="mx-3 rl" :to="{ name: 'QuestionList' }"
@@ -20,7 +21,7 @@
         style="
           margin: auto auto;
           background-color: #fff5f0;
-          height: 1000px;
+          height: 100vh;
           display: flex;
           justify-content: center;
         "
@@ -70,7 +71,7 @@
 
     <!-- go practice -->
     <div id="session" v-if="session">
-      <div style="background-color: #fff5f0; height: 100vh;">
+      <div style="background-color: #fff5f0; height: 100vh">
         <div id="video-container">
           <div class="videoclass">
             <user-video
@@ -453,8 +454,12 @@ export default {
 </script>
 
 <style scoped>
-.pratice-page-box {
+.pratice-page-box{
   width: 100vw;
+}
+.pratice-page-box-noFooter{
+  width: 100vw;
+  z-index: 1;
 }
 .video-container {
   position: absolute;
