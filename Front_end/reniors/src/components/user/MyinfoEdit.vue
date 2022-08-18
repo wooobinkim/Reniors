@@ -13,7 +13,7 @@
       <br />
       <p class="forminfo">이메일<span class="required">&nbsp;&nbsp;*</span></p>
       <b-form-input
-        v-if="currentUser.kakaoId === null"
+        v-if="currentUser.kakaoId === ''"
         class="mb-3"
         type="email"
         v-model="currentUser.userAppId"

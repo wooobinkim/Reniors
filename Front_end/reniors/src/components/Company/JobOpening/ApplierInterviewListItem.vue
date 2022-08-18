@@ -2,11 +2,11 @@
   <div class="apply-interview-item-info-box">
     <div>이름 : {{ apply.name }}</div>
     <template v-if="new Date(apply.interviewDate).getFullYear() == 1970">
-      <div>면접날짜 : 미정</div>
+      <div>면접 날짜 : -</div>
     </template>
     <template v-else>
       <div>
-        면접날짜 : {{ new Date(apply.interviewDate).getFullYear() }}-{{
+        면접 날짜 : {{ new Date(apply.interviewDate).getFullYear() }}-{{
           new Date(apply.interviewDate).getMonth() + 1
         }}-{{ new Date(apply.interviewDate).getDate() }}
         {{ new Date(apply.interviewDate).getHours() }}시
@@ -17,15 +17,15 @@
         }}
       </div>
     </template>
-    <div>채용현황 : {{ apply.jobOpeningProcess }}</div>
+    <div>채용 현황 : {{ apply.jobOpeningProcess }}</div>
     <div class="apply-interview-btn-box">
-      <button @click="resumeview()">이력서보기</button>
+      <button @click="resumeview()">이력서 보기</button>
       <template v-if="apply.jobOpeningProcess == '면접'">
-        <button @click="interviewflag()">면접일정잡기</button>
+        <button @click="interviewflag()">면접 일정 잡기</button>
       </template>
       <template v-if="apply.jobOpeningProcess == '면접심사중'">
         <router-link :to="{ name: 'usereval', params: { no: apply.userId } }">
-          <button>면접평가보기</button></router-link
+          <button>면접 평가 보기</button></router-link
         >
       </template>
     </div>
