@@ -76,7 +76,11 @@ export default {
     ...mapActions(["login"]),
     kakaologin() {
       window.location.replace(
-        "https://kauth.kakao.com/oauth/authorize?client_id=4e4c47797fd9117b5651478290547b4f&redirect_uri=https://i7b307.p.ssafy.io/kakaologin&response_type=code",
+        "https://kauth.kakao.com/oauth/authorize?client_id=" +
+          process.env.VUE_APP_KAKAO_REST_API_KEY +
+          "&redirect_uri=" +
+          process.env.VUE_APP_KAKAO_REDIRECT_URI +
+          "&response_type=code",
       );
     },
   },

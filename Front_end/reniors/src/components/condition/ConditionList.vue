@@ -35,7 +35,7 @@
           </div>
 
           <template v-if="!condition.jobParentCategoryName">
-            <p>맞춤직무가 없습니다.</p>
+            <p>맞춤 직무를 설정해보세요.</p>
           </template>
           <template v-else>
             <p>{{ condition.jobParentCategoryName }}</p>
@@ -84,7 +84,6 @@ export default {
         router.push({ name: "ConditionCreate" });
     };
     const routeResult = (id, event) => {
-      console.log("여기여기");
       if (event.currentTarget.classList.contains("is-active")) {
         router.push({ name: "ConditionResult", params: { conditionId: id } });
         const search = () => store.dispatch("condition/search", id);
