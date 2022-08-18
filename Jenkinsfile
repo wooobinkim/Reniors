@@ -27,14 +27,13 @@ pipeline{
             steps {
                 script{
                     try{
-                        sh "docker rmi ${BACK_NAME}"
-                        sh "docker rmi ${FRONT_NAME}"
-
-                        sh "docker build -t ${BACK_NAME} ./Back_end/reniors/."
-                        sh "docker build -t ${FRONT_NAME} ./Front_end/reniors/."
+                        // sh "docker rmi ${BACK_NAME}"
+                        // sh "docker rmi ${FRONT_NAME}"
                     }catch(e){
-                        sh 'exit 0'
+                        
                     }
+                    sh "docker build -t ${BACK_NAME} ./Back_end/reniors/."
+                    sh "docker build -t ${FRONT_NAME} ./Front_end/reniors/."
                 }
             }
         }

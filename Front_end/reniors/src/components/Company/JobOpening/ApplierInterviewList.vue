@@ -1,24 +1,25 @@
 <template>
   <div>
     <template v-for="apply in applylist" :key="apply.id">
-      <!-- <template
+      <template
         v-if="
           apply.jobOpeningProcess == '면접' ||
           apply.jobOpeningProcess == '면접심사중' ||
           apply.jobOpeningProcess == '면접불합격'
         "
-      > -->
+      >
         <div>
           <input
             :value="apply"
             type="checkbox"
+            v-model="pu.passUser"
             class="apply-interview-list-checkbox"
           />
           <applier-interview-list-item :apply="apply">
           </applier-interview-list-item>
         </div>
       </template>
-    <!-- </template> -->
+    </template>
     <button @click="interviewpass()" class="apply-interview-pass-btn">
       최종합격
     </button>
@@ -40,17 +41,15 @@ export default {
   },
   data() {
     return {
-      passUser: [],
+      pu:{
+        passUser: [],
+      }
     };
   },
   watch: {
-    passUser(){
-      console.log(this.passUser);
-    }
   },
   async created() {
     await this.getapplylist(this.$route.params.no);
-    console.log(this.passUser);
   },
   computed: {
     ...mapGetters("company", ["jobopening", "applylist"]),
@@ -62,9 +61,9 @@ export default {
       "updateApply",
     ]),
     ...mapActions("home", ["createNotice"]),
-    interviewpass() {
+    async interviewpass() {
       if (confirm("선택된 지원자의 상태를 최종 합격으로 변경하시겠습니까?")) {
-        this.passUser.forEach((data) => {
+        await this.pu.passUser.forEach((data) => {
           this.updateApply({
             jobOpeningId: this.jobopeningdetail.id,
             applyId: data.id,
@@ -80,15 +79,15 @@ export default {
         });
 
         let tmparr = [];
-        this.applylist.forEach((apply) => {
+        await this.applylist.forEach((apply) => {
           if (
             apply.jobOpeningProcess == "면접" ||
             apply.jobOpeningProcess == "면접심사중"
           )
             tmparr.push(apply);
         });
-        let unpassUser = tmparr.filter((x) => !this.passUser.includes(x));
-        unpassUser.forEach((data) => {
+        let unpassUser = tmparr.filter((x) => !this.pu.passUser.includes(x));
+        await unpassUser.forEach((data) => {
           this.updateApply({
             jobOpeningId: this.jobopeningdetail.id,
             applyId: data.id,
@@ -109,7 +108,8 @@ export default {
             jobOpeningProcess: "최종합격",
           },
         };
-        this.progressJobOpening(data);
+        await this.progressJobOpening(data);
+        window.location.reload();
       }
     },
   },

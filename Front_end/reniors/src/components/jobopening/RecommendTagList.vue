@@ -32,7 +32,7 @@
       </div>
     </template>
     <div class="jobopening-list">
-      <div v-if="isrecommend">
+      <div v-if="isrecommend" class="jobopening-scroll">
         <RecommendJobOpeningItem
           v-for="jobopening in recommendJobopenings"
           :key="jobopening"
@@ -124,7 +124,6 @@ export default {
 }
 
 .jobopening-list > div {
-  overflow: scroll;
   display: grid;
   grid-template-rows: 150px 150px;
   grid-template-columns: repeat(var(--columns), 170px);
@@ -140,6 +139,7 @@ export default {
     justify-items: center;
   }
 }
+
 .notlogTotal {
   display: flex;
   width: 100%;
@@ -147,11 +147,13 @@ export default {
   justify-content: center;
   background-color: #fff5f0;
 }
+
 .noglog {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .notlogBox {
   background-color: rgba(256, 256, 256, 0.5);
   border: none;
@@ -159,11 +161,13 @@ export default {
   margin: 8px;
   padding: 10px 8px;
 }
+
 .notlogp {
   font-size: 24px;
   font-weight: bold;
   color: #ff843e;
 }
+
 .notlogBtn {
   background-color: #ff843e;
   border: none;
@@ -175,8 +179,28 @@ export default {
   padding: 8px;
   margin: 8px;
 }
+
 .notlogBtn i {
   font-size: 24px;
   margin: auto 8px;
+}
+
+.jobopening-scroll {
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+.jobopening-scroll::-webkit-scrollbar {
+  height: 5px;
+}
+
+.jobopening-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--color-green-1);
+  border-radius: 10px;
+}
+
+.jobopening-scroll::-webkit-scrollbar-track {
+  background-color: var(--color-green-3);
+  border-radius: 10px;
 }
 </style>

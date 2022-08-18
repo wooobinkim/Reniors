@@ -16,7 +16,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.common.reniors.common.exception.NotAuthException.USER_NO_AUTH;
@@ -69,11 +71,26 @@ public class AnswerService {
     }
 
     @Transactional
+    public boolean answerCheck(Long questionId, User user) {
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(()->new NotFoundException(QUESTION_NOT_FOUND));
+        Optional answer = answerRepository.findByQuestionAndUser(question, user);
+
+        if(answer.isPresent()) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Transactional
     public AnswerResponse getAnswer(Long questionId, User user) {
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(()->new NotFoundException(QUESTION_NOT_FOUND));
         Answer answer = answerRepository.findByQuestionAndUser(question, user)
                 .orElseThrow(()->new NotFoundException(ANSWER_NOT_FOUND));
+
         return AnswerResponse.response(answer);
     }
 

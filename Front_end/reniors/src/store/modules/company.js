@@ -183,8 +183,8 @@ export default {
       dispatch("removeToken");
     },
 
-    registCompany: ({ commit, getters }, formData) => {
-      axios({
+    async registCompany({ commit, getters }, formData){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company`,
         method: "post",
         headers: {
@@ -193,28 +193,28 @@ export default {
         },
         data: formData,
       })
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+        .then(async ({ data }) => {
+          await commit("SET_DATASTATE", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    getCompany: ({ commit, getters }) => {
-      axios({
+    async getCompany({ commit, getters }){
+      await axios({
         url: "https://i7b307.p.ssafy.io/api/company",
         method: "get",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_COMPANY", data);
+        .then(async ({ data }) => {
+          await commit("SET_COMPANY", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    updateCompany: ({ commit, getters }, formData) => {
-      axios({
+    async updateCompany({ commit, getters }, formData){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company`,
         method: "put",
         headers: {
@@ -223,16 +223,16 @@ export default {
         },
         data: formData,
       })
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+        .then(async ({ data }) => {
+          await commit("SET_DATASTATE", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
 
-    registJobOpening: ({ commit, getters }, formData) => {
-      axios({
+    async registJobOpening({ commit, getters }, formData){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening`,
         method: "post",
         headers: {
@@ -241,15 +241,15 @@ export default {
         },
         data: formData,
       })
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+        .then(async({ data }) => {
+          await commit("SET_DATASTATE", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    updateJobOpening: ({ commit, getters }, data) => {
-      axios({
+    async updateJobOpening({ commit, getters }, data){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${data.no}`,
         method: "put",
         headers: {
@@ -258,285 +258,285 @@ export default {
         },
         data: data.formData,
       })
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+        .then(async ({ data }) => {
+          await commit("SET_DATASTATE", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    getJobOpeningList: ({ commit, getters }) => {
-      axios({
+    async getJobOpeningList({ commit, getters }){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening`,
         method: "get",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_JOBOPENING_LIST", data);
+        .then(async ({ data }) => {
+          await commit("SET_JOBOPENING_LIST", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    getJobOpening: ({ commit, getters }, no) => {
-      axios({
+    async getJobOpening({ commit, getters }, no){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}`,
         method: "get",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_JOBOPENING", data);
+        .then(async ({ data }) => {
+          await commit("SET_JOBOPENING", data);
         })
 
         .catch((error) => {
           console.log(error);
         });
     },
-    deleteJobOpening: ({ commit, getters }, no) => {
-      axios({
+    async deleteJobOpening({ commit, getters }, no){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}`,
         method: "delete",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_JOBOPENING", data);
+        .then(async({ data }) => {
+          await commit("SET_JOBOPENING", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    finishJobOpening: ({ commit, getters }, no) => {
-      axios({
+    async finishJobOpening({ commit, getters }, no){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}/finish`,
         method: "put",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+        .then(async ({ data }) => {
+          await commit("SET_DATASTATE", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    progressJobOpening: ({ commit, getters }, data) => {
-      axios({
+    async progressJobOpening({ commit, getters }, data){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company/progress/${data.no}`,
         method: "put",
         headers: getters.authHeader,
         data: data.progress,
       })
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+        .then(async({ data }) => {
+          await commit("SET_DATASTATE", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    getapplylist: ({ commit, getters }, no) => {
-      axios({
+    async getapplylist({ commit, getters }, no){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}/apply`,
         method: "get",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_APPLY_LIST", data);
+        .then(async ({ data }) => {
+          await commit("SET_APPLY_LIST", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    getapply: ({ commit, getters }, data) => {
-      axios({
+    async getapply({ commit, getters }, data){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
         method: "get",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_APPLY", data);
+        .then(async ({ data }) => {
+          await commit("SET_APPLY", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    getinterviewapplylist: ({ commit, getters }, no) => {
-      axios({
+    async getinterviewapplylist({ commit, getters }, no){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}/apply`,
         method: "get",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_INTERVIEW_APPLY_LIST", data);
+        .then(async({ data }) => {
+          await commit("SET_INTERVIEW_APPLY_LIST", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    getinterviewapplylistasc: ({ commit, getters }, no) => {
-      axios({
+    async getinterviewapplylistasc({ commit, getters }, no){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${no}/apply/dateAsc`,
         method: "get",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_INTERVIEW_APPLY_LIST_ASC", data);
+        .then(async ({ data }) => {
+          await commit("SET_INTERVIEW_APPLY_LIST_ASC", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    updateApply: ({ commit, getters }, data) => {
-      axios({
+    async updateApply({ commit, getters }, data){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}`,
         method: "put",
         headers: getters.authHeader,
         data: data.apply,
       })
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+        .then(async ({ data }) => {
+          await commit("SET_DATASTATE", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    finishInterview: ({ commit, getters }, data) => {
-      axios({
+    async finishInterview({ commit, getters }, data){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company/jobopening/${data.jobOpeningId}/apply/${data.applyId}/finishInterview`,
         method: "put",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+        .then(async({ data }) => {
+          await commit("SET_DATASTATE", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    getResume: ({ commit, getters }, no) => {
-      axios({
+    async getResume({ commit, getters }, no){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/company/userdetail/${no}`,
         method: "get",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_RESUME", data);
+        .then(async ({ data }) => {
+          await commit("SET_RESUME", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    registRoom: ({ commit, getters }, data) => {
-      axios({
+    async registRoom({ commit, getters }, data){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/room/company`,
         method: "post",
         headers: getters.authHeader,
         data: data,
       })
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+        .then(async ({ data }) => {
+          await commit("SET_DATASTATE", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    registEvalQuestion: ({ commit, getters }, evalquestion) => {
-      axios({
+    async registEvalQuestion({ commit, getters }, evalquestion){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/eval`,
         method: "post",
         headers: getters.authHeader,
         data: evalquestion,
       })
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+        .then(async ({ data }) => {
+          await commit("SET_DATASTATE", data);
           window.location.reload();
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    getEvalQuestionList: ({ commit, getters }, no) => {
-      axios({
+    async getEvalQuestionList({ commit, getters }, no){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/eval/search/${no}`,
         method: "get",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_EVAL_QUESTION_LIST", data);
+        .then(async ({ data }) => {
+          await commit("SET_EVAL_QUESTION_LIST", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    updateEvalQuestion: ({ commit, getters }, data) => {
-      axios({
+    async updateEvalQuestion({ commit, getters }, data){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/eval/${data.no}`,
         method: "put",
         headers: getters.authHeader,
         data: data.evalquestion,
       })
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+        .then(async ({ data }) => {
+          await commit("SET_DATASTATE", data);
           window.location.reload();
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    deleteEvalQuestion: ({ commit, getters }, no) => {
-      axios({
+    async deleteEvalQuestion({ commit, getters }, no){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/eval/${no}`,
         method: "delete",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+        .then(async ({ data }) => {
+          await commit("SET_DATASTATE", data);
           window.location.reload();
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    registUserEval: ({ commit, getters }, data) => {
-      axios({
+    async registUserEval({ commit, getters }, data) {
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/eval/${data.jobOpeningId}/usereval/${data.userId}`,
         method: "post",
         headers: getters.authHeader,
         data: data.usereval,
       })
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+        .then(async ({ data }) => {
+          await commit("SET_DATASTATE", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    getUserEvalList: ({ commit, getters }, data) => {
-      axios({
+    async getUserEvalList({ commit, getters }, data){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/eval/${data.jobOpeningId}/usereval/${data.userId}`,
         method: "get",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_USER_EVAL_LIST", data);
+        .then(async ({ data }) => {
+          await commit("SET_USER_EVAL_LIST", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    deleteUserEvalList: ({ commit, getters }, data) => {
-      axios({
+    async deleteUserEvalList({ commit, getters }, data){
+      await axios({
         url: `https://i7b307.p.ssafy.io/api/eval/${data.jobOpeningId}/usereval/${data.userId}`,
         method: "delete",
         headers: getters.authHeader,
       })
-        .then(({ data }) => {
-          commit("SET_DATASTATE", data);
+        .then(async ({ data }) => {
+          await commit("SET_DATASTATE", data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    setInterviewer: ({ commit }, data) => {
-      commit("SET_INTERVIEWER", data);
+    async setInterviewer({ commit }, data){
+      await commit("SET_INTERVIEWER", data);
     },
   },
 

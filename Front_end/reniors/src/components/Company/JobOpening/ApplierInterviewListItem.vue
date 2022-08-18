@@ -78,6 +78,7 @@ export default {
           apply: this.applyinfo,
         };
         this.updateApply(data);
+        window.location.reload();
       }
     },
     interviewflag() {

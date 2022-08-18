@@ -259,8 +259,6 @@ export default {
         gender: "",
         isOpen: "CLOSE",
         kakaoId: "",
-        portfolioName: "",
-        portfolioPath: "",
         profileImgName: "",
         profileImgPath: "",
         totalCareer: 0,
@@ -346,7 +344,9 @@ export default {
         formData.append("img", this.userImg[0]);
         formData.append(
           "data",
-          new Blob([JSON.stringify(this.user)], { type: "application/json" }),
+          new Blob([JSON.stringify(this.user)], {
+            type: "application/json" 
+          }),
         );
         this.registUser(formData);
       }

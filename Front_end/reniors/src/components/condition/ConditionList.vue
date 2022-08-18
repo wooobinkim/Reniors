@@ -24,7 +24,7 @@
           <div class="condition-item-region">
             <font-awesome-icon icon="fa-solid fa-location-dot" />
             <template v-if="condition.hopeAreaResponseList.length == 0">
-              <p>맞춤지역을 설정해보세요.</p>
+              <p>맞춤지역이 없습니다.</p>
             </template>
             <template v-else>
               <p>

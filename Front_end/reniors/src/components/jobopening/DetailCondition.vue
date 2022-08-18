@@ -22,7 +22,7 @@
     <div class="jobopening-box">
       <h3>근무조건</h3>
       <hr>
-      <ConditionItem left="급여" :right="jobopening.minSalary + '원'" />
+      <ConditionItem left="연봉" :right="jobopening.minSalary/10000 + ' 만원'" />
       <ConditionItem left="지역" :right="sidos?.find((sido) => sido.id===jobopening?.sidoId)?.name + ' ' + guguns?.find((gugun) => gugun.id===jobopening?.gugunId)?.name" />
       <ConditionItem left="근무일" :right="'주 ' + jobopening.workingDay + '일'" />
     </div>

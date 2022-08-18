@@ -92,6 +92,14 @@ public class InterviewQuestionController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{questionId}/answers/check")
+    @ApiOperation(value = "인터뷰 답변 작성 여부 조회", notes = "예상 질문에 답변을 작성했는지 확인한다.")
+    public ResponseEntity<?> answerCheck(
+            @PathVariable("questionId") Long questionId,
+            @ApiIgnore @LoginUser User user
+    ){
+        return ResponseEntity.ok(answerService.answerCheck(questionId, user));
+    }
     // 답변 조회
     @GetMapping("/{questionId}/answers")
     @ApiOperation(value = "인터뷰 답변 조회", notes = "예상 질문에 작성한 답변을 조회한다.")
