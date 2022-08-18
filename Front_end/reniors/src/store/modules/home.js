@@ -2,8 +2,6 @@ import axios from "axios";
 import _ from "lodash";
 import http from "@/api/http";
 
-const YOUTUBE_API_KEY = "AIzaSyAF4F4t4ryCtxtxMrF0LgKNNXCITQVyi7E";
-
 export default {
   namespaced: true,
   state: {
@@ -29,7 +27,7 @@ export default {
     YOUTUBES: (state, youtubes) => (state.youtubes = youtubes),
     HOTJOBOPENINGS: (state, hots) => (state.hotJobopenings = hots),
     NOTICES: (state, notices) => (state.notices = notices),
-    noticeNotReaded: (state, noticeNotReaded) =>
+    NOTICE_NOT_READED: (state, noticeNotReaded) =>
       (state.noticeNotReaded = noticeNotReaded),
     DUMMY: () => 0,
   },
@@ -55,7 +53,7 @@ export default {
             part: "snippet",
             type: "video",
             q: keyword,
-            key: YOUTUBE_API_KEY,
+            key: process.env.VUE_APP_YOUTUBE_API_KEY,
           },
         },
       );
@@ -79,7 +77,7 @@ export default {
           notReadNotices += 1;
         }
       });
-      commit("noticeNotReaded", notReadNotices);
+      commit("NOTICE_NOT_READED", notReadNotices);
     },
   },
 };

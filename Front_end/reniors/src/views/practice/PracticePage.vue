@@ -48,6 +48,7 @@
                 class="form-control form1"
                 type="text"
                 required
+                readonly
               />
             </p>
             <p>
@@ -57,6 +58,7 @@
                 class="form-control form1"
                 type="text"
                 required
+                readonly
               />
             </p>
             <p class="text-center">
@@ -308,7 +310,7 @@ export default {
             console.log(
               "There was an error connecting to the session:",
               error.code,
-              error.message
+              error.message,
             );
           });
       });
@@ -334,7 +336,7 @@ export default {
 
     getToken(mySessionId) {
       return this.createSession(mySessionId).then((sessionId) =>
-        this.createToken(sessionId)
+        this.createToken(sessionId),
       );
     },
 
@@ -351,7 +353,7 @@ export default {
                 username: "OPENVIDUAPP",
                 password: OPENVIDU_SERVER_SECRET,
               },
-            }
+            },
           )
           .then((response) => response.data)
           .then((data) => resolve(data.id))
@@ -360,11 +362,11 @@ export default {
               resolve(sessionId);
             } else {
               console.warn(
-                `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}`
+                `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}`,
               );
               if (
                 window.confirm(
-                  `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}\n\nClick OK to navigate and accept it. If no certificate warning is shown, then check that your OpenVidu Server is up and running at "${OPENVIDU_SERVER_URL}"`
+                  `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}\n\nClick OK to navigate and accept it. If no certificate warning is shown, then check that your OpenVidu Server is up and running at "${OPENVIDU_SERVER_URL}"`,
                 )
               ) {
                 location.assign(`${OPENVIDU_SERVER_URL}/accept-certificate`);
@@ -386,7 +388,7 @@ export default {
                 username: "OPENVIDUAPP",
                 password: OPENVIDU_SERVER_SECRET,
               },
-            }
+            },
           )
           .then((response) => response.data)
           .then((data) => resolve(data.token))
@@ -413,7 +415,7 @@ export default {
                 username: "OPENVIDUAPP",
                 password: OPENVIDU_SERVER_SECRET,
               },
-            }
+            },
           )
           .then((res) => {
             this.nowRecordingId = res.data.id;
@@ -436,7 +438,7 @@ export default {
                 username: "OPENVIDUAPP",
                 password: OPENVIDU_SERVER_SECRET,
               },
-            }
+            },
           )
           .then((res) => res.data)
           .then((data) => {

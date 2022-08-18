@@ -71,13 +71,13 @@
       <div class="tabs" v-if="!chatopenclose">
         <!-- <div>지원자 : {{ interviewer }}</div> -->
         <!-- resume -->
-        <div v-if="tab && !chatopenclose">
+        <div v-if="tab && !chatopenclose" class="interview-info-box">
           <div>
             <resume-view :applyinfo="this.applyinfo"></resume-view>
           </div>
         </div>
         <!-- evaluation -->
-        <div v-if="!tab && !chatopenclose">
+        <div v-if="!tab && !chatopenclose" class="interview-info-box">
           <div>
             <openvidu-eval-list :applyinfo="this.applyinfo"></openvidu-eval-list>
           </div>
@@ -564,7 +564,7 @@ export default {
 }
 .tabBtn{
   width: 35vw;
-  height: 8vh;
+  height: 10%;
   background-color: #EEEEEE;
   display: flex;
   align-items: center;
@@ -717,8 +717,8 @@ export default {
     width: 35vw
 }
 .chatbtn{
-    width: 16vw;
-    height: 16vw;
+    width: 4vw;
+    height: 4vw;
     border-radius: 100%;
     border: none;
     background-color: white;
@@ -726,7 +726,7 @@ export default {
     margin: 4px;
 }
 .chatbtn i{
-    font-size: 24px;
+    font-size: 32px;
     color: #8CD6C1;
     font-weight: bold;  
 }
@@ -777,5 +777,10 @@ export default {
 .leavebtn span{
     font-size: 24px;
     color: white;
+}
+
+.interview-info-box{
+  height: 90%;
+  overflow-y: scroll;
 }
 </style>
