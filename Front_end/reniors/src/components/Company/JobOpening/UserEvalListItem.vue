@@ -33,12 +33,11 @@ export default {
   padding: 10px 15px;
   font-size: 16px;
   text-align: left;
-  /* background-color: var(--color-green-3); */
   border-radius: 8px;
-  /* border: 2px solid var(--color-black-3); */
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
+
 .usereval-list-item > .eval-number {
   width: 100%;
   margin-bottom: 3px;
@@ -46,12 +45,15 @@ export default {
   font-weight: bold;
   color: var(--color-red-2);
 }
+
 .usereval-list-item > span {
   color: var(--color-black-1);
 }
+
 .usereval-list-item > .question-title {
   font-weight: bold;
 }
+
 .usereval-list-item > textarea {
   width: 100%;
   color: var(--color-black-1);

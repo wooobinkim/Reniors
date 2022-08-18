@@ -1,17 +1,36 @@
 <template>
   <div class="recommend-tag-list">
-    <template v-if="isrecommend">
+    <template v-if="isLoggedin && isrecommend">
       <div class="recommend-tag-title">
-        <h2>조건에 맞는 <span>추천 공고</span>입니다</h2>
+        <h2>조건에 맞는 <span>추천 공고</span>입니다.</h2>
         <button @click="movesetting()">재설정</button>
       </div>
     </template>
-    <template v-else>
+    <template v-else-if="isLoggedin && !isrecommend">
       <div class="recommend-tag-title">
-        <h2>조건에 맞는 <span>추천 공고</span>가 없습니다</h2>
+        <h2>조건에 맞는 <span>추천 공고</span>가 없습니다.</h2>
       </div>
     </template>
-    <!-- <RecommendTagItem v-for="(tag, index) in tags" :key="index" :tag="tag" /> -->
+    <template v-else>
+      <div class="notlogTotal" v-if="!isLoggedin">
+        <div class="notlog">
+          <div class="notlogBox">
+            <p class="notlogp">추천 공고 서비스는</p>
+            <p class="notlogp">
+              <router-link :to="{ name: 'Login' }" style="text-decoration: none"
+                ><span style="color: #37bf99"> 로그인</span></router-link
+              >
+              후 이용해주세요🙂
+            </p>
+            <router-link :to="{ name: 'Login' }">
+              <button class="notlogBtn">
+                로그인 하러 가기 <i class="bi bi-arrow-right-square-fill"></i>
+              </button>
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </template>
     <div class="jobopening-list">
       <div v-if="isrecommend">
         <RecommendJobOpeningItem
@@ -25,7 +44,8 @@
 </template>
 
 <script scoped>
-import { mapGetters } from "vuex";
+import { mapGetters, useStore } from "vuex";
+import { computed } from "vue";
 import RecommendJobOpeningItem from "./RecommendJobOpeningItem.vue";
 
 export default {
@@ -34,14 +54,9 @@ export default {
     RecommendJobOpeningItem,
   },
   setup() {
-    // const store = useStore();
-
-    // const tags = computed(() => store.getters["jobopening/tags"]);
-    // const recommendJobopenings = computed(() => store.getters["recommendJobopenings"]);
-    // console.log(recommendJobopenings);
-    return {
-      // tags,
-    };
+    const store = useStore();
+    const isLoggedin = computed(() => store.getters["isLogginedIn"]);
+    return { isLoggedin };
   },
   watch: {
     recommendJobopenings: function (data) {
@@ -71,8 +86,6 @@ export default {
       else len = this.recommendJobopenings.length / 2;
       document.documentElement.style.setProperty("--columns", len);
     }
-    // this.isrecommend = null;
-    // this.fetchRecommend();
   },
 };
 </script>
@@ -113,12 +126,12 @@ export default {
 .jobopening-list > div {
   overflow: scroll;
   display: grid;
-  /* gap: 1px; */
   grid-template-rows: 150px 150px;
   grid-template-columns: repeat(var(--columns), 170px);
   margin-top: 10px;
   justify-items: center;
 }
+
 @media screen and (min-width: 720px) {
   .jobopening-list > div {
     grid-template-rows: 150px 150px;
@@ -126,5 +139,44 @@ export default {
     margin-top: 10px;
     justify-items: center;
   }
+}
+.notlogTotal {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff5f0;
+}
+.noglog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.notlogBox {
+  background-color: rgba(256, 256, 256, 0.5);
+  border: none;
+  border-radius: 10px;
+  margin: 8px;
+  padding: 10px 8px;
+}
+.notlogp {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff843e;
+}
+.notlogBtn {
+  background-color: #ff843e;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  width: 72%;
+  padding: 8px;
+  margin: 8px;
+}
+.notlogBtn i {
+  font-size: 24px;
+  margin: auto 8px;
 }
 </style>
