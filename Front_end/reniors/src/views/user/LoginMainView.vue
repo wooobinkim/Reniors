@@ -16,9 +16,9 @@
         </div>
       </div>
       <br />
-      <br>
+      <br />
       <p class="line m-0">혹시 계정이 없으신가요?</p>
-      <br>
+      <br />
       <router-link class="link" style="color: #ff843e" :to="{ name: 'Signup' }">
         개인 회원가입
       </router-link>
@@ -29,9 +29,14 @@
       >
         기업 회원가입
       </router-link>
-      <br>
+      <br />
       <div style="margin-top: 18px; margin-bottom: 25px">
-        <img src="@/assets/kakaosignup.svg" style="width: 80%; height: 22px;"  alt="kakao" @click="kakaologin()" />
+        <img
+          src="@/assets/kakaosignup.svg"
+          style="width: 80%; height: 22px"
+          alt="kakao"
+          @click="kakaologin()"
+        />
       </div>
     </div>
   </div>
@@ -50,9 +55,15 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
-    kakaologin(){
-      window.location.replace("https://kauth.kakao.com/oauth/authorize?client_id=4e4c47797fd9117b5651478290547b4f&redirect_uri=https://i7b307.p.ssafy.io/kakaologin&response_type=code")
-    }
+    kakaologin() {
+      window.location.replace(
+        "https://kauth.kakao.com/oauth/authorize?client_id=" +
+          process.env.VUE_APP_KAKAO_REST_API_KEY +
+          "&redirect_uri=" +
+          process.env.VUE_APP_KAKAO_REDIRECT_URI +
+          "&response_type=code",
+      );
+    },
   },
 };
 </script>
@@ -86,8 +97,6 @@ export default {
   width: auto;
   height: 200px;
   border: solid;
-  /* border-color: #FF843E;
-  background-color: #FFF5F0; */
   background-color: #ff843e;
   border-radius: 10px;
   color: white;
@@ -102,8 +111,6 @@ export default {
   width: auto;
   height: 200px;
   border: solid;
-  /* border-color: #37BF99;
-  background-color: #ECFFFA; */
   background-color: #37bf99;
   border-radius: 10px;
   color: white;
@@ -122,9 +129,7 @@ export default {
 .link {
   display: inline;
   margin: 8px;
-  /* font-family: 'Inter'; */
   font-style: normal;
-  /* font-weight: 600; */
   font-size: 14px;
   line-height: 17px;
   color: #6d6d6d;
@@ -132,8 +137,8 @@ export default {
   font-weight: bold;
   font-size: 16px;
 }
-.line {
 
+.line {
   flex-basis: 100%;
   margin: auto;
   color: rgba(0, 0, 0, 0.35);
@@ -142,6 +147,4 @@ export default {
   margin: 8px 0px;
   color: #8a8a8a;
 }
-
-
 </style>

@@ -100,6 +100,9 @@ export default {
     ...mapActions("home", ["readNotice", "deleteNotice"]),
     readNotification(notice) {
       this.readNotice(notice.id);
+      window.location.href =
+        "https://i7b307.p.ssafy.io/jobopening/" +
+        notice.applyResponse.jobOpeningId;
     },
     deleteNotification(notificationId) {
       if (confirm("삭제하시겠습니까?")) {
