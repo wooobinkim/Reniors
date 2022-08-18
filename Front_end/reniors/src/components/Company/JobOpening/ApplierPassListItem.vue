@@ -1,11 +1,11 @@
 <template>
   <div class="apply-pass-item-info-box">
     <div>이름 : {{ apply.name }}</div>
-    <div>채용현황 : {{ apply.jobOpeningProcess }}</div>
+    <div>채용 현황 : {{ apply.jobOpeningProcess }}</div>
     <div class="apply-pass-btn-box">
-      <button @click="resumeview()">이력서보기</button>
+      <button @click="resumeview()">이력서 보기</button>
       <router-link :to="{ name: 'usereval', params: { no: apply.userId } }">
-        <button>면접평가보기</button></router-link
+        <button>면접 평가 보기</button></router-link
       >
     </div>
   </div>

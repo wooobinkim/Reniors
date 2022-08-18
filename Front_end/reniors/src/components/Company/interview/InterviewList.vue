@@ -1,5 +1,13 @@
 <template>
-  <div class="interview-list-item-box">
+  <div
+    v-if="interviewapplylistasc.length === 0"
+    class="interview-list-item-box"
+  >
+    <div class="interview-list-item-empty">
+      <p class="item-empty-msg">예정된 면접 정보가 없습니다.</p>
+    </div>
+  </div>
+  <div v-else class="interview-list-item-box">
     <interview-list-item
       v-for="interviewapply in interviewapplylistasc"
       :key="interviewapply.id"
@@ -31,5 +39,21 @@ export default {
 <style scope>
 .interview-list-item-box {
   margin-bottom: 6vh;
+}
+
+.interview-list-item-empty {
+  width: 328px;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border-color: var(--color-black-2);
+  box-shadow: inset 0 0 1px 1px var(--color-black-3),
+    0 0 5px var(--color-black-3);
+}
+
+.interview-list-item-empty > .item-empty-msg {
+  width: 100%;
+  font-weight: bold;
+  font-size: 17px;
 }
 </style>
