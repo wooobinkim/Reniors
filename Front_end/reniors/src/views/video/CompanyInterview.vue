@@ -636,6 +636,17 @@ export default {
     border: none;
     overflow-y: auto;
 }
+.chatlist::-webkit-scrollbar {
+  width: 5px;
+}
+.chatlist::-webkit-scrollbar-thumb {
+  background-color: var(--color-green-1);
+  border-radius: 10px;
+}
+.chatlist::-webkit-scrollbar-track {
+  background-color: var(--color-green-3);
+  border-radius: 10px;
+}
 
 .chatform{
     width: 35vw - 48px;
@@ -663,7 +674,7 @@ export default {
     border: none;
     border-radius: 20px;
     margin: 2px 8px 0 2px;
-    background-color: #EAEAEA;
+    background-color: none;
     display: flex;
     align-items: center;
 }
@@ -671,6 +682,7 @@ export default {
     font-size: 28px;
     transform: rotate(45deg);
     margin: 0;
+    background-color: none;
 }
 .chatitem{
   width: 30vw;
@@ -782,5 +794,16 @@ export default {
 .interview-info-box{
   height: 90%;
   overflow-y: scroll;
+}
+.interview-info-box::-webkit-scrollbar {
+  width: 5px;
+}
+.interview-info-box::-webkit-scrollbar-thumb {
+  background-color: var(--color-green-1);
+  border-radius: 10px;
+}
+.interview-info-box::-webkit-scrollbar-track {
+  background-color: var(--color-green-3);
+  border-radius: 10px;
 }
 </style>
