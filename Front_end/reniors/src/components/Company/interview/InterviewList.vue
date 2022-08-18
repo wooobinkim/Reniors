@@ -39,12 +39,14 @@ export default {
 <style scope>
 .interview-list-item-box {
   margin-bottom: 6vh;
+  margin-top: 64px;
 }
 
 .interview-list-item-empty {
   width: 328px;
   padding: 20px;
   border-radius: 10px;
+  margin-top: 64px;
   margin-bottom: 20px;
   border-color: var(--color-black-2);
   box-shadow: inset 0 0 1px 1px var(--color-black-3),
