@@ -46,7 +46,6 @@
     <template v-if="this.progress == '면접심사중'">
       <applier-interview-list
         :jobopeningdetail="jobopeningdetail"
-        :passUser=[]
       ></applier-interview-list>
     </template>
 
