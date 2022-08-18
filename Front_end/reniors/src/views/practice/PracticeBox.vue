@@ -4,24 +4,25 @@
             <img src="@/assets/logo_cut.png" alt="logo">
         </router-link>
     </div>
-    <div class="total">
-      <!-- header -->
-      <div class="head">
+      <div class="head container-fluid">
         <router-link :to="{ name: 'VideoMain' }">
           <i
             class="bi bi-arrow-left-circle-fill"
-            style="color: #ffd39b; font-size: 24px; margin: 0 16px"
+
           ></i>
         </router-link>
         <p>내 연습함</p>
       </div>
+    <div class="total">
+      <!-- header -->
+
 
       <!-- content -->
       <div class="content row">
         <div
           v-for="(record, index) in this.myrecords"
           :key="index"
-          style="width: 144px; padding: 0"
+          class="vediobox-wrap"
         >
           <!-- 비디오섬네일 -->
           <router-link :to="{ path: '/practice/box/' + index }">
@@ -86,6 +87,7 @@ export default {
   background-color: #fff5f0;
   width: 100%;
   height: 100vh;
+  padding-top: 90px;
 }
 .head {
   position: fixed;
@@ -99,7 +101,6 @@ export default {
   border-bottom-color: #ff843e;
   margin: 0;
   background-color: white;
-  box-shadow: 0 0 1px gray;
 }
 .head p {
   font-size: 20px;
@@ -107,26 +108,55 @@ export default {
   color: #ffb400;
   margin: 0 16px;
 }
-.content {
-  margin: 16px;
-  display: flex;
-  justify-content: space-around;
+.head .bi-arrow-left-circle-fill{
+  color: #ffd39b; 
+  font-size: 35px; 
+  margin: 0 16px;
 }
+.vediobox-wrap{
+  width: 300px;
+  padding: 0;
+}
+
 .videobox {
-  width: 144px;
-  height: 160px;
+  width: 300px;
+  height: 200px;
   border-radius: 10px;
   border: solid #ff843e 1px;
   background-color: white;
   margin: 8px auto;
 }
 video {
-  width: 120px;
-  height: 120px;
+  width: 280px;
+  height: 150px;
   border: #c5c5c5 solid 0.5px;
   border-radius: 5px;
   margin: 4px auto 2px;
 }
+@media(max-width:760px){
+  .head .bi-arrow-left-circle-fill{
+    font-size: 30px; 
+  }
+  .vediobox-wrap{
+    width: 144px;
+  }
+  .videobox {
+    width: 144px;
+    height: 160px;
+  }
+  
+  video {
+    width: 120px;
+    height: 120px;
+  }
+}
+.content {
+  margin: 16px;
+  display: flex;
+  justify-content: space-around;
+}
+
+
 .videobox p {
   margin: auto;
 }

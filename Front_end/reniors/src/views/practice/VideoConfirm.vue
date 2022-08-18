@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <div class="total">
-      <!-- header -->
-      <div class="head">
+      <div class="head container-fluid">
         <router-link :to="{ name: 'PracticeBox' }">
           <i
             class="bi bi-arrow-left-circle-fill"
@@ -11,6 +8,10 @@
         </router-link>
         <p>내 연습함</p>
       </div>
+  <div>
+    <div class="total">
+      <!-- header -->
+
       <!-- content -->
       <div class="content">
         <div class="contentHead">
@@ -100,7 +101,6 @@ export default {
 }
 .head {
   height: 48px;
-  width: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -109,6 +109,8 @@ export default {
   margin: 0;
   background-color: white;
   box-shadow: 0 0 1px gray;
+  position: fixed;
+  top: 0;
 }
 .head p {
   font-size: 20px;
@@ -120,7 +122,9 @@ export default {
   display: flex;
   justify-content: left;
   align-items: baseline;
-  margin: 4px 16px;
+  margin: 4px auto;
+  width: 500px;
+  margin-top: 50px;
 }
 .p1 {
   font-size: 24px;
@@ -131,13 +135,7 @@ export default {
   font-size: 16px;
   margin: 0 4px;
 }
-video {
-  width: 344px;
-  height: 344px;
-  border: solid gray 1px;
-  border-radius: 5px;
-  background-color: white;
-}
+
 .sttTotal{
   display: flex;
   justify-content: center;
@@ -160,7 +158,7 @@ video {
     /* position: fixed; */
     bottom: 120px;
     height: 150px;
-    width: 344px;
+    width: 500px;
     border: solid #D9D9D9 1px;
     border-radius: 5px;
 }
@@ -194,18 +192,37 @@ video {
 }
 .smallVideo{
 	background-color: white;
-	width: 344px;
-	height: 400px;
+	width: 500px;
+	height: 550px;
 	margin: 8px auto 4px auto;
 	border: solid #FFD39B 1px;
 	border-radius: 5px;
 }
-video{
-	background-color: white;
+video {
+  width: 500px;
+  height: 700px;
+  border: solid gray 1px;
+  border-radius: 5px;
+  background-color: white;
+}
+@media(max-width: 760px){
+  .contentHead {
+    width: 100vw;
+  }
+  video {
+  width: 344px;
+  height: 480px;
+  }
+  .smallVideo{
 	width: 344px;
-	height: 520px;
-	margin: 8px auto 4px auto;
-	border: solid #FFD39B 1px;
-	border-radius: 5px;
+	height: 400px;
+  
+  }
+  .sttScript{
+
+      /* position: fixed; */
+      bottom: 120px;
+      height: 150px;
+  }
 }
 </style>
