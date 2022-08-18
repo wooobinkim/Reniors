@@ -50,7 +50,6 @@ export default {
   },
   async created() {
     await this.getapplylist(this.$route.params.no);
-    console.log(this.pu.passUser);
   },
   computed: {
     ...mapGetters("company", ["jobopening", "applylist"]),
@@ -62,9 +61,9 @@ export default {
       "updateApply",
     ]),
     ...mapActions("home", ["createNotice"]),
-    interviewpass() {
+    async interviewpass() {
       if (confirm("선택된 지원자의 상태를 최종 합격으로 변경하시겠습니까?")) {
-        this.pu.passUser.forEach((data) => {
+        await this.pu.passUser.forEach((data) => {
           this.updateApply({
             jobOpeningId: this.jobopeningdetail.id,
             applyId: data.id,
@@ -80,7 +79,7 @@ export default {
         });
 
         let tmparr = [];
-        this.applylist.forEach((apply) => {
+        await this.applylist.forEach((apply) => {
           if (
             apply.jobOpeningProcess == "면접" ||
             apply.jobOpeningProcess == "면접심사중"
@@ -88,7 +87,7 @@ export default {
             tmparr.push(apply);
         });
         let unpassUser = tmparr.filter((x) => !this.pu.passUser.includes(x));
-        unpassUser.forEach((data) => {
+        await unpassUser.forEach((data) => {
           this.updateApply({
             jobOpeningId: this.jobopeningdetail.id,
             applyId: data.id,
@@ -109,7 +108,8 @@ export default {
             jobOpeningProcess: "최종합격",
           },
         };
-        this.progressJobOpening(data);
+        await this.progressJobOpening(data);
+        window.location.reload();
       }
     },
   },

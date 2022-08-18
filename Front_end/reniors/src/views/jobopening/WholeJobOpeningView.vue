@@ -1,4 +1,5 @@
 <template>
+<div>
     <div class="header">
       <i @click="prevpage()" class="bi bi-arrow-left-circle-fill"></i>
       <router-link class="header-logo" :to="{ name: 'home' }">
@@ -6,8 +7,8 @@
       </router-link>
       <div></div>
     </div>
-<div>
-    <search-bar></search-bar>
+    
+        <search-bar></search-bar>
 
     <!-- content -->
     <div class="jobopening-container">

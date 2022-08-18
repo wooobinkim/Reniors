@@ -13,7 +13,7 @@
     </template>
     <!-- <RecommendTagItem v-for="(tag, index) in tags" :key="index" :tag="tag" /> -->
     <div class="jobopening-list">
-      <div v-if="isrecommend">
+      <div v-if="isrecommend" class="jobopening-scroll">
         <RecommendJobOpeningItem
           v-for="jobopening in recommendJobopenings"
           :key="jobopening"
@@ -111,7 +111,6 @@ export default {
 }
 
 .jobopening-list > div {
-  overflow: scroll;
   display: grid;
   /* gap: 1px; */
   grid-template-rows: 150px 150px;
@@ -126,5 +125,20 @@ export default {
     margin-top: 10px;
     justify-items: center;
   }
+}
+.jobopening-scroll{
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+.jobopening-scroll::-webkit-scrollbar {
+  height: 5px;
+}
+.jobopening-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--color-green-1);
+  border-radius: 10px;
+}
+.jobopening-scroll::-webkit-scrollbar-track {
+  background-color: var(--color-green-3);
+  border-radius: 10px;
 }
 </style>
