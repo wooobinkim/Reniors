@@ -105,6 +105,7 @@ export default {
           },
         };
         this.progressJobOpening(data);
+        window.location.reload();
       }
     },
 
