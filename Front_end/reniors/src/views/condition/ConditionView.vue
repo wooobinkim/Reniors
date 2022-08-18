@@ -66,7 +66,7 @@ export default {
 
 .condition-container {
   height: 1500px;
-  margin-top: 48px;
+  margin-top: 56px;
 }
 .notlogTotal{
   display: flex;
