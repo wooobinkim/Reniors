@@ -22,8 +22,10 @@ import com.common.reniors.dto.company.CompanyCreateRequest;
 import com.common.reniors.dto.company.CompanyLoginRequest;
 import com.common.reniors.dto.company.CompanyResponse;
 import com.common.reniors.dto.company.CompanyUpdateRequest;
-import com.common.reniors.dto.jobOpening.*;
-import com.common.reniors.dto.user.UserResponse;
+import com.common.reniors.dto.jobOpening.JobOpeningCompanyResponse;
+import com.common.reniors.dto.jobOpening.JobOpeningCreateRequest;
+import com.common.reniors.dto.jobOpening.JobOpeningProgressUpdateRequest;
+import com.common.reniors.dto.jobOpening.JobOpeningUpdateRequest;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -218,8 +220,6 @@ public class CompanyService {
                         a.interviewDate.isNotNull())
                 .orderBy(a.interviewDate.asc()).fetch();
 
-//        JobOpening jobOpening = jobOpeningRepository.findById(jobOpeningId).orElseThrow(() -> new NotFoundException("not found Apply"));
-//        List<Apply> applyList = applyRepository.findByJobOpening(jobOpening);
         List<ApplyResponse> applyResponseList = applyList.stream().map(res->ApplyResponse.response(
                 res
         )).collect(Collectors.toList());
@@ -233,7 +233,6 @@ public class CompanyService {
             throw new NotAuthException(COMPANY_NO_AUTH);
         Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found Apply"));
         ApplyResponse applyResponse = ApplyResponse.response(apply);
-//        UserResponse userResponse = UserResponse.response(apply.getUser());
 
         return applyResponse;
     }
@@ -243,11 +242,9 @@ public class CompanyService {
     public void updateapply(Company company, Long applyId, ApplyUpdateRequest applyUpdateRequest){
         if(company.getId() != applyRepository.findById(applyId).get().getJobOpening().getCompany().getId())
             throw new NotAuthException(COMPANY_NO_AUTH);
-        System.out.println("applyUpdateRequest = " + applyUpdateRequest);
         Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found Apply"));
 
         apply.update(applyUpdateRequest,apply.getUser(), apply.getJobOpening());
-        System.out.println("apply.getInterviewDate() = " + apply.getInterviewDate());
     }
 
     //회사 공고 지원자 인터뷰 종료하기
@@ -257,6 +254,5 @@ public class CompanyService {
             throw new NotAuthException(COMPANY_NO_AUTH);
         Apply apply = applyRepository.findById(applyId).orElseThrow(() -> new NotFoundException("not found Apply"));
         apply.finishInterview();
-//        apply.update(applyUpdateRequest,apply.getUser(), apply.getJobOpening());
     }
 }

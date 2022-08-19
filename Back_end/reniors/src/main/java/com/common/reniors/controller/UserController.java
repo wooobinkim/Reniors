@@ -113,7 +113,6 @@ public class UserController {
             @RequestPart(value = "img", required = false) final MultipartFile file,
             @Valid @RequestPart(value = "data", required = true) final UserCreateRequest request
     ) throws Exception {
-        // TODO : URL 추가
         String userProfile = "userBaseProfile.png";
         if (file != null) {
             userProfile = awsS3Service.uploadFile(file, "user/");

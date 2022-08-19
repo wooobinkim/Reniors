@@ -166,6 +166,4 @@ public class ResumeController {
         licenseService.delete(licenseId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
-    // 포트폴리오 추가/삭제 구현 필요
 }

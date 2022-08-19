@@ -126,7 +126,6 @@ public class CompanyController {
     @GetMapping("/jobopening")
     @ApiOperation(value = "회사 공고목록", notes = "회사가 올린 공고 목록들을 가져온다.")
     public ResponseEntity<?> getJobOpeningList(@ApiIgnore @LoginCompany Company company){
-        System.out.println(company.getId());
         List<JobOpeningCompanyResponse> jobOpeningList = companyService.getJobOpeningList(company);
         return ResponseEntity.status(HttpStatus.OK).body(jobOpeningList);
     }

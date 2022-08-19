@@ -22,7 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Api(tags={"평가 API"})
 public class EvalController {
-
     private final EvalService evalService;
 
     //평가 질문 등록

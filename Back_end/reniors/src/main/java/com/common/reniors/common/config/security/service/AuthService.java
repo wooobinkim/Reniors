@@ -21,7 +21,6 @@ import java.util.StringTokenizer;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AuthService implements UserDetailsService {
-
     private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
 
@@ -31,8 +30,6 @@ public class AuthService implements UserDetailsService {
         StringTokenizer st = new StringTokenizer(userId,",");
         String id = st.nextToken();
         String name = st.nextToken();
-        System.out.println("id = " + id);
-        System.out.println("name = " + name);
 
         if (name.equals("user")) {
             User findUser = userRepository.findById(Long.valueOf(id)).orElseThrow(() -> new NotFoundException("USER_NOT_FOUND"));
@@ -55,9 +52,5 @@ public class AuthService implements UserDetailsService {
             return loginCompanyDetails;
 
         }
-
     }
-
-
 }
-

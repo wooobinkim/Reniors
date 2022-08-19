@@ -25,7 +25,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Api(tags={"공고 API"})
 public class JobOpeningController {
-
     private final JobOpeningService jobOpeningService;
     private final BookmarkService bookmarkService;
 
@@ -102,8 +101,6 @@ public class JobOpeningController {
     public ResponseEntity<?> applyJobOpening(
             @PathVariable("jobOpeningId") Long jobOpeningId,
             @ApiIgnore @LoginUser User user){
-
-
         Long applyId = jobOpeningService.applyJobOpening(user, jobOpeningId);
         return ResponseEntity.status(HttpStatus.CREATED).body(applyId);
     }

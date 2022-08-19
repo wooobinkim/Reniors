@@ -26,7 +26,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Api(tags={"인터뷰 질문 및 답변 API"})
 public class InterviewQuestionController {
-
     private final QuestionService questionService;
     private final AnswerService answerService;
 

@@ -59,6 +59,9 @@ public class UserService {
     @Value("${spring.mail.username}")
     private String from;
 
+    @Value("${api-key.kakao-rest-api}")
+    private String kakaoRestApiKey;
+
     @Transactional
     public String loginUser(UserLoginRequest request) {
         Optional<User> findUser = userRepository.findByUserAppId(request.getUserAppId());
@@ -118,7 +121,7 @@ public class UserService {
         // HTTP Body 생성
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
-        body.add("client_id", "4e4c47797fd9117b5651478290547b4f");
+        body.add("client_id", kakaoRestApiKey);
         body.add("redirect_uri", "https://i7b307.p.ssafy.io/kakaologin");
         body.add("code", code);
 

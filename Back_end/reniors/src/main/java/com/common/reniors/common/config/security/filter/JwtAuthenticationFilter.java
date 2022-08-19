@@ -21,7 +21,6 @@ import java.util.StringTokenizer;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilter {
-
     private final JwtUtil jwtUtil;
     private final AuthService authService;
 
@@ -32,12 +31,10 @@ public class JwtAuthenticationFilter extends GenericFilter {
     public void doFilter(ServletRequest request,
                          ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
-        System.out.println("JwtAuthenticationFilter - doFilter");
         String jwtToken = extractToken((HttpServletRequest) request);
 
         if (StringUtils.hasText(jwtToken) && jwtUtil.isValidToken(jwtToken)) {
             UserDetails userDetails = authService.loadUserByUsername(jwtUtil.getSubject(jwtToken));
-            System.out.println(jwtUtil.getSubject(jwtToken));
             StringTokenizer st = new StringTokenizer(jwtUtil.getSubject(jwtToken),",");
             String id = st.nextToken();
             String name = st.nextToken();
@@ -50,11 +47,8 @@ public class JwtAuthenticationFilter extends GenericFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }else {
                 LoginCompanyDetails loginCompanyDetails = (LoginCompanyDetails) userDetails;
-                System.out.println("COMPANY");
-                System.out.println(userDetails);
                 Authentication authentication =
                         new UsernamePasswordAuthenticationToken(loginCompanyDetails.getCompany(), null, userDetails.getAuthorities());
-                System.out.println("authentication : "+authentication);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

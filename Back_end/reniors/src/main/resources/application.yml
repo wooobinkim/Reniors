@@ -58,6 +58,9 @@ token:
   expiration_time: 1296000000
   secret: secretcode
 
+api-key:
+  kakao-rest-api: 4e4c47797fd9117b5651478290547b4f
+
 logging:
   level:
     org:
