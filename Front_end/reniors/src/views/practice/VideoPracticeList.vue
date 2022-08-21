@@ -28,7 +28,7 @@
       :idx="idx"
       :id="question.id"
     ></video-question>
-
+    <div style="margin-bottom: 200px;"></div>
     <router-link :to="{ name: 'PracticePage' }">
       <div class="submit">
         <button class="Btn">연습하기</button>

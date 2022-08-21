@@ -23,6 +23,7 @@
     ></article-item>
 
     <button v-show="!isLast" class="more-btn" @click="pageUp()">더보기</button>
+    <div style="margin-bottom: 100px"></div>
   </div>
 </template>
 <script>
