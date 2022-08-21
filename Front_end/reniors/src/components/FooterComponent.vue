@@ -95,6 +95,7 @@ export default {
   font-weight: bold;
   color: #2c3e50;
   text-decoration: none;
+  width: 20%;
 }
 .footroute p {
   font-size: 12px;

@@ -1,4 +1,4 @@
-# Rniors - 다시 시작하는 나의 일생
+# Reniors - 다시 시작하는 나의 일생
 
 ---
 
@@ -24,7 +24,7 @@
 
 ## 🟧Reniors - 팀원 소개
 
-![Untitled](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/Untitled.png)
+![Untitled](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/Untitled.png)
 
 ---
 
@@ -94,7 +94,7 @@ Reniors는 시니어분들을 대상으로하는 전문 구인구직 서비스 �
 
 ## 🟧Reniors - 시스템 아키텍쳐
 
-![Rniors%20-%20%E1%84%83%E1%85%A1%E1%84%89%E1%85%B5%20%E1%84%89%E1%85%B5%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%92%E1%85%A1%E1%84%82%E1%85%B3%E1%86%AB%20%E1%84%82%E1%85%A1%E1%84%8B%E1%85%B4%20%E1%84%8B%E1%85%B5%E1%86%AF%E1%84%89%E1%85%A2%E1%86%BC%207b9b9bedb8e44b96b5bd03cf1ee708f0/service_architecture.png](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/service_architecture.png)
+![Rniors%20-%20%E1%84%83%E1%85%A1%E1%84%89%E1%85%B5%20%E1%84%89%E1%85%B5%E1%84%8C%E1%85%A1%E1%86%A8%E1%84%92%E1%85%A1%E1%84%82%E1%85%B3%E1%86%AB%20%E1%84%82%E1%85%A1%E1%84%8B%E1%85%B4%20%E1%84%8B%E1%85%B5%E1%86%AF%E1%84%89%E1%85%A2%E1%86%BC%207b9b9bedb8e44b96b5bd03cf1ee708f0/service_architecture.png](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/service_architecture.png)
 
 ---
 
@@ -120,64 +120,64 @@ Reniors는 시니어분들을 대상으로하는 전문 구인구직 서비스 �
 
 ## 🟧Reniors - 서비스 화면
 
-![0. login1.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/0._login1.png)
+![0. login1.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/0._login1.png)
 
-![1. mainpage.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/1._mainpage.png)
+![1. mainpage.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/1._mainpage.png)
 
-![5. footer-jobopening.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/5._footer-jobopening.png)
+![5. footer-jobopening.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/5._footer-jobopening.png)
 
-![6. totalJobopening.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/6._totalJobopening.png)
+![6. totalJobopening.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/6._totalJobopening.png)
 
-![2. bookmark-b.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/2._bookmark-b.png)
+![2. bookmark-b.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/2._bookmark-b.png)
 
-![3. recommendation-d.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/3._recommendation-d.png)
+![3. recommendation-d.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/3._recommendation-d.png)
 
-![10. conditionJobopening-a.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/10._conditionJobopening-a.png)
+![10. conditionJobopening-a.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/10._conditionJobopening-a.png)
 
-![11. community.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/11._community.png)
+![11. community.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/11._community.png)
 
-![11. community-a.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/11._community-a.png)
+![11. community-a.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/11._community-a.png)
 
-![18. footer-video.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/18._footer-video.png)
+![18. footer-video.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/18._footer-video.png)
 
-![14. interviewPractice.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/14._interviewPractice.png)
+![14. interviewPractice.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/14._interviewPractice.png)
 
-![15. videoPracticePage-a.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/15._videoPracticePage-a.png)
+![15. videoPracticePage-a.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/15._videoPracticePage-a.png)
 
-![16. recording-b.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/16._recording-b.png)
+![16. recording-b.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/16._recording-b.png)
 
-![17. practiceBoxPage-a.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/17._practiceBoxPage-a.png)
+![17. practiceBoxPage-a.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/17._practiceBoxPage-a.png)
 
-![17. practiceBoxPage-b.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/17._practiceBoxPage-b.png)
+![17. practiceBoxPage-b.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/17._practiceBoxPage-b.png)
 
-![19. enterInterview.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/19._enterInterview.png)
+![19. enterInterview.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/19._enterInterview.png)
 
-![40. Interview.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/40._Interview.png)
+![40. Interview.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/40._Interview.png)
 
-![23. changeToCompany.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/23._changeToCompany.png)
+![23. changeToCompany.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/23._changeToCompany.png)
 
-![24. manageJobopening.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/24._manageJobopening.png)
+![24. manageJobopening.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/24._manageJobopening.png)
 
-![27. jobopeningDetail.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/27._jobopeningDetail.png)
+![27. jobopeningDetail.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/27._jobopeningDetail.png)
 
-![28. goBack.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/28._goBack.png)
+![28. goBack.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/28._goBack.png)
 
-![31. adjustInterviewDate.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/31._adjustInterviewDate.png)
+![31. adjustInterviewDate.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/31._adjustInterviewDate.png)
 
-![33. jobopeningList-a.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/33._jobopeningList-a.png)
+![33. jobopeningList-a.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/33._jobopeningList-a.png)
 
-![37. clickInterviewPlanManage.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/37._clickInterviewPlanManage.png)
+![37. clickInterviewPlanManage.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/37._clickInterviewPlanManage.png)
 
-![39. enterInterview.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/39._enterInterview.png)
+![39. enterInterview.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/39._enterInterview.png)
 
-![41. InterviewTab.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/41._InterviewTab.png)
+![41. InterviewTab.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/41._InterviewTab.png)
 
-![42. Evaluation.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/42._Evaluation.png)
+![42. Evaluation.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/42._Evaluation.png)
 
-![49. alarm-c.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/49._alarm-c.png)
+![49. alarm-c.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/49._alarm-c.png)
 
-![49. alarm-d.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/49._alarm-d.png)
+![49. alarm-d.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/49._alarm-d.png)
 
-![50. movetoMyPage.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/50._movetoMyPage.png)
+![50. movetoMyPage.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/50._movetoMyPage.png)
 
-![50. finalPass.PNG](./Rniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/50._finalPass.png)
+![50. finalPass.PNG](./Reniors%20-%20%EB%8B%A4%EC%8B%9C%20%EC%8B%9C%EC%9E%91%ED%95%98%EB%8A%94%20%EB%82%98%EC%9D%98%20%EC%9D%BC%EC%83%9D%207b9b9bedb8e44b96b5bd03cf1ee708f0/50._finalPass.png)
