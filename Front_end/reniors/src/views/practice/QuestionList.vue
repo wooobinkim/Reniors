@@ -29,6 +29,7 @@
       :id="question.id"
       :checklist="checklist"
     ></question-item>
+    <div style="margin-bottom: 100px;"></div>
   </div>
 </template>
 <script>

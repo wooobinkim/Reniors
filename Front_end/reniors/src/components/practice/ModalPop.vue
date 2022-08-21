@@ -60,7 +60,8 @@ export default{
 .one{
     position: fixed;
     top: 200px;
-    left: 20px;
+    left: 50%;
+    transform: translate(-50%, 0%);
     width: 320px;
     height: 300px;
     display: flex;
