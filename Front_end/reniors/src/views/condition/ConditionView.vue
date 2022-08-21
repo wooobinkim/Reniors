@@ -64,6 +64,7 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 0 !important;
+  z-index: 3;
 }
 .header img {
   height: 38px;

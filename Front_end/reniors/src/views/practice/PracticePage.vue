@@ -582,6 +582,7 @@ export default {
 .submit {
   position: fixed;
   bottom: 50px;
+  left: 0;
   width: 100vw;
   height: 64px;
   display: flex;

@@ -46,6 +46,6 @@ export default {
     margin-bottom: 22px;
 }
 .jobopening-interview-list-item-box {
-  margin-bottom: 6vh;
+  margin-bottom: 100px;
 }
 </style>

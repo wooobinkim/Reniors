@@ -100,6 +100,10 @@ export default {
   font-weight: bold;
   color: #2c3e50;
   text-decoration: none;
+  width: 25%;
+}
+.footer > div{
+  width: 25%;
 }
 .footroute p {
   font-size: 12px;
@@ -127,8 +131,9 @@ export default {
 .footer-profile-dropdown {
   position: absolute;
   display: none;
-  left: -25px;
+  left: 50%;  
   bottom: 60px;
+  margin-left: -50px;
   width: 100px;
   background-color: white;
   border: 1px solid black;

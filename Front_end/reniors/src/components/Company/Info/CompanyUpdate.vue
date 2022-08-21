@@ -237,6 +237,7 @@
             @change="changeImg()"
           />
         </div>
+        <div style="heigth: 200px;"></div>
       </div>
     </div>
     <footer style="width: 312px">
@@ -346,7 +347,8 @@ export default {
   text-align: left;
 }
 .company-update-form {
-  height: 440px;
+  height: 90%;
+  margin-bottom: 200px;
 }
 .hidden-btn {
   visibility: hidden;

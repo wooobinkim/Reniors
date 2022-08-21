@@ -36,10 +36,15 @@ export default {
     SET_TOKEN: (state, token) => (state.token = token),
     SET_CURRENT_USER: (state, user) => (state.currentUser = user),
     SET_ARTICLE: (state, article) => (state.article = article),
-    SET_ARTICLES: (state, articles) =>
-      articles.forEach((element) => {
-        state.articles.push(element);
-      }),
+    SET_ARTICLES: (state, articles) =>{
+      if(articles){
+        articles.forEach((element) => {
+          state.articles.push(element);
+        })
+      }else{
+        state.isLast = true;
+      }
+    },
     CLEAR_ARTICLES: (state) => (state.articles = []),
     SET_COMMENT: (state, comment) => (state.comment = comment),
     SET_COMMENTS: (state, comments) => (state.comments = comments),
