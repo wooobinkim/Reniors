@@ -170,13 +170,11 @@ export default {
     };
 
     const fetchChilds = (parent) => {
-      console.log(payload);
       emptyArray(hopechilds);
       return store.dispatch("category/getJobChild", parent);
     };
 
     const fetchGugun = (id) => {
-      console.log(id);
       emptyArray(hopeareas);
       store.dispatch("category/getGugun", id);
     };
@@ -191,14 +189,12 @@ export default {
       if (!hopeareas.includes(event.target.value)) {
         hopeareas.push(event.target.value);
         instance?.proxy?.$forceUpdate();
-        console.log(hopeareas);
       }
     };
 
     const deleteHope = (hopearea) => {
       hopeareas.splice(hopeareas.indexOf(hopearea), 1);
       if (isEmpty(hopeareas)) hopeareas.push(null);
-      console.log(hopeareas);
       instance?.proxy?.$forceUpdate();
     };
 
@@ -207,14 +203,12 @@ export default {
       if (!hopechilds.includes(event.target.value)) {
         hopechilds.push(event.target.value);
         instance?.proxy?.$forceUpdate();
-        console.log(hopechilds);
       }
     };
 
     const deleteChild = (hopechild) => {
       hopechilds.splice(hopechilds.indexOf(hopechild), 1);
       if (isEmpty(hopechilds)) hopechilds.push(null);
-      console.log(hopechilds);
       instance?.proxy?.$forceUpdate();
     };
 
@@ -236,8 +230,6 @@ export default {
       { id: "6", name: "주 6일" },
     ];
 
-    // props로 대체 (수정을 위해서)
-    // type을 typeEmployment를 action에서 처리해야됨 (true인것마다 axios요청 또 보내기?)
     const payload = {
       name: "",
       parent: "",
@@ -252,7 +244,6 @@ export default {
     };
     const initPayload = () => {
       const propData = props.conditionData;
-      // console.log(propData);
       (payload.name = propData?.name),
         (payload.parent = propData?.jobParentCategoryId),
         (payload.lastEdu = propData?.lastEdu),

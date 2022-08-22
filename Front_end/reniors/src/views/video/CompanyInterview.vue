@@ -350,7 +350,6 @@ export default {
       console.log(this.applyinfo.userId);
       if (confirm("퇴장하시겠습니까?")) {
         this.sessionleave = true;
-        // --- Leave the session by calling 'disconnect' method over the Session object ---
         if (this.session) this.session.disconnect();
 
         this.session = undefined;
@@ -813,8 +812,8 @@ export default {
 }
 
 .chatbtn1 {
-  width: 16vw;
-  height: 16vw;
+  width: 4vw;
+  height: 4vw;
   border-radius: 100%;
   border: none;
   background-color: white;

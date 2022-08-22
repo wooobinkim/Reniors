@@ -69,11 +69,11 @@ export const user = {
           await dispatch("fetchCurrentUser");
           router.push({ name: "home" });
         })
-        .catch((e) => {
+        .catch((err) => {
           alert(
             "아이디 또는 비밀번호를 잘못 입력하셨습니다.\n입력하신 내용을 다시 확인해주세요.",
           );
-          console.log(e);
+          console.log(err);
         });
     },
 
@@ -122,7 +122,6 @@ export const user = {
     },
 
     registUser({ getters }, formData) {
-      console.log(formData);
       axios({
         url: `https://i7b307.p.ssafy.io/api/users/regist`,
         method: "post",

@@ -1,6 +1,5 @@
 import http from "@/api/http";
 import router from "@/router";
-// import localtest from "@/api/localtest";
 
 export default {
   namespaced: true,
@@ -21,12 +20,7 @@ export default {
   },
   actions: {
     async fetchConditions({ commit }) {
-      console.log("??");
       const response = await http.get(`/jobopening/condition`);
-      // const response = await localtest.get(
-      //   `http://localhost:8080/jobopening/condition`
-      // );
-      console.log(response.data);
       commit("CONDITIONS", response.data);
       router.push({ name: "Condition" });
     },
@@ -40,42 +34,28 @@ export default {
         typeEmployment: payload.type,
         workingDay: payload.day,
       };
-      console.log(data);
       const response = await http.post("/jobopening/condition", data);
-      // const response = await localtest.post(`http://localhost:8080/jobopening/condition`)
       const conditionId = response.data;
       payload.hopeareas.map(async (hopearea) => {
-        let res = await http.post(
-          `/jobopening/condition/${conditionId}/hopearea`,
-          {
-            gugunId: hopearea,
-            id: payload.selectSido.data,
-          }
-        );
-        console.log(res);
+        await http.post(`/jobopening/condition/${conditionId}/hopearea`, {
+          gugunId: hopearea,
+          id: payload.selectSido.data,
+        });
       });
-      console.log(response);
       dispatch("fetchConditions");
     },
     async deleteCondition({ dispatch }, conditionId) {
-      const response = await http.delete(
-        `/jobopening/condition/${conditionId}`
-      );
-      console.log(response);
+      await http.delete(`/jobopening/condition/${conditionId}`);
       dispatch("fetchConditions");
     },
     async fetchEdit({ commit }, id) {
       const response = await http.get(`/jobopening/condition/${id}`);
-      console.log(response.data);
       commit("EDITDATA", response.data);
     },
 
     // jobopenings
     async search({ commit }, conditionId) {
       const response = await http.get(`/jobopening/search/${conditionId}`);
-      console.log(response);
-      console.log(`fetch by ${conditionId}th condition`);
-      console.log(response.data);
       commit("JOBOPENINGS", response.data.content);
     },
   },

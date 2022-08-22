@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-// import store from '@/store'
-
 import ResumeStepOne from "../components/resume/ResumeStepOne.vue";
 import ResumeStepTwo from "../components/resume/ResumeStepTwo.vue";
 import ResumeStepThree from "../components/resume/ResumeStepThree.vue";
@@ -23,18 +21,14 @@ import PreferSetting from "../components/user/PreferSetting";
 import PreferSettingComplete from "../views/user/PreferSettingCompleteView.vue";
 import MyCalendarView from "../views/user/MyCalendarView.vue";
 
-
 import CreateSetting from "../views/user/CreateSetting.vue";
 import UpdateSetting from "../views/user/UpdateSetting.vue";
 
-// import PreferSettingMain from "../components/user/PreferSettingMain"
 import CompanyHomeView from "@/views/home/CompanyHomeView.vue";
 import HomeView from "../views/home/HomeView.vue";
-// import CompanyInterviewView from "@/views/CompanyInterviewView.vue";
 import CompanyInterviewView from "@/views/CompanyInterviewView.vue";
 import CompanyJobOpeningView from "@/views/CompanyJobOpeningView.vue";
 import CompanyMyPageView from "@/views/CompanyMyPageView.vue";
-// import CompanyMyPageView from "@/views/CompanyMyPageView.vue";
 
 import CompanyMyPage from "@/components/Company/Info/CompanyMyPage.vue";
 import CompanyRegist from "@/components/Company/Info/CompanyRegist.vue";
@@ -48,12 +42,9 @@ import UserEvalList from "@/components/Company/JobOpening/UserEvalList.vue";
 import ResumeView from "@/components/Company/interview/ResumeView.vue";
 import JobOpeningInterviewList from "@/components/Company/interview/JobOpeningInterviewList.vue";
 import CompanyInterviewList from "@/components/Company/interview/InterviewList.vue";
-// import CompanyOpenVidu from "@/components/Company/interview/CompanyOpenVidu.vue";
 import CompanyInterview from "@/views/video/CompanyInterview.vue";
 import EvalList from "@/components/Company/interview/EvalList.vue";
 import EvalRegist from "@/components/Company/interview/EvalRegist.vue";
-// import CompanyInterview from "@/components/Company/Interview/CompanyInterview.vue";
-// import CompanyMyPage from "@/components/Company/MyPage/CompanyMyPage.vue";
 
 //boards
 import BoardMain from "@/views/board/BoardMain.vue";
@@ -80,9 +71,8 @@ import OpenVidu from "@/views/openvidu/OpenVidu.vue";
 
 //jobopening
 import WholeJobOpeningView from "@/views/jobopening/WholeJobOpeningView.vue";
-// import ConditionJobOpeningView from "@/views/jobopening/ConditionJobOpeningView.vue";
 
-import IntroView from "@/views/home/IntroView.vue"
+import IntroView from "@/views/home/IntroView.vue";
 
 const routes = [
   {
@@ -263,11 +253,6 @@ const routes = [
     name: "WholeJobOpening",
     component: WholeJobOpeningView,
   },
-  // {
-  //   path: "/jobopening/condition",
-  //   name: "ConditionJobOpening",
-  //   component: ConditionJobOpeningView,
-  // },
   {
     path: "/jobopening/:jobopeningId",
     name: "JobopeningDetail",
@@ -363,11 +348,6 @@ const routes = [
         name: "companyinterviewlist",
         component: CompanyInterviewList,
       },
-      // {
-      //   path: "interviewroom/:no/:jobOpeningId",
-      //   name: "companyopenvidu",
-      //   component: CompanyOpenVidu,
-      // },
       {
         path: "evallist/:no",
         name: "companyeval",
@@ -473,20 +453,5 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
-
-// router.beforeEach((to, from, next) => {
-
-//   const { isLogginedIn } = store.getters
-//   console.log(isLogginedIn)
-//   const noAuthPages = ['Login', 'LoginUser', 'LoginCompany', 'Signup', 'SignupComplete', 'FindPassword', 'FindUsername', 'home', 'kakaoLogin']
-//   const isAuthRequired = !noAuthPages.includes(to.name)
-
-//   if (isAuthRequired && !isLogginedIn) {
-//     alert('Require Login. Redirecting..')
-//     next({ name: 'Login' })
-//   } else {
-//     next()
-//   }
-// })
 
 export default router;

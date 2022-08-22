@@ -172,7 +172,11 @@ export default {
         headers: getters.authHeader,
       })
         .then(({ data }) => {
-          commit("RECOMMENDJOBOPENINGS", data.content);
+          if (data) {
+            commit("RECOMMENDJOBOPENINGS", data.content);
+          } else {
+            commit("RECOMMENDJOBOPENINGS", null);
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -214,10 +218,10 @@ export default {
       commit("APPLIES", response.data);
       commit("INTERVIEW", response.data);
     },
-    async apply({ getters }, jobopeningId) {
+    async apply({ dispatch }, jobopeningId) {
       await http.post(`/jobopening/${jobopeningId}/apply`);
-      console.log(getters.authHeader);
       alert("지원 성공!");
+      dispatch("fetchApply");
       router.go(0);
     },
     async fetchBookmark({ commit }) {
@@ -225,17 +229,17 @@ export default {
         url: "https://i7b307.p.ssafy.io/api/jobopening/bookmark",
         method: "get",
         headers: {
-          "Content-Type" : "application/json",
-          Authorization : "Bearer "+localStorage.getItem("token"),
-        }
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
       })
-      .then(async (response) => {
-        await commit("BOOKMARKS", response.data);
-        await commit("BOOKMARKSDATE", response.data);
-      })
-      .catch((err)=>{
-        console.log(err);
-      })
+        .then(async (response) => {
+          await commit("BOOKMARKS", response.data);
+          await commit("BOOKMARKSDATE", response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     async addBookmark({ dispatch }, id) {
       await http.post(`/jobopening/bookmark/${id}`);

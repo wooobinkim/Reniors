@@ -40,7 +40,6 @@
           type="text"
           placeholder="상세주소를 입력해주세요"
         ></b-form-input>
-        <!-- <b-form-input class="mb-3" v-model="credentials.address" type="text" placeholder="" ></b-form-input> -->
         <p class="forminfo">
           연락처<span class="required">&nbsp;&nbsp;*</span>
         </p>
@@ -175,7 +174,6 @@ export default {
     },
     changeImg() {
       this.userImg = this.$refs.img.files;
-      console.log(this.userImg);
     },
     update() {
       const formData = new FormData();
@@ -184,7 +182,6 @@ export default {
         "data",
         new Blob([JSON.stringify(this.userEdit)], { type: "application/json" }),
       );
-      console.log(this.userEdit);
       this.updateUser(formData);
     },
   },
@@ -241,7 +238,6 @@ footer {
 }
 
 footer > button {
-  
   margin: 0 auto;
   background-color: var(--color-red-2);
   width: 100%;

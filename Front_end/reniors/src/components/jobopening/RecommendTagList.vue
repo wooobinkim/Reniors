@@ -6,6 +6,13 @@
         <button @click="movesetting()">재설정</button>
       </div>
     </template>
+    <template
+      v-else-if="isLoggedin && !isrecommend && recommendJobopenings === null"
+    >
+      <div class="not-recommend-tag-title">
+        <h2>조건에 맞는 <span>추천 공고</span>가 없습니다!</h2>
+      </div>
+    </template>
     <template v-else-if="isLoggedin && !isrecommend">
       <div class="not-recommend-tag-title">
         <h2>관심 조건을 설정하고 <span>추천 공고</span>를 받아보세요!</h2>

@@ -1,8 +1,7 @@
 <template>
   <template v-if="!jobopenings">
     <div class="condition-result-view">
-      <p>총 <span>0</span>건의 공고가 있어요 😄</p>
-      <!-- <ConditionResultItem v-for="(jobopening, index) in jobopenings" :key="index" :jobopening="jobopening"/> -->
+      <p>조건에 맞는 공고가 없습니다 😅</p>
     </div>
   </template>
   <template v-else>
