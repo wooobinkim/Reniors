@@ -146,7 +146,17 @@ export const user = {
         headers: getters.authHeader,
       })
         .then((res) => {
-          commit("SET_PREFER", res.data);
+          if (res.data == "") {
+            commit("SET_PREFER", {
+              id: null,
+              jobParentCategoryResponse: { id: null, name: null },
+              gugunResponse: { id: null, name: null, code: null },
+              workingDay: null,
+              minSalary: null,
+            });
+          } else {
+            commit("SET_PREFER", res.data);
+          }
         })
         .catch((err) => {
           commit("SET_PREFER", {

@@ -21,6 +21,7 @@ export default {
     bookmarksdate: [],
     isLast: false,
     currPage: 0,
+    setRecommendCondition: false,
   },
   getters: {
     tags: (state) => state.tags,
@@ -55,6 +56,7 @@ export default {
     bookmarksdate: (state) => state.bookmarksdate,
     isLast: (state) => state.isLast,
     currPage: (state) => state.currPage,
+    setRecommendCondition: (state) => state.setRecommendCondition,
   },
   mutations: {
     TAGS: (state, tags) => (state.tags = tags),
@@ -110,6 +112,8 @@ export default {
     },
     SET_IS_LAST: (state, isLast) => (state.isLast = isLast),
     SET_CURR_PAGE: (state, currPage) => (state.currPage = currPage),
+    SET_RECOMMENDCONDITION: (state, setRecommendCondition) =>
+      (state.setRecommendCondition = setRecommendCondition),
   },
   actions: {
     async clearJobopenings({ commit }) {
@@ -161,8 +165,9 @@ export default {
         .then(async ({ data }) => {
           if (data) {
             await dispatch("fetchJobOpeningRecommend", data.id);
+            commit("SET_RECOMMENDCONDITION", true);
           } else {
-            commit("RECOMMENDJOBOPENINGS", null);
+            commit("SET_RECOMMENDCONDITION", false);
           }
         })
         .catch((error) => {
