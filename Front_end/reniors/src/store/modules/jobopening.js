@@ -152,14 +152,18 @@ export default {
       commit("RECOMMENDCLEAR");
     },
 
-    async fetchRecommend({ getters, dispatch }) {
+    async fetchRecommend({ commit, getters, dispatch }) {
       await axios({
         url: `https://i7b307.p.ssafy.io/api/recommendcondition`,
         method: "get",
         headers: getters.authHeader,
       })
         .then(async ({ data }) => {
-          await dispatch("fetchJobOpeningRecommend", data.id);
+          if (data) {
+            await dispatch("fetchJobOpeningRecommend", data.id);
+          } else {
+            commit("RECOMMENDJOBOPENINGS", null);
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -237,8 +241,8 @@ export default {
           await commit("BOOKMARKS", response.data);
           await commit("BOOKMARKSDATE", response.data);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          console.log(error);
         });
     },
     async addBookmark({ dispatch }, id) {

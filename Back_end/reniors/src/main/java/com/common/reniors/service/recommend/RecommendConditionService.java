@@ -45,7 +45,12 @@ public class RecommendConditionService {
 
     @Transactional
     public RecommendConditionResponse read(Long userId) {
-        RecommendConditionResponse response = RecommendConditionResponse.response(recommendConditionRepository.findByUserId(userId).orElseThrow(() -> new NotFoundException(RECOMMEND_CONDITION_NOT_FOUND)));
+        RecommendCondition recommendCondition = recommendConditionRepository.findByUserId(userId)
+                .orElse(null);
+        if (recommendCondition == null) {
+            return null;
+        }
+        RecommendConditionResponse response = RecommendConditionResponse.response(recommendCondition);
         return response;
     }
 
