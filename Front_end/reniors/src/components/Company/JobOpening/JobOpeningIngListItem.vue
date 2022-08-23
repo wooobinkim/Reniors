@@ -40,7 +40,7 @@ export default {
 
 <style scoped>
 .company-jobOpening-ing-list-item {
-  width: 328px;
+  width: 900px;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 16px;
@@ -96,5 +96,10 @@ export default {
   font-size: 16px;
   font-weight: bold;
   display: inline;
+}
+@media(max-width: 760px){
+  .company-jobOpening-ing-list-item {
+    width: 328px;
+  }
 }
 </style>

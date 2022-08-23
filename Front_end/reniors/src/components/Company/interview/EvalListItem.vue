@@ -47,8 +47,8 @@ export default {
 
 <style scope>
 .eval-question-list-item {
-  width: 328px;
-  padding: 5px 10px;
+  width: 900px;
+  padding: 15px 20px;
   font-size: 16px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
@@ -68,5 +68,11 @@ export default {
 .eval-question-list-item > .section2 {
   width: 100%;
   text-align: left;
+}
+@media(max-width: 760px){
+  .eval-question-list-item {
+    width: 328px;
+    padding: 5px 10px;
+  }
 }
 </style>

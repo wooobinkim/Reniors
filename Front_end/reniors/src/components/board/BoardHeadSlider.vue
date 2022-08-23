@@ -23,8 +23,7 @@ export default{
     },
     setup(){},
     created(){
-        this.fetchParents(),
-        this.fetchInterest()
+        this.fetchParents()
     },
     computed:{
         ...mapGetters(['interest', 'parents'])

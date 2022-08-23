@@ -175,6 +175,7 @@ export default {
         });
     },
     async fetchJobOpeningRecommend({ commit, getters }, data) {
+      console.log(data);
       await axios({
         url: `https://i7b307.p.ssafy.io/api/jobopening/search/recommend/${data}`,
         method: "get",

@@ -35,7 +35,6 @@ export default {
   setup() {
     const store = useStore();
     const jobopeningId = useRoute().params.jobopeningId;
-
     const selectJobopening = () =>
       store.dispatch("jobopening/selectJobopening", jobopeningId);
     selectJobopening();
