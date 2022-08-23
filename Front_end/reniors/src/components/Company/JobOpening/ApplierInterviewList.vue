@@ -149,12 +149,14 @@ export default {
   color: var(--color-yellow-1);
 }
 .apply-interview-pass-btn-box{
-  width: 100vw;
   position: fixed;
+  width: 100vw;
+  left: 0;
   bottom: 50px;
   height: 64px;
   display: flex;
   align-items: center;
+  justify-content: center;
   margin: 0;
 }
 .apply-interview-pass-btn {

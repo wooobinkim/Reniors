@@ -77,11 +77,12 @@ export default {
   box-sizing: border-box;
   background-color: var(--color-red-4);
   border-radius: 0.4rem;
-  margin: 10px 10px;
   padding: 10px;
   height: 150px;
   text-decoration: none;
   cursor: pointer;
+  width: 900px;
+  margin: 0 0 10px 0;
 }
 
 .jobopening-item p {
@@ -117,7 +118,6 @@ export default {
 }
 .jobopening-item-second > span:first-child {
   color: #37bf99;
-  margin-right: 16px;
 }
 .jobopening-item-second > span:nth-child(2) {
   color: #f28a07;
@@ -136,5 +136,10 @@ export default {
   margin-top: 10px;
   color: var(--color-black-1);
   font-size: 10px;
+}
+@media(max-width: 760px){
+  .jobopening-item {
+    width: 328px;
+  }
 }
 </style>

@@ -157,11 +157,13 @@ export default {
 }
 .apply-resume-pass-btn-box{
   width: 100vw;
+  left: 0;
   position: fixed;
   bottom: 50px;
   height: 64px;
   display: flex;
   align-items: center;
+  justify-content: center;
   margin: 0;
 }
 .apply-resume-pass-btn {

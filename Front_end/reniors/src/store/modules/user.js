@@ -67,7 +67,6 @@ export const user = {
           const token = res.headers["authorization"];
           await dispatch("saveToken", token);
           await dispatch("fetchCurrentUser");
-          router.push({ name: "home" });
         })
         .catch((err) => {
           alert(

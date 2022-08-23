@@ -64,8 +64,7 @@
 </template>
 
 <script>
-import { computed } from "vue";
-import { useStore } from "vuex";
+import { mapActions, mapGetters, useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 
@@ -90,10 +89,6 @@ export default {
         search();
       }
     };
-
-    const fetchConditions = () => store.dispatch("condition/fetchConditions");
-    fetchConditions();
-    const conditions = computed(() => store.getters["condition/conditions"]);
 
     const popover = (event) => {
       if (event.target.innerText === "더 보기") event.target.innerText = "닫기";
@@ -122,9 +117,17 @@ export default {
       routeResult,
       deleteCondition,
       editCondition,
-      conditions,
       options,
     };
+  },
+  created(){
+    this.fetchConditions();
+  },
+  computed:{
+    ...mapGetters("condition",["conditions"])
+  },
+  methods:{
+    ...mapActions("condition",["fetchConditions"])
   },
 };
 </script>
@@ -137,7 +140,7 @@ export default {
   border: none;
   border-radius: 0.5rem;
   height: 140px;
-  width: 70vh;
+  width: 70vw;
   margin: 5px;
   margin-bottom: 15px;
   padding: 10px;
@@ -158,10 +161,13 @@ export default {
 
 .condition-list {
   margin-bottom: 10px;
+  width: 900px;
+  margin: auto;
 }
 
 .condition-item {
   background-color: var(--color-orange-2);
+  width: 328px;
 }
 
 .condition-item-header {
@@ -224,5 +230,10 @@ export default {
   border-radius: 1rem;
   background-color: white;
   font-size: 12px;
+}
+@media(max-width: 760px){
+  .condition-list {
+    width: 328px;
+  }
 }
 </style>

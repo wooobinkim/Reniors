@@ -39,7 +39,6 @@
     <template v-if="this.progress == '서류심사중'">
       <applier-resume-list
         :jobopeningdetail="jobopeningdetail"
-
       ></applier-resume-list>
     </template>
 

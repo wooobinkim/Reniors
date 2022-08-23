@@ -86,7 +86,7 @@ export default {
     },
     async loginUser(){
       await this.login(this.credentials);
-      this.$router.push("/");
+      this.$router.push("/home");
     },
   },
 };
