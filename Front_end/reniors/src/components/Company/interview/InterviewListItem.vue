@@ -22,8 +22,9 @@
         </button>
       </template>
       <template v-else>
-        <button class="about-interview-btn">
-          <router-link
+        <button class="about-interview-btn" @click="mobileCheck()">
+          <a v-if="this.isMobile">면접보기</a>
+          <router-link v-else
             :to="{
               name: 'companyInterviewVideo',
               params: {
@@ -42,18 +43,39 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import dayjs from "dayjs";
 
 export default {
+  data(){
+    return{
+    }
+  },
   props: {
     interviewapply: Object,
   },
+  computed:{
+    ...mapGetters("company", ["isMobile"]),
+  },
+  mounted(){
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.setIsMobile);
+    })
+  },
+  created(){
+    this.setIsMobile();
+  },
   methods: {
-    ...mapActions("company", ["setInterviewer"]),
+    ...mapActions("company", ["setInterviewer", "setIsMobile"]),
     dateFormat(val) {
       return dayjs(val).format("YYYY년 MM월 DD일 HH시 MM분");
     },
+    mobileCheck(){
+      if(this.isMobile){
+        alert("모바일로는 불가능합니다,\nPC로 접속해주세요!")
+      }
+    },
+    
   },
 };
 </script>
@@ -67,7 +89,7 @@ export default {
   margin-left: 5px;
 }
 .interview-list-item {
-  width: 328px;
+  width: 900px;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -102,6 +124,7 @@ export default {
   padding: 5px 10px;
   background-color: var(--color-red-2);
   border: none;
+  color: white;
   border-radius: 8px;
   font-size: 16px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
@@ -116,5 +139,13 @@ export default {
 .about-interview-btn > a {
   text-decoration: none;
   color: white;
+}
+.about-interview-btn > a:hover{
+  color: white;
+}
+@media(max-width: 760px){
+  .interview-list-item {
+    width: 328px;
+  }
 }
 </style>

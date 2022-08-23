@@ -69,7 +69,7 @@ export default {
 
 <style scoped>
 .company-jobOpening-ing-list-item {
-  width: 328px;
+  width: 900px;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 16px;
@@ -123,5 +123,10 @@ export default {
 }
 .to-apply-list-btn > a:visited {
   color: white;
+}
+@media(max-width: 760px){
+  .company-jobOpening-ing-list-item {
+    width: 328px;
+  }
 }
 </style>

@@ -21,9 +21,13 @@ export default {
     const store = useStore();
 
     const apply = (login) => {
-      if (confirm("공고에 지원하시겠습니까?")) {
-        if (login === true)
-          store.dispatch("jobopening/apply", props.jobopeningId);
+      if (login === true){
+        if (confirm("공고에 지원하시겠습니까?")) {
+            store.dispatch("jobopening/apply", props.jobopeningId);
+        }
+      }
+      else{
+        alert("로그인이 필요합니다!");
       }
     };
     const isLogin = computed(() => store.getters["isLogginedIn"]);

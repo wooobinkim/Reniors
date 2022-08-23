@@ -50,9 +50,10 @@ export default {
   setup() {
     const store = useStore()
 
-    const fetchYoutube = () => store.dispatch('home/fetchYoutubes', '취업정보')
+    // Youtube API 가 하루에 50건으로 한정 되어있어 오류를 발생 시킴
+    //const fetchYoutube = () => store.dispatch('home/fetchYoutubes', '취업정보')
     const fetchHot = () => store.dispatch('home/fetchHot')
-    fetchYoutube()
+    //fetchYoutube()
     fetchHot()
 
     let recommendJobopenings=null;
@@ -61,11 +62,12 @@ export default {
       recommendJobopenings = computed(() => store.state.home.recommendJobopenings)
     }
     const hotJobopenings=computed(() => store.getters['home/hotJobopenings']);
-    const youtubes = computed(() => store.getters['home/youtubes'])
-    const isYoutube = computed(() => store.getters['home/isYoutube'])
+    //const youtubes = computed(() => store.getters['home/youtubes'])
 
+    //const isYoutube = computed(() => store.getters['home/isYoutube'])
+    const youtubes = [];
     return {
-      isLogin, hotJobopenings, recommendJobopenings, youtubes, isYoutube,
+      isLogin, hotJobopenings, recommendJobopenings, youtubes,
     }
 
   },

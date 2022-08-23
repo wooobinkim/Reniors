@@ -28,6 +28,7 @@ export default {
     userevallist: [],
     interviewer: null,
     resume: null,
+    isMobile: /Mobi/i.test(window.navigator.userAgent),
   },
 
   getters: {
@@ -54,6 +55,7 @@ export default {
     resume: (state) => state.resume,
     interviewapplylist: (state) => state.interviewapplylist,
     interviewapplylistasc: (state) => state.interviewapplylistasc,
+    isMobile: (state) => state.isMobile,
   },
 
   mutations: {
@@ -142,6 +144,9 @@ export default {
     SET_HEADER(state, data) {
       state.header = data;
     },
+    SET_IS_MOBILE(state){
+      state.isMobile = /Mobi/i.test(window.navigator.userAgent);
+    }
   },
 
   actions: {
@@ -538,6 +543,9 @@ export default {
     async setInterviewer({ commit }, data){
       await commit("SET_INTERVIEWER", data);
     },
+    setIsMobile({commit}){
+      commit("SET_IS_MOBILE");
+    }
   },
 
   modules: {},
