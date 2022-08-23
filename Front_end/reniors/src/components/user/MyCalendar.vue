@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3">
+  <div class="p-3 calender-box">
 
     <FullCalendar :options="calendarOptions" :header="{center: 'title'}" />
     <div style="float: right; text-align: right;">
@@ -127,6 +127,9 @@ export default {
 </script>
 
 <style>
+  .calender-box{
+    width: 900px;
+  }
   table {
     border-collapse: collapse;
     border-radius: 8px;
@@ -169,6 +172,10 @@ export default {
 
   }
 
+  .fc-toolbar-chunk > button:hover{
+    background-color: var(--color-red-1) !important;
+  }
+
   .fc-event-title-container {
     border-radius: 20px;
     display: flex;
@@ -199,4 +206,9 @@ export default {
     opacity: 0;
   }
 
+  @media(max-width: 760px){
+    .calender-box{
+      width: 312px;
+    }
+  }
 </style>

@@ -1,8 +1,6 @@
 <template>
   <div>
     <apply-history-card v-for="apply in applies" :apply="apply" :key="apply"></apply-history-card>
-
-    
   </div>
 </template>
 <script>

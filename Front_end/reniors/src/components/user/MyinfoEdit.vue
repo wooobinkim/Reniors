@@ -1,7 +1,14 @@
 <template>
+    <div class="header">
+      <i @click="prevpage()" class="bi bi-arrow-left-circle-fill"></i>
+      <router-link class="header-logo" :to="{ name: 'home' }">
+        <img src="@/assets/logo_cut.png" alt="logo" />
+      </router-link>
+      <div></div>
+    </div>
   <div>
     <header>
-      <div style="margin-top: 16px; padding: 10px; background-color: #f9f9f9">
+      <div style="margin-top: 50px; padding: 10px; background-color: #f9f9f9">
         <span class="title">내 정보 수정</span>
       </div>
     </header>
@@ -58,7 +65,6 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import ResumeBasicForm from "@/components/resume/ResumeBasicForm.vue";
-
 export default {
   name: "MyinfoEdit",
   components: { ResumeBasicForm },
@@ -93,11 +99,38 @@ export default {
         this.deleteUser();
       }
     },
+    prevpage() {
+      this.$router.go(-1);
+    },
   },
 };
 </script>
 
 <style scoped>
+.header {
+  height: 48px;
+  background-color: white;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px -2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: fixed;
+  width: 100vw;
+  top: 0;
+}
+.header img {
+  height: 38px;
+  margin: auto;
+  width: auto;
+}
+.header > .bi {
+  color: var(--color-red-1);
+  font-size: 30px;
+  cursor: pointer;
+}
+.header > div {
+  width: 30px;
+}
 .title {
   font-size: 22px;
   margin-top: 4px;

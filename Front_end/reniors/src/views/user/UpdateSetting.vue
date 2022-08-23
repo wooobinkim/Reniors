@@ -1,7 +1,6 @@
 <template>
   <div>
     <prefer-setting action="update"></prefer-setting>
-
   </div>
 </template>
 <script>

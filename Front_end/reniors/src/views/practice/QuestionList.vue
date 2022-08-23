@@ -1,5 +1,11 @@
 <template>
-  <real-header></real-header>
+    <div class="header">
+      <i @click="prevpage()" class="bi bi-arrow-left-circle-fill"></i>
+      <router-link class="header-logo" :to="{ name: 'home' }">
+        <img src="@/assets/logo_cut.png" alt="logo" />
+      </router-link>
+      <div></div>
+    </div>
   <div class="total">
     <div class="head2">
       <router-link class="mx-3 rl" :to="{ name: 'QuestionList' }"
@@ -35,10 +41,9 @@
 <script>
 import QuestionItem from "@/components/practice/QuestionItem.vue";
 import { mapActions, mapGetters } from "vuex";
-import RealHeader from "@/components/RealHeader.vue";
 export default {
   name: "QuestionList",
-  components: { QuestionItem, RealHeader },
+  components: { QuestionItem },
   data() {
     return {
       sampleData: "",
@@ -52,6 +57,9 @@ export default {
   unmounted() {},
   methods: {
     ...mapActions(["fetchQuestions", "fetchChecklist", "clearAnswer"]),
+        prevpage() {
+      this.$router.go(-1);
+    },
   },
   created() {
     this.fetchQuestions();
@@ -62,6 +70,30 @@ export default {
 </script>
 
 <style scoped>
+.header {
+  height: 48px;
+  background-color: white;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px -2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: fixed;
+  width: 100vw;
+  top: 0;
+}
+.header img {
+  height: 38px;
+  margin: auto;
+  width: auto;
+}
+.header > .bi {
+  color: var(--color-red-1);
+  font-size: 30px;
+  cursor: pointer;
+}
+.header > div {
+  width: 30px;
+}
 .total {
   background-color: #fff5f0;
   width: 100%;

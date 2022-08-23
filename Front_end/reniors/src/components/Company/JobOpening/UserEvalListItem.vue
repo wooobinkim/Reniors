@@ -29,7 +29,7 @@ export default {
 
 <style scope>
 .usereval-list-item {
-  width: 328px;
+  width: 900px;
   padding: 10px 15px;
   font-size: 16px;
   text-align: left;
@@ -64,5 +64,10 @@ export default {
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   resize: none;
+}
+@media(max-width: 760px){
+  .usereval-list-item {
+  width: 328px;
+  }
 }
 </style>

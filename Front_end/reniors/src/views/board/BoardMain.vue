@@ -1,5 +1,11 @@
 <template>
-  <real-header></real-header>
+    <div class="header">
+      <i @click="prevpage()" class="bi bi-arrow-left-circle-fill"></i>
+      <router-link class="header-logo" :to="{ name: 'home' }">
+        <img src="@/assets/logo_cut.png" alt="logo" />
+      </router-link>
+      <div></div>
+    </div>
   <div class="board-main-box">
     <board-head-slider class="slider"></board-head-slider>
     <div class="title">
@@ -29,14 +35,12 @@
 <script>
 import BoardHeadSlider from "@/components/board/BoardHeadSlider.vue";
 import ArticleItem from "@/components/board/ArticleItem.vue";
-import RealHeader from "@/components/RealHeader.vue";
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "BoardHome",
   components: {
     BoardHeadSlider,
     ArticleItem,
-    RealHeader,
   },
   data() {
     return {
@@ -84,6 +88,9 @@ export default {
     async pageUp() {
       await this.setCurrPage(this.currPage + 1);
     },
+        prevpage() {
+      this.$router.go(-1);
+    },
   },
   async created() {
     await this.setCurrPage(0);
@@ -101,6 +108,30 @@ export default {
 </script>
 
 <style scoped>
+.header {
+  height: 48px;
+  background-color: white;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px -2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: fixed;
+  width: 100vw;
+  top: 0;
+}
+.header img {
+  height: 38px;
+  margin: auto;
+  width: auto;
+}
+.header > .bi {
+  color: var(--color-red-1);
+  font-size: 30px;
+  cursor: pointer;
+}
+.header > div {
+  width: 30px;
+}
 .board-main-box {
   width: 100%;
 }

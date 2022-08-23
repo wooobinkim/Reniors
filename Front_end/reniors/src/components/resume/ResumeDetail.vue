@@ -3,7 +3,7 @@
   <div>
     <br>
     <br>
-    <div style="width: 312px; margin: auto;">
+    <div class="resume-box">
       <br>
       <div>
         <img
@@ -129,6 +129,10 @@ export default {
 </script>
 
 <style scoped>
+.resume-box{
+  width: 900px;
+  margin: 0;
+}
 p {
   margin-bottom: 3px;
   text-align: left;
@@ -181,12 +185,19 @@ img {
 button {
   float: right;
   height: 40px;
-  width: 88px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
   border-style: none;
   background-color: #ffb400;
   font-weight: 700;
   color: white;
+  padding: 5px 50px;
+  margin: auto 0;
+}
+@media(max-width: 760px){
+  .resume-box{
+    width: 312px;
+    margin: 0;
+  }
 }
 </style>
