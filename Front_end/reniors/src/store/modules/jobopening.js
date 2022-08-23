@@ -21,6 +21,7 @@ export default {
     bookmarksdate: [],
     isLast: false,
     currPage: 0,
+    setRecommendCondition: false,
   },
   getters: {
     tags: (state) => state.tags,
@@ -55,6 +56,7 @@ export default {
     bookmarksdate: (state) => state.bookmarksdate,
     isLast: (state) => state.isLast,
     currPage: (state) => state.currPage,
+    setRecommendCondition: (state) => state.setRecommendCondition,
   },
   mutations: {
     TAGS: (state, tags) => (state.tags = tags),
@@ -110,6 +112,8 @@ export default {
     },
     SET_IS_LAST: (state, isLast) => (state.isLast = isLast),
     SET_CURR_PAGE: (state, currPage) => (state.currPage = currPage),
+    SET_RECOMMENDCONDITION: (state, setRecommendCondition) =>
+      (state.setRecommendCondition = setRecommendCondition),
   },
   actions: {
     async clearJobopenings({ commit }) {
@@ -152,15 +156,19 @@ export default {
       commit("RECOMMENDCLEAR");
     },
 
-    async fetchRecommend({ getters, dispatch }) {
+    async fetchRecommend({ commit, getters, dispatch }) {
       await axios({
         url: `https://i7b307.p.ssafy.io/api/recommendcondition`,
         method: "get",
         headers: getters.authHeader,
       })
         .then(async ({ data }) => {
-          console.log(data);
-          await dispatch("fetchJobOpeningRecommend", data.id);
+          if (data) {
+            await dispatch("fetchJobOpeningRecommend", data.id);
+            commit("SET_RECOMMENDCONDITION", true);
+          } else {
+            commit("SET_RECOMMENDCONDITION", false);
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -174,7 +182,11 @@ export default {
         headers: getters.authHeader,
       })
         .then(({ data }) => {
-          commit("RECOMMENDJOBOPENINGS", data.content);
+          if (data) {
+            commit("RECOMMENDJOBOPENINGS", data.content);
+          } else {
+            commit("RECOMMENDJOBOPENINGS", null);
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -216,10 +228,10 @@ export default {
       commit("APPLIES", response.data);
       commit("INTERVIEW", response.data);
     },
-    async apply({ getters }, jobopeningId) {
+    async apply({ dispatch }, jobopeningId) {
       await http.post(`/jobopening/${jobopeningId}/apply`);
-      console.log(getters.authHeader);
       alert("지원 성공!");
+      dispatch("fetchApply");
       router.go(0);
     },
     async fetchBookmark({ commit }) {
@@ -227,17 +239,17 @@ export default {
         url: "https://i7b307.p.ssafy.io/api/jobopening/bookmark",
         method: "get",
         headers: {
-          "Content-Type" : "application/json",
-          Authorization : "Bearer "+localStorage.getItem("token"),
-        }
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
       })
-      .then(async (response) => {
-        await commit("BOOKMARKS", response.data);
-        await commit("BOOKMARKSDATE", response.data);
-      })
-      .catch((err)=>{
-        console.log(err);
-      })
+        .then(async (response) => {
+          await commit("BOOKMARKS", response.data);
+          await commit("BOOKMARKSDATE", response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     async addBookmark({ dispatch }, id) {
       await http.post(`/jobopening/bookmark/${id}`);

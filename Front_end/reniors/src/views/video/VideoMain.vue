@@ -153,11 +153,13 @@ export default {
   },
   setup() {},
   created() {
-    this.fetchRooms();
-    if (this.rooms.length >= 1) {
-      this.title = this.rooms[0].companyName;
-      this.sub = this.rooms[0].jobOpeningName;
-      this.interviewId = this.rooms[0].sessionId;
+    if(this.isLogginedIn){
+      this.fetchRooms();
+      if (this.rooms.length >= 1) {
+        this.title = this.rooms[0].companyName;
+        this.sub = this.rooms[0].jobOpeningName;
+        this.interviewId = this.rooms[0].sessionId;
+      }
     }
   },
   methods: {

@@ -232,21 +232,19 @@ export default {
           });
       }
     },
-
     fetchInterest({ commit, getters }) {
       axios({
         url: "https://i7b307.p.ssafy.io/api/recommendcondition",
         method: "get",
         headers: getters.authHeader,
       }).then((res) => {
-        if ("jobChildCategoryResponse" in res.data) {
+        if (res.data.jobChildCategoryResponse) {
           commit("SET_INTEREST", res.data.jobChildCategoryResponse);
         } else {
           commit("SET_INTEREST", { id: 1 });
         }
       });
     },
-
     //직무 대분류 가져오기
     fetchParents({ commit, getters }) {
       axios({

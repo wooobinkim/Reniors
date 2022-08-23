@@ -227,10 +227,6 @@ export default {
     this.fetchCurrentUser(), (this.myUserName = this.currentUser.name);
     this.fetchRooms(), (this.mySessionId = this.rooms[0].sessionId);
     this.companyName = this.rooms[0].companyName;
-    var isMobile = /Mobi/i.test(window.navigator.userAgent);
-    if(isMobile){
-      alert("모바일로는 불가능합니다,\nPC로 접속해주세요!")
-    }
   },
   methods: {
     ...mapActions(["fetchCurrentUser", "fetchRooms"]),

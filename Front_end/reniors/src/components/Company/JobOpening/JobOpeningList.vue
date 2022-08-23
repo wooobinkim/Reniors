@@ -92,6 +92,7 @@ export default {
 
 .company-jobOpening-btn-box {
   display: flex;
+  justify-content: center;
 }
 .company-jobOpening-btn-box > div {
   width: 138px;

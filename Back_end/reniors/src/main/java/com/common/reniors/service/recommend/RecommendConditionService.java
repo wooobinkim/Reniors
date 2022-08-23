@@ -31,38 +31,44 @@ public class RecommendConditionService {
     @Transactional
     public Long create(Long userId, RecommendConditionCreateRequest request) {
         User user = userRepository.findById(userId)
-                .orElseThrow(()->new NotFoundException(USER_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
         if (recommendConditionRepository.findByUserId(userId).isPresent()) {
             throw new DuplicateException(String.format("%s님의 추천 조건이 이미 존재합니다.", user.getName()));
         }
         JobParentCategory jobParentCategory = jobParentCategoryRepository.findById(request.getJobParentCategoryId())
-                .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(CATEGORY_NOT_FOUND));
         Gugun gugun = gugunRepository.findById(request.getGugunId())
-                .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(CATEGORY_NOT_FOUND));
         RecommendCondition recommendCondition = RecommendCondition.create(user, jobParentCategory, gugun, request.getWorkingDay(), request.getMinSalary());
         return recommendConditionRepository.save(recommendCondition).getId();
     }
 
     @Transactional
     public RecommendConditionResponse read(Long userId) {
-        return RecommendConditionResponse.response(recommendConditionRepository.findByUserId(userId).get());
+        RecommendCondition recommendCondition = recommendConditionRepository.findByUserId(userId)
+                .orElse(null);
+        if (recommendCondition == null) {
+            return null;
+        }
+        RecommendConditionResponse response = RecommendConditionResponse.response(recommendCondition);
+        return response;
     }
 
     @Transactional
     public void update(Long userId, RecommendConditionUpdateRequest request) {
         RecommendCondition recommendCondition = recommendConditionRepository.findByUserId(userId)
-                .orElseThrow(()->new NotFoundException(RECOMMEND_CONDITION_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(RECOMMEND_CONDITION_NOT_FOUND));
         JobParentCategory jobParentCategory = jobParentCategoryRepository.findById(request.getJobParentCategoryId())
-                .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(CATEGORY_NOT_FOUND));
         Gugun gugun = gugunRepository.findById(request.getGugunId())
-                .orElseThrow(()->new NotFoundException(CATEGORY_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(CATEGORY_NOT_FOUND));
         recommendCondition.update(jobParentCategory, gugun, request.getWorkingDay(), request.getMinSalary());
     }
 
     @Transactional
     public void delete(Long userId) {
         RecommendCondition recommendCondition = recommendConditionRepository.findByUserId(userId)
-                .orElseThrow(()->new NotFoundException(RECOMMEND_CONDITION_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(RECOMMEND_CONDITION_NOT_FOUND));
         recommendConditionRepository.delete(recommendCondition);
     }
 }

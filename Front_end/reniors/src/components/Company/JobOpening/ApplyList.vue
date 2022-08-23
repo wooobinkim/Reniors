@@ -96,7 +96,7 @@ export default {
 
 <style scoped>
 .company-jobOpening-info-box {
-  width: 328px;
+  width: 900px;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 16px;
@@ -138,7 +138,7 @@ export default {
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 .apply-list-box {
-  width: 328px;
+  width: 900px;
   border-color: var(--color-black-2);
   -webkit-box-shadow: 1px 16px 18px -2px var(--color-black-3);
   box-shadow: 1px 16px 18px -2px var(--color-black-3);
@@ -149,7 +149,7 @@ export default {
 .tab-btn-box {
   display: flex;
   justify-content: space-between;
-  width: 328px;
+  width: 900px;
 }
 .tab-btn-box > .tab-btn {
   width: 30%;
@@ -167,5 +167,16 @@ export default {
   width: 40% !important;
   border-bottom: none !important;
   font-size: 20px !important;
+}
+@media (max-width: 760px) {
+  .company-jobOpening-info-box {
+    width: 328px;
+  }
+  .apply-list-box{
+    width: 328px;
+  }
+  .tab-btn-box{
+    width: 328px;
+  }
 }
 </style>

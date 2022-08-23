@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style scoped>
-.total{
+.total {
   margin-top: 64px;
   margin-bottom: 56px;
 }
